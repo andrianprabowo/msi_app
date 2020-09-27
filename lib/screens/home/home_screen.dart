@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/screens/home/widgets/item_header.dart';
-import 'package:msi_app/screens/home/widgets/item_menu.dart';
+import 'package:msi_app/widgets/item_header.dart';
+import 'package:msi_app/widgets/item_menu.dart';
 import 'package:msi_app/screens/inbound/inbound_screen.dart';
 import 'package:msi_app/screens/login/login_screen.dart';
 import 'package:msi_app/screens/outbound/outbound_screen.dart';
