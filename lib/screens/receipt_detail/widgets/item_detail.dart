@@ -1,34 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:msi_app/models/purchase_order.dart';
-import 'package:msi_app/screens/receipt_detail/receipt_detail_screen.dart';
+import 'package:msi_app/models/item.dart';
 import 'package:msi_app/utils/constants.dart';
 
-class ItemReceipt extends StatelessWidget {
-  final PurchaseOrder item;
+class ItemDetail extends StatelessWidget {
+  final Item item;
 
-  const ItemReceipt(this.item);
-
-  String get dateString {
-    return DateFormat.yMMMMd().format(item.docDate);
-  }
+  const ItemDetail(this.item);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.of(context).pushNamed(ReceiptDetailScreen.routeName);
-      },
+      onTap: () {},
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(kSmall),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildRow('PO Number', item.poNumber),
-            buildRow('Doc Date', dateString),
-            buildRow('Vendor', item.vendor),
-            buildRow('Warehouse', item.warehouse),
+            buildRow('Item Code', item.itemCode),
+            buildRow('Item Name', item.itemName),
+            buildRow('Total Receipt', item.totalReceipt.toStringAsFixed(2)),
+            buildRow('Receipt Qty', item.totalReceipt.toStringAsFixed(2)),
+            buildRow('Remaining Qty', item.totalReceipt.toStringAsFixed(2)),
+            buildRow('UoM', item.uom),
           ],
         ),
       ),

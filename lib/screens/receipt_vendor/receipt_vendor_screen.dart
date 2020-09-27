@@ -63,13 +63,7 @@ class ReceiptVendorScreen extends StatelessWidget {
             SizedBox(
               height: getProportionateScreenHeight(kLarge),
             ),
-            Text(
-              'List Purchase Order',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: kPrimaryColor,
-              ),
-            ),
+            buildTitle('List Purchase Order'),
             Divider(),
             Expanded(
               child: ListView.separated(
@@ -83,6 +77,16 @@ class ReceiptVendorScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildTitle(String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        color: kPrimaryColor,
       ),
     );
   }
