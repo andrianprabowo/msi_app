@@ -57,20 +57,26 @@ class _LoginFormState extends State<LoginForm> {
             SizedBox(
               height: getProportionateScreenHeight(kLarge * 2),
             ),
-            RaisedButton(
-              child: Text('Login'),
-              onPressed: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(HomeScreen.routeName);
-              },
-            )
+            buildButtonLogin(context),
           ],
         ),
       ),
     );
   }
 
-  DropdownButtonFormField buildDropdownWarehouse() {
+  Widget buildButtonLogin(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: RaisedButton(
+        child: Text('Login'),
+        onPressed: () {
+          Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+        },
+      ),
+    );
+  }
+
+  Widget buildDropdownWarehouse() {
     return DropdownButtonFormField(
       isExpanded: true,
       items: listWarehouse

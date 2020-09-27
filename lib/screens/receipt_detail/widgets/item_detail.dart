@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/item.dart';
+import 'package:msi_app/screens/receipt_detail/widgets/dialog_lot_number.dart';
 import 'package:msi_app/utils/constants.dart';
 
 class ItemDetail extends StatelessWidget {
@@ -7,10 +8,18 @@ class ItemDetail extends StatelessWidget {
 
   const ItemDetail(this.item);
 
+  void _inputLotNumber(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return DialogLotNumber();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () => _inputLotNumber(context),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(kSmall),
