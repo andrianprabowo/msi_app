@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:msi_app/utils/router.dart';
+import 'package:msi_app/utils/routes.dart';
 import 'package:msi_app/utils/theme.dart';
 
 void main() async {
