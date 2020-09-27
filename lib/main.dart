@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/screens/splash/splash_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:msi_app/utils/router.dart';
+import 'package:msi_app/utils/theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(MyApp());
 }
 
@@ -11,12 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MSI App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: SplashScreen(),
+      theme: themeData(),
+      initialRoute: initialRoute,
+      routes: routes,
     );
   }
 }
-
