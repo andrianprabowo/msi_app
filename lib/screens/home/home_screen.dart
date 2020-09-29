@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/widgets/item_header.dart';
 import 'package:msi_app/widgets/item_menu.dart';
 import 'package:msi_app/screens/inbound/inbound_screen.dart';
@@ -9,6 +10,7 @@ import 'package:msi_app/screens/stock_counting/stock_counting_screen.dart';
 import 'package:msi_app/screens/stock_inquiry/stock_inquiry_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -53,6 +55,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('WMS Mobile'),
@@ -68,9 +71,19 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ItemHeader(
-              username: username,
-              warehouse: warehouse,
+            FutureBuilder(
+              future: authProvider.initPrefs(),
+              builder: (_, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+
+                return ItemHeader(
+                  username: authProvider.username,
+                  warehouse:
+                      '${authProvider.warehouseId} - ${authProvider.warehouseName}',
+                );
+              },
             ),
             Divider(),
             SizedBox(height: getProportionateScreenHeight(40)),
