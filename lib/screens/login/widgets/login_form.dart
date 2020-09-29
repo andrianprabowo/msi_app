@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:msi_app/models/warehouse.dart';
+import 'package:msi_app/providers/warehouse_provider.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
+import 'package:msi_app/screens/login/widgets/selected_warehouse.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:search_widget/search_widget.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -12,33 +17,13 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   String _username;
   String _password;
-
-  List<Map<String, dynamic>> listWarehouse = [
-    {
-      "whsCode": "T.WMSICA",
-      "whsName": "TRANSIT MSI CORPORATE ACCOUNT",
-    },
-    {
-      "whsCode": "T.WMSICB",
-      "whsName": "Transit The Harvest Cibubur",
-    },
-    {
-      "whsCode": "T.WMSICC",
-      "whsName": "Transit The Harvest Radio Dalam Call Center"
-    },
-    {
-      "whsCode": "T.WMSICD",
-      "whsName": "Transit The Harvest Pantai Indah Kapuk"
-    },
-    {
-      "whsCode": "T.WMSICG",
-      "whsName": "Transit The Harvest Sari Asih Ciledug",
-    },
-  ];
   String _selectedWarehouse;
 
   @override
   Widget build(BuildContext context) {
+    final warehouseProvider = Provider.of<WarehouseProvider>(context);
+    final listWarehouse = warehouseProvider.items;
+
     return Form(
       key: _formKey,
       child: Padding(
@@ -53,9 +38,9 @@ class _LoginFormState extends State<LoginForm> {
             SizedBox(
               height: getProportionateScreenHeight(kLarge),
             ),
-            buildDropdownWarehouse(),
+            buildSearchableDropdown(listWarehouse),
             SizedBox(
-              height: getProportionateScreenHeight(kLarge * 2),
+              height: getProportionateScreenHeight(kLarge),
             ),
             buildButtonLogin(context),
           ],
@@ -76,13 +61,13 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget buildDropdownWarehouse() {
+  Widget buildDropdownWarehouse(List<Warehouse> list) {
     return DropdownButtonFormField(
       isExpanded: true,
-      items: listWarehouse
+      items: list
           .map((warehouse) => DropdownMenuItem(
                 child: Text(
-                  warehouse['whsName'],
+                  warehouse.whsName,
                   overflow: TextOverflow.ellipsis,
                 ),
               ))
@@ -93,10 +78,43 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
+  Widget buildSearchableDropdown(List<Warehouse> list) {
+    return SearchWidget<Warehouse>(
+      dataList: list,
+      hideSearchBoxWhenItemSelected: true,
+      listContainerHeight: MediaQuery.of(context).size.height / 4,
+      queryBuilder: (query, list) {
+        return list
+            .where((item) =>
+                item.whsName.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      },
+      popupListItemBuilder: (item) {
+        return PopupListItemWidget(item);
+      },
+      selectedItemBuilder: (selectedItem, deleteSelectedItem) {
+        return SelectedWarehouse(selectedItem, deleteSelectedItem);
+      },
+      // widget customization
+      noItemsFoundWidget: NoItemsFound(),
+      textFieldBuilder: (controller, focusNode) {
+        return MyTextField(controller, focusNode);
+      },
+      onItemSelected: (item) {
+        setState(() {
+          if (item == null) return;
+          _selectedWarehouse = item.whsName;
+          print(_selectedWarehouse);
+        });
+        return _selectedWarehouse;
+      },
+    );
+  }
+
   TextFormField buildUsernameFormField() {
     return TextFormField(
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.email),
+        prefixIcon: Icon(Icons.person),
         hintText: 'Username',
       ),
     );
@@ -106,7 +124,7 @@ class _LoginFormState extends State<LoginForm> {
     return TextFormField(
       obscureText: true,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.email),
+        prefixIcon: Icon(Icons.vpn_key),
         hintText: 'Password',
       ),
     );

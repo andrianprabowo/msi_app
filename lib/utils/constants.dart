@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// Base URL
+const kBaseUrl = 'http://103.87.86.29:12950';
+
 // Color
 const kPrimaryColor = Color.fromRGBO(73, 112, 191, 1.0);
 const kAccentColor = Color.fromRGBO(191, 164, 84, 1.0);
