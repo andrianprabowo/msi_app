@@ -71,20 +71,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FutureBuilder(
-              future: authProvider.initPrefs(),
-              builder: (_, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                }
-
-                return ItemHeader(
-                  username: authProvider.username,
-                  warehouse:
-                      '${authProvider.warehouseId} - ${authProvider.warehouseName}',
-                );
-              },
-            ),
+            ItemHeader(),
             Divider(),
             SizedBox(height: getProportionateScreenHeight(40)),
             Expanded(

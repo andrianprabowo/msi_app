@@ -52,10 +52,7 @@ class OutboundScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ItemHeader(
-              username: username,
-              warehouse: warehouse,
-            ),
+            ItemHeader(),
             Divider(),
             SizedBox(height: getProportionateScreenHeight(40)),
             Expanded(
