@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/staging_bin.dart';
-import 'package:msi_app/screens/put_bin/put_bin_screen.dart';
+import 'package:msi_app/screens/staging_item/staging_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 
 class ItemStaging extends StatelessWidget {
@@ -12,7 +12,7 @@ class ItemStaging extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(PutBinScreen.routeName);
+        Navigator.of(context).pushNamed(StagingItemScreen.routeName);
       },
       child: Container(
         width: double.infinity,

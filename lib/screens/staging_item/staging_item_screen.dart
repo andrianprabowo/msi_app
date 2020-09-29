@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/staging_bin.dart';
-import 'package:msi_app/screens/put_away/widgets/item_staging.dart';
+import 'package:msi_app/models/item_bin.dart';
+import 'package:msi_app/screens/staging_item/widgets/item_staging_bin.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 
-class PutAwayScreen extends StatelessWidget {
-  static const routeName = '/put_away';
+class StagingItemScreen extends StatelessWidget {
+  static const routeName = '/staging_item';
   final _scanInput = TextEditingController();
 
-  final List<StagingBin> items = [
-    StagingBin(
-      binCode: 'STAGING 01',
-      warehouse: 'Warehouse',
+  final List<ItemBin> items = [
+    ItemBin(
+      itemCode: 'codeitem 01',
+      itemName: 'White Sugar',
     ),
-    StagingBin(
-      binCode: 'STAGING 02',
-      warehouse: 'Central Kitchen Sentul',
+    ItemBin(
+      itemCode: 'codeitem 02',
+      itemName: 'Black Sugar',
+    ),
+    ItemBin(
+      itemCode: 'codeitem 03',
+      itemName: 'Brown Sugar',
+    ),
+    ItemBin(
+      itemCode: 'codeitem 04',
+      itemName: 'Yelow Sugar',
+    ),
+    ItemBin(
+      itemCode: 'codeitem 05',
+      itemName: 'Pink Sugar',
+    ),
+    ItemBin(
+      itemCode: 'codeitem 06',
+      itemName: 'Green Sugar',
     ),
   ];
 
@@ -34,11 +50,13 @@ class PutAwayScreen extends StatelessWidget {
             TextFormField(
               controller: _scanInput,
               decoration: InputDecoration(
-                hintText: 'Scan / Choose Stagging bin',
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                labelText: 'Item Barcode',
+                hintText: 'Scan Item/ Barcode',
                 suffixIcon: IconButton(
                   icon: Icon(Icons.local_see),
                   onPressed: () {
-                    _scanInput.text = 'Stagging 02';
+                    _scanInput.text = 'code item 02';
                     FocusScope.of(context).unfocus();
                   },
                 ),
@@ -47,7 +65,7 @@ class PutAwayScreen extends StatelessWidget {
             SizedBox(
               height: getProportionateScreenHeight(kLarge),
             ),
-            buildTitle('List Staging Bin'),
+            buildTitle('List Item'),
             Divider(),
             Expanded(
               child: ListView.separated(
@@ -55,7 +73,7 @@ class PutAwayScreen extends StatelessWidget {
                 itemCount: items.length,
                 itemBuilder: (_, index) {
                   Divider();
-                  return ItemStaging(items[index]);
+                  return ItemStagingBin(items[index]);
                 },
               ),
             ),
