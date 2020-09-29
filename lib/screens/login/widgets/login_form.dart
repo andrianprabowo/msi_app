@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:msi_app/models/warehouse.dart';
-import 'package:msi_app/providers/warehouse_provider.dart';
-import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/login/widgets/selected_warehouse.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:search_widget/search_widget.dart';
 
 class LoginForm extends StatefulWidget {
+  final List<Warehouse> listWarehouse;
+
+  const LoginForm(this.listWarehouse);
+
   @override
   _LoginFormState createState() => _LoginFormState();
 }
@@ -17,13 +20,10 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   String _username;
   String _password;
-  String _selectedWarehouse;
+  Warehouse _selectedWarehouse;
 
   @override
   Widget build(BuildContext context) {
-    final warehouseProvider = Provider.of<WarehouseProvider>(context);
-    final listWarehouse = warehouseProvider.items;
-
     return Form(
       key: _formKey,
       child: Padding(
@@ -38,7 +38,7 @@ class _LoginFormState extends State<LoginForm> {
             SizedBox(
               height: getProportionateScreenHeight(kLarge),
             ),
-            buildSearchableDropdown(listWarehouse),
+            buildSearchableDropdown(),
             SizedBox(
               height: getProportionateScreenHeight(kLarge),
             ),
@@ -55,7 +55,24 @@ class _LoginFormState extends State<LoginForm> {
       child: RaisedButton(
         child: Text('Login'),
         onPressed: () {
-          Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+          _formKey.currentState.save();
+
+          if (_selectedWarehouse == null ||
+              _username.isEmpty ||
+              _password.isEmpty) {
+            Scaffold.of(context).showSnackBar(
+              SnackBar(content: Text('Please input all required fields')),
+            );
+            return;
+          }
+
+          final authProvider =
+              Provider.of<AuthProvider>(context, listen: false);
+          authProvider.login(
+            username: _username,
+            warehouse: _selectedWarehouse,
+            context: context,
+          );
         },
       ),
     );
@@ -78,9 +95,9 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget buildSearchableDropdown(List<Warehouse> list) {
+  Widget buildSearchableDropdown() {
     return SearchWidget<Warehouse>(
-      dataList: list,
+      dataList: widget.listWarehouse,
       hideSearchBoxWhenItemSelected: true,
       listContainerHeight: MediaQuery.of(context).size.height / 4,
       queryBuilder: (query, list) {
@@ -102,8 +119,12 @@ class _LoginFormState extends State<LoginForm> {
       },
       onItemSelected: (item) {
         setState(() {
-          if (item == null) return;
-          _selectedWarehouse = item.whsName;
+          if (item == null) {
+            _selectedWarehouse = null;
+            return;
+          }
+
+          _selectedWarehouse = item;
           print(_selectedWarehouse);
         });
         return _selectedWarehouse;
@@ -117,6 +138,9 @@ class _LoginFormState extends State<LoginForm> {
         prefixIcon: Icon(Icons.person),
         hintText: 'Username',
       ),
+      onSaved: (value) {
+        return _username = value;
+      },
     );
   }
 
@@ -127,6 +151,9 @@ class _LoginFormState extends State<LoginForm> {
         prefixIcon: Icon(Icons.vpn_key),
         hintText: 'Password',
       ),
+      onSaved: (value) {
+        return _password = value;
+      },
     );
   }
 }

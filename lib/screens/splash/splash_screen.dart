@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/providers/warehouse_provider.dart';
+import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/login/login_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
-import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatelessWidget {
   static const routeName = '/';
 
-  void getDataWarehouse(BuildContext context) async {
-    final warehouseProvider =
-        Provider.of<WarehouseProvider>(context, listen: false);
-    await warehouseProvider.getAllWarehouse();
+  void startTimer(BuildContext context) async {
+    // delay 1 second
+    await Future.delayed(Duration(milliseconds: 1000));
 
-    Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token != null) {
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+    } else {
+      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
-    getDataWarehouse(context);
-
+    startTimer(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(

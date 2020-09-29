@@ -9,6 +9,7 @@ import 'package:msi_app/screens/stock_counting/stock_counting_screen.dart';
 import 'package:msi_app/screens/stock_inquiry/stock_inquiry_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home';
@@ -43,7 +44,10 @@ class HomeScreen extends StatelessWidget {
     },
   ];
 
-  void logout(BuildContext context) {
+  void logout(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+
     Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
   }
 

@@ -10,7 +10,7 @@ class WarehouseProvider extends ChangeNotifier {
 
   List<Warehouse> get items => _items;
 
-  Future<void> getAllWarehouse() async {
+  Future<List<Warehouse>> getAllWarehouse() async {
     final url = '$kBaseUrl/api/owhs';
 
     try {
@@ -22,6 +22,7 @@ class WarehouseProvider extends ChangeNotifier {
         list.add(Warehouse.fromMap(map));
       });
       _items = list;
+      return _items;
     } catch (error) {
       throw error;
     }
