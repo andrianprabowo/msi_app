@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/item_bin.dart';
-import 'package:msi_app/screens/staging_batch/staging_batch_screen.dart';
+import 'package:msi_app/models/item_batch.dart';
 import 'package:msi_app/utils/constants.dart';
 
-class ItemStagingBin extends StatelessWidget {
-  final ItemBin item;
+class ItemBatchStaging extends StatelessWidget {
+  final ItemBatch item;
 
-  const ItemStagingBin(this.item);
+  const ItemBatchStaging(this.item);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(StagingBatchScreen.routeName);
+        //   Navigator.of(context).pushNamed(PutBinScreen.routeName);
       },
       child: Container(
         width: double.infinity,
@@ -20,8 +19,10 @@ class ItemStagingBin extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildRow('Item Code', item.itemCode),
-            buildRow('Item Name', item.itemName),
+            buildRow('Batch Number', item.batchNumber),
+            buildRow('Description', item.description),
+            buildRow('Qty on Batch', item.availableQty.toStringAsFixed(2)),
+            buildRow('Inventory UoM', item.inventoryUom),
           ],
         ),
       ),
