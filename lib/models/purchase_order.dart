@@ -1,37 +1,42 @@
 import 'dart:convert';
 
 class PurchaseOrder {
+  final int docEntry;
   final String poNumber;
   final DateTime docDate;
-  final String vendor;
-  final String warehouse;
+  final String vendorCode;
+  final String vendorName;
   PurchaseOrder({
+    this.docEntry,
     this.poNumber,
     this.docDate,
-    this.vendor,
-    this.warehouse,
+    this.vendorCode,
+    this.vendorName,
   });
 
   PurchaseOrder copyWith({
+    int docEntry,
     String poNumber,
     DateTime docDate,
-    String vendor,
-    String warehouse,
+    String vendorCode,
+    String vendorName,
   }) {
     return PurchaseOrder(
+      docEntry: docEntry ?? this.docEntry,
       poNumber: poNumber ?? this.poNumber,
       docDate: docDate ?? this.docDate,
-      vendor: vendor ?? this.vendor,
-      warehouse: warehouse ?? this.warehouse,
+      vendorCode: vendorCode ?? this.vendorCode,
+      vendorName: vendorName ?? this.vendorName,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'poNumber': poNumber,
-      'docDate': docDate?.millisecondsSinceEpoch,
-      'vendor': vendor,
-      'warehouse': warehouse,
+      'h_DocEntry': docEntry,
+      'h_U_DocNum': poNumber,
+      'h_DocDate': docDate?.millisecondsSinceEpoch,
+      'h_CardCode': vendorCode,
+      'h_CardName': vendorName,
     };
   }
 
@@ -39,10 +44,11 @@ class PurchaseOrder {
     if (map == null) return null;
 
     return PurchaseOrder(
-      poNumber: map['poNumber'],
-      docDate: DateTime.fromMillisecondsSinceEpoch(map['docDate']),
-      vendor: map['vendor'],
-      warehouse: map['warehouse'],
+      docEntry: map['h_DocEntry'] ?? 0,
+      poNumber: map['h_U_DocNum'] ?? '',
+      docDate: DateTime.parse(map['h_DocDate']),
+      vendorCode: map['h_CardCode'] ?? '',
+      vendorName: map['h_CardName'] ?? '',
     );
   }
 
@@ -53,7 +59,7 @@ class PurchaseOrder {
 
   @override
   String toString() {
-    return 'PurchaseOrder(poNumber: $poNumber, docDate: $docDate, vendor: $vendor, warehouse: $warehouse)';
+    return 'PurchaseOrder(docEntry: $docEntry, poNumber: $poNumber, docDate: $docDate, vendorCode: $vendorCode, vendorName: $vendorName)';
   }
 
   @override
@@ -61,17 +67,19 @@ class PurchaseOrder {
     if (identical(this, o)) return true;
 
     return o is PurchaseOrder &&
+        o.docEntry == docEntry &&
         o.poNumber == poNumber &&
         o.docDate == docDate &&
-        o.vendor == vendor &&
-        o.warehouse == warehouse;
+        o.vendorCode == vendorCode &&
+        o.vendorName == vendorName;
   }
 
   @override
   int get hashCode {
-    return poNumber.hashCode ^
+    return docEntry.hashCode ^
+        poNumber.hashCode ^
         docDate.hashCode ^
-        vendor.hashCode ^
-        warehouse.hashCode;
+        vendorCode.hashCode ^
+        vendorName.hashCode;
   }
 }

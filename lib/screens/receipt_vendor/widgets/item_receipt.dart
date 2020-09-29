@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/purchase_order.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/receipt_detail/receipt_detail_screen.dart';
 import 'package:msi_app/utils/constants.dart';
+import 'package:provider/provider.dart';
 
 class ItemReceipt extends StatelessWidget {
   final PurchaseOrder item;
@@ -15,6 +17,7 @@ class ItemReceipt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(ReceiptDetailScreen.routeName);
@@ -27,8 +30,13 @@ class ItemReceipt extends StatelessWidget {
           children: [
             buildRow('PO Number', item.poNumber),
             buildRow('Doc Date', dateString),
-            buildRow('Vendor', item.vendor),
-            buildRow('Warehouse', item.warehouse),
+            buildRow('Vendor', item.vendorName),
+            FutureBuilder(
+              future: authProvider.initPrefs(),
+              builder: (_, snapshot) {
+                return buildRow('Warehouse', authProvider.warehouseName);
+              },
+            ),
           ],
         ),
       ),

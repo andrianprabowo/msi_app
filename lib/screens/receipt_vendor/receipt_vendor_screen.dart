@@ -1,42 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/purchase_order.dart';
+import 'package:msi_app/providers/purchase_order_provider.dart';
 import 'package:msi_app/screens/receipt_vendor/widgets/item_receipt.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:provider/provider.dart';
 
 class ReceiptVendorScreen extends StatelessWidget {
   static const routeName = '/receipt_vendor';
   final _scanInput = TextEditingController();
 
-  List<PurchaseOrder> items = [
-    PurchaseOrder(
-      poNumber: 'PO-11111',
-      docDate: DateTime.now(),
-      vendor: 'PT Sinar Mas Land',
-      warehouse: 'Jakarta Main Warehouse',
-    ),
-    PurchaseOrder(
-      poNumber: 'PO-22222',
-      docDate: DateTime.now(),
-      vendor: 'PT Sinar Mas Land',
-      warehouse: 'Sentul Main Warehouse',
-    ),
-    PurchaseOrder(
-      poNumber: 'PO-33333',
-      docDate: DateTime.now(),
-      vendor: 'PT Sinar Mas Land',
-      warehouse: 'Jakarta Main Warehouse',
-    ),
-    PurchaseOrder(
-      poNumber: 'PO-44444',
-      docDate: DateTime.now(),
-      vendor: 'PT Sinar Mas Land',
-      warehouse: 'Sentul Main Warehouse',
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final poProvider = Provider.of<PurchaseOrderProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Receipt From Vendor'),
@@ -66,12 +42,41 @@ class ReceiptVendorScreen extends StatelessWidget {
             buildTitle('List Purchase Order'),
             Divider(),
             Expanded(
-              child: ListView.separated(
-                separatorBuilder: (_, index) => Divider(),
-                itemCount: items.length,
-                itemBuilder: (_, index) {
-                  Divider();
-                  return ItemReceipt(items[index]);
+              child: FutureBuilder(
+                future: poProvider.getAllPoByWarehouseId(),
+                builder: (_, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  if (snapshot.hasError) {
+                    return Center(child: Text('An error occured'));
+                  }
+                  List<PurchaseOrder> list = snapshot.data;
+                  return (list.length == 0)
+                      ? Center(
+                          child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.insert_drive_file,
+                              size: 60,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(
+                              height: getProportionateScreenHeight(10),
+                            ),
+                            Text('No Data Available'),
+                          ],
+                        ))
+                      : ListView.separated(
+                          separatorBuilder: (_, index) => Divider(),
+                          itemCount: list.length,
+                          itemBuilder: (_, index) {
+                            Divider();
+                            return ItemReceipt(list[index]);
+                          },
+                        );
                 },
               ),
             ),
