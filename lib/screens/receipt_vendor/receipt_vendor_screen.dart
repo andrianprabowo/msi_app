@@ -72,19 +72,20 @@ class ReceiptVendorScreen extends StatelessWidget {
                   return (list.length == 0)
                       ? Center(
                           child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.insert_drive_file,
-                              size: 60,
-                              color: Colors.grey,
-                            ),
-                            SizedBox(
-                              height: getProportionateScreenHeight(10),
-                            ),
-                            Text('No Data Available'),
-                          ],
-                        ))
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.insert_drive_file,
+                                size: 60,
+                                color: Colors.grey,
+                              ),
+                              SizedBox(
+                                height: getProportionateScreenHeight(10),
+                              ),
+                              Text('No Data Available'),
+                            ],
+                          ),
+                        )
                       : ListView.builder(
                           itemCount: list.length,
                           itemBuilder: (_, index) {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/item.dart';
+import 'package:msi_app/models/item_purchase_order.dart';
 import 'package:msi_app/screens/receipt_detail/widgets/dialog_lot_number.dart';
 import 'package:msi_app/utils/constants.dart';
 
 class ItemDetail extends StatelessWidget {
-  final Item item;
+  final ItemPurchaseOrder item;
 
   const ItemDetail(this.item);
 
@@ -22,6 +22,8 @@ class ItemDetail extends StatelessWidget {
       onTap: () => _inputLotNumber(context),
       child: Container(
         width: double.infinity,
+        margin: const EdgeInsets.all(kTiny),
+        decoration: kBoxDecoration,
         padding: const EdgeInsets.all(kSmall),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,8 +31,8 @@ class ItemDetail extends StatelessWidget {
             buildRow('Item Code', item.itemCode),
             buildRow('Item Name', item.itemName),
             buildRow('Total Receipt', item.totalReceipt.toStringAsFixed(2)),
-            buildRow('Receipt Qty', item.totalReceipt.toStringAsFixed(2)),
-            buildRow('Remaining Qty', item.totalReceipt.toStringAsFixed(2)),
+            buildRow('Receipt Qty', item.receiptQty.toStringAsFixed(2)),
+            buildRow('Remaining Qty', item.remainingQty.toStringAsFixed(2)),
             buildRow('UoM', item.uom),
           ],
         ),
