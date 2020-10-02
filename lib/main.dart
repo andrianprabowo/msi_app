@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/item_po_provider.dart';
+import 'package:msi_app/providers/pick_item_receive_provider.dart';
+import 'package:msi_app/providers/pick_list_whs_provider.dart';
 import 'package:msi_app/providers/purchase_order_provider.dart';
 import 'package:msi_app/providers/warehouse_provider.dart';
 import 'package:msi_app/utils/routes.dart';
@@ -17,6 +20,9 @@ void main() async {
         ChangeNotifierProvider(create: (_) => WarehouseProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => PurchaseOrderProvider()),
+        ChangeNotifierProvider(create: (_) => ItemPoProvider()),
+        ChangeNotifierProvider(create: (_) => PickListWhsProvider()),
+        ChangeNotifierProvider(create: (_) => PickItemReceiveProvider()),
       ],
       child: MyApp(),
     ),

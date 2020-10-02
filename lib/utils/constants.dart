@@ -13,3 +13,13 @@ const kTiny = 2.0;
 const kSmall = 4.0;
 const kMedium = 8.0;
 const kLarge = 16.0;
+
+// Decoration
+final kBoxDecoration = BoxDecoration(
+  borderRadius: BorderRadius.all(Radius.circular(kSmall)),
+  border: Border.all(
+    width: kTiny,
+    color: kPrimaryColor,
+    style: BorderStyle.solid,
+  ),
+);
