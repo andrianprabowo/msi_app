@@ -18,12 +18,18 @@ class ItemReceipt extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(ReceiptDetailScreen.routeName);
+        Navigator.of(context).pushNamed(
+          ReceiptDetailScreen.routeName,
+          arguments: item.poNumber,
+        );
       },
       child: Container(
         width: double.infinity,
+        margin: const EdgeInsets.all(kTiny),
+        decoration: kBoxDecoration,
         padding: const EdgeInsets.all(kSmall),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

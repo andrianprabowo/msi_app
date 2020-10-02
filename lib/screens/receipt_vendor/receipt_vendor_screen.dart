@@ -50,8 +50,24 @@ class ReceiptVendorScreen extends StatelessWidget {
                   }
 
                   if (snapshot.hasError) {
-                    return Center(child: Text('An error occured'));
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.error_outline,
+                            size: 60,
+                            color: Colors.red,
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(10),
+                          ),
+                          Text('An error occured'),
+                        ],
+                      ),
+                    );
                   }
+
                   List<PurchaseOrder> list = snapshot.data;
                   return (list.length == 0)
                       ? Center(
@@ -69,11 +85,9 @@ class ReceiptVendorScreen extends StatelessWidget {
                             Text('No Data Available'),
                           ],
                         ))
-                      : ListView.separated(
-                          separatorBuilder: (_, index) => Divider(),
+                      : ListView.builder(
                           itemCount: list.length,
                           itemBuilder: (_, index) {
-                            Divider();
                             return ItemReceipt(list[index]);
                           },
                         );
