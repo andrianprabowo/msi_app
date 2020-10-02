@@ -36,9 +36,6 @@ class _ReceiptDetailScreenState extends State<ReceiptDetailScreen> {
             icon: Icon(Icons.arrow_forward),
             onPressed: () {},
           ),
-          SizedBox(
-            width: getProportionateScreenWidth(kMedium),
-          )
         ],
       ),
       body: SingleChildScrollView(

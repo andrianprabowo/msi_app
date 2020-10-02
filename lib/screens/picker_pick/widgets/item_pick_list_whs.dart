@@ -18,8 +18,8 @@ class ItemPickListWhs extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(PickItemReceiveScreen.routeName,
-            arguments: item.pickNumber);
+        Navigator.of(context)
+            .pushNamed(PickItemReceiveScreen.routeName, arguments: item);
       },
       child: Container(
         width: double.infinity,
