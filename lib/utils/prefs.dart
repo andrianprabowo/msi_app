@@ -30,7 +30,7 @@ class Prefs {
 
   static Future<String> getString(String key) async {
     final p = await prefs;
-    return p.getString(key) ?? '';
+    return p.getString(key) ?? null;
   }
 
   static Future<void> setString(String key, String value) async {

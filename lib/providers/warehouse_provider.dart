@@ -6,7 +6,7 @@ import 'package:msi_app/models/warehouse.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/prefs.dart';
 
-class WarehouseProvider extends ChangeNotifier {
+class WarehouseProvider with ChangeNotifier {
   List<Warehouse> _items;
 
   List<Warehouse> get items => _items;
@@ -18,11 +18,13 @@ class WarehouseProvider extends ChangeNotifier {
     try {
       final response = await http.get(url);
       final data = json.decode(response.body) as List;
+      if (data == null) return;
 
       final List<Warehouse> list = [];
       data.forEach((map) {
         list.add(Warehouse.fromMap(map));
       });
+
       _items = list;
       notifyListeners();
     } catch (error) {

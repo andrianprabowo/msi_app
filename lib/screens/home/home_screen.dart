@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/widgets/base_app_bar.dart';
 import 'package:msi_app/widgets/item_header.dart';
 import 'package:msi_app/widgets/item_menu.dart';
 import 'package:msi_app/screens/inbound/inbound_screen.dart';
-import 'package:msi_app/screens/login/login_screen.dart';
 import 'package:msi_app/screens/outbound/outbound_screen.dart';
 import 'package:msi_app/screens/production/production_screen.dart';
 import 'package:msi_app/screens/stock_counting/stock_counting_screen.dart';
 import 'package:msi_app/screens/stock_inquiry/stock_inquiry_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home';
 
-  final String username = 'user@mail.com';
-  final String warehouse = 'Warehouse Name';
   final List<Map<String, Object>> menus = [
     {
       'icon': Icons.archive,
@@ -44,25 +41,10 @@ class HomeScreen extends StatelessWidget {
     },
   ];
 
-  void logout(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
-
-    Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('WMS Mobile'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () => logout(context),
-          )
-        ],
-      ),
+      appBar: BaseAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(kMedium),
         child: Column(

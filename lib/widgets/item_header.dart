@@ -15,24 +15,7 @@ class ItemHeader extends StatelessWidget {
       builder: (_, snapshot) {
         return Row(
           children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Username: ${authProvider.username}',
-                    style: TextStyle(
-                        color: kPrimaryColor, fontWeight: FontWeight.bold),
-                  ),
-                  authProvider.warehouseId == null ||
-                          authProvider.warehouseId.isEmpty
-                      ? Text('No selected Warehouse')
-                      : Text(
-                          '${authProvider.warehouseId} - ${authProvider.warehouseName}',
-                        ),
-                ],
-              ),
-            ),
+            buildTextInfo(authProvider),
             buildChangeWarehouse(context),
           ],
         );
@@ -40,8 +23,30 @@ class ItemHeader extends StatelessWidget {
     );
   }
 
+  Widget buildTextInfo(AuthProvider authProvider) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Username: ${authProvider.username}',
+            style: TextStyle(
+              color: kPrimaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          authProvider.warehouseId == null
+              ? Text('No selected Warehouse')
+              : Text(
+                  '${authProvider.warehouseId} - ${authProvider.warehouseName}',
+                ),
+        ],
+      ),
+    );
+  }
+
   Widget buildChangeWarehouse(BuildContext context) {
-    final whsProvider = Provider.of<WarehouseProvider>(context);
+    final whsProvider = Provider.of<WarehouseProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return FutureBuilder(
       future: whsProvider.getWarehouseByUsername(),

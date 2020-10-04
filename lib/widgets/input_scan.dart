@@ -1,39 +1,33 @@
 import 'package:flutter/material.dart';
 
 class InputScan extends StatefulWidget {
+  final String label;
+  final String hint;
+  final void Function(String scanResult) scanResult;
+
+  const InputScan({
+    this.label,
+    this.hint,
+    this.scanResult,
+  });
+
   @override
   _InputScanState createState() => _InputScanState();
 }
 
 class _InputScanState extends State<InputScan> {
-  final _scanInput = TextEditingController();
-  String barcode;
-
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: TextFormField(
-            controller: _scanInput,
-            onChanged: (value) {
-              barcode = value;
-            },
-            decoration: InputDecoration(
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              labelText: 'Item Barcode',
-              hintText: 'Scan Item / Barcode',
-            ),
-          ),
-        ),
-        IconButton(
-          icon: Icon(Icons.local_see),
-          onPressed: () {
-            _scanInput.text = 'Item Code 0001';
-            FocusScope.of(context).unfocus();
-          },
-        ),
-      ],
+    return TextFormField(
+      onChanged: (value) {
+        widget.scanResult(value);
+      },
+      decoration: InputDecoration(
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        labelText: widget.label,
+        hintText: widget.hint,
+        suffixIcon: Icon(Icons.local_see),
+      ),
     );
   }
 }

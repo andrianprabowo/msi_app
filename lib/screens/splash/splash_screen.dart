@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/login/login_screen.dart';
 import 'package:msi_app/utils/constants.dart';
+import 'package:msi_app/utils/prefs.dart';
 import 'package:msi_app/utils/size_config.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatelessWidget {
   static const routeName = '/';
@@ -12,9 +12,7 @@ class SplashScreen extends StatelessWidget {
     // delay 1 second
     await Future.delayed(Duration(milliseconds: 1000));
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-
+    final token = await Prefs.getString(Prefs.token);
     if (token != null) {
       Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
     } else {

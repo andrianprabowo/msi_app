@@ -58,6 +58,7 @@ class _LoginFormState extends State<LoginForm> {
 
   TextFormField buildUsernameFormField() {
     return TextFormField(
+      initialValue: 'SX_Senopati',
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person),
