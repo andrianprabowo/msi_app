@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-class PurchaseOrder {
+import 'package:flutter/material.dart';
+
+class PurchaseOrder with ChangeNotifier {
   final int docEntry;
   final String poNumber;
   final DateTime docDate;
@@ -34,7 +36,7 @@ class PurchaseOrder {
     return {
       'h_DocEntry': docEntry,
       'h_U_DocNum': poNumber,
-      'h_DocDate': docDate?.millisecondsSinceEpoch,
+      'h_DocDate': docDate?.toIso8601String(),
       'h_CardCode': vendorCode,
       'h_CardName': vendorName,
     };

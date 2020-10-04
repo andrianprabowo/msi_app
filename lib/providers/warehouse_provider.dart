@@ -17,8 +17,10 @@ class WarehouseProvider with ChangeNotifier {
 
     try {
       final response = await http.get(url);
+      print(response.request);
       final data = json.decode(response.body) as List;
       if (data == null) return;
+      print(data);
 
       final List<Warehouse> list = [];
       data.forEach((map) {
@@ -28,6 +30,7 @@ class WarehouseProvider with ChangeNotifier {
       _items = list;
       notifyListeners();
     } catch (error) {
+      print(error);
       throw error;
     }
   }

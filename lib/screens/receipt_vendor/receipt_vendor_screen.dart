@@ -1,113 +1,93 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/purchase_order.dart';
 import 'package:msi_app/providers/purchase_order_provider.dart';
+import 'package:msi_app/screens/receipt_detail/receipt_detail_screen.dart';
 import 'package:msi_app/screens/receipt_vendor/widgets/item_receipt.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/error_info.dart';
+import 'package:msi_app/widgets/input_scan.dart';
+import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
 class ReceiptVendorScreen extends StatelessWidget {
   static const routeName = '/receipt_vendor';
-  final _scanInput = TextEditingController();
+
+  Future<void> refreshData(BuildContext context) async {
+    await Provider.of<PurchaseOrderProvider>(context, listen: false)
+        .getAllPoByWarehouseId();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final poProvider = Provider.of<PurchaseOrderProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Receipt From Vendor'),
       ),
       body: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(kMedium),
+        padding: const EdgeInsets.symmetric(
+          vertical: kLarge,
+          horizontal: kMedium,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextFormField(
-              controller: _scanInput,
-              decoration: InputDecoration(
-                hintText: 'Input or scan PO Number',
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.local_see),
-                  onPressed: () {
-                    _scanInput.text = 'PO-1234';
-                    FocusScope.of(context).unfocus();
-                  },
-                ),
-              ),
-            ),
-            SizedBox(
-              height: getProportionateScreenHeight(kLarge),
-            ),
-            buildTitle('List Purchase Order'),
+            buildInputScan(context),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTitle('List Purchase Order'),
             Divider(),
-            Expanded(
-              child: FutureBuilder(
-                future: poProvider.getAllPoByWarehouseId(),
-                builder: (_, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.error_outline,
-                            size: 60,
-                            color: Colors.red,
-                          ),
-                          SizedBox(
-                            height: getProportionateScreenHeight(10),
-                          ),
-                          Text('An error occured'),
-                        ],
-                      ),
-                    );
-                  }
-
-                  List<PurchaseOrder> list = snapshot.data;
-                  return (list.length == 0)
-                      ? Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.insert_drive_file,
-                                size: 60,
-                                color: Colors.grey,
-                              ),
-                              SizedBox(
-                                height: getProportionateScreenHeight(10),
-                              ),
-                              Text('No Data Available'),
-                            ],
-                          ),
-                        )
-                      : ListView.builder(
-                          itemCount: list.length,
-                          itemBuilder: (_, index) {
-                            return ItemReceipt(list[index]);
-                          },
-                        );
-                },
-              ),
-            ),
+            buildItemList(context),
           ],
         ),
       ),
     );
   }
 
-  Widget buildTitle(String title) {
-    return Text(
-      title,
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        color: kPrimaryColor,
+  Widget buildItemList(BuildContext context) {
+    return Expanded(
+      child: FutureBuilder(
+        future: refreshData(context),
+        builder: (_, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) return ErrorInfo();
+
+          return RefreshIndicator(
+            onRefresh: () => refreshData(context),
+            child: Consumer<PurchaseOrderProvider>(
+              builder: (_, provider, child) => provider.items.length == 0
+                  ? NoData()
+                  : ListView.builder(
+                      itemCount: provider.items.length,
+                      itemBuilder: (_, index) {
+                        return ChangeNotifierProvider.value(
+                          value: provider.items[index],
+                          child: ItemReceipt(provider.items[index]),
+                        );
+                      },
+                    ),
+            ),
+          );
+        },
       ),
+    );
+  }
+
+  Widget buildInputScan(BuildContext context) {
+    final poProvider =
+        Provider.of<PurchaseOrderProvider>(context, listen: false);
+    return InputScan(
+      label: 'PO Number',
+      hint: 'Input or scan PO Number',
+      scanResult: (value) {
+        final po = poProvider.findByPoNumber(value);
+        Navigator.of(context).pushNamed(
+          ReceiptDetailScreen.routeName,
+          arguments: po,
+        );
+      },
     );
   }
 }

@@ -48,28 +48,24 @@ class ItemHeader extends StatelessWidget {
   Widget buildChangeWarehouse(BuildContext context) {
     final whsProvider = Provider.of<WarehouseProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    return FutureBuilder(
-      future: whsProvider.getWarehouseByUsername(),
-      builder: (_, snapshot) {
-        return IconButton(
-          icon: Icon(Icons.settings),
-          onPressed: () {
-            SelectDialog.showModal<Warehouse>(
-              context,
-              label: "Select Warehouse",
-              showSearchBox: true,
-              items: whsProvider.items,
-              itemBuilder: (context, item, _) {
-                return ListTile(
-                  title: Text(item.whsName),
-                  subtitle: Text('ID: ${item.whsCode}'),
-                );
-              },
-              searchBoxDecoration: InputDecoration(hintText: 'Search by name'),
-              onChange: (Warehouse selected) {
-                authProvider.selectWarehouse(selected);
-              },
+    return IconButton(
+      icon: Icon(Icons.settings),
+      onPressed: () async {
+        await whsProvider.getWarehouseByUsername();
+        SelectDialog.showModal<Warehouse>(
+          context,
+          label: "Select Warehouse",
+          showSearchBox: true,
+          items: whsProvider.items,
+          itemBuilder: (context, item, _) {
+            return ListTile(
+              title: Text(item.whsName),
+              subtitle: Text('ID: ${item.whsCode}'),
             );
+          },
+          searchBoxDecoration: InputDecoration(hintText: 'Search by name'),
+          onChange: (Warehouse selected) {
+            authProvider.selectWarehouse(selected);
           },
         );
       },

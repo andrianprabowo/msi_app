@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 // Base URL
 const kBaseUrl = 'http://103.87.86.29:12950';
@@ -23,3 +24,8 @@ final kBoxDecoration = BoxDecoration(
     style: BorderStyle.solid,
   ),
 );
+
+// Date Converter
+String convertDate(DateTime dateTime) {
+  return DateFormat.yMMMMd().format(dateTime);
+}
