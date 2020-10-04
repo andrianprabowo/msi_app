@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/item_purchase_order.dart';
-import 'package:msi_app/screens/receipt_batch/receipt_batch_screen.dart';
+import 'package:msi_app/models/item_po_batch.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 
-class ItemDetail extends StatelessWidget {
-  final ItemPurchaseOrder item;
+import 'dialog_input_qty.dart';
 
-  const ItemDetail(this.item);
+class ItemBatch extends StatelessWidget {
+  final ItemPoBatch item;
+
+  const ItemBatch(this.item);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(
-          ReceiptBatchScreen.routeName,
-          arguments: item,
-        );
+        showModalBottomSheet(
+            context: context, builder: (_) => DialogInputQty(item));
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),

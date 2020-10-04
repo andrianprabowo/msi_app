@@ -8,6 +8,7 @@ import 'package:msi_app/screens/pick_item_receive/pick_item_receive_screen.dart'
 import 'package:msi_app/screens/picker_pick/picker_pick_screen.dart';
 import 'package:msi_app/screens/production/production_screen.dart';
 import 'package:msi_app/screens/put_away/put_away_screen.dart';
+import 'package:msi_app/screens/receipt_batch/receipt_batch_screen.dart';
 import 'package:msi_app/screens/receipt_detail/receipt_detail_screen.dart';
 import 'package:msi_app/screens/receipt_vendor/receipt_vendor_screen.dart';
 import 'package:msi_app/screens/return_outlet/return_outlet_screen.dart';
@@ -39,4 +40,5 @@ final Map<String, WidgetBuilder> routes = {
   StagingItemScreen.routeName: (context) => StagingItemScreen(),
   StagingBatchScreen.routeName: (context) => StagingBatchScreen(),
   PickItemReceiveScreen.routeName: (context) => PickItemReceiveScreen(),
+  ReceiptBatchScreen.routeName: (context) => ReceiptBatchScreen(),
 };
