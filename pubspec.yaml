@@ -27,6 +27,7 @@ dependencies:
   provider: ^4.3.2+2
   http: ^0.12.2
   shared_preferences: ^0.5.12
+  select_dialog: ^1.2.1
   search_widget: ^1.0.2
 
 

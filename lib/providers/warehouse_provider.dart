@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:msi_app/models/warehouse.dart';
 import 'package:msi_app/utils/constants.dart';
+import 'package:msi_app/utils/prefs.dart';
 
 class WarehouseProvider extends ChangeNotifier {
   List<Warehouse> _items;
 
   List<Warehouse> get items => _items;
 
-  Future<List<Warehouse>> getAllWarehouse() async {
-    final url = '$kBaseUrl/api/owhs';
+  Future<void> getWarehouseByUsername() async {
+    final username = await Prefs.getString(Prefs.username);
+    final url = '$kBaseUrl/tgrpo/tgrpo/api/getlistwarehouse/username=$username';
 
     try {
       final response = await http.get(url);
@@ -22,7 +24,7 @@ class WarehouseProvider extends ChangeNotifier {
         list.add(Warehouse.fromMap(map));
       });
       _items = list;
-      return _items;
+      notifyListeners();
     } catch (error) {
       throw error;
     }

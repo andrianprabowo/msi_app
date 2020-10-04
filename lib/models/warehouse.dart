@@ -3,18 +3,22 @@ import 'dart:convert';
 class Warehouse {
   final String whsCode;
   final String whsName;
+  final String username;
   Warehouse({
     this.whsCode,
     this.whsName,
+    this.username,
   });
 
   Warehouse copyWith({
     String whsCode,
     String whsName,
+    String username,
   }) {
     return Warehouse(
       whsCode: whsCode ?? this.whsCode,
       whsName: whsName ?? this.whsName,
+      username: username ?? this.username,
     );
   }
 
@@ -22,6 +26,7 @@ class Warehouse {
     return {
       'whsCode': whsCode,
       'whsName': whsName,
+      'username': username,
     };
   }
 
@@ -29,8 +34,9 @@ class Warehouse {
     if (map == null) return null;
 
     return Warehouse(
-      whsCode: map['whsCode'] ?? '',
-      whsName: map['whsName'] ?? '',
+      whsCode: map['outlet'] ?? '',
+      whsName: map['outletName1'] ?? '',
+      username: map['username'] ?? '',
     );
   }
 
@@ -40,15 +46,19 @@ class Warehouse {
       Warehouse.fromMap(json.decode(source));
 
   @override
-  String toString() => 'Warehouse(whsCode: $whsCode, whsName: $whsName)';
+  String toString() =>
+      'Warehouse(whsCode: $whsCode, whsName: $whsName, username: $username)';
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is Warehouse && o.whsCode == whsCode && o.whsName == whsName;
+    return o is Warehouse &&
+        o.whsCode == whsCode &&
+        o.whsName == whsName &&
+        o.username == username;
   }
 
   @override
-  int get hashCode => whsCode.hashCode ^ whsName.hashCode;
+  int get hashCode => whsCode.hashCode ^ whsName.hashCode ^ username.hashCode;
 }

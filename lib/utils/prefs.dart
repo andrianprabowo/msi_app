@@ -13,7 +13,7 @@ class Prefs {
     return p.getBool(key) ?? false;
   }
 
-  static Future setBool(String key, bool value) async {
+  static Future<void> setBool(String key, bool value) async {
     final p = await prefs;
     return p.setBool(key, value);
   }
@@ -23,7 +23,7 @@ class Prefs {
     return p.getInt(key) ?? 0;
   }
 
-  static Future setInt(String key, int value) async {
+  static Future<void> setInt(String key, int value) async {
     final p = await prefs;
     return p.setInt(key, value);
   }
@@ -33,7 +33,7 @@ class Prefs {
     return p.getString(key) ?? '';
   }
 
-  static Future setString(String key, String value) async {
+  static Future<void> setString(String key, String value) async {
     final p = await prefs;
     return p.setString(key, value);
   }
@@ -43,7 +43,7 @@ class Prefs {
     return p.getDouble(key) ?? 0.0;
   }
 
-  static Future setDouble(String key, double value) async {
+  static Future<void> setDouble(String key, double value) async {
     final p = await prefs;
     return p.setDouble(key, value);
   }

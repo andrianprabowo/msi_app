@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:msi_app/models/warehouse.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:msi_app/utils/prefs.dart';
 
 class AuthProvider extends ChangeNotifier {
   String _token;
@@ -14,25 +14,29 @@ class AuthProvider extends ChangeNotifier {
   String get warehouseId => _warehouseId;
   String get warehouseName => _warehouseName;
 
-  Future<void> initPrefs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _token = prefs.getString('token');
-    _username = prefs.getString('username');
-    _warehouseId = prefs.getString('warehouseId');
-    _warehouseName = prefs.getString('warehouseName');
+  Future<void> getData() async {
+    _token = await Prefs.getString(Prefs.token);
+    _username = await Prefs.getString(Prefs.username);
+    _warehouseId = await Prefs.getString(Prefs.warehouseId);
+    _warehouseName = await Prefs.getString(Prefs.warehouseName);
   }
 
   Future<void> login({
-    String username,
-    Warehouse warehouse,
     BuildContext context,
+    String username,
   }) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('username', username);
-    prefs.setString('token', 'TOKEN');
-    prefs.setString('warehouseId', warehouse.whsCode);
-    prefs.setString('warehouseName', warehouse.whsName);
+    await Prefs.setString(Prefs.username, username);
+    await Prefs.setString(Prefs.token, 'TOKEN');
 
     Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+  }
+
+  void selectWarehouse(Warehouse warehouse) async {
+    await Prefs.setString(Prefs.warehouseId, warehouse.whsCode);
+    await Prefs.setString(Prefs.warehouseName, warehouse.whsName);
+
+    _warehouseId = warehouse.whsCode;
+    _warehouseName = warehouse.whsName;
+    notifyListeners();
   }
 }
