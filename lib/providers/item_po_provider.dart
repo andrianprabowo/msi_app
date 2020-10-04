@@ -10,20 +10,30 @@ class ItemPoProvider extends ChangeNotifier {
 
   List<ItemPurchaseOrder> get items => _items;
 
-  Future<List<ItemPurchaseOrder>> getPoDetailByDocNum(String docNum) async {
-    final url = '$kBaseUrl/api/po/$docNum';
+  Future<void> getPoDetailByDocNum(String docNum) async {
+    final url = '$kBaseUrl/api/newgetpodetail/docnum=$docNum';
 
     try {
       final response = await http.get(url);
+      print(response.request);
       final data = json.decode(response.body) as List;
+      print(data);
+      if (data == null) return;
+
       final List<ItemPurchaseOrder> list = [];
       data.forEach((map) {
         list.add(ItemPurchaseOrder.fromMap(map));
       });
+
       _items = list;
-      return _items;
+      notifyListeners();
     } catch (error) {
+      print(error);
       throw error;
     }
+  }
+
+  ItemPurchaseOrder findByItemCode(String itemCode) {
+    return _items.firstWhere((element) => element.itemCode == itemCode);
   }
 }

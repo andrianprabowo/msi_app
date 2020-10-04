@@ -1,65 +1,62 @@
 import 'dart:convert';
 
-class ItemPurchaseOrder {
+import 'package:flutter/material.dart';
+
+class ItemPurchaseOrder with ChangeNotifier {
   final String itemCode;
-  final String itemName;
-  final double totalReceipt;
-  final double receiptQty;
-  final double remainingQty;
+  final String description;
+  final double openQty;
+  final double quantity;
   final String uom;
-  final String cardCode;
+  final String docNum;
   ItemPurchaseOrder({
     this.itemCode,
-    this.itemName,
-    this.totalReceipt,
-    this.receiptQty,
-    this.remainingQty,
+    this.description,
+    this.openQty,
+    this.quantity,
     this.uom,
-    this.cardCode,
+    this.docNum,
   });
 
   ItemPurchaseOrder copyWith({
     String itemCode,
-    String itemName,
-    double totalReceipt,
-    double receiptQty,
-    double remainingQty,
+    String description,
+    double openQty,
+    double quantity,
     String uom,
-    String cardCode,
+    String docNum,
   }) {
     return ItemPurchaseOrder(
       itemCode: itemCode ?? this.itemCode,
-      itemName: itemName ?? this.itemName,
-      totalReceipt: totalReceipt ?? this.totalReceipt,
-      receiptQty: receiptQty ?? this.receiptQty,
-      remainingQty: remainingQty ?? this.remainingQty,
+      description: description ?? this.description,
+      openQty: openQty ?? this.openQty,
+      quantity: quantity ?? this.quantity,
       uom: uom ?? this.uom,
-      cardCode: cardCode ?? this.cardCode,
+      docNum: docNum ?? this.docNum,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'det_ItemCode': itemCode,
-      'det_Deskripsi': itemName,
-      'det_OpenQty': totalReceipt,
-      'det_Qty': receiptQty,
-      'remainingQty': remainingQty,
-      'det_UnitMsr': uom,
-      'h_CardCode': cardCode,
+      'itemCode': itemCode,
+      'dscription': description,
+      'openQty': openQty,
+      'quantity': quantity,
+      'unitMsr': uom,
+      'docNum': docNum,
     };
   }
 
   factory ItemPurchaseOrder.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
+
     return ItemPurchaseOrder(
-      itemCode: map['det_ItemCode'] ?? '',
-      itemName: map['det_Deskripsi'] ?? '',
-      totalReceipt: map['totalReceipt'] ?? 0.0,
-      receiptQty: map['det_Qty'] ?? 0.0,
-      remainingQty: map['det_OpenQty'] ?? 0.0,
-      uom: map['det_UnitMsr'] ?? '',
-      cardCode: map['h_CardCode'] ?? '',
+      itemCode: map['itemCode'] ?? '',
+      description: map['dscription'] ?? '',
+      openQty: map['openQty'] ?? 0.0,
+      quantity: map['quantity'] ?? 0.0,
+      uom: map['unitMsr'] ?? '',
+      docNum: map['docNum'] ?? '',
     );
   }
 
@@ -70,7 +67,7 @@ class ItemPurchaseOrder {
 
   @override
   String toString() {
-    return 'ItemPurchaseOrder(itemCode: $itemCode, itemName: $itemName, totalReceipt: $totalReceipt, receiptQty: $receiptQty, remainingQty: $remainingQty, uom: $uom, cardCode: $cardCode)';
+    return 'ItemPurchaseOrder(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, uom: $uom, docNum: $docNum)';
   }
 
   @override
@@ -79,22 +76,20 @@ class ItemPurchaseOrder {
 
     return o is ItemPurchaseOrder &&
         o.itemCode == itemCode &&
-        o.itemName == itemName &&
-        o.totalReceipt == totalReceipt &&
-        o.receiptQty == receiptQty &&
-        o.remainingQty == remainingQty &&
+        o.description == description &&
+        o.openQty == openQty &&
+        o.quantity == quantity &&
         o.uom == uom &&
-        o.cardCode == cardCode;
+        o.docNum == docNum;
   }
 
   @override
   int get hashCode {
     return itemCode.hashCode ^
-        itemName.hashCode ^
-        totalReceipt.hashCode ^
-        receiptQty.hashCode ^
-        remainingQty.hashCode ^
+        description.hashCode ^
+        openQty.hashCode ^
+        quantity.hashCode ^
         uom.hashCode ^
-        cardCode.hashCode;
+        docNum.hashCode;
   }
 }
