@@ -1,27 +1,24 @@
 import 'dart:convert';
 
-class StagingBin {
+import 'package:flutter/cupertino.dart';
+
+class StagingBin with ChangeNotifier {
   final String binCode;
-  final String warehouse;
   StagingBin({
     this.binCode,
-    this.warehouse,
   });
 
   StagingBin copyWith({
     String binCode,
-    String warehouse,
   }) {
     return StagingBin(
       binCode: binCode ?? this.binCode,
-      warehouse: warehouse ?? this.warehouse,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'binCode': binCode,
-      'warehouse': warehouse,
     };
   }
 
@@ -30,7 +27,6 @@ class StagingBin {
 
     return StagingBin(
       binCode: map['binCode'] ?? '',
-      warehouse: map['warehouse'] ?? '',
     );
   }
 
@@ -40,15 +36,15 @@ class StagingBin {
       StagingBin.fromMap(json.decode(source));
 
   @override
-  String toString() => 'StagingBin(binCode: $binCode, warehouse: $warehouse)';
+  String toString() => 'StagingBin(binCode: $binCode)';
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is StagingBin && o.binCode == binCode && o.warehouse == warehouse;
+    return o is StagingBin && o.binCode == binCode;
   }
 
   @override
-  int get hashCode => binCode.hashCode ^ warehouse.hashCode;
+  int get hashCode => binCode.hashCode;
 }
