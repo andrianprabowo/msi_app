@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_batch.dart';
+import 'package:msi_app/screens/staging_confirm/staging_confirm_screen.dart';
 import 'package:msi_app/utils/constants.dart';
+import 'package:msi_app/widgets/base_text_line.dart';
 
 class ItemBatchStaging extends StatelessWidget {
   final ItemBatch item;
@@ -11,34 +13,23 @@ class ItemBatchStaging extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        //   Navigator.of(context).pushNamed(PutBinScreen.routeName);
+        Navigator.of(context).pushNamed(
+          StagingConfirmScreen.routeName,
+          arguments: item,
+        );
       },
       child: Container(
-        width: double.infinity,
+        margin: const EdgeInsets.all(kTiny),
         padding: const EdgeInsets.all(kSmall),
+        decoration: kBoxDecoration,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildRow('Batch Number', item.batchNumber),
-            buildRow('Description', item.description),
-            buildRow('Qty on Batch', item.availableQty.toStringAsFixed(2)),
-            buildRow('Inventory UoM', item.inventoryUom),
+            BaseTextLine('Batch Number', item.batchNo),
+            BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(2)),
+            BaseTextLine('Expired Date', convertDate(item.expiredDate)),
           ],
         ),
       ),
-    );
-  }
-
-  Widget buildRow(String label, String value) {
-    return Row(
-      children: [
-        Text(
-          label,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        Spacer(),
-        Text(value)
-      ],
     );
   }
 }

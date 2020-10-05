@@ -15,6 +15,7 @@ import 'package:msi_app/screens/return_outlet/return_outlet_screen.dart';
 import 'package:msi_app/screens/return_vendor/return_vendor_screen.dart';
 import 'package:msi_app/screens/splash/splash_screen.dart';
 import 'package:msi_app/screens/staging_batch/staging_batch_screen.dart';
+import 'package:msi_app/screens/staging_confirm/staging_confirm_screen.dart';
 import 'package:msi_app/screens/staging_item/staging_item_screen.dart';
 import 'package:msi_app/screens/stock_counting/stock_counting_screen.dart';
 import 'package:msi_app/screens/stock_inquiry/stock_inquiry_screen.dart';
@@ -22,23 +23,41 @@ import 'package:msi_app/screens/stock_inquiry/stock_inquiry_screen.dart';
 final String initialRoute = SplashScreen.routeName;
 
 final Map<String, WidgetBuilder> routes = {
+  // GENERAL
   SplashScreen.routeName: (context) => SplashScreen(),
   LoginScreen.routeName: (context) => LoginScreen(),
   HomeScreen.routeName: (context) => HomeScreen(),
+
+  // SUB MENU
   InboundScreen.routeName: (context) => InboundScreen(),
   OutboundScreen.routeName: (context) => OutboundScreen(),
   ProductionScreen.routeName: (context) => ProductionScreen(),
   StockCountingScreen.routeName: (context) => StockCountingScreen(),
   StockInquiryScreen.routeName: (context) => StockInquiryScreen(),
+
+  // INBOUND TRANSACTION
+  // Receipt From Vendor
   ReceiptVendorScreen.routeName: (context) => ReceiptVendorScreen(),
-  PutAwayScreen.routeName: (context) => PutAwayScreen(),
-  ReturnOutletScreen.routeName: (context) => ReturnOutletScreen(),
-  PickerPickScreen.routeName: (context) => PickerPickScreen(),
-  InventoryDispatchScreen.routeName: (context) => InventoryDispatchScreen(),
-  ReturnVendorScreen.routeName: (context) => ReturnVendorScreen(),
   ReceiptDetailScreen.routeName: (context) => ReceiptDetailScreen(),
+  ReceiptBatchScreen.routeName: (context) => ReceiptBatchScreen(),
+
+  // Put Away
+  PutAwayScreen.routeName: (context) => PutAwayScreen(),
   StagingItemScreen.routeName: (context) => StagingItemScreen(),
   StagingBatchScreen.routeName: (context) => StagingBatchScreen(),
+  StagingConfirmScreen.routeName: (context) => StagingConfirmScreen(),
+
+  // Return From Outlet
+  ReturnOutletScreen.routeName: (context) => ReturnOutletScreen(),
+
+  // OUTBOUND TRANSCATION
+  // Picker Pick List
+  PickerPickScreen.routeName: (context) => PickerPickScreen(),
   PickItemReceiveScreen.routeName: (context) => PickItemReceiveScreen(),
-  ReceiptBatchScreen.routeName: (context) => ReceiptBatchScreen(),
+
+  // Inventory Dispatch
+  InventoryDispatchScreen.routeName: (context) => InventoryDispatchScreen(),
+
+  // Return To Vendor
+  ReturnVendorScreen.routeName: (context) => ReturnVendorScreen(),
 };

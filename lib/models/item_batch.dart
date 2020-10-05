@@ -1,37 +1,34 @@
 import 'dart:convert';
 
-class ItemBatch {
-  final String batchNumber;
-  final String description;
+import 'package:flutter/material.dart';
+
+class ItemBatch with ChangeNotifier {
+  final String batchNo;
   final double availableQty;
-  final String inventoryUom;
+  final DateTime expiredDate;
   ItemBatch({
-    this.batchNumber,
-    this.description,
+    this.batchNo,
     this.availableQty,
-    this.inventoryUom,
+    this.expiredDate,
   });
 
   ItemBatch copyWith({
-    String batchNumber,
-    String description,
+    String batchNo,
     double availableQty,
-    String inventoryUom,
+    DateTime expiredDate,
   }) {
     return ItemBatch(
-      batchNumber: batchNumber ?? this.batchNumber,
-      description: description ?? this.description,
+      batchNo: batchNo ?? this.batchNo,
       availableQty: availableQty ?? this.availableQty,
-      inventoryUom: inventoryUom ?? this.inventoryUom,
+      expiredDate: expiredDate ?? this.expiredDate,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'batchNumber': batchNumber,
-      'description': description,
-      'availableQty': availableQty,
-      'inventoryUom': inventoryUom,
+      'batchNo': batchNo,
+      'avlQty': availableQty,
+      'expDate': expiredDate?.toIso8601String(),
     };
   }
 
@@ -39,10 +36,9 @@ class ItemBatch {
     if (map == null) return null;
 
     return ItemBatch(
-      batchNumber: map['batchNumber'],
-      description: map['description'],
-      availableQty: map['availableQty'],
-      inventoryUom: map['inventoryUom'],
+      batchNo: map['batchNo'] ?? '',
+      availableQty: map['avlQty'] ?? 0.0,
+      expiredDate: DateTime.parse(map['expDate']),
     );
   }
 
@@ -52,26 +48,20 @@ class ItemBatch {
       ItemBatch.fromMap(json.decode(source));
 
   @override
-  String toString() {
-    return 'ItemBatch(batchNumber: $batchNumber, description: $description, availableQty: $availableQty, inventoryUom: $inventoryUom)';
-  }
+  String toString() =>
+      'ItemBatch(batchNo: $batchNo, availableQty: $availableQty, expiredDate: $expiredDate)';
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
     return o is ItemBatch &&
-        o.batchNumber == batchNumber &&
-        o.description == description &&
+        o.batchNo == batchNo &&
         o.availableQty == availableQty &&
-        o.inventoryUom == inventoryUom;
+        o.expiredDate == expiredDate;
   }
 
   @override
-  int get hashCode {
-    return batchNumber.hashCode ^
-        description.hashCode ^
-        availableQty.hashCode ^
-        inventoryUom.hashCode;
-  }
+  int get hashCode =>
+      batchNo.hashCode ^ availableQty.hashCode ^ expiredDate.hashCode;
 }
