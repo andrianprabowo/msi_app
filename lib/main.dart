@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/item_bin_provider.dart';
 import 'package:msi_app/providers/item_po_batch_provider.dart';
 import 'package:msi_app/providers/item_po_provider.dart';
 import 'package:msi_app/providers/pick_item_receive_provider.dart';
@@ -27,6 +28,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => PickItemReceiveProvider()),
         ChangeNotifierProvider(create: (_) => ItemPoBatchProvider()),
         ChangeNotifierProvider(create: (_) => StagingBinProvider()),
+        ChangeNotifierProvider(create: (_) => ItemBinProvider()),
       ],
       child: MyApp(),
     ),

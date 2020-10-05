@@ -1,20 +1,26 @@
 import 'dart:convert';
 
-class ItemBin {
+import 'package:flutter/material.dart';
+
+class ItemBin with ChangeNotifier {
   final String itemCode;
   final String itemName;
+  final double availableQty;
   ItemBin({
     this.itemCode,
     this.itemName,
+    this.availableQty,
   });
 
   ItemBin copyWith({
     String itemCode,
     String itemName,
+    double availableQty,
   }) {
     return ItemBin(
       itemCode: itemCode ?? this.itemCode,
       itemName: itemName ?? this.itemName,
+      availableQty: availableQty ?? this.availableQty,
     );
   }
 
@@ -22,6 +28,7 @@ class ItemBin {
     return {
       'itemCode': itemCode,
       'itemName': itemName,
+      'avlQty': availableQty,
     };
   }
 
@@ -31,6 +38,7 @@ class ItemBin {
     return ItemBin(
       itemCode: map['itemCode'] ?? '',
       itemName: map['itemName'] ?? '',
+      availableQty: map['avlQty'] ?? 0.0,
     );
   }
 
@@ -40,15 +48,20 @@ class ItemBin {
       ItemBin.fromMap(json.decode(source));
 
   @override
-  String toString() => 'ItemBin(itemCode: $itemCode, itemName: $itemName)';
+  String toString() =>
+      'ItemBin(itemCode: $itemCode, itemName: $itemName, availableQty: $availableQty)';
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is ItemBin && o.itemCode == itemCode && o.itemName == itemName;
+    return o is ItemBin &&
+        o.itemCode == itemCode &&
+        o.itemName == itemName &&
+        o.availableQty == availableQty;
   }
 
   @override
-  int get hashCode => itemCode.hashCode ^ itemName.hashCode;
+  int get hashCode =>
+      itemCode.hashCode ^ itemName.hashCode ^ availableQty.hashCode;
 }
