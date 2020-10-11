@@ -1,62 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_list_whs.dart';
+import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/pick_list_whs_provider.dart';
 import 'package:msi_app/screens/pick_item_receive/pick_item_receive_screen.dart';
 import 'package:msi_app/utils/constants.dart';
-import 'package:msi_app/utils/prefs.dart';
+import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:provider/provider.dart';
 
 class ItemPickListWhs extends StatelessWidget {
   final PickListWhs item;
 
   const ItemPickListWhs(this.item);
 
-  String get dateString {
-    return DateFormat.yMMMMd().format(item.pickDate);
-  }
-
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final pickListWhsProvider =
+        Provider.of<PickListWhsProvider>(context, listen: false);
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed(PickItemReceiveScreen.routeName, arguments: item);
+        pickListWhsProvider.selectPickList(item);
+        Navigator.of(context).pushNamed(PickItemReceiveScreen.routeName);
       },
       child: Container(
-        width: double.infinity,
         margin: const EdgeInsets.all(kTiny),
-        decoration: kBoxDecoration,
         padding: const EdgeInsets.all(kSmall),
+        decoration: kBoxDecoration,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildRow('Pick Number', item.pickNumber),
-            buildRow('Pick Date', dateString),
-            FutureBuilder(
-              future: Prefs.getString(Prefs.username),
-              builder: (_, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                return buildRow('Picker', snapshot.data);
-              },
-            ),
-            buildRow('Memo', item.pickRemark),
+            BaseTextLine('Pick Number', item.pickNumber),
+            BaseTextLine('Pick Date', convertDate(item.pickDate)),
+            BaseTextLine('Card Code', item.cardCode),
+            BaseTextLine('Card Name', item.cardName),
+            BaseTextLine('Picker', authProvider.username),
+            BaseTextLine('Memo', item.pickRemark),
           ],
         ),
       ),
-    );
-  }
-
-  Widget buildRow(String label, String value) {
-    return Row(
-      children: [
-        Text(
-          label,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        Spacer(),
-        Text(value)
-      ],
     );
   }
 }

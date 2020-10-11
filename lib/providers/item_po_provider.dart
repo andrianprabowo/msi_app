@@ -6,7 +6,7 @@ import 'package:msi_app/models/item_purchase_order.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
-class ItemPoProvider extends ChangeNotifier {
+class ItemPoProvider with ChangeNotifier {
   List<ItemPurchaseOrder> _items;
 
   List<ItemPurchaseOrder> get items {

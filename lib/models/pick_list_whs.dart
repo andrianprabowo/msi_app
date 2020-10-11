@@ -1,17 +1,22 @@
 import 'dart:convert';
 
-class PickListWhs {
+import 'package:flutter/material.dart';
+import 'package:msi_app/models/pick_item_receive.dart';
+
+class PickListWhs with ChangeNotifier {
   final String pickNumber;
   final DateTime pickDate;
   final String cardCode;
   final String cardName;
   final String pickRemark;
+  List<PickItemReceive> pickItemList;
   PickListWhs({
     this.pickNumber,
     this.pickDate,
     this.cardCode,
     this.cardName,
     this.pickRemark,
+    this.pickItemList,
   });
 
   PickListWhs copyWith({
@@ -20,6 +25,7 @@ class PickListWhs {
     String cardCode,
     String cardName,
     String pickRemark,
+    List<PickItemReceive> pickItemList,
   }) {
     return PickListWhs(
       pickNumber: pickNumber ?? this.pickNumber,
@@ -27,16 +33,18 @@ class PickListWhs {
       cardCode: cardCode ?? this.cardCode,
       cardName: cardName ?? this.cardName,
       pickRemark: pickRemark ?? this.pickRemark,
+      pickItemList: pickItemList ?? this.pickItemList,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'uDocNum': pickNumber,
-      'docDate': pickDate?.toIso8601String(),
+      'pickNumber': pickNumber,
+      'pickDate': pickDate?.millisecondsSinceEpoch,
       'cardCode': cardCode,
       'cardName': cardName,
       'pickRemark': pickRemark,
+      'pickItemList': pickItemList?.map((x) => x?.toMap())?.toList(),
     };
   }
 
@@ -48,7 +56,8 @@ class PickListWhs {
       pickDate: DateTime.parse(map['docDate']),
       cardCode: map['cardCode'] ?? '',
       cardName: map['cardName'] ?? '',
-      pickRemark: map['pickRemark'] ?? '',
+      pickRemark: map['pickRemark'] ?? "",
+      pickItemList: map['pickItemList'] ?? [],
     );
   }
 
@@ -59,27 +68,6 @@ class PickListWhs {
 
   @override
   String toString() {
-    return 'PickListWhs(pickNumber: $pickNumber, pickDate: $pickDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark)';
-  }
-
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is PickListWhs &&
-        o.pickNumber == pickNumber &&
-        o.pickDate == pickDate &&
-        o.cardCode == cardCode &&
-        o.cardName == cardName &&
-        o.pickRemark == pickRemark;
-  }
-
-  @override
-  int get hashCode {
-    return pickNumber.hashCode ^
-        pickDate.hashCode ^
-        cardCode.hashCode ^
-        cardName.hashCode ^
-        pickRemark.hashCode;
+    return 'PickListWhs(pickNumber: $pickNumber, pickDate: $pickDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, pickItemList: $pickItemList)';
   }
 }

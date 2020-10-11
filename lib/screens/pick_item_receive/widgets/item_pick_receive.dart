@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/pick_item_receive.dart';
+import 'package:msi_app/screens/pick_item_bin/pick_list_bin_screen.dart';
 import 'package:msi_app/utils/constants.dart';
+import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
 
 class ItemPickReceive extends StatelessWidget {
   final PickItemReceive item;
@@ -11,50 +14,25 @@ class ItemPickReceive extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        //  Navigator.of(context).pushNamed(PickItemReceiveScreen.routeName);
+        Navigator.of(context).pushNamed(PickListBinScreen.routeName);
       },
       child: Container(
-        width: double.infinity,
         margin: const EdgeInsets.all(kTiny),
-        decoration: kBoxDecoration,
         padding: const EdgeInsets.all(kSmall),
+        decoration: kBoxDecoration,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildTitle(item.itemCode),
-            buildTitle(item.dscription),
+            BaseTitle(item.itemCode),
+            BaseTitle(item.description),
             Divider(),
-            buildRow('Total To Pick', item.openQty.toStringAsFixed(2)),
-            buildRow('Remaining Qty', item.quantity.toStringAsFixed(2)),
-            buildRow('Inventory UoM', item.unitMsr),
-            buildRow('Bin Location', '??????'),
-            buildRow('Batch Number', '??????'),
+            BaseTextLine('Total To Pick', item.openQty.toStringAsFixed(2)),
+            BaseTextLine('Remaining Qty', item.quantity.toStringAsFixed(2)),
+            BaseTextLine('Inventory UoM', item.unitMsr),
+            BaseTextLine('Bin Location', '??????'),
+            BaseTextLine('Batch Number', '??????'),
           ],
         ),
       ),
-    );
-  }
-
-  Widget buildTitle(String label) {
-    return Text(
-      label,
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        color: kPrimaryColor,
-      ),
-    );
-  }
-
-  Widget buildRow(String label, String value) {
-    return Row(
-      children: [
-        Text(
-          label,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        Spacer(),
-        Text(value)
-      ],
     );
   }
 }

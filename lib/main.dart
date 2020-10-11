@@ -28,12 +28,12 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ItemPoProvider()),
         ChangeNotifierProvider(create: (_) => PickListWhsProvider()),
         ChangeNotifierProvider(create: (_) => PickItemReceiveProvider()),
+        ChangeNotifierProvider(create: (_) => PickListBinProvider()),
         ChangeNotifierProvider(create: (_) => StagingBinProvider()),
         ChangeNotifierProvider(create: (_) => ItemBinProvider()),
         ChangeNotifierProvider(create: (_) => ItemBatchProvider()),
         ChangeNotifierProvider(
             create: (_) => InventoryDispatchHeaderProvider()),
-        ChangeNotifierProvider(create: (_) => PickListBinProvider()),
       ],
       child: MyApp(),
     ),

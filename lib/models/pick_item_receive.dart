@@ -1,42 +1,50 @@
 import 'dart:convert';
 
-class PickItemReceive {
+import 'package:flutter/material.dart';
+import 'package:msi_app/models/pick_list_bin.dart';
+
+class PickItemReceive with ChangeNotifier {
   final String itemCode;
-  final String dscription;
+  final String description;
   final double openQty;
   final double quantity;
   final String unitMsr;
+  List<PickListBin> binList;
   PickItemReceive({
     this.itemCode,
-    this.dscription,
+    this.description,
     this.openQty,
     this.quantity,
     this.unitMsr,
+    this.binList,
   });
 
   PickItemReceive copyWith({
     String itemCode,
-    String dscription,
+    String description,
     double openQty,
     double quantity,
     String unitMsr,
+    List<PickListBin> binList,
   }) {
     return PickItemReceive(
       itemCode: itemCode ?? this.itemCode,
-      dscription: dscription ?? this.dscription,
+      description: description ?? this.description,
       openQty: openQty ?? this.openQty,
       quantity: quantity ?? this.quantity,
       unitMsr: unitMsr ?? this.unitMsr,
+      binList: binList ?? this.binList,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'itemCode': itemCode,
-      'dscription': dscription,
+      'description': description,
       'openQty': openQty,
       'quantity': quantity,
       'unitMsr': unitMsr,
+      'binList': binList?.map((x) => x?.toMap())?.toList(),
     };
   }
 
@@ -45,10 +53,11 @@ class PickItemReceive {
 
     return PickItemReceive(
       itemCode: map['itemCode'] ?? '',
-      dscription: map['dscription'] ?? '',
+      description: map['dscription'] ?? '',
       openQty: map['openQty'] ?? 0.0,
       quantity: map['quantity'] ?? 0.0,
       unitMsr: map['unitMsr'] ?? '',
+      binList: map['binList'] ?? [],
     );
   }
 
@@ -59,27 +68,6 @@ class PickItemReceive {
 
   @override
   String toString() {
-    return 'PickItemReceive(itemCode: $itemCode, dscription: $dscription, openQty: $openQty, quantity: $quantity, unitMsr: $unitMsr)';
-  }
-
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is PickItemReceive &&
-        o.itemCode == itemCode &&
-        o.dscription == dscription &&
-        o.openQty == openQty &&
-        o.quantity == quantity &&
-        o.unitMsr == unitMsr;
-  }
-
-  @override
-  int get hashCode {
-    return itemCode.hashCode ^
-        dscription.hashCode ^
-        openQty.hashCode ^
-        quantity.hashCode ^
-        unitMsr.hashCode;
+    return 'PickItemReceive(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, unitMsr: $unitMsr, binList: $binList)';
   }
 }

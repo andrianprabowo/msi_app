@@ -1,150 +1,102 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/models/pick_list_whs.dart';
 import 'package:msi_app/providers/pick_item_receive_provider.dart';
+import 'package:msi_app/providers/pick_list_whs_provider.dart';
+import 'package:msi_app/screens/pick_item_bin/pick_list_bin_screen.dart';
 import 'package:msi_app/screens/pick_item_receive/widgets/item_pick_receive.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/error_info.dart';
+import 'package:msi_app/widgets/input_scan.dart';
+import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
-class PickItemReceiveScreen extends StatefulWidget {
+class PickItemReceiveScreen extends StatelessWidget {
   static const routeName = '/pick_item_receive';
 
-  @override
-  _PickItemReceiveScreenState createState() => _PickItemReceiveScreenState();
-}
-
-class _PickItemReceiveScreenState extends State<PickItemReceiveScreen> {
-  final _remarks = TextEditingController();
-
-  String convertDate(DateTime dateTime) {
-    return DateFormat.yMMMMd().format(dateTime);
+  Future<void> refreshData(BuildContext context, String pickNumber) async {
+    final pickItemProvider =
+        Provider.of<PickItemReceiveProvider>(context, listen: false);
+    await pickItemProvider.getPlActionByPlNo(pickNumber);
   }
 
   @override
   Widget build(BuildContext context) {
-    PickListWhs item = ModalRoute.of(context).settings.arguments;
-    final pLItemReceiveProvider = Provider.of<PickItemReceiveProvider>(context);
-
+    final item =
+        Provider.of<PickListWhsProvider>(context, listen: false).selected;
     return Scaffold(
       appBar: AppBar(
         title: Text('Pick List'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.arrow_forward),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(kMedium),
+        padding: const EdgeInsets.symmetric(
+          vertical: kLarge,
+          horizontal: kMedium,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildRow('Pick Number', item.pickNumber),
+            BaseTextLine('Pick Number', item.pickNumber),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildRow('Pick Date', convertDate(item.pickDate)),
+            BaseTextLine('Pick Date', convertDate(item.pickDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildRemarksFormField(),
+            BaseTextLine('Remarks', item.pickRemark),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildTitle('Pick & Pack List'),
+            buildInputScan(context),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTitle('List Items'),
             Divider(),
-            Expanded(
-              child: FutureBuilder(
-                future:
-                    pLItemReceiveProvider.getPlItemReceiveByPo(item.pickNumber),
-                builder: (_, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.error_outline,
-                            size: 60,
-                            color: Colors.red,
-                          ),
-                          SizedBox(
-                            height: getProportionateScreenHeight(10),
-                          ),
-                          Text('An error occured'),
-                        ],
-                      ),
-                    );
-                  }
-
-                  List<PickItemReceive> list = snapshot.data;
-                  return (list.length == 0)
-                      ? Center(
-                          child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.insert_drive_file,
-                              size: 60,
-                              color: Colors.grey,
-                            ),
-                            SizedBox(
-                              height: getProportionateScreenHeight(10),
-                            ),
-                            Text('No Data Available'),
-                          ],
-                        ))
-                      : ListView.builder(
-                          itemCount: list.length,
-                          itemBuilder: (_, index) {
-                            return ItemPickReceive(list[index]);
-                          },
-                        );
-                },
-              ),
-            ),
+            buildItemList(context, item),
           ],
         ),
       ),
     );
   }
 
-  Widget buildTitle(String title) {
-    return Text(
-      title,
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        color: kPrimaryColor,
+  Widget buildItemList(BuildContext context, PickListWhs item) {
+    return Expanded(
+      child: FutureBuilder(
+        future: refreshData(context, item.pickNumber),
+        builder: (_, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) return ErrorInfo();
+
+          return RefreshIndicator(
+            onRefresh: () => refreshData(context, item.pickNumber),
+            child: Consumer<PickItemReceiveProvider>(
+              builder: (_, provider, child) => provider.items.length == 0
+                  ? NoData()
+                  : ListView.builder(
+                      itemCount: provider.items.length,
+                      itemBuilder: (_, index) {
+                        return ChangeNotifierProvider.value(
+                          value: provider.items[index],
+                          child: ItemPickReceive(provider.items[index]),
+                        );
+                      },
+                    ),
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget buildRow(String label, String value) {
-    return Row(
-      children: [
-        Text(
-          label,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        Spacer(),
-        Text(value)
-      ],
-    );
-  }
-
-  Widget buildRemarksFormField() {
-    return TextFormField(
-      maxLines: 2,
-      controller: _remarks,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.all(kLarge),
-        alignLabelWithHint: true,
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        labelText: 'Remarks',
-        hintText: 'Input Remarks',
-      ),
+  Widget buildInputScan(BuildContext context) {
+    final provider =
+        Provider.of<PickItemReceiveProvider>(context, listen: false);
+    return InputScan(
+      label: 'Item Code',
+      hint: 'Scan Item Barcode',
+      scanResult: (value) {
+        final item = provider.findByItemCode(value);
+        Navigator.of(context).pushNamed(PickListBinScreen.routeName);
+      },
     );
   }
 }
