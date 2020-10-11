@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/providers/purchase_order_provider.dart';
+import 'package:msi_app/screens/list_receipt_from_vendor/list_receipt_from_vendor_screen.dart';
 import 'package:msi_app/screens/receipt_detail/receipt_detail_screen.dart';
 import 'package:msi_app/screens/receipt_vendor/widgets/item_receipt.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -23,6 +24,14 @@ class ReceiptVendorScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Receipt From Vendor'),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.list_alt),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed(ListReceiptFromVendorScreen.routeName);
+              })
+        ],
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(

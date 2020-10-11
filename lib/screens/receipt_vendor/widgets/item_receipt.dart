@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/purchase_order.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/purchase_order_provider.dart';
 import 'package:msi_app/screens/receipt_detail/receipt_detail_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -14,12 +15,12 @@ class ItemReceipt extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final poProvider =
+        Provider.of<PurchaseOrderProvider>(context, listen: false);
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(
-          ReceiptDetailScreen.routeName,
-          arguments: item,
-        );
+        poProvider.selectPo(item);
+        Navigator.of(context).pushNamed(ReceiptDetailScreen.routeName);
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),

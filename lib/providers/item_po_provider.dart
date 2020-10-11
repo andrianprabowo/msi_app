@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/item_batch.dart';
 import 'package:msi_app/models/item_purchase_order.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -8,7 +9,23 @@ import 'package:http/http.dart' as http;
 class ItemPoProvider extends ChangeNotifier {
   List<ItemPurchaseOrder> _items;
 
-  List<ItemPurchaseOrder> get items => _items;
+  List<ItemPurchaseOrder> get items {
+    _items.forEach((detail) {
+      // calculate total batch qty
+      var totalBatch = 0.0;
+      detail.batchList.forEach((batch) {
+        totalBatch = totalBatch + batch.availableQty;
+      });
+      detail.quantity = totalBatch;
+
+      // calculate remaining qty
+      detail.remainingQty = detail.openQty - detail.quantity;
+    });
+
+    _items = _items.where((item) => item.remainingQty > 0).toList();
+
+    return _items;
+  }
 
   Future<void> getPoDetailByDocNum(String docNum) async {
     final url = '$kBaseUrl/api/newgetpodetail/docnum=$docNum';
@@ -35,5 +52,17 @@ class ItemPoProvider extends ChangeNotifier {
 
   ItemPurchaseOrder findByItemCode(String itemCode) {
     return _items.firstWhere((element) => element.itemCode == itemCode);
+  }
+
+  void addBatch(ItemPurchaseOrder itemPo, ItemBatch itemBatch) {
+    itemPo.batchList.add(itemBatch);
+    notifyListeners();
+    print('Added Batch: $itemBatch');
+  }
+
+  void removeBatch(ItemPurchaseOrder itemPo, ItemBatch itemBatch) {
+    itemPo.batchList.remove(itemBatch);
+    notifyListeners();
+    print('Removed Batch: $itemBatch');
   }
 }

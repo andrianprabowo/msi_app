@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/utils/constants.dart';
+import 'package:msi_app/utils/prefs.dart';
 import 'package:msi_app/utils/size_config.dart';
 
 class ItemMenu extends StatelessWidget {
@@ -16,8 +17,21 @@ class ItemMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => {
-        Navigator.of(context).pushNamed(routeName),
+      onTap: () async {
+        final warehouseId = await Prefs.getString(Prefs.warehouseId);
+        if (warehouseId == null) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: Row(
+            children: [
+              Icon(Icons.error_outline, color: Colors.red),
+              SizedBox(width: getProportionateScreenWidth(kLarge)),
+              Text('Please select warehouse first'),
+            ],
+          )));
+          return;
+        }
+
+        Navigator.of(context).pushNamed(routeName);
       },
       child: Container(
         child: Column(

@@ -1,21 +1,26 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/item_batch.dart';
 
 class ItemPurchaseOrder with ChangeNotifier {
   final String itemCode;
   final String description;
-  final double openQty;
-  final double quantity;
+  double openQty;
+  double quantity;
+  double remainingQty;
   final String uom;
   final String docNum;
+  List<ItemBatch> batchList;
   ItemPurchaseOrder({
     this.itemCode,
     this.description,
     this.openQty,
     this.quantity,
+    this.remainingQty,
     this.uom,
     this.docNum,
+    this.batchList,
   });
 
   ItemPurchaseOrder copyWith({
@@ -23,27 +28,30 @@ class ItemPurchaseOrder with ChangeNotifier {
     String description,
     double openQty,
     double quantity,
+    double remainingQty,
     String uom,
     String docNum,
+    List<ItemBatch> batchList,
   }) {
     return ItemPurchaseOrder(
       itemCode: itemCode ?? this.itemCode,
       description: description ?? this.description,
       openQty: openQty ?? this.openQty,
       quantity: quantity ?? this.quantity,
+      remainingQty: remainingQty ?? this.remainingQty,
       uom: uom ?? this.uom,
       docNum: docNum ?? this.docNum,
+      batchList: batchList ?? this.batchList,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'itemCode': itemCode,
-      'dscription': description,
-      'openQty': openQty,
-      'quantity': quantity,
-      'unitMsr': uom,
-      'docNum': docNum,
+      'materialNo': itemCode,
+      'materialDesc': description,
+      'grQuantity': quantity.toString(),
+      'uom': uom,
+      'listBatches': batchList?.map((x) => x?.toMap())?.toList(),
     };
   }
 
@@ -55,8 +63,10 @@ class ItemPurchaseOrder with ChangeNotifier {
       description: map['dscription'] ?? '',
       openQty: map['openQty'] ?? 0.0,
       quantity: map['quantity'] ?? 0.0,
+      remainingQty: map['remainingQty'] ?? 0.0,
       uom: map['unitMsr'] ?? '',
       docNum: map['docNum'] ?? '',
+      batchList: map['batchList'] ?? [],
     );
   }
 
@@ -67,29 +77,6 @@ class ItemPurchaseOrder with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ItemPurchaseOrder(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, uom: $uom, docNum: $docNum)';
-  }
-
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is ItemPurchaseOrder &&
-        o.itemCode == itemCode &&
-        o.description == description &&
-        o.openQty == openQty &&
-        o.quantity == quantity &&
-        o.uom == uom &&
-        o.docNum == docNum;
-  }
-
-  @override
-  int get hashCode {
-    return itemCode.hashCode ^
-        description.hashCode ^
-        openQty.hashCode ^
-        quantity.hashCode ^
-        uom.hashCode ^
-        docNum.hashCode;
+    return 'ItemPurchaseOrder(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, remainingQty: $remainingQty, uom: $uom, docNum: $docNum, batchList: $batchList)';
   }
 }

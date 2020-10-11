@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_header_provider.dart';
 import 'package:msi_app/providers/item_batch_provider.dart';
 import 'package:msi_app/providers/item_bin_provider.dart';
-import 'package:msi_app/providers/item_po_batch_provider.dart';
 import 'package:msi_app/providers/item_po_provider.dart';
 import 'package:msi_app/providers/pick_item_receive_provider.dart';
+import 'package:msi_app/providers/pick_list_bin_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_provider.dart';
 import 'package:msi_app/providers/purchase_order_provider.dart';
 import 'package:msi_app/providers/staging_bin.provider.dart';
@@ -27,10 +28,12 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ItemPoProvider()),
         ChangeNotifierProvider(create: (_) => PickListWhsProvider()),
         ChangeNotifierProvider(create: (_) => PickItemReceiveProvider()),
-        ChangeNotifierProvider(create: (_) => ItemPoBatchProvider()),
         ChangeNotifierProvider(create: (_) => StagingBinProvider()),
         ChangeNotifierProvider(create: (_) => ItemBinProvider()),
         ChangeNotifierProvider(create: (_) => ItemBatchProvider()),
+        ChangeNotifierProvider(
+            create: (_) => InventoryDispatchHeaderProvider()),
+        ChangeNotifierProvider(create: (_) => PickListBinProvider()),
       ],
       child: MyApp(),
     ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/screens/inventory_dispatch/inventory_dispatch_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch/inventory_dispatch_header_screen.dart';
 import 'package:msi_app/screens/picker_pick/picker_pick_screen.dart';
 import 'package:msi_app/screens/return_vendor/return_vendor_screen.dart';
 import 'package:msi_app/widgets/base_app_bar.dart';
@@ -20,7 +20,7 @@ class OutboundScreen extends StatelessWidget {
     {
       'icon': Icons.local_shipping,
       'label': 'Inventory Dispatch',
-      'routeName': InventoryDispatchScreen.routeName,
+      'routeName': InventoryDispatchHeaderScreen.routeName,
     },
     {
       'icon': Icons.redo,

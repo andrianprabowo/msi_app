@@ -27,7 +27,7 @@ class ItemBatch with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'batchNo': batchNo,
-      'avlQty': availableQty,
+      'batchQuantity': availableQty.toString(),
       'expDate': expiredDate?.toIso8601String(),
     };
   }

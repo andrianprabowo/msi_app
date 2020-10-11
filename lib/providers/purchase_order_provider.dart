@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/item_purchase_order.dart';
 import 'package:msi_app/models/purchase_order.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -8,8 +9,16 @@ import 'package:msi_app/utils/prefs.dart';
 
 class PurchaseOrderProvider with ChangeNotifier {
   List<PurchaseOrder> _items = [];
+  PurchaseOrder _selected;
 
   List<PurchaseOrder> get items => _items;
+  PurchaseOrder get selected => _selected;
+
+  List<ItemPurchaseOrder> get detailList {
+    return _selected.detailList
+        .where((element) => element.batchList.isNotEmpty)
+        .toList();
+  }
 
   Future<void> getAllPoByWarehouseId() async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
@@ -37,5 +46,35 @@ class PurchaseOrderProvider with ChangeNotifier {
 
   PurchaseOrder findByPoNumber(String poNumber) {
     return _items.firstWhere((element) => element.poNumber == poNumber);
+  }
+
+  void selectPo(PurchaseOrder purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
+  }
+
+  Future<Map<String, dynamic>> createReceiptVendor() async {
+    var url = '$kBaseUrl/tgrpo/tgrpo/api/listtgrpoes';
+    final headers = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    };
+
+    try {
+      var response = await http.post(
+        url,
+        headers: headers,
+        body: _selected.toJson(),
+      );
+      print(response.request);
+
+      print('Status: ${response.statusCode}');
+      final data = json.decode(response.body) as Map;
+      print(data);
+      return data;
+    } catch (error) {
+      print(error);
+      throw error;
+    }
   }
 }

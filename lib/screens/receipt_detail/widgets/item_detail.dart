@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/item_batch.dart';
 import 'package:msi_app/models/item_purchase_order.dart';
-import 'package:msi_app/screens/receipt_batch/receipt_batch_screen.dart';
+import 'package:msi_app/screens/receipt_detail/widgets/item_batch_widget.dart';
+import 'package:msi_app/screens/receipt_detail/widgets/dialog_input_qty.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
@@ -14,10 +16,8 @@ class ItemDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(
-          ReceiptBatchScreen.routeName,
-          arguments: item,
-        );
+        showModalBottomSheet(
+            context: context, builder: (_) => DialogInputQty(item));
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),
@@ -28,12 +28,28 @@ class ItemDetail extends StatelessWidget {
             BaseTitle(item.itemCode),
             BaseTitle(item.description),
             Divider(),
-            BaseTextLine('Open Qty', item.openQty.toStringAsFixed(2)),
-            BaseTextLine('Qty', item.quantity.toStringAsFixed(2)),
-            BaseTextLine('UoM', item.uom)
+            BaseTextLine('PO Quantity', item.openQty.toStringAsFixed(2)),
+            BaseTextLine('Receipt Quantity', item.quantity.toStringAsFixed(2)),
+            BaseTextLine(
+                'Remaining Quantity', item.remainingQty.toStringAsFixed(2)),
+            BaseTextLine('UoM', item.uom),
+            Divider(),
+            if (item.batchList.isNotEmpty) BaseTitle('Item Batch List'),
+            buildItemBatchList(item.batchList),
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildItemBatchList(List<ItemBatch> list) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: list.length,
+      itemBuilder: (_, index) {
+        return ItemBatchWidget(item, list[index]);
+      },
     );
   }
 }

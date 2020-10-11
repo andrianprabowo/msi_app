@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/inbound/inbound_screen.dart';
-import 'package:msi_app/screens/inventory_dispatch/inventory_dispatch_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch/inventory_dispatch_header_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_detail/inventory_dispatch_detail_screen.dart';
+import 'package:msi_app/screens/list_put_away_submited/list_put_away_submited_screen.dart';
+import 'package:msi_app/screens/list_receipt_from_vendor/list_receipt_from_vendor_screen.dart';
 import 'package:msi_app/screens/login/login_screen.dart';
 import 'package:msi_app/screens/outbound/outbound_screen.dart';
+import 'package:msi_app/screens/pick_item_bin/pick_list_bin_screen.dart';
 import 'package:msi_app/screens/pick_item_receive/pick_item_receive_screen.dart';
 import 'package:msi_app/screens/picker_pick/picker_pick_screen.dart';
 import 'package:msi_app/screens/production/production_screen.dart';
+import 'package:msi_app/screens/production_header/production_header_screen.dart';
 import 'package:msi_app/screens/put_away/put_away_screen.dart';
-import 'package:msi_app/screens/receipt_batch/receipt_batch_screen.dart';
+import 'package:msi_app/screens/receipt_check/receipt_check_screen.dart';
 import 'package:msi_app/screens/receipt_detail/receipt_detail_screen.dart';
 import 'package:msi_app/screens/receipt_vendor/receipt_vendor_screen.dart';
 import 'package:msi_app/screens/return_outlet/return_outlet_screen.dart';
@@ -39,13 +44,16 @@ final Map<String, WidgetBuilder> routes = {
   // Receipt From Vendor
   ReceiptVendorScreen.routeName: (context) => ReceiptVendorScreen(),
   ReceiptDetailScreen.routeName: (context) => ReceiptDetailScreen(),
-  ReceiptBatchScreen.routeName: (context) => ReceiptBatchScreen(),
+  ReceiptCheckScreen.routeName: (context) => ReceiptCheckScreen(),
+  ListReceiptFromVendorScreen.routeName: (context) =>
+      ListReceiptFromVendorScreen(),
 
   // Put Away
   PutAwayScreen.routeName: (context) => PutAwayScreen(),
   StagingItemScreen.routeName: (context) => StagingItemScreen(),
   StagingBatchScreen.routeName: (context) => StagingBatchScreen(),
   StagingConfirmScreen.routeName: (context) => StagingConfirmScreen(),
+  ListPutAwaySubmitedScreen.routeName: (context) => ListPutAwaySubmitedScreen(),
 
   // Return From Outlet
   ReturnOutletScreen.routeName: (context) => ReturnOutletScreen(),
@@ -54,10 +62,17 @@ final Map<String, WidgetBuilder> routes = {
   // Picker Pick List
   PickerPickScreen.routeName: (context) => PickerPickScreen(),
   PickItemReceiveScreen.routeName: (context) => PickItemReceiveScreen(),
+  PickListBinScreen.routeName: (context) => PickListBinScreen(),
 
   // Inventory Dispatch
-  InventoryDispatchScreen.routeName: (context) => InventoryDispatchScreen(),
+  InventoryDispatchHeaderScreen.routeName: (context) =>
+      InventoryDispatchHeaderScreen(),
+  InventoryDispatchDetailScreen.routeName: (context) =>
+      InventoryDispatchDetailScreen(),
 
   // Return To Vendor
   ReturnVendorScreen.routeName: (context) => ReturnVendorScreen(),
+
+  // Production
+  ProductionHeaderScreen.routeName: (context) => ProductionHeaderScreen(),
 };

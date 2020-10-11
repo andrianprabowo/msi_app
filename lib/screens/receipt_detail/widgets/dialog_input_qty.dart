@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:msi_app/models/item_po_batch.dart';
+import 'package:msi_app/models/item_batch.dart';
+import 'package:msi_app/models/item_purchase_order.dart';
+import 'package:msi_app/providers/item_po_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:provider/provider.dart';
 
 class DialogInputQty extends StatefulWidget {
-  final ItemPoBatch item;
+  final ItemPurchaseOrder item;
 
   const DialogInputQty(this.item);
 
@@ -15,11 +18,16 @@ class DialogInputQty extends StatefulWidget {
 }
 
 class _DialogInputQtyState extends State<DialogInputQty> {
+  final _batchNumber = TextEditingController();
   final _quantity = TextEditingController();
   DateTime _selectedDate = DateTime.now();
 
   String get dateString {
     return DateFormat.yMMMMd().format(_selectedDate);
+  }
+
+  ItemPurchaseOrder get item {
+    return widget.item;
   }
 
   @override
@@ -31,26 +39,25 @@ class _DialogInputQtyState extends State<DialogInputQty> {
         children: [
           BaseTitle('Batch Number / Exp Date'),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          buildReadOnlyInput(widget.item.itemCode),
+          buildInput(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildDatePicker(context),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          buildButtonSubmit(),
+          buildButtonSubmit(context),
         ],
       ),
     );
   }
 
-  Widget buildReadOnlyInput(String value) {
+  Widget buildInput() {
     return TextFormField(
-      readOnly: true,
-      initialValue: value,
+      controller: _batchNumber,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        labelText: 'Item Barcode',
-        hintText: 'Scan Item / Barcode',
+        labelText: 'Batch Number',
+        hintText: 'Scan /Input Batch Number',
         suffixIcon: Icon(Icons.local_see),
       ),
     );
@@ -114,12 +121,22 @@ class _DialogInputQtyState extends State<DialogInputQty> {
     );
   }
 
-  Widget buildButtonSubmit() {
+  Widget buildButtonSubmit(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(
         child: Text('Submit'),
         onPressed: () {
+          final itemPoProvider =
+              Provider.of<ItemPoProvider>(context, listen: false);
+          itemPoProvider.addBatch(
+            item,
+            ItemBatch(
+              batchNo: _batchNumber.text,
+              expiredDate: _selectedDate,
+              availableQty: double.parse(_quantity.text),
+            ),
+          );
           Navigator.of(context).pop();
         },
       ),

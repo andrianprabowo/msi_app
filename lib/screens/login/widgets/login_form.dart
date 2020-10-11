@@ -42,9 +42,15 @@ class _LoginFormState extends State<LoginForm> {
           _formKey.currentState.save();
 
           if (_username.isEmpty || _password.isEmpty) {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(content: Text('Please input all required fields')),
-            );
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Row(
+                children: [
+                  Icon(Icons.error_outline, color: Colors.red),
+                  SizedBox(width: getProportionateScreenWidth(kLarge)),
+                  Text('Please input Username & Password fields'),
+                ],
+              ),
+            ));
             return;
           }
 

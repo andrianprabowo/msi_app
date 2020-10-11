@@ -1,44 +1,43 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/item_purchase_order.dart';
 
 class PurchaseOrder with ChangeNotifier {
   final int docEntry;
+  final DateTime postingDate;
   final String poNumber;
   final DateTime docDate;
   final String vendorCode;
   final String vendorName;
+  final String storageLocation;
+  final String storageLocationName;
+  final String docnum;
+  List<ItemPurchaseOrder> detailList;
   PurchaseOrder({
     this.docEntry,
+    this.postingDate,
     this.poNumber,
     this.docDate,
     this.vendorCode,
     this.vendorName,
+    this.storageLocation,
+    this.storageLocationName,
+    this.docnum,
+    this.detailList,
   });
-
-  PurchaseOrder copyWith({
-    int docEntry,
-    String poNumber,
-    DateTime docDate,
-    String vendorCode,
-    String vendorName,
-  }) {
-    return PurchaseOrder(
-      docEntry: docEntry ?? this.docEntry,
-      poNumber: poNumber ?? this.poNumber,
-      docDate: docDate ?? this.docDate,
-      vendorCode: vendorCode ?? this.vendorCode,
-      vendorName: vendorName ?? this.vendorName,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
-      'h_DocEntry': docEntry,
-      'h_U_DocNum': poNumber,
-      'h_DocDate': docDate?.toIso8601String(),
-      'h_CardCode': vendorCode,
-      'h_CardName': vendorName,
+      'postingDate': DateTime.now().toIso8601String(),
+      'poNo': poNumber,
+      'deliveryDate': docDate?.toIso8601String(),
+      'kdVendor': vendorCode,
+      'nmVendor': vendorName,
+      'storageLocation': storageLocation ?? '',
+      'storageLocationName': storageLocationName ?? '',
+      'docnum': poNumber,
+      'details': detailList?.map((x) => x?.toMap())?.toList(),
     };
   }
 
@@ -51,6 +50,7 @@ class PurchaseOrder with ChangeNotifier {
       docDate: DateTime.parse(map['h_DocDate']),
       vendorCode: map['h_CardCode'] ?? '',
       vendorName: map['h_CardName'] ?? '',
+      detailList: map['detailList'] ?? [],
     );
   }
 
@@ -61,27 +61,6 @@ class PurchaseOrder with ChangeNotifier {
 
   @override
   String toString() {
-    return 'PurchaseOrder(docEntry: $docEntry, poNumber: $poNumber, docDate: $docDate, vendorCode: $vendorCode, vendorName: $vendorName)';
-  }
-
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is PurchaseOrder &&
-        o.docEntry == docEntry &&
-        o.poNumber == poNumber &&
-        o.docDate == docDate &&
-        o.vendorCode == vendorCode &&
-        o.vendorName == vendorName;
-  }
-
-  @override
-  int get hashCode {
-    return docEntry.hashCode ^
-        poNumber.hashCode ^
-        docDate.hashCode ^
-        vendorCode.hashCode ^
-        vendorName.hashCode;
+    return 'PurchaseOrder(docEntry: $docEntry, poNumber: $poNumber, docDate: $docDate, vendorCode: $vendorCode, vendorName: $vendorName, detailList: $detailList)';
   }
 }
