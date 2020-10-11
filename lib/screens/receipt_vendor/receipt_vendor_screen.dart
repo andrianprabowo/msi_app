@@ -26,11 +26,12 @@ class ReceiptVendorScreen extends StatelessWidget {
         title: Text('Receipt From Vendor'),
         actions: [
           IconButton(
-              icon: Icon(Icons.list_alt),
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(ListReceiptFromVendorScreen.routeName);
-              })
+            icon: Icon(Icons.list_alt),
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamed(ListReceiptFromVendorScreen.routeName);
+            },
+          ),
         ],
       ),
       body: Container(

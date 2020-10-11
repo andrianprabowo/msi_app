@@ -11,7 +11,6 @@ import 'package:msi_app/screens/pick_item_bin/pick_list_bin_screen.dart';
 import 'package:msi_app/screens/pick_item_receive/pick_item_receive_screen.dart';
 import 'package:msi_app/screens/picker_pick/picker_pick_screen.dart';
 import 'package:msi_app/screens/production/production_screen.dart';
-import 'package:msi_app/screens/production_header/production_header_screen.dart';
 import 'package:msi_app/screens/put_away/put_away_screen.dart';
 import 'package:msi_app/screens/receipt_check/receipt_check_screen.dart';
 import 'package:msi_app/screens/receipt_detail/receipt_detail_screen.dart';
@@ -72,7 +71,4 @@ final Map<String, WidgetBuilder> routes = {
 
   // Return To Vendor
   ReturnVendorScreen.routeName: (context) => ReturnVendorScreen(),
-
-  // Production
-  ProductionHeaderScreen.routeName: (context) => ProductionHeaderScreen(),
 };
