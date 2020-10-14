@@ -6,15 +6,17 @@ import 'package:msi_app/models/pick_item_receive.dart';
 class PickListWhs with ChangeNotifier {
   final String pickNumber;
   final DateTime pickDate;
+  final DateTime postingDate;
   final String cardCode;
   final String cardName;
   final String pickRemark;
   final String filename;
-  final String storageLocation;
+  String storageLocation;
   List<PickItemReceive> pickItemList;
   PickListWhs({
     this.pickNumber,
     this.pickDate,
+    this.postingDate,
     this.cardCode,
     this.cardName,
     this.pickRemark,
@@ -26,7 +28,8 @@ class PickListWhs with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'doNo': pickNumber,
-      'postingDate': pickDate?.toIso8601String(),
+      'deliveryDate': pickDate?.toIso8601String(),
+      'postingDate': DateTime.now().toIso8601String(),
       'plant': cardCode,
       'plantName': cardName,
       'remark': pickRemark,
@@ -58,6 +61,6 @@ class PickListWhs with ChangeNotifier {
 
   @override
   String toString() {
-    return 'PickListWhs(pickNumber: $pickNumber, pickDate: $pickDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, filename: $filename, storageLocation: $storageLocation, pickItemList: $pickItemList)';
+    return 'PickListWhs(pickNumber: $pickNumber, pickDate: $pickDate, postingDate: $postingDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, filename: $filename, storageLocation: $storageLocation, pickItemList: $pickItemList)';
   }
 }

@@ -38,7 +38,7 @@ class PickItemReceiveScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.post_add),
             onPressed: () {
-              Navigator.of(context).pushNamed(PickerCheckScreen.routeName);
+              Navigator.of(context).pushNamed(PickCheckScreen.routeName);
             },
           )
         ],

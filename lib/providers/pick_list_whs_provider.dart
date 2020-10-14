@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/models/pick_list_whs.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -12,6 +13,10 @@ class PickListWhsProvider with ChangeNotifier {
 
   List<PickListWhs> get items => _items;
   PickListWhs get selected => _selected;
+
+  List<PickItemReceive> get detailList {
+    return _selected.pickItemList.where((item) => item.pickedQty > 0).toList();
+  }
 
   Future<void> getPlByWarehouse() async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
@@ -52,6 +57,8 @@ class PickListWhsProvider with ChangeNotifier {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
+
+    _selected.pickItemList = detailList;
 
     try {
       var response = await http.post(

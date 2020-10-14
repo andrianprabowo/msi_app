@@ -22,14 +22,14 @@ class PickItemReceive with ChangeNotifier {
     this.pickedQty,
     this.unitMsr,
     this.val,
-    this.itemStorageLocation = '',
+    this.itemStorageLocation,
     this.batchList,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'materialNo': itemCode,
-      'materialNo': description,
+      'materialDesc': description,
       'openQty': openQty,
       'quantity': quantity,
       'grQuantity': pickedQty,

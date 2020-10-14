@@ -65,7 +65,7 @@ final Map<String, WidgetBuilder> routes = {
   PickItemReceiveScreen.routeName: (context) => PickItemReceiveScreen(),
   PickListBinScreen.routeName: (context) => PickListBinScreen(),
   PickItemBatchScreen.routeName: (context) => PickItemBatchScreen(),
-  PickerCheckScreen.routeName: (context) => PickerCheckScreen(),
+  PickCheckScreen.routeName: (context) => PickCheckScreen(),
 
   // Inventory Dispatch
   InventoryDispatchHeaderScreen.routeName: (context) =>
