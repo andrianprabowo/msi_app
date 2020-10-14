@@ -11,21 +11,7 @@ class PickListBinProvider with ChangeNotifier {
   var _showAllBin = false;
 
   List<PickListBin> get items {
-    // _items.forEach((detail) {
-    //   // calculate total batch qty
-    //   var totalBatch = 0.0;
-    //   detail.batchList.forEach((batch) {
-    //     totalBatch = totalBatch + batch.availableQty;
-    //   });
-    //   detail.quantity = totalBatch;
-
-    //   // calculate remaining qty
-    //   detail.remainingQty = detail.openQty - detail.quantity;
-    // });
-
-    // _items = _items.where((item) => item.remainingQty > 0).toList();
-
-    return _items;
+    return _showAllBin ? _items : _items.take(5).toList();
   }
 
   bool get showAllBin => _showAllBin;
@@ -35,9 +21,10 @@ class PickListBinProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getPlBinList() async {
+  Future<void> getPlBinList(String itemCode) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
-    final url = '$kBaseUrl/api/getplbinlist/whscode=$warehouseId';
+    final url =
+        '$kBaseUrl/api/newgetplbinlist/whscode=$warehouseId&itemcode=$itemCode';
 
     try {
       final response = await http.get(url);
@@ -62,16 +49,4 @@ class PickListBinProvider with ChangeNotifier {
   PickListBin findByBinLocation(String binLocation) {
     return _items.firstWhere((element) => element.binLocation == binLocation);
   }
-
-  // void addBatch(ItemPurchaseOrder itemPo, ItemBatch itemBatch) {
-  //   itemPo.batchList.add(itemBatch);
-  //   notifyListeners();
-  //   print('Added Batch: $itemBatch');
-  // }
-
-  // void removeBatch(ItemPurchaseOrder itemPo, ItemBatch itemBatch) {
-  //   itemPo.batchList.remove(itemBatch);
-  //   notifyListeners();
-  //   print('Removed Batch: $itemBatch');
-  // }
 }

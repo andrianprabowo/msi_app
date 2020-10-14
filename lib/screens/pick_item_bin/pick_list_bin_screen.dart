@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/providers/pick_list_bin_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_provider.dart';
+import 'package:msi_app/screens/pick_item_batch/pick_item_batch_screen.dart';
 import 'package:msi_app/screens/pick_item_bin/widget/item_pick_item_bin.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -14,16 +16,18 @@ import 'package:provider/provider.dart';
 class PickListBinScreen extends StatelessWidget {
   static const routeName = '/pick_list_bin';
 
-  Future<void> refreshData(BuildContext context) async {
+  Future<void> refreshData(BuildContext context, String itemCode) async {
     final pickItemProvider =
         Provider.of<PickListBinProvider>(context, listen: false);
-    await pickItemProvider.getPlBinList();
+    await pickItemProvider.getPlBinList(itemCode);
   }
 
   @override
   Widget build(BuildContext context) {
-    final item =
+    final pickList =
         Provider.of<PickListWhsProvider>(context, listen: false).selected;
+    PickItemReceive pickItemReceive = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Pick List'),
@@ -38,14 +42,14 @@ class PickListBinScreen extends StatelessWidget {
           children: [
             BaseTextLine('Recommendation Bin', "REC-BIN"),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Memo', item.pickRemark),
+            BaseTextLine('Memo', pickList.pickRemark),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildInputScan(context),
+            buildInputScan(context, pickItemReceive),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             Row(
               children: [
                 Expanded(
-                  child: BaseTitle('List Inventory Transfer'),
+                  child: BaseTitle('List Bin Location'),
                 ),
                 Text('Show All Bin'),
                 Consumer<PickListBinProvider>(
@@ -61,17 +65,17 @@ class PickListBinScreen extends StatelessWidget {
               ],
             ),
             Divider(),
-            buildItemList(context),
+            buildItemList(context, pickItemReceive),
           ],
         ),
       ),
     );
   }
 
-  Widget buildItemList(BuildContext context) {
+  Widget buildItemList(BuildContext context, PickItemReceive item) {
     return Expanded(
       child: FutureBuilder(
-        future: refreshData(context),
+        future: refreshData(context, item.itemCode),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -80,7 +84,7 @@ class PickListBinScreen extends StatelessWidget {
           if (snapshot.hasError) return ErrorInfo();
 
           return RefreshIndicator(
-            onRefresh: () => refreshData(context),
+            onRefresh: () => refreshData(context, item.itemCode),
             child: Consumer<PickListBinProvider>(
               builder: (_, provider, child) => provider.items.length == 0
                   ? NoData()
@@ -89,7 +93,7 @@ class PickListBinScreen extends StatelessWidget {
                       itemBuilder: (_, index) {
                         return ChangeNotifierProvider.value(
                           value: provider.items[index],
-                          child: ItemPickItemBin(provider.items[index]),
+                          child: ItemPickItemBin(item, provider.items[index]),
                         );
                       },
                     ),
@@ -100,17 +104,20 @@ class PickListBinScreen extends StatelessWidget {
     );
   }
 
-  Widget buildInputScan(BuildContext context) {
+  Widget buildInputScan(BuildContext context, PickItemReceive pickItemReceive) {
     final provider = Provider.of<PickListBinProvider>(context, listen: false);
     return InputScan(
       label: 'Bin Location',
       hint: 'Scan Bin Location',
       scanResult: (value) {
         final item = provider.findByBinLocation(value);
-        // Navigator.of(context).pushNamed(
-        //   PickItemReceiveScreen.routeName,
-        //   arguments: itemCode,
-        // );
+        Navigator.of(context).pushNamed(
+          PickItemBatchScreen.routeName,
+          arguments: {
+            'pickItemReceive': pickItemReceive,
+            'pickListBin': item,
+          },
+        );
       },
     );
   }

@@ -10,6 +10,7 @@ class ItemPurchaseOrder with ChangeNotifier {
   double quantity;
   double remainingQty;
   final String uom;
+  final String filename;
   final String docNum;
   List<ItemBatch> batchList;
   ItemPurchaseOrder({
@@ -19,6 +20,7 @@ class ItemPurchaseOrder with ChangeNotifier {
     this.quantity,
     this.remainingQty,
     this.uom,
+    this.filename,
     this.docNum,
     this.batchList,
   });
@@ -30,6 +32,7 @@ class ItemPurchaseOrder with ChangeNotifier {
     double quantity,
     double remainingQty,
     String uom,
+    String filename,
     String docNum,
     List<ItemBatch> batchList,
   }) {
@@ -40,6 +43,7 @@ class ItemPurchaseOrder with ChangeNotifier {
       quantity: quantity ?? this.quantity,
       remainingQty: remainingQty ?? this.remainingQty,
       uom: uom ?? this.uom,
+      filename: filename ?? this.filename,
       docNum: docNum ?? this.docNum,
       batchList: batchList ?? this.batchList,
     );
@@ -51,6 +55,7 @@ class ItemPurchaseOrder with ChangeNotifier {
       'materialDesc': description,
       'grQuantity': quantity.toString(),
       'uom': uom,
+      'filename': 'Receipt Vendor',
       'listBatches': batchList?.map((x) => x?.toMap())?.toList(),
     };
   }
@@ -65,6 +70,7 @@ class ItemPurchaseOrder with ChangeNotifier {
       quantity: map['quantity'] ?? 0.0,
       remainingQty: map['remainingQty'] ?? 0.0,
       uom: map['unitMsr'] ?? '',
+      filename: 'Receipt Vendor',
       docNum: map['docNum'] ?? '',
       batchList: map['batchList'] ?? [],
     );
@@ -77,6 +83,6 @@ class ItemPurchaseOrder with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ItemPurchaseOrder(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, remainingQty: $remainingQty, uom: $uom, docNum: $docNum, batchList: $batchList)';
+    return 'ItemPurchaseOrder(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, remainingQty: $remainingQty, uom: $uom, filename: $filename, docNum: $docNum, batchList: $batchList)';
   }
 }

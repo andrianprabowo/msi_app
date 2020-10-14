@@ -4,30 +4,21 @@ import 'package:flutter/material.dart';
 
 class PickBatch with ChangeNotifier {
   final String batchNo;
-  final double availableQty;
+  double availableQty;
+  double pickQty;
   final DateTime expiredDate;
   PickBatch({
     this.batchNo,
     this.availableQty,
+    this.pickQty,
     this.expiredDate,
   });
-
-  PickBatch copyWith({
-    String batchNo,
-    double availableQty,
-    DateTime expiredDate,
-  }) {
-    return PickBatch(
-      batchNo: batchNo ?? this.batchNo,
-      availableQty: availableQty ?? this.availableQty,
-      expiredDate: expiredDate ?? this.expiredDate,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
       'batchNo': batchNo,
-      'avlQty': availableQty,
+      'batchQuantity': availableQty,
+      'pickQty': pickQty,
       'expDate': expiredDate?.toIso8601String(),
     };
   }
@@ -37,7 +28,8 @@ class PickBatch with ChangeNotifier {
 
     return PickBatch(
       batchNo: map['batchNo'] ?? '',
-      availableQty: map['avlqty'] ?? 0.0,
+      availableQty: map['avlQty'] ?? 0.0,
+      pickQty: map['pickQty'] ?? 0.0,
       expiredDate: DateTime.parse(map['expDate']),
     );
   }
@@ -49,19 +41,5 @@ class PickBatch with ChangeNotifier {
 
   @override
   String toString() =>
-      'PickBatch(batchNo: $batchNo, availableQty: $availableQty, expiredDate: $expiredDate)';
-
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is PickBatch &&
-        o.batchNo == batchNo &&
-        o.availableQty == availableQty &&
-        o.expiredDate == expiredDate;
-  }
-
-  @override
-  int get hashCode =>
-      batchNo.hashCode ^ availableQty.hashCode ^ expiredDate.hashCode;
+      'PickBatch(batchNo: $batchNo, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate)';
 }

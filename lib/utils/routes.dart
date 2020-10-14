@@ -7,6 +7,8 @@ import 'package:msi_app/screens/list_put_away_submited/list_put_away_submited_sc
 import 'package:msi_app/screens/list_receipt_from_vendor/list_receipt_from_vendor_screen.dart';
 import 'package:msi_app/screens/login/login_screen.dart';
 import 'package:msi_app/screens/outbound/outbound_screen.dart';
+import 'package:msi_app/screens/pick_check/pick_check_screen.dart';
+import 'package:msi_app/screens/pick_item_batch/pick_item_batch_screen.dart';
 import 'package:msi_app/screens/pick_item_bin/pick_list_bin_screen.dart';
 import 'package:msi_app/screens/pick_item_receive/pick_item_receive_screen.dart';
 import 'package:msi_app/screens/picker_pick/picker_pick_screen.dart';
@@ -62,6 +64,8 @@ final Map<String, WidgetBuilder> routes = {
   PickerPickScreen.routeName: (context) => PickerPickScreen(),
   PickItemReceiveScreen.routeName: (context) => PickItemReceiveScreen(),
   PickListBinScreen.routeName: (context) => PickListBinScreen(),
+  PickItemBatchScreen.routeName: (context) => PickItemBatchScreen(),
+  PickerCheckScreen.routeName: (context) => PickerCheckScreen(),
 
   // Inventory Dispatch
   InventoryDispatchHeaderScreen.routeName: (context) =>

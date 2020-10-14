@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/pick_list_whs.dart';
 import 'package:msi_app/providers/pick_item_receive_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_provider.dart';
+import 'package:msi_app/screens/pick_check/pick_check_screen.dart';
 import 'package:msi_app/screens/pick_item_bin/pick_list_bin_screen.dart';
 import 'package:msi_app/screens/pick_item_receive/widgets/item_pick_receive.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -20,6 +21,10 @@ class PickItemReceiveScreen extends StatelessWidget {
     final pickItemProvider =
         Provider.of<PickItemReceiveProvider>(context, listen: false);
     await pickItemProvider.getPlActionByPlNo(pickNumber);
+
+    final pickWhsProvider =
+        Provider.of<PickListWhsProvider>(context, listen: false);
+    pickWhsProvider.selected.pickItemList = pickItemProvider.items;
   }
 
   @override
@@ -29,6 +34,14 @@ class PickItemReceiveScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Pick List'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.post_add),
+            onPressed: () {
+              Navigator.of(context).pushNamed(PickerCheckScreen.routeName);
+            },
+          )
+        ],
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(
@@ -95,7 +108,8 @@ class PickItemReceiveScreen extends StatelessWidget {
       hint: 'Scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value);
-        Navigator.of(context).pushNamed(PickListBinScreen.routeName);
+        Navigator.of(context)
+            .pushNamed(PickListBinScreen.routeName, arguments: item);
       },
     );
   }

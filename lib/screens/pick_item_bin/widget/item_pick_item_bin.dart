@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/models/pick_list_bin.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/screens/pick_item_batch/pick_item_batch_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:provider/provider.dart';
 
 class ItemPickItemBin extends StatelessWidget {
+  final PickItemReceive pickItemReceive;
   final PickListBin item;
 
-  const ItemPickItemBin(this.item);
+  const ItemPickItemBin(this.pickItemReceive, this.item);
 
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InkWell(
       onTap: () {
-        // Navigator.of(context);
-        // .pushNamed(PickItemReceiveScreen.routeName, arguments: item);
+        Navigator.of(context).pushNamed(
+          PickItemBatchScreen.routeName,
+          arguments: {
+            'pickItemReceive': pickItemReceive,
+            'pickListBin': item,
+          },
+        );
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),
@@ -25,9 +33,8 @@ class ItemPickItemBin extends StatelessWidget {
         child: Column(
           children: [
             BaseTextLine('Bin Location', item.binLocation),
-            BaseTextLine('Capacity', item.capacity.toStringAsPrecision(2)),
             BaseTextLine('Warehouse', authProvider.warehouseName),
-            BaseTextLine('Qty', item.qty.toString()),
+            BaseTextLine('Qty', item.avlQty.toString()),
           ],
         ),
       ),

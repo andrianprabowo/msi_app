@@ -1,50 +1,42 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/pick_list_bin.dart';
+import 'package:msi_app/models/pick_batch.dart';
 
 class PickItemReceive with ChangeNotifier {
   final String itemCode;
   final String description;
-  final double openQty;
-  final double quantity;
+  double openQty;
+  double quantity;
+  double pickedQty;
   final String unitMsr;
-  List<PickListBin> binList;
+  final int val;
+  String itemStorageLocation;
+  List<PickBatch> batchList;
+
   PickItemReceive({
     this.itemCode,
     this.description,
     this.openQty,
     this.quantity,
+    this.pickedQty,
     this.unitMsr,
-    this.binList,
+    this.val,
+    this.itemStorageLocation = '',
+    this.batchList,
   });
-
-  PickItemReceive copyWith({
-    String itemCode,
-    String description,
-    double openQty,
-    double quantity,
-    String unitMsr,
-    List<PickListBin> binList,
-  }) {
-    return PickItemReceive(
-      itemCode: itemCode ?? this.itemCode,
-      description: description ?? this.description,
-      openQty: openQty ?? this.openQty,
-      quantity: quantity ?? this.quantity,
-      unitMsr: unitMsr ?? this.unitMsr,
-      binList: binList ?? this.binList,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
-      'itemCode': itemCode,
-      'description': description,
+      'materialNo': itemCode,
+      'materialNo': description,
       'openQty': openQty,
       'quantity': quantity,
-      'unitMsr': unitMsr,
-      'binList': binList?.map((x) => x?.toMap())?.toList(),
+      'grQuantity': pickedQty,
+      'uom': unitMsr,
+      'val': val,
+      'itemStorageLocation': itemStorageLocation,
+      'listBatches': batchList?.map((x) => x?.toMap())?.toList(),
     };
   }
 
@@ -56,8 +48,11 @@ class PickItemReceive with ChangeNotifier {
       description: map['dscription'] ?? '',
       openQty: map['openQty'] ?? 0.0,
       quantity: map['quantity'] ?? 0.0,
+      pickedQty: map['grQuantity'] ?? 0.0,
       unitMsr: map['unitMsr'] ?? '',
-      binList: map['binList'] ?? [],
+      val: map['val'] ?? 0,
+      itemStorageLocation: map['itemStorageLocation'] ?? '',
+      batchList: map['batchList'] ?? [],
     );
   }
 
@@ -68,6 +63,6 @@ class PickItemReceive with ChangeNotifier {
 
   @override
   String toString() {
-    return 'PickItemReceive(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, unitMsr: $unitMsr, binList: $binList)';
+    return 'PickItemReceive(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, pickedQty: $pickedQty, unitMsr: $unitMsr, val: $val, itemStorageLocation: $itemStorageLocation, batchList: $batchList)';
   }
 }

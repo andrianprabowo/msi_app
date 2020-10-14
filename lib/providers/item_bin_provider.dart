@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_bin.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
-import 'package:msi_app/utils/prefs.dart';
 
 class ItemBinProvider with ChangeNotifier {
   List<ItemBin> _items;
@@ -12,7 +11,7 @@ class ItemBinProvider with ChangeNotifier {
   List<ItemBin> get items => _items;
 
   Future<void> getItemInStagingBin(String binCode) async {
-    final warehouseId = await Prefs.getString(Prefs.warehouseId);
+    // final warehouseId = await Prefs.getString(Prefs.warehouseId);
     // final url = '$kBaseUrl/api/getiteminstgbin/bincode=$binCode&whscode=$warehouseId';
     final url =
         '$kBaseUrl/api/getiteminstgbin/bincode=WMSISTPR-SYSTEM-BIN-LOCATION&whscode=WMSISTPR';

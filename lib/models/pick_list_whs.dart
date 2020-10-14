@@ -9,6 +9,8 @@ class PickListWhs with ChangeNotifier {
   final String cardCode;
   final String cardName;
   final String pickRemark;
+  final String filename;
+  final String storageLocation;
   List<PickItemReceive> pickItemList;
   PickListWhs({
     this.pickNumber,
@@ -16,35 +18,21 @@ class PickListWhs with ChangeNotifier {
     this.cardCode,
     this.cardName,
     this.pickRemark,
+    this.filename,
+    this.storageLocation,
     this.pickItemList,
   });
 
-  PickListWhs copyWith({
-    String pickNumber,
-    DateTime pickDate,
-    String cardCode,
-    String cardName,
-    String pickRemark,
-    List<PickItemReceive> pickItemList,
-  }) {
-    return PickListWhs(
-      pickNumber: pickNumber ?? this.pickNumber,
-      pickDate: pickDate ?? this.pickDate,
-      cardCode: cardCode ?? this.cardCode,
-      cardName: cardName ?? this.cardName,
-      pickRemark: pickRemark ?? this.pickRemark,
-      pickItemList: pickItemList ?? this.pickItemList,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return {
-      'pickNumber': pickNumber,
-      'pickDate': pickDate?.millisecondsSinceEpoch,
-      'cardCode': cardCode,
-      'cardName': cardName,
-      'pickRemark': pickRemark,
-      'pickItemList': pickItemList?.map((x) => x?.toMap())?.toList(),
+      'doNo': pickNumber,
+      'postingDate': pickDate?.toIso8601String(),
+      'plant': cardCode,
+      'plantName': cardName,
+      'remark': pickRemark,
+      'filename': 'Pick List',
+      'storageLocation': storageLocation,
+      'details': pickItemList?.map((x) => x?.toMap())?.toList(),
     };
   }
 
@@ -56,7 +44,9 @@ class PickListWhs with ChangeNotifier {
       pickDate: DateTime.parse(map['docDate']),
       cardCode: map['cardCode'] ?? '',
       cardName: map['cardName'] ?? '',
-      pickRemark: map['pickRemark'] ?? "",
+      pickRemark: map['pickRemark'] ?? '',
+      filename: 'Pick List',
+      storageLocation: map['storageLocation'] ?? '',
       pickItemList: map['pickItemList'] ?? [],
     );
   }
@@ -68,6 +58,6 @@ class PickListWhs with ChangeNotifier {
 
   @override
   String toString() {
-    return 'PickListWhs(pickNumber: $pickNumber, pickDate: $pickDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, pickItemList: $pickItemList)';
+    return 'PickListWhs(pickNumber: $pickNumber, pickDate: $pickDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, filename: $filename, storageLocation: $storageLocation, pickItemList: $pickItemList)';
   }
 }
