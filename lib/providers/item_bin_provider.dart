@@ -15,7 +15,7 @@ class ItemBinProvider with ChangeNotifier {
       // calculate total batch qty
       var totalBatch = 0.0;
       detail.batchList.forEach((batch) {
-        totalBatch = totalBatch + batch.availableQty;
+        totalBatch = totalBatch + batch.putQty;
       });
       detail.putQty = totalBatch;
 

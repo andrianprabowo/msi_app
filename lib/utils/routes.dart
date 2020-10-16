@@ -21,7 +21,7 @@ import 'package:msi_app/screens/return_outlet/return_outlet_screen.dart';
 import 'package:msi_app/screens/return_vendor/return_vendor_screen.dart';
 import 'package:msi_app/screens/splash/splash_screen.dart';
 import 'package:msi_app/screens/staging_batch/staging_batch_screen.dart';
-import 'package:msi_app/screens/staging_confirm/staging_confirm_screen.dart';
+import 'package:msi_app/screens/staging_check/staging_check_screen.dart';
 import 'package:msi_app/screens/staging_item/staging_item_screen.dart';
 import 'package:msi_app/screens/stock_counting/stock_counting_screen.dart';
 import 'package:msi_app/screens/stock_inquiry/stock_inquiry_screen.dart';
@@ -55,7 +55,7 @@ final Map<String, WidgetBuilder> routes = {
   StagingItemScreen.routeName: (context) => StagingItemScreen(),
   StagingBatchScreen.routeName: (context) => StagingBatchScreen(),
   StorageBinItemScreen.routeName: (context) => StorageBinItemScreen(),
-  StagingConfirmScreen.routeName: (context) => StagingConfirmScreen(),
+  StagingCheckScreen.routeName: (context) => StagingCheckScreen(),
   ListPutAwaySubmitedScreen.routeName: (context) => ListPutAwaySubmitedScreen(),
 
   // Return From Outlet

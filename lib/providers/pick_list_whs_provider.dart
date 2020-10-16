@@ -67,6 +67,7 @@ class PickListWhsProvider with ChangeNotifier {
         body: _selected.toJson(),
       );
       print(response.request);
+      print(_selected.toJson());
 
       print('Status: ${response.statusCode}');
       final data = json.decode(response.body) as Map;

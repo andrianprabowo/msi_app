@@ -15,9 +15,7 @@ class StagingBinProvider with ChangeNotifier {
   StagingBin get selected => _selected;
 
   List<ItemBin> get itemBinList {
-    return _selected.itemBinList
-        .where((element) => element.batchList.isNotEmpty)
-        .toList();
+    return _selected.itemBinList.where((item) => item.putQty > 0).toList();
   }
 
   Future<void> getBinLoc() async {
@@ -60,6 +58,8 @@ class StagingBinProvider with ChangeNotifier {
       'Accept': 'application/json',
     };
 
+    _selected.itemBinList = itemBinList;
+
     try {
       var response = await http.post(
         url,
@@ -67,6 +67,7 @@ class StagingBinProvider with ChangeNotifier {
         body: _selected.toJson(),
       );
       print(response.request);
+      print(_selected.toJson());
 
       print('Status: ${response.statusCode}');
       final data = json.decode(response.body) as Map;

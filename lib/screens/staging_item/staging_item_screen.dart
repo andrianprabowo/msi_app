@@ -3,6 +3,7 @@ import 'package:msi_app/models/staging_bin.dart';
 import 'package:msi_app/providers/item_bin_provider.dart';
 import 'package:msi_app/providers/staging_bin.provider.dart';
 import 'package:msi_app/screens/staging_batch/staging_batch_screen.dart';
+import 'package:msi_app/screens/staging_check/staging_check_screen.dart';
 import 'package:msi_app/screens/staging_item/widgets/item_staging_bin.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -16,8 +17,13 @@ class StagingItemScreen extends StatelessWidget {
   static const routeName = '/staging_item';
 
   Future<void> refreshData(BuildContext context, String binCode) async {
-    await Provider.of<ItemBinProvider>(context, listen: false)
-        .getItemInStagingBin(binCode);
+    final itemBinProvider =
+        Provider.of<ItemBinProvider>(context, listen: false);
+    await itemBinProvider.getItemInStagingBin(binCode);
+
+    final stagingBinProvider =
+        Provider.of<StagingBinProvider>(context, listen: false);
+    stagingBinProvider.selected.itemBinList = itemBinProvider.items;
   }
 
   @override
@@ -28,6 +34,13 @@ class StagingItemScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Put Away'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.post_add),
+            onPressed: () =>
+                Navigator.of(context).pushNamed(StagingCheckScreen.routeName),
+          )
+        ],
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(
