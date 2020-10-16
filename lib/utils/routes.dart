@@ -25,6 +25,7 @@ import 'package:msi_app/screens/staging_confirm/staging_confirm_screen.dart';
 import 'package:msi_app/screens/staging_item/staging_item_screen.dart';
 import 'package:msi_app/screens/stock_counting/stock_counting_screen.dart';
 import 'package:msi_app/screens/stock_inquiry/stock_inquiry_screen.dart';
+import 'package:msi_app/screens/storage_bin_item/storage_bin_item_screen.dart';
 
 final String initialRoute = SplashScreen.routeName;
 
@@ -53,6 +54,7 @@ final Map<String, WidgetBuilder> routes = {
   PutAwayScreen.routeName: (context) => PutAwayScreen(),
   StagingItemScreen.routeName: (context) => StagingItemScreen(),
   StagingBatchScreen.routeName: (context) => StagingBatchScreen(),
+  StorageBinItemScreen.routeName: (context) => StorageBinItemScreen(),
   StagingConfirmScreen.routeName: (context) => StagingConfirmScreen(),
   ListPutAwaySubmitedScreen.routeName: (context) => ListPutAwaySubmitedScreen(),
 

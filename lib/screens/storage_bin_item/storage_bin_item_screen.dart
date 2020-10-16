@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/pick_item_receive.dart';
-import 'package:msi_app/providers/pick_list_bin_provider.dart';
-import 'package:msi_app/providers/pick_list_whs_provider.dart';
-import 'package:msi_app/screens/pick_item_batch/pick_item_batch_screen.dart';
-import 'package:msi_app/screens/pick_item_bin/widget/item_pick_item_bin.dart';
+import 'package:msi_app/models/item_bin.dart';
+import 'package:msi_app/providers/item_batch_provider.dart';
+import 'package:msi_app/providers/item_bin_provider.dart';
+import 'package:msi_app/providers/storage_bin_item_provider.dart';
+import 'package:msi_app/screens/staging_item/staging_item_screen.dart';
+import 'package:msi_app/screens/storage_bin_item/widgets/item_storage_bin_item.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -13,24 +14,22 @@ import 'package:msi_app/widgets/input_scan.dart';
 import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
-class PickListBinScreen extends StatelessWidget {
-  static const routeName = '/pick_list_bin';
+class StorageBinItemScreen extends StatelessWidget {
+  static const routeName = '/storage_bin_item';
 
-  Future<void> refreshData(BuildContext context, String itemCode) async {
-    final pickItemProvider =
-        Provider.of<PickListBinProvider>(context, listen: false);
-    await pickItemProvider.getPlBinList(itemCode);
+  Future<void> refreshData(BuildContext context) async {
+    final provider =
+        Provider.of<StorageBinItemProvider>(context, listen: false);
+    await provider.getBinLocList();
   }
 
   @override
   Widget build(BuildContext context) {
-    final pickList =
-        Provider.of<PickListWhsProvider>(context, listen: false).selected;
-    PickItemReceive pickItemReceive = ModalRoute.of(context).settings.arguments;
+    ItemBin itemBin = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick List'),
+        title: Text('Put Away'),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(
@@ -42,9 +41,7 @@ class PickListBinScreen extends StatelessWidget {
           children: [
             BaseTextLine('Recommendation Bin', ''),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Memo', pickList.pickRemark),
-            SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildInputScan(context, pickItemReceive),
+            buildInputScan(context, itemBin),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             Row(
               children: [
@@ -52,7 +49,7 @@ class PickListBinScreen extends StatelessWidget {
                   child: BaseTitle('List Bin Location'),
                 ),
                 Text('Show All Bin'),
-                Consumer<PickListBinProvider>(
+                Consumer<StorageBinItemProvider>(
                   builder: (_, provider, child) {
                     return Switch(
                       value: provider.showAllBin,
@@ -65,17 +62,17 @@ class PickListBinScreen extends StatelessWidget {
               ],
             ),
             Divider(),
-            buildItemList(context, pickItemReceive),
+            buildItemList(context, itemBin),
           ],
         ),
       ),
     );
   }
 
-  Widget buildItemList(BuildContext context, PickItemReceive item) {
+  Widget buildItemList(BuildContext context, ItemBin itemBin) {
     return Expanded(
       child: FutureBuilder(
-        future: refreshData(context, item.itemCode),
+        future: refreshData(context),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -84,8 +81,8 @@ class PickListBinScreen extends StatelessWidget {
           if (snapshot.hasError) return ErrorInfo();
 
           return RefreshIndicator(
-            onRefresh: () => refreshData(context, item.itemCode),
-            child: Consumer<PickListBinProvider>(
+            onRefresh: () => refreshData(context),
+            child: Consumer<StorageBinItemProvider>(
               builder: (_, provider, child) => provider.items.length == 0
                   ? NoData()
                   : ListView.builder(
@@ -93,7 +90,10 @@ class PickListBinScreen extends StatelessWidget {
                       itemBuilder: (_, index) {
                         return ChangeNotifierProvider.value(
                           value: provider.items[index],
-                          child: ItemPickItemBin(item, provider.items[index]),
+                          child: ItemStorageBinItem(
+                            itemBin,
+                            provider.items[index],
+                          ),
                         );
                       },
                     ),
@@ -104,20 +104,27 @@ class PickListBinScreen extends StatelessWidget {
     );
   }
 
-  Widget buildInputScan(BuildContext context, PickItemReceive pickItemReceive) {
-    final provider = Provider.of<PickListBinProvider>(context, listen: false);
+  Widget buildInputScan(BuildContext context, ItemBin itemBin) {
+    final provider =
+        Provider.of<StorageBinItemProvider>(context, listen: false);
     return InputScan(
       label: 'Bin Location',
       hint: 'Scan Bin Location',
       scanResult: (value) {
-        final item = provider.findByBinLocation(value);
-        Navigator.of(context).pushNamed(
-          PickItemBatchScreen.routeName,
-          arguments: {
-            'pickItemReceive': pickItemReceive,
-            'pickListBin': item,
-          },
-        );
+        final item = provider.findBinByBinCode(value);
+
+        final itemBinProvider =
+            Provider.of<ItemBinProvider>(context, listen: false);
+        final itemBatchProvider =
+            Provider.of<ItemBatchProvider>(context, listen: false);
+        // update bin location
+        itemBin.binCodeDestination = item.binCode;
+        // add batch list
+        final batchList = itemBatchProvider.pickedItems;
+        itemBinProvider.addBatchList(itemBin, batchList);
+
+        Navigator.of(context)
+            .popUntil(ModalRoute.withName(StagingItemScreen.routeName));
       },
     );
   }

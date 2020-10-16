@@ -11,6 +11,7 @@ import 'package:msi_app/providers/pick_list_bin_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_provider.dart';
 import 'package:msi_app/providers/purchase_order_provider.dart';
 import 'package:msi_app/providers/staging_bin.provider.dart';
+import 'package:msi_app/providers/storage_bin_item_provider.dart';
 import 'package:msi_app/providers/warehouse_provider.dart';
 import 'package:msi_app/utils/routes.dart';
 import 'package:msi_app/utils/theme.dart';
@@ -34,6 +35,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => StagingBinProvider()),
         ChangeNotifierProvider(create: (_) => ItemBinProvider()),
         ChangeNotifierProvider(create: (_) => ItemBatchProvider()),
+        ChangeNotifierProvider(create: (_) => StorageBinItemProvider()),
         ChangeNotifierProvider(
             create: (_) => InventoryDispatchHeaderProvider()),
       ],

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/item_batch.dart';
-import 'package:msi_app/screens/staging_confirm/staging_confirm_screen.dart';
+import 'package:msi_app/models/put_batch.dart';
+import 'package:msi_app/screens/staging_batch/widgets/dialog_put_away.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 
 class ItemBatchStaging extends StatelessWidget {
-  final ItemBatch item;
+  final PutBatch item;
 
   const ItemBatchStaging(this.item);
 
@@ -13,9 +13,9 @@ class ItemBatchStaging extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(
-          StagingConfirmScreen.routeName,
-          arguments: item,
+        showModalBottomSheet(
+          context: context,
+          builder: (_) => DialogPutAway(item),
         );
       },
       child: Container(
@@ -27,6 +27,7 @@ class ItemBatchStaging extends StatelessWidget {
             BaseTextLine('Batch Number', item.batchNo),
             BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(2)),
             BaseTextLine('Expired Date', convertDate(item.expiredDate)),
+            BaseTextLine('Put Qty', item.putQty.toStringAsFixed(2)),
           ],
         ),
       ),

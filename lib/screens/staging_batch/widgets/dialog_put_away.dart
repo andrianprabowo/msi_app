@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/pick_batch.dart';
-import 'package:msi_app/providers/pick_batch_provider.dart';
+import 'package:msi_app/models/put_batch.dart';
+import 'package:msi_app/providers/item_batch_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:provider/provider.dart';
 
-class DialogPickBatch extends StatefulWidget {
-  final PickBatch item;
+class DialogPutAway extends StatefulWidget {
+  final PutBatch item;
 
-  const DialogPickBatch(this.item);
+  const DialogPutAway(this.item);
 
   @override
-  _DialogPickBatchState createState() => _DialogPickBatchState();
+  _DialogPutAwayState createState() => _DialogPutAwayState();
 }
 
-class _DialogPickBatchState extends State<DialogPickBatch> {
+class _DialogPutAwayState extends State<DialogPutAway> {
   final _quantity = TextEditingController();
 
   @override
@@ -72,7 +72,7 @@ class _DialogPickBatchState extends State<DialogPickBatch> {
             return;
           }
 
-          Provider.of<PickBatchProvider>(context, listen: false)
+          Provider.of<ItemBatchProvider>(context, listen: false)
               .updatePickQty(widget.item.batchNo, qty);
 
           Navigator.of(context).pop();

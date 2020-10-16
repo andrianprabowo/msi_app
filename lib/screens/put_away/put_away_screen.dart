@@ -85,16 +85,14 @@ class PutAwayScreen extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final poProvider = Provider.of<StagingBinProvider>(context, listen: false);
+    final provider = Provider.of<StagingBinProvider>(context, listen: false);
     return InputScan(
       label: 'Staging Bin',
       hint: 'Input or scan Staging Bin',
       scanResult: (value) {
-        final item = poProvider.findBy(value);
-        Navigator.of(context).pushNamed(
-          StagingItemScreen.routeName,
-          arguments: item,
-        );
+        final item = provider.findByBinCode(value);
+        provider.selectStagingBin(item);
+        Navigator.of(context).pushNamed(StagingItemScreen.routeName);
       },
     );
   }

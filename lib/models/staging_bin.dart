@@ -1,24 +1,20 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:msi_app/models/item_bin.dart';
 
 class StagingBin with ChangeNotifier {
   final String binCode;
+  List<ItemBin> itemBinList;
   StagingBin({
     this.binCode,
+    this.itemBinList,
   });
-
-  StagingBin copyWith({
-    String binCode,
-  }) {
-    return StagingBin(
-      binCode: binCode ?? this.binCode,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
-      'binCode': binCode,
+      'storageLocation': binCode,
+      'details': itemBinList?.map((x) => x?.toMap())?.toList(),
     };
   }
 
@@ -27,6 +23,7 @@ class StagingBin with ChangeNotifier {
 
     return StagingBin(
       binCode: map['binCode'] ?? '',
+      itemBinList: map['itemBinList'] ?? [],
     );
   }
 
@@ -36,15 +33,6 @@ class StagingBin with ChangeNotifier {
       StagingBin.fromMap(json.decode(source));
 
   @override
-  String toString() => 'StagingBin(binCode: $binCode)';
-
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is StagingBin && o.binCode == binCode;
-  }
-
-  @override
-  int get hashCode => binCode.hashCode;
+  String toString() =>
+      'StagingBin(binCode: $binCode, itemBinList: $itemBinList)';
 }

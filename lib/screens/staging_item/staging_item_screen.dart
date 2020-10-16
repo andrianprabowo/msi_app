@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/staging_bin.dart';
 import 'package:msi_app/providers/item_bin_provider.dart';
+import 'package:msi_app/providers/staging_bin.provider.dart';
 import 'package:msi_app/screens/staging_batch/staging_batch_screen.dart';
 import 'package:msi_app/screens/staging_item/widgets/item_staging_bin.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -21,7 +22,9 @@ class StagingItemScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    StagingBin item = ModalRoute.of(context).settings.arguments;
+    final stagingBin =
+        Provider.of<StagingBinProvider>(context, listen: false).selected;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Put Away'),
@@ -38,7 +41,7 @@ class StagingItemScreen extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Items'),
             Divider(),
-            buildItemList(context, item),
+            buildItemList(context, stagingBin),
           ],
         ),
       ),
@@ -83,7 +86,7 @@ class StagingItemScreen extends StatelessWidget {
       label: 'Item Barcode',
       hint: 'Input or scan Item Barcode',
       scanResult: (value) {
-        final item = provider.findBy(value);
+        final item = provider.findByItemCode(value);
         Navigator.of(context).pushNamed(
           StagingBatchScreen.routeName,
           arguments: item,
