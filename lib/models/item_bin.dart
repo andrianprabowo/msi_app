@@ -27,7 +27,7 @@ class ItemBin with ChangeNotifier {
     return {
       'materialNo': itemCode,
       'materialDesc': itemName,
-      'binCode': binCodeDestination,
+      'itemStorageLocation': binCodeDestination,
       'grQuantity': putQty,
       'listBatches': batchList?.map((x) => x?.toMap())?.toList(),
     };

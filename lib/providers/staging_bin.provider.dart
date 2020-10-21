@@ -58,6 +58,11 @@ class StagingBinProvider with ChangeNotifier {
       'Accept': 'application/json',
     };
 
+    final warehouseId = await Prefs.getString(Prefs.warehouseId);
+    final warehouseName = await Prefs.getString(Prefs.warehouseName);
+
+    _selected.plant = warehouseId;
+    _selected.plantName = warehouseName;
     _selected.itemBinList = itemBinList;
 
     try {

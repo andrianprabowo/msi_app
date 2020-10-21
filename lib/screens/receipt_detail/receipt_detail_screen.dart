@@ -3,6 +3,7 @@ import 'package:msi_app/models/purchase_order.dart';
 import 'package:msi_app/providers/item_po_provider.dart';
 import 'package:msi_app/providers/purchase_order_provider.dart';
 import 'package:msi_app/screens/receipt_check/receipt_check_screen.dart';
+import 'package:msi_app/screens/receipt_detail/widgets/dialog_input_non_batch.dart';
 import 'package:msi_app/screens/receipt_detail/widgets/dialog_input_qty.dart';
 import 'package:msi_app/screens/receipt_detail/widgets/item_detail.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -33,8 +34,9 @@ class ReceiptDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final po =
-        Provider.of<PurchaseOrderProvider>(context, listen: false).selected;
+    final poProvider =
+        Provider.of<PurchaseOrderProvider>(context, listen: false);
+    final po = poProvider.selected;
 
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +61,7 @@ class ReceiptDetailScreen extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Document Date', convertDate(po.docDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildInputScanbin(context),
+            buildInputScanbin(context, poProvider),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -110,17 +112,22 @@ class ReceiptDetailScreen extends StatelessWidget {
         final item = provider.findByItemCode(value);
         showModalBottomSheet(
           context: context,
-          builder: (_) => DialogInputQty(item),
+          builder: (_) => item.fgBatch == 'Y'
+              ? DialogInputQty(item)
+              : DialogInputQtyNonBatch(item),
         );
       },
     );
   }
 
-  Widget buildInputScanbin(BuildContext context) {
+  Widget buildInputScanbin(
+      BuildContext context, PurchaseOrderProvider poProvider) {
     return InputScan(
       label: 'Staging Bin',
       hint: 'Input or scan Staging Bin',
-      scanResult: (value) {},
+      scanResult: (value) {
+        poProvider.setStagingBin(value);
+      },
     );
   }
 }

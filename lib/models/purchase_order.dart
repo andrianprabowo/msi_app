@@ -10,8 +10,8 @@ class PurchaseOrder with ChangeNotifier {
   final DateTime docDate;
   final String vendorCode;
   final String vendorName;
-  final String storageLocation;
-  final String storageLocationName;
+  String storageLocation;
+  String storageLocationName;
   final String docnum;
   List<ItemPurchaseOrder> detailList;
   PurchaseOrder({

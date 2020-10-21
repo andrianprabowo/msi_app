@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_batch.dart';
 import 'package:msi_app/models/item_purchase_order.dart';
+import 'package:msi_app/screens/receipt_detail/widgets/dialog_input_non_batch.dart';
 import 'package:msi_app/screens/receipt_detail/widgets/item_batch_widget.dart';
 import 'package:msi_app/screens/receipt_detail/widgets/dialog_input_qty.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -17,7 +18,11 @@ class ItemDetail extends StatelessWidget {
     return InkWell(
       onTap: () {
         showModalBottomSheet(
-            context: context, builder: (_) => DialogInputQty(item));
+          context: context,
+          builder: (_) => item.fgBatch == 'Y'
+              ? DialogInputQty(item)
+              : DialogInputQtyNonBatch(item),
+        );
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),
@@ -33,6 +38,7 @@ class ItemDetail extends StatelessWidget {
             BaseTextLine(
                 'Remaining Quantity', item.remainingQty.toStringAsFixed(2)),
             BaseTextLine('UoM', item.uom),
+            BaseTextLine('Item Batch', item.fgBatch),
             Divider(),
             if (item.batchList.isNotEmpty) BaseTitle('Item Batch List'),
             buildItemBatchList(item.batchList),

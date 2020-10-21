@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/staging_bin.provider.dart';
 import 'package:msi_app/screens/list_put_away_submited/list_put_away_submited_screen.dart';
 import 'package:msi_app/screens/put_away/widgets/item_staging.dart';
 import 'package:msi_app/screens/staging_item/staging_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/input_scan.dart';
@@ -20,6 +22,7 @@ class PutAwayScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('Put Away'),
@@ -41,6 +44,10 @@ class PutAwayScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            BaseTextLine('Warehouse Code', authProvider.warehouseId),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTextLine('Warehouse Name', authProvider.warehouseName),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Staging Bin'),

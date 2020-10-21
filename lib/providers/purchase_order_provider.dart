@@ -15,9 +15,7 @@ class PurchaseOrderProvider with ChangeNotifier {
   PurchaseOrder get selected => _selected;
 
   List<ItemPurchaseOrder> get detailList {
-    return _selected.detailList
-        .where((element) => element.batchList.isNotEmpty)
-        .toList();
+    return _selected.detailList.where((item) => item.quantity > 0).toList();
   }
 
   Future<void> getAllPoByWarehouseId() async {
@@ -53,12 +51,19 @@ class PurchaseOrderProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setStagingBin(String stagingBin) {
+    _selected.storageLocation = stagingBin;
+    notifyListeners();
+  }
+
   Future<Map<String, dynamic>> createReceiptVendor() async {
     var url = '$kBaseUrl/tgrpo/tgrpo/api/listtgrpoes';
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
+
+    _selected.detailList = detailList;
 
     try {
       var response = await http.post(
@@ -67,6 +72,7 @@ class PurchaseOrderProvider with ChangeNotifier {
         body: _selected.toJson(),
       );
       print(response.request);
+      print(_selected.toJson());
 
       print('Status: ${response.statusCode}');
       final data = json.decode(response.body) as Map;

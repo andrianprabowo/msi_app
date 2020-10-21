@@ -25,6 +25,7 @@ class StagingDetailCheck extends StatelessWidget {
           BaseTextLine(
               'Available Quantity', item.availableQty.toStringAsFixed(2)),
           BaseTextLine('Put Quantity', item.putQty.toStringAsFixed(2)),
+          BaseTextLine('Bin Location', item.binCodeDestination),
           Divider(),
           if (item.batchList.isNotEmpty) BaseTitle('Item Batch List'),
           buildItemBatchList(item.batchList),

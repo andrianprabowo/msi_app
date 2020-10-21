@@ -12,6 +12,7 @@ class ItemPurchaseOrder with ChangeNotifier {
   final String uom;
   final String filename;
   final String docNum;
+  final String fgBatch;
   List<ItemBatch> batchList;
   ItemPurchaseOrder({
     this.itemCode,
@@ -22,6 +23,7 @@ class ItemPurchaseOrder with ChangeNotifier {
     this.uom,
     this.filename,
     this.docNum,
+    this.fgBatch,
     this.batchList,
   });
 
@@ -34,6 +36,7 @@ class ItemPurchaseOrder with ChangeNotifier {
     String uom,
     String filename,
     String docNum,
+    String fgBatch,
     List<ItemBatch> batchList,
   }) {
     return ItemPurchaseOrder(
@@ -45,6 +48,7 @@ class ItemPurchaseOrder with ChangeNotifier {
       uom: uom ?? this.uom,
       filename: filename ?? this.filename,
       docNum: docNum ?? this.docNum,
+      fgBatch: fgBatch ?? this.fgBatch,
       batchList: batchList ?? this.batchList,
     );
   }
@@ -67,11 +71,12 @@ class ItemPurchaseOrder with ChangeNotifier {
       itemCode: map['itemCode'] ?? '',
       description: map['dscription'] ?? '',
       openQty: map['openQty'] ?? 0.0,
-      quantity: map['quantity'] ?? 0.0,
+      quantity: 0.0,
       remainingQty: map['remainingQty'] ?? 0.0,
       uom: map['unitMsr'] ?? '',
       filename: 'Receipt Vendor',
       docNum: map['docNum'] ?? '',
+      fgBatch: map['fgBatch'] ?? '',
       batchList: map['batchList'] ?? [],
     );
   }
@@ -83,6 +88,6 @@ class ItemPurchaseOrder with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ItemPurchaseOrder(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, remainingQty: $remainingQty, uom: $uom, filename: $filename, docNum: $docNum, batchList: $batchList)';
+    return 'ItemPurchaseOrder(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, remainingQty: $remainingQty, uom: $uom, filename: $filename, docNum: $docNum, fgBatch: $fgBatch, batchList: $batchList)';
   }
 }

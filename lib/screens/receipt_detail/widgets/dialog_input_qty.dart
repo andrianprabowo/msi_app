@@ -22,10 +22,6 @@ class _DialogInputQtyState extends State<DialogInputQty> {
   final _quantity = TextEditingController();
   DateTime _selectedDate = DateTime.now();
 
-  String get dateString {
-    return DateFormat.yMMMMd().format(_selectedDate);
-  }
-
   ItemPurchaseOrder get item {
     return widget.item;
   }
@@ -81,7 +77,7 @@ class _DialogInputQtyState extends State<DialogInputQty> {
                 ),
               ),
             ),
-            child: Text(dateString),
+            child: Text(convertDate(_selectedDate)),
           ),
         ),
         IconButton(
@@ -129,10 +125,14 @@ class _DialogInputQtyState extends State<DialogInputQty> {
         onPressed: () {
           final itemPoProvider =
               Provider.of<ItemPoProvider>(context, listen: false);
+          String dateString =
+              DateFormat().addPattern('dd/MM/yy').format(_selectedDate);
           itemPoProvider.addBatch(
             item,
             ItemBatch(
-              batchNo: _batchNumber.text,
+              batchNo: _batchNumber.text.isEmpty
+                  ? "BatchNo-$dateString"
+                  : _batchNumber.text,
               expiredDate: _selectedDate,
               availableQty: double.parse(_quantity.text),
             ),

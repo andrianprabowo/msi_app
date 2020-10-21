@@ -26,7 +26,7 @@ class _InputScanState extends State<InputScan> {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: widget.label,
         hintText: widget.hint,
-        suffixIcon: Icon(Icons.local_see),
+        suffixIcon: Icon(Icons.assessment_outlined),
       ),
     );
   }

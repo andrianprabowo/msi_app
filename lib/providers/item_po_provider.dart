@@ -11,13 +11,14 @@ class ItemPoProvider with ChangeNotifier {
 
   List<ItemPurchaseOrder> get items {
     _items.forEach((detail) {
-      // calculate total batch qty
-      var totalBatch = 0.0;
-      detail.batchList.forEach((batch) {
-        totalBatch = totalBatch + batch.availableQty;
-      });
-      detail.quantity = totalBatch;
-
+      if (detail.fgBatch == 'Y') {
+        // calculate total batch qty
+        var totalBatch = 0.0;
+        detail.batchList.forEach((batch) {
+          totalBatch = totalBatch + batch.availableQty;
+        });
+        detail.quantity = totalBatch;
+      }
       // calculate remaining qty
       detail.remainingQty = detail.openQty - detail.quantity;
     });
@@ -64,5 +65,11 @@ class ItemPoProvider with ChangeNotifier {
     itemPo.batchList.remove(itemBatch);
     notifyListeners();
     print('Removed Batch: $itemBatch');
+  }
+
+  void inputQty(ItemPurchaseOrder itemPo, double qty) {
+    itemPo.quantity = qty;
+    notifyListeners();
+    print('Update Qty: $itemPo');
   }
 }
