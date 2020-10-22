@@ -7,6 +7,7 @@ class ItemBin with ChangeNotifier {
   final String itemCode;
   final String itemName;
   final String binCode;
+  final String fgBatch;
   String binCodeDestination;
   final double availableQty;
   double remainingQty;
@@ -16,6 +17,7 @@ class ItemBin with ChangeNotifier {
     this.itemCode,
     this.itemName,
     this.binCode,
+    this.fgBatch,
     this.binCodeDestination,
     this.availableQty,
     this.remainingQty,
@@ -40,9 +42,10 @@ class ItemBin with ChangeNotifier {
       itemCode: map['itemCode'] ?? '',
       itemName: map['itemName'] ?? '',
       binCode: map['binCode'] ?? '',
+      fgBatch: map['fgBatch'] ?? '',
       binCodeDestination: map['binCodeDestination'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
-      putQty: map['putQty'] ?? 0.0,
+      putQty: 0.0,
       batchList: map['batchList'] ?? [],
     );
   }
@@ -54,6 +57,6 @@ class ItemBin with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ItemBin(itemCode: $itemCode, itemName: $itemName, binCode: $binCode, binCodeDestination: $binCodeDestination, availableQty: $availableQty, remainingQty: $remainingQty, putQty: $putQty, batchList: $batchList)';
+    return 'ItemBin(itemCode: $itemCode, itemName: $itemName, binCode: $binCode, fgBatch: $fgBatch, binCodeDestination: $binCodeDestination, availableQty: $availableQty, remainingQty: $remainingQty, putQty: $putQty, batchList: $batchList)';
   }
 }

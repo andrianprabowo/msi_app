@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_bin.dart';
 import 'package:msi_app/models/put_batch.dart';
 import 'package:msi_app/screens/staging_batch/staging_batch_screen.dart';
+import 'package:msi_app/screens/staging_item/widgets/dialog_put_away_nonbatch.dart';
 import 'package:msi_app/screens/staging_item/widgets/put_batch_widget.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -15,10 +16,11 @@ class ItemStagingBin extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).pushNamed(
-          StagingBatchScreen.routeName,
-          arguments: item,
-        );
+        item.fgBatch == 'Y'
+            ? Navigator.of(context)
+                .pushNamed(StagingBatchScreen.routeName, arguments: item)
+            : showModalBottomSheet(
+                context: context, builder: (_) => DialogPutAwayNonbatch(item));
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),
@@ -29,6 +31,8 @@ class ItemStagingBin extends StatelessWidget {
           children: [
             BaseTextLine('Item Code', item.itemCode),
             BaseTextLine('Item Name', item.itemName),
+            BaseTextLine('Item Batch', item.fgBatch),
+            BaseTextLine('Put Qty', item.putQty.toStringAsFixed(2)),
             if (item.binCodeDestination.isNotEmpty)
               BaseTextLine('Bin Code', item.binCodeDestination),
             BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(2)),

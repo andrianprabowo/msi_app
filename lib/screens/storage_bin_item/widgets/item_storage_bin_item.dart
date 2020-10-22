@@ -25,8 +25,10 @@ class ItemStorageBinItem extends StatelessWidget {
         // update bin location
         itemBin.binCodeDestination = storageBinItem.binCode;
         // add batch list
-        final batchList = itemBatchProvider.pickedItems;
-        itemBinProvider.addBatchList(itemBin, batchList);
+        if (itemBin.fgBatch == "Y") {
+          final batchList = itemBatchProvider.pickedItems;
+          itemBinProvider.addBatchList(itemBin, batchList);
+        }
 
         Navigator.of(context)
             .popUntil(ModalRoute.withName(StagingItemScreen.routeName));

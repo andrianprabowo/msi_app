@@ -12,12 +12,14 @@ class ItemBinProvider with ChangeNotifier {
 
   List<ItemBin> get items {
     _items.forEach((detail) {
-      // calculate total batch qty
-      var totalBatch = 0.0;
-      detail.batchList.forEach((batch) {
-        totalBatch = totalBatch + batch.putQty;
-      });
-      detail.putQty = totalBatch;
+      if (detail.fgBatch == "Y") {
+        // calculate total batch qty
+        var totalBatch = 0.0;
+        detail.batchList.forEach((batch) {
+          totalBatch = totalBatch + batch.putQty;
+        });
+        detail.putQty = totalBatch;
+      }
 
       // calculate remaining qty
       detail.remainingQty = detail.availableQty - detail.putQty;
@@ -73,5 +75,11 @@ class ItemBinProvider with ChangeNotifier {
     itemBin.batchList.remove(itemBatch);
     notifyListeners();
     print('Removed Batch Item: $itemBatch');
+  }
+
+  void inputQtyNonBatch(ItemBin itemBin, double qty) {
+    itemBin.putQty = qty;
+    notifyListeners();
+    print('Update Qty Non batch: $itemBin');
   }
 }
