@@ -59,6 +59,11 @@ class _DialogInputQtyNonBatchState extends State<DialogInputQtyNonBatch> {
       child: RaisedButton(
           child: Text('Submit'),
           onPressed: () {
+          if (double.parse(_quantity.text) > widget.item.openQty) {
+           
+            print('Tidak boleh lebih besar dari Available Qty ');
+            return;
+          }
             final itemPoProvider =
                 Provider.of<ItemPoProvider>(context, listen: false);
             itemPoProvider.inputQty(

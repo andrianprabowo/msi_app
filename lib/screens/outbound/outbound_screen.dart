@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/screens/inventory_dispatch/inventory_dispatch_header_screen.dart';
-import 'package:msi_app/screens/picker_pick/picker_pick_screen.dart';
-import 'package:msi_app/screens/return_vendor/return_vendor_screen.dart';
+import 'package:msi_app/screens/outbound_sub_1/outbound_sub_1_screen.dart';
+import 'package:msi_app/screens/outbound_sub_2/outbound_sub_2_screen.dart';
+import 'package:msi_app/screens/outbound_sub_3/outbound_sub_3_screen.dart';
 import 'package:msi_app/widgets/base_app_bar.dart';
 import 'package:msi_app/widgets/item_header.dart';
 import 'package:msi_app/widgets/item_menu.dart';
@@ -13,19 +13,19 @@ class OutboundScreen extends StatelessWidget {
 
   final List<Map<String, Object>> menus = [
     {
-      'icon': Icons.description,
-      'label': 'Picker Pick List',
-      'routeName': PickerPickScreen.routeName,
-    },
-    {
       'icon': Icons.local_shipping,
-      'label': 'Inventory Dispatch',
-      'routeName': InventoryDispatchHeaderScreen.routeName,
+      'label': 'Transfer to Outlet',
+      'routeName': OutboundSub1Screen.routeName,
     },
     {
-      'icon': Icons.redo,
-      'label': 'Return To Vendor',
-      'routeName': ReturnVendorScreen.routeName,
+      'icon': Icons.point_of_sale,
+      'label': 'Sales Order',
+      'routeName': OutboundSub2Screen.routeName,
+    },
+    {
+      'icon': Icons.settings_backup_restore,
+      'label': 'Return to Vendor',
+      'routeName': OutboundSub3Screen.routeName,
     },
   ];
 

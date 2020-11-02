@@ -65,6 +65,10 @@ class _DialogPutAwayNonbatchState extends State<DialogPutAwayNonbatch> {
       child: RaisedButton(
         child: Text('Submit'),
         onPressed: () {
+          if (double.parse(_quantity.text) > widget.item.availableQty) {
+            print('Tidak boleh lebih besar dari Available Qty ');
+            return;
+          }
           final itemBinProvider =
               Provider.of<ItemBinProvider>(context, listen: false);
           itemBinProvider.inputQtyNonBatch(

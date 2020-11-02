@@ -17,7 +17,7 @@ class PickCheckScreen extends StatelessWidget {
     showDialog(
       context: context,
       child: AlertDialog(
-        title: Text('Post Picker Pick List'),
+        title: Text('Post Picker Pick List To Outlet'),
         content: Text('Are you sure want to process?'),
         actions: [
           FlatButton(
@@ -68,6 +68,8 @@ class PickCheckScreen extends StatelessWidget {
               SizedBox(height: getProportionateScreenHeight(kLarge)),
               Text('Success create Picker Pick List'),
               SizedBox(height: getProportionateScreenHeight(kLarge)),
+              Text('Transfer to Outlet'),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
               Text(
                 docId.toString(),
                 style: TextStyle(
@@ -99,7 +101,7 @@ class PickCheckScreen extends StatelessWidget {
     final item = provider.selected;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick List'),
+        title: Text('Picker Pick List'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),

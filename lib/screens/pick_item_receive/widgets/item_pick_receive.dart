@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/pick_batch.dart';
 import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/screens/pick_item_bin/pick_list_bin_screen.dart';
+import 'package:msi_app/screens/pick_item_receive/widgets/dialog_pick_list_nonbatch.dart';
 import 'package:msi_app/screens/pick_item_receive/widgets/pick_batch_widget.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -16,8 +17,11 @@ class ItemPickReceive extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed(PickListBinScreen.routeName, arguments: item);
+        item.fgBatch == 'Y'
+            ? Navigator.of(context)
+                .pushNamed(PickListBinScreen.routeName, arguments: item)
+            : showModalBottomSheet(
+                context: context, builder: (_) => DialogPickListNonbatch(item));
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),
@@ -31,10 +35,11 @@ class ItemPickReceive extends StatelessWidget {
             BaseTextLine('Total To Pick', item.openQty.toStringAsFixed(2)),
             BaseTextLine('Remaining Qty', item.quantity.toStringAsFixed(2)),
             BaseTextLine('Inventory UoM', item.unitMsr),
+            BaseTextLine('Item Batch', item.fgBatch),
             if (item.itemStorageLocation.isNotEmpty)
               BaseTextLine('Bin Location', item.itemStorageLocation),
-            if (item.pickedQty != 0)
-              BaseTextLine('Picked Qty', item.pickedQty.toStringAsFixed(2)),
+            // if (item.pickedQty != 0)
+            BaseTextLine('Picked Qty', item.pickedQty.toStringAsFixed(2)),
             buildItemBatchList(item.batchList),
           ],
         ),

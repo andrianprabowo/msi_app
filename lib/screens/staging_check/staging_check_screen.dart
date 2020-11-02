@@ -16,7 +16,7 @@ class StagingCheckScreen extends StatelessWidget {
     showDialog(
       context: context,
       child: AlertDialog(
-        title: Text('Post Put Away'),
+        title: Text('Post Put Away From Vendor'),
         content: Text('Are you sure want to process?'),
         actions: [
           FlatButton(

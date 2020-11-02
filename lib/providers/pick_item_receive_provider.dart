@@ -11,13 +11,14 @@ class PickItemReceiveProvider with ChangeNotifier {
 
   List<PickItemReceive> get items {
     _items.forEach((detail) {
-      // calculate total batch qty
-      var totalBatch = 0.0;
-      detail.batchList.forEach((batch) {
-        totalBatch = totalBatch + batch.pickQty;
-      });
-      detail.pickedQty = totalBatch;
-
+      if (detail.fgBatch == "Y") {
+        // calculate total batch qty
+        var totalBatch = 0.0;
+        detail.batchList.forEach((batch) {
+          totalBatch = totalBatch + batch.pickQty;
+        });
+        detail.pickedQty = totalBatch;
+      }
       // calculate remaining qty
       detail.quantity = detail.openQty - detail.pickedQty;
     });
@@ -70,5 +71,11 @@ class PickItemReceiveProvider with ChangeNotifier {
     pickItemReceive.batchList.remove(itemBatch);
     notifyListeners();
     print('Removed Item Batch: $itemBatch');
+  }
+
+  void inputQtyNonBatch(PickItemReceive pickItemReceive, double qty) {
+    pickItemReceive.pickedQty = qty;
+    notifyListeners();
+    print('Update Qty Non batch: $pickItemReceive');
   }
 }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 // Base URL
-// const kBaseUrl = 'http://103.87.86.29:12950';
-const kBaseUrl = 'http://116.197.129.170:12950';
+const kBaseUrl = 'http://103.87.86.29:12950';
+// const kBaseUrl = 'http://116.197.129.170:12950';
 
 // Color
 const kPrimaryColor = Color.fromRGBO(73, 112, 191, 1.0);

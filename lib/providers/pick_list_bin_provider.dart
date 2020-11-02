@@ -24,7 +24,7 @@ class PickListBinProvider with ChangeNotifier {
   Future<void> getPlBinList(String itemCode) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
     final url =
-        '$kBaseUrl/api/newgetplbinlist/whscode=$warehouseId&itemcode=$itemCode';
+        '$kBaseUrl/api/getplbinlist/whscode=$warehouseId&itemcode=$itemCode';
 
     try {
       final response = await http.get(url);

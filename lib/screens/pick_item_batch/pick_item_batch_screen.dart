@@ -39,7 +39,7 @@ class PickItemBatchScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick List Batch'),
+        title: Text('Picker Pick List'),
         actions: [
           IconButton(
             icon: Icon(Icons.check_box_outlined),

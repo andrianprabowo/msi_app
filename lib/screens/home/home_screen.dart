@@ -15,27 +15,27 @@ class HomeScreen extends StatelessWidget {
 
   final List<Map<String, Object>> menus = [
     {
-      'icon': Icons.archive,
+      'icon': Icons.all_inbox,
       'label': 'Inbound Transaction',
       'routeName': InboundScreen.routeName,
     },
     {
-      'icon': Icons.unarchive,
+      'icon': Icons.outbond,
       'label': 'Outbound Transaction',
       'routeName': OutboundScreen.routeName,
     },
     {
-      'icon': Icons.business,
+      'icon': Icons.location_city,
       'label': 'Production',
       'routeName': ProductionScreen.routeName,
     },
     {
-      'icon': Icons.assignment,
+      'icon': Icons.account_balance_wallet,
       'label': 'Stock Counting',
       'routeName': StockCountingScreen.routeName,
     },
     {
-      'icon': Icons.search,
+      'icon': Icons.find_in_page,
       'label': 'Stock Inquiry',
       'routeName': StockInquiryScreen.routeName,
     },

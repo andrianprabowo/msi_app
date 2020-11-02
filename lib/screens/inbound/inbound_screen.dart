@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/screens/put_away/put_away_screen.dart';
-import 'package:msi_app/screens/receipt_vendor/receipt_vendor_screen.dart';
-import 'package:msi_app/screens/return_outlet/return_outlet_screen.dart';
+import 'package:msi_app/screens/inbound_sub_1/inbound_sub_1_screen.dart';
+import 'package:msi_app/screens/inbound_sub_2/inbound_sub_2_screen.dart';
 import 'package:msi_app/widgets/base_app_bar.dart';
 import 'package:msi_app/widgets/item_header.dart';
 import 'package:msi_app/widgets/item_menu.dart';
@@ -13,20 +12,20 @@ class InboundScreen extends StatelessWidget {
 
   final List<Map<String, Object>> menus = [
     {
-      'icon': Icons.shopping_cart,
-      'label': 'Receipt From Vendor',
-      'routeName': ReceiptVendorScreen.routeName,
+      'icon': Icons.receipt_long,
+      'label': 'Receipt From Vendor ',
+      'routeName': InboundSub1Screen.routeName,
     },
     {
-      'icon': Icons.work,
-      'label': 'Put Away',
-      'routeName': PutAwayScreen.routeName,
+      'icon': Icons.settings_backup_restore,
+      'label': 'Return From Outlet',
+      'routeName': InboundSub2Screen.routeName,
     },
-    {
-      'icon': Icons.undo,
-      'label': 'Return Form Outlet',
-      'routeName': ReturnOutletScreen.routeName,
-    },
+    // {
+    //   'icon': Icons.undo,
+    //   'label': 'Return Form Outlet',
+    //   'routeName': ReturnOutletScreen.routeName,
+    // },
   ];
 
   @override

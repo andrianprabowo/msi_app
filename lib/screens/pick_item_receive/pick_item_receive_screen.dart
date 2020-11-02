@@ -33,7 +33,7 @@ class PickItemReceiveScreen extends StatelessWidget {
         Provider.of<PickListWhsProvider>(context, listen: false).selected;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick List'),
+        title: Text('Picker Pick List'),
         actions: [
           IconButton(
             icon: Icon(Icons.post_add),

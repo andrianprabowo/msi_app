@@ -65,6 +65,11 @@ class _DialogPutAwayState extends State<DialogPutAway> {
         child: Text('Submit'),
         onPressed: () {
           // handle if input not double to return nothing
+
+          if (double.parse(_quantity.text) > widget.item.availableQty) {
+            print('Tidak boleh lebih besar dari Available Qty ');
+            return;
+          }
           double qty;
           try {
             qty = double.parse(_quantity.text);

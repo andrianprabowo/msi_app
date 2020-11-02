@@ -29,7 +29,7 @@ class StorageBinItemScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Put Away'),
+        title: Text('Put Away From Vendor'),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(

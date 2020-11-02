@@ -9,6 +9,7 @@ class PickItemReceive with ChangeNotifier {
   double openQty;
   double quantity;
   double pickedQty;
+  String fgBatch;
   final String unitMsr;
   final int val;
   String itemStorageLocation;
@@ -20,6 +21,7 @@ class PickItemReceive with ChangeNotifier {
     this.openQty,
     this.quantity,
     this.pickedQty,
+    this.fgBatch,
     this.unitMsr,
     this.val,
     this.itemStorageLocation,
@@ -48,7 +50,8 @@ class PickItemReceive with ChangeNotifier {
       description: map['dscription'] ?? '',
       openQty: map['openQty'] ?? 0.0,
       quantity: map['quantity'] ?? 0.0,
-      pickedQty: map['grQuantity'] ?? 0.0,
+      fgBatch: map['fgBatch'] ?? '',
+      pickedQty:0.0,
       unitMsr: map['unitMsr'] ?? '',
       val: map['val'] ?? 0,
       itemStorageLocation: map['itemStorageLocation'] ?? '',
@@ -63,6 +66,6 @@ class PickItemReceive with ChangeNotifier {
 
   @override
   String toString() {
-    return 'PickItemReceive(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, pickedQty: $pickedQty, unitMsr: $unitMsr, val: $val, itemStorageLocation: $itemStorageLocation, batchList: $batchList)';
+    return 'PickItemReceive(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, pickedQty: $pickedQty, fgBatch: $fgBatch, unitMsr: $unitMsr, val: $val, itemStorageLocation: $itemStorageLocation, batchList: $batchList)';
   }
 }

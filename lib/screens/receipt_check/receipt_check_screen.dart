@@ -16,7 +16,7 @@ class ReceiptCheckScreen extends StatelessWidget {
     showDialog(
       context: context,
       child: AlertDialog(
-        title: Text('Post Receipt Vendor'),
+        title: Text('Post Receipt From Vendor'),
         content: Text('Are you sure want to process?'),
         actions: [
           FlatButton(
@@ -65,7 +65,9 @@ class ReceiptCheckScreen extends StatelessWidget {
               Icon(Icons.info_outline, color: Colors.green, size: 50),
               Divider(),
               SizedBox(height: getProportionateScreenHeight(kLarge)),
-              Text('Success create GRPO'),
+              Text('Success create Receipt'),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
+              Text('Receipt Return from Vendor'),
               SizedBox(height: getProportionateScreenHeight(kLarge)),
               Text(
                 docId.toString(),

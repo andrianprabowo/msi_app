@@ -30,7 +30,7 @@ class PickListBinScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick List'),
+        title: Text('Picker Pick List'),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(

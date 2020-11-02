@@ -23,7 +23,7 @@ class ReceiptVendorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Receipt From Vendor'),
+        title: Text('Receipt from Vendor'),
         actions: [
           IconButton(
             icon: Icon(Icons.list_alt),

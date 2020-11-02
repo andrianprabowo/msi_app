@@ -33,7 +33,7 @@ class StagingItemScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Put Away'),
+        title: Text('Put Away From Vendor'),
         actions: [
           IconButton(
             icon: Icon(Icons.post_add),

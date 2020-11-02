@@ -32,7 +32,7 @@ class StagingBatchScreen extends StatelessWidget {
     ItemBin item = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Put Away'),
+        title: Text('Put Away From Vendor'),
         actions: [
           IconButton(
             icon: Icon(Icons.check_box_outlined),
