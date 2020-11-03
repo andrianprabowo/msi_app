@@ -1,125 +1,108 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/inventory_dispatch_detail.dart';
+import 'package:msi_app/providers/inventory_dispatch_detail_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_header_provider.dart';
 import 'package:msi_app/screens/inventory_dispatch_detail/widgets/item_inventory_dispatch_detail.dart';
+import 'package:msi_app/screens/inventory_dispatch_item/inventory_dispatch_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
-import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/input_scan.dart';
+import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
 class InventoryDispatchDetailScreen extends StatelessWidget {
   static const routeName = '/inventory_dispatch_detail';
-  final _scanInputZonation = TextEditingController();
 
-  final List<InventoryDispatchDetail> items = [
-    InventoryDispatchDetail(
-      itemCode: '150308200MSI-Code1',
-      itemName: '150308200MSI-Item name 1',
-      totalToPick: 100.00,
-      remainingQty: 100.00,
-      inventoryUom: 'pcs',
-      batchNumber: 0,
-    ),
-    InventoryDispatchDetail(
-      itemCode: '150308200MSI-Code2',
-      itemName: '150308200MSI-Item name 2',
-      totalToPick: 100.00,
-      remainingQty: 100.00,
-      inventoryUom: 'pcs',
-      batchNumber: 0,
-    ),
-    InventoryDispatchDetail(
-      itemCode: '150308200MSI-Code3',
-      itemName: '150308200MSI-Item name 3',
-      totalToPick: 100.00,
-      remainingQty: 100.00,
-      inventoryUom: 'pcs',
-      batchNumber: 0,
-    ),
-    InventoryDispatchDetail(
-      itemCode: '150308200MSI-Code4',
-      itemName: '150308200MSI-Item name 4',
-      totalToPick: 100.00,
-      remainingQty: 100.00,
-      inventoryUom: 'pcs',
-      batchNumber: 0,
-    ),
-    InventoryDispatchDetail(
-      itemCode: '150308200MSI-Code5',
-      itemName: '150308200MSI-Item name 5',
-      totalToPick: 100.00,
-      remainingQty: 100.00,
-      inventoryUom: 'pcs',
-      batchNumber: 0,
-    ),
-  ];
+  Future<void> refreshData(BuildContext context) async {
+    final headerProvider =
+        Provider.of<InventoryDispatchHeaderProvider>(context, listen: false);
+    final provider =
+        Provider.of<InventoryDispatchDetailProvider>(context, listen: false);
+    final item = headerProvider.selected;
+    print(item);
+    // provider.getPlByWarehouse('WMSISTPR-SYSTEM-BIN-LOCATION');
+    provider.getPlByWarehouse(item.binCode);
+    print('object$item');
+  }
 
   @override
   Widget build(BuildContext context) {
-    final invDisHeader =
-        Provider.of<InventoryDispatchHeaderProvider>(context, listen: false);
-    final item = invDisHeader.header;
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inventory Dispatch'),
+        title: Text('Inventory Dispatch test'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.list_alt),
+            onPressed: () {
+              // Navigator.of(context)
+              //     .pushNamed(ListReceiptFromVendorScreen.routeName);
+            },
+          ),
+        ],
       ),
       body: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(kMedium),
+        padding: const EdgeInsets.symmetric(
+          vertical: kLarge,
+          horizontal: kMedium,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('Doc Number', item.docNumber),
-            SizedBox(height: getProportionateScreenHeight(kMedium)),
-            BaseTextLine('Document Date', convertDate(item.requireDate)),
-            SizedBox(height: getProportionateScreenHeight(kMedium)),
-            TextFormField(
-              controller: _scanInputZonation,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                labelText: 'Memo',
-                hintText: 'Input Memo',
-              ),
-            ),
-            SizedBox(height: getProportionateScreenHeight(kMedium)),
-            BaseTextLine('Outlet', item.toWarehouse),
-            SizedBox(height: getProportionateScreenHeight(kMedium)),
-            BaseTextLine('Zonation', invDisHeader.zonation),
-            SizedBox(height: getProportionateScreenHeight(kMedium)),
             buildInputScan(context),
-            SizedBox(height: getProportionateScreenHeight(kMedium)),
-            BaseTitle('List Inventory Transfer'),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTitle('Inventory Dispatch List'),
             Divider(),
-            Expanded(
-              child: ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (_, index) {
-                  return ItemInventoryDispatchDetail(items[index]);
-                },
-              ),
-            ),
+            buildItemList(context),
           ],
         ),
       ),
     );
   }
 
+  Widget buildItemList(BuildContext context) {
+    return Expanded(
+      child: FutureBuilder(
+        future: refreshData(context),
+        builder: (_, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) return ErrorInfo();
+
+          return RefreshIndicator(
+            onRefresh: () => refreshData(context),
+            child: Consumer<InventoryDispatchDetailProvider>(
+              builder: (_, provider, child) => provider.items.length == 0
+                  ? NoData()
+                  : ListView.builder(
+                      itemCount: provider.items.length,
+                      itemBuilder: (_, index) {
+                        return ChangeNotifierProvider.value(
+                          value: provider.items[index],
+                          child: ItemInventoryDispatchDetail(
+                              provider.items[index]),
+                        );
+                      },
+                    ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   Widget buildInputScan(BuildContext context) {
-    // final poProvider =
-    //     Provider.of<PurchaseOrderProvider>(context, listen: false);
+    final provider =
+        Provider.of<InventoryDispatchDetailProvider>(context, listen: false);
     return InputScan(
-      label: 'Bin Container',
-      hint: 'Input or scan Bin',
+      label: 'Inventory Dispatch',
+      hint: 'Input or scan Inventory Dispatch',
       scanResult: (value) {
-        // final po = poProvider.findByPoNumber(value);
-        // Navigator.of(context).pushNamed(
-        //   ReceiptDetailScreen.routeName,
-        //   arguments: po,
-        // );
+        final item = provider.findByDocNumber(value);
+        provider.selectPickList(item);
+        Navigator.of(context).pushNamed(InventoryDispatchItemScreen.routeName);
       },
     );
   }

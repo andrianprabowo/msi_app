@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/inventory_dispatch_batch.dart';
 
 class InventoryDispatchItem with ChangeNotifier {
   final String itemCode;
@@ -12,6 +13,8 @@ class InventoryDispatchItem with ChangeNotifier {
   final String unitMsr;
   final int val;
   String itemStorageLocation;
+  List<InventoryDispatchBatch> batchList;
+
   InventoryDispatchItem({
     this.itemCode,
     this.description,
@@ -22,45 +25,47 @@ class InventoryDispatchItem with ChangeNotifier {
     this.unitMsr,
     this.val,
     this.itemStorageLocation,
+    this.batchList,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'itemCode': itemCode,
-      'dscription': description,
+      'materialNo': itemCode,
+      'materialDesc': description,
       'openQty': openQty,
       'quantity': quantity,
-      'pickedQty': pickedQty,
-      'fgBatch': fgBatch,
-      'unitMsr': unitMsr,
+      'grQuantity': pickedQty,
+      'uom': unitMsr,
       'val': val,
       'itemStorageLocation': itemStorageLocation,
+      'listBatches': batchList?.map((x) => x?.toMap())?.toList(),
     };
   }
 
   factory InventoryDispatchItem.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return InventoryDispatchItem(
       itemCode: map['itemCode'] ?? '',
       description: map['dscription'] ?? '',
       openQty: map['openQty'] ?? 0.0,
       quantity: map['quantity'] ?? 0.0,
-      pickedQty: 0.0,
       fgBatch: map['fgBatch'] ?? '',
+      pickedQty: 0.0,
       unitMsr: map['unitMsr'] ?? '',
       val: map['val'] ?? 0,
       itemStorageLocation: map['itemStorageLocation'] ?? '',
+      batchList: map['batchList'] ?? [],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory InventoryDispatchItem.fromJson(String source) => InventoryDispatchItem.fromMap(json.decode(source));
+  factory InventoryDispatchItem.fromJson(String source) =>
+      InventoryDispatchItem.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'InventoryDispatchItem(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, pickedQty: $pickedQty, fgBatch: $fgBatch, unitMsr: $unitMsr, val: $val, itemStorageLocation: $itemStorageLocation)';
+    return 'InventoryDispatchItem(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, pickedQty: $pickedQty, fgBatch: $fgBatch, unitMsr: $unitMsr, val: $val, itemStorageLocation: $itemStorageLocation, batchList: $batchList)';
   }
-
 }

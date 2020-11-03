@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/item_purchase_order.dart';
-import 'package:msi_app/providers/purchase_order_provider.dart';
+import 'package:msi_app/models/inventory_dispatch_item.dart';
+import 'package:msi_app/providers/inventory_dispatch_detail_provider.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
-import 'package:msi_app/screens/receipt_check/widget/item_detail_check.dart';
+import 'package:msi_app/screens/inventory_dispatch_check/widget/inventory_dispatch_detail_check.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/input_scan.dart';
 import 'package:provider/provider.dart';
 
-class ReceiptCheckScreen extends StatelessWidget {
-  static const routeName = '/receipt_check';
+class InventoryDispatchCheckScreen extends StatelessWidget {
+  static const routeName = '/inventory_dispatch_check';
 
   void postData(BuildContext context) {
     showDialog(
       context: context,
       child: AlertDialog(
-        title: Text('Post Receipt From Vendor'),
+        title: Text('Post Inventory Dispatch'),
         content: Text('Are you sure want to process?'),
         actions: [
           FlatButton(
@@ -26,10 +27,12 @@ class ReceiptCheckScreen extends StatelessWidget {
           FlatButton(
             child: Text('OK'),
             onPressed: () async {
-              final poProvider =
-                  Provider.of<PurchaseOrderProvider>(context, listen: false);
+              final provider = Provider.of<InventoryDispatchDetailProvider>(
+                  context,
+                  listen: false);
               try {
-                final response = await poProvider.createReceiptVendor();
+                final response =
+                    await provider.createInventoryDispatch(context);
                 final docId = response['id'];
                 Navigator.of(context).pop();
                 await showSuccessDialog(context, docId);
@@ -65,9 +68,9 @@ class ReceiptCheckScreen extends StatelessWidget {
               Icon(Icons.info_outline, color: Colors.green, size: 50),
               Divider(),
               SizedBox(height: getProportionateScreenHeight(kLarge)),
-              Text('Success create Receipt'),
+              Text('Success create Inventory Dispatch'),
               SizedBox(height: getProportionateScreenHeight(kLarge)),
-              Text('From Vendor'),
+              Text('Transfer to Outlet'),
               SizedBox(height: getProportionateScreenHeight(kLarge)),
               Text(
                 docId.toString(),
@@ -96,12 +99,12 @@ class ReceiptCheckScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final poProvider =
-        Provider.of<PurchaseOrderProvider>(context, listen: false);
-    final po = poProvider.selected;
+    final provider =
+        Provider.of<InventoryDispatchDetailProvider>(context, listen: false);
+    final item = provider.selected;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Receipt Check'),
+        title: Text('Inventory Dispatch'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
@@ -119,32 +122,47 @@ class ReceiptCheckScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('PO Number', po.poNumber),
-            BaseTextLine('Delivery Date', convertDate(po.docDate)),
+            BaseTextLine('Doc Number', item.docNumber),
+            BaseTextLine('Doc Date', convertDate(item.docDate)),
+            BaseTextLine('Remark', item.pickRemark),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Vendor Code', po.vendorCode),
-            BaseTextLine('Vendor Name', po.vendorName),
+            BaseTextLine('Vendor Code', item.cardCode),
+            BaseTextLine('Vendor Name', item.cardName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Staging Bin Code', po.storageLocation ?? 'Empty'),
-            // BaseTextLine('Staging Bin Name', po.storageLocationName),
+            buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Item Details'),
             Divider(),
-            buildItemDetails(poProvider.detailList),
+            buildItemDetails(provider.detailList),
           ],
         ),
       ),
     );
   }
 
-  Widget buildItemDetails(List<ItemPurchaseOrder> list) {
+  Widget buildItemDetails(List<InventoryDispatchItem> list) {
     return Expanded(
       child: ListView.builder(
         itemCount: list.length,
         itemBuilder: (_, i) {
-          return ItemDetailCheck(list[i]);
+          return InventoryDispatchDetailCheck(list[i]);
         },
       ),
+    );
+  }
+
+  Widget buildInputScan(BuildContext context) {
+    final provider =
+        Provider.of<InventoryDispatchDetailProvider>(context, listen: false);
+    return InputScan(
+      label: 'Storage Location',
+      hint: 'Input or scan Storage Location',
+      scanResult: (value) {
+        provider.selected.storageLocation = value;
+        // final item = provider.findByPoNumber(value);
+        // provider.selectPo(item);
+        // Navigator.of(context).pushNamed(ReceiptDetailScreen.routeName);
+      },
     );
   }
 }

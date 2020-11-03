@@ -30,7 +30,7 @@ class PickListBinSo with ChangeNotifier {
       binLocation: map['binCode'] ?? '',
       capacity: map['capacity'] ?? 0.0,
       warehouse: map['warehouse'] ?? '',
-      avlQty: map['avlQty'] ?? 0.0,
+      avlQty: map['avlqty'] ?? 0.0,
     );
   }
 

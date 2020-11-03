@@ -1,77 +1,41 @@
 import 'dart:convert';
 
-class InventoryDispatchHeader {
-  final String docNumber;
-  final DateTime requireDate;
-  final String toWarehouse;
-  final String memo;
-  InventoryDispatchHeader({
-    this.docNumber,
-    this.requireDate,
-    this.toWarehouse,
-    this.memo,
-  });
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
-  InventoryDispatchHeader copyWith({
-    String docNumber,
-    DateTime requireDate,
-    String toWarehouse,
-    String memo,
-  }) {
-    return InventoryDispatchHeader(
-      docNumber: docNumber ?? this.docNumber,
-      requireDate: requireDate ?? this.requireDate,
-      toWarehouse: toWarehouse ?? this.toWarehouse,
-      memo: memo ?? this.memo,
-    );
-  }
+import 'package:msi_app/models/inventory_dispatch_detail.dart';
+
+class InventoryDispatchHeader with ChangeNotifier {
+  final String binCode;
+
+  List<InventoryDispatchDetail> itemDispatchDetail;
+  InventoryDispatchHeader({
+    this.binCode,
+    this.itemDispatchDetail,
+  });
 
   Map<String, dynamic> toMap() {
     return {
-      'docNumber': docNumber,
-      'requireDate': requireDate?.toIso8601String(),
-      'toWarehouse': toWarehouse,
-      'memo': memo,
+      'storageLocation': binCode,
+      'itemDispatchDetail': itemDispatchDetail?.map((x) => x?.toMap())?.toList(),
     };
   }
 
   factory InventoryDispatchHeader.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-
+  
     return InventoryDispatchHeader(
-      docNumber: map['docNumber'] ?? '',
-      requireDate: DateTime.parse(map['requireDate']),
-      toWarehouse: map['toWarehouse'] ?? '',
-      memo: map['memo'] ?? '',
+      binCode: map['binCode'] ?? '',
+      itemDispatchDetail: map['itemBinList'] ?? [],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory InventoryDispatchHeader.fromJson(String source) =>
-      InventoryDispatchHeader.fromMap(json.decode(source));
+  factory InventoryDispatchHeader.fromJson(String source) => InventoryDispatchHeader.fromMap(json.decode(source));
 
   @override
-  String toString() {
-    return 'InventoryDispatchHeader(docNumber: $docNumber, requireDate: $requireDate, toWarehouse: $toWarehouse, memo: $memo)';
-  }
+  String toString() => 'InventoryDispatchHeader(binCode: $binCode, itemDispatchDetail: $itemDispatchDetail)';
 
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is InventoryDispatchHeader &&
-        o.docNumber == docNumber &&
-        o.requireDate == requireDate &&
-        o.toWarehouse == toWarehouse &&
-        o.memo == memo;
-  }
-
-  @override
-  int get hashCode {
-    return docNumber.hashCode ^
-        requireDate.hashCode ^
-        toWarehouse.hashCode ^
-        memo.hashCode;
-  }
+  
 }

@@ -20,16 +20,21 @@ class InventoryDispathBatchProvider with ChangeNotifier {
 
   double get totalPicked => _totalPicked;
 
-  Future<void> getPlBatchByItemWhs(String itemCode, String binCode) async {
+  Future<void> getPlBatchByItemWhs(String itemCode, String binCode , String docNum) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
     final url =
-        '$kBaseUrl/api/getplbatchlistbyitmwhs/itemcode=$itemCode&whscode=$warehouseId&bincode=$binCode';
+         '$kBaseUrl/api/inventorygetplbatchlistbyitmwhs/itemcode=$itemCode&whscode=$warehouseId&bincode=$binCode&docnum=$docNum';
+      
+      print('test $binCode');
+
+
 
     try {
       final response = await http.get(url);
       print(response.request);
       final data = json.decode(response.body) as List;
       print(data);
+      
       if (data == null) return;
 
       final List<InventoryDispatchBatch> list = [];

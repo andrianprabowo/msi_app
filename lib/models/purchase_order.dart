@@ -11,6 +11,7 @@ class PurchaseOrder with ChangeNotifier {
   final String vendorCode;
   final String vendorName;
   String storageLocation;
+  String plant;
   String storageLocationName;
   final String docnum;
   List<ItemPurchaseOrder> detailList;
@@ -22,6 +23,7 @@ class PurchaseOrder with ChangeNotifier {
     this.vendorCode,
     this.vendorName,
     this.storageLocation,
+    this.plant,
     this.storageLocationName,
     this.docnum,
     this.detailList,
@@ -35,6 +37,7 @@ class PurchaseOrder with ChangeNotifier {
       'kdVendor': vendorCode,
       'nmVendor': vendorName,
       'storageLocation': storageLocation ?? '',
+      'plant': plant ?? '',
       'storageLocationName': storageLocationName ?? '',
       'docnum': poNumber,
       'details': detailList?.map((x) => x?.toMap())?.toList(),
@@ -61,6 +64,6 @@ class PurchaseOrder with ChangeNotifier {
 
   @override
   String toString() {
-    return 'PurchaseOrder(docEntry: $docEntry, poNumber: $poNumber, docDate: $docDate, vendorCode: $vendorCode, vendorName: $vendorName, detailList: $detailList)';
+    return 'PurchaseOrder(docEntry: $docEntry, poNumber: $poNumber, docDate: $docDate, vendorCode: $vendorCode, vendorName: $vendorName, plant: $plant, detailList: $detailList)';
   }
 }

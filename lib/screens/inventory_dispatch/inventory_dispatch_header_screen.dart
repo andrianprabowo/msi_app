@@ -1,106 +1,105 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/inventory_dispatch_header.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_header_provider.dart';
 import 'package:msi_app/screens/inventory_dispatch/widgets/item_inventory_dispatch_header.dart';
+import 'package:msi_app/screens/inventory_dispatch_item/inventory_dispatch_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/error_info.dart';
+import 'package:msi_app/widgets/input_scan.dart';
+import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
 class InventoryDispatchHeaderScreen extends StatelessWidget {
   static const routeName = '/inventory_dispatch_header';
-  final _scanInputZonation = TextEditingController();
-  final _scanInputDay = TextEditingController();
 
-  final List<InventoryDispatchHeader> items = [
-    InventoryDispatchHeader(
-      docNumber: '150308111MSI-SNIP',
-      requireDate: DateTime.now(),
-      toWarehouse: 'Harvest Senopati',
-      memo: 'Untuk kebutuhan mendesak',
-    ),
-    InventoryDispatchHeader(
-      docNumber: '150308222MSI-SNIP',
-      requireDate: DateTime.now(),
-      toWarehouse: 'Harvest Veteran',
-      memo: 'Untuk kebutuhan mendesak',
-    ),
-    InventoryDispatchHeader(
-      docNumber: '150308333MSI-SNIP',
-      requireDate: DateTime.now(),
-      toWarehouse: 'Harvest Bintaro',
-      memo: 'Untuk kebutuhan mendesak',
-    ),
-    InventoryDispatchHeader(
-      docNumber: '150308444MSI-SNIP',
-      requireDate: DateTime.now(),
-      toWarehouse: 'Harvest Sentul',
-      memo: 'Untuk kebutuhan mendesak',
-    ),
-    InventoryDispatchHeader(
-      docNumber: '150308555MSI-SNIP',
-      requireDate: DateTime.now(),
-      toWarehouse: 'Harvest Bekasi',
-      memo: 'Untuk kebutuhan mendesak',
-    ),
-  ];
+  Future<void> refreshData(BuildContext context) async {
+    await Provider.of<InventoryDispatchHeaderProvider>(context, listen: false).getBinLoc();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final invDisHeader =
-        Provider.of<InventoryDispatchHeaderProvider>(context, listen: false);
-
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('Inventory Dispatch'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.list_alt),
+            onPressed: () {
+              // Navigator.of(context)
+              //     .pushNamed(InventoryDispatchDetailScreen.routeName);
+            },
+          ),
+        ],
       ),
       body: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(kMedium),
+        padding: const EdgeInsets.symmetric(
+          vertical: kLarge,
+          horizontal: kMedium,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Todo change dropdown
-            TextFormField(
-              controller: _scanInputZonation,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                labelText: 'Zonation',
-                hintText: 'Select Zonation',
-              ),
-              onChanged: (value) {
-                invDisHeader.setZonation(value);
-              },
-            ),
-            SizedBox(
-              height: getProportionateScreenHeight(kMedium),
-            ),
-            TextFormField(
-              textInputAction: TextInputAction.done,
-              controller: _scanInputDay,
-              decoration: InputDecoration(
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                labelText: 'Day',
-                hintText: 'Select Day',
-              ),
-            ),
-            SizedBox(
-              height: getProportionateScreenHeight(kLarge),
-            ),
-            BaseTitle('List Inventory Transfer'),
+            BaseTextLine('Warehouse Code', authProvider.warehouseId),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTextLine('Warehouse Name', authProvider.warehouseName),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            buildInputScan(context),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTitle('List Staging Bin'),
             Divider(),
-            Expanded(
-              child: ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (_, index) {
-                  return ItemInventoryDispatchHeader(items[index]);
-                },
-              ),
-            ),
+            buildItemList(context),
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildItemList(BuildContext context) {
+    return Expanded(
+      child: FutureBuilder(
+        future: refreshData(context),
+        builder: (_, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) return ErrorInfo();
+
+          return RefreshIndicator(
+            onRefresh: () => refreshData(context),
+            child: Consumer<InventoryDispatchHeaderProvider>(
+              builder: (_, provider, child) => provider.items.length == 0
+                  ? NoData()
+                  : ListView.builder(
+                      itemCount: provider.items.length,
+                      itemBuilder: (_, index) {
+                        return ChangeNotifierProvider.value(
+                          value: provider.items[index],
+                          child: ItemInventoryDispatchHeader(provider.items[index]),
+                        );
+                      },
+                    ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget buildInputScan(BuildContext context) {
+    final provider = Provider.of<InventoryDispatchHeaderProvider>(context, listen: false);
+    return InputScan(
+      label: 'Staging Bin',
+      hint: 'Input or scan Staging Bin',
+      scanResult: (value) {
+        final item = provider.findByBinCode(value);
+        provider.selectStagingBin(item);
+        Navigator.of(context).pushNamed(InventoryDispatchItemScreen.routeName);
+      },
     );
   }
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/screens/Inventory_dispatch_batch/inventory_dispatch_batch_screen.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/inbound/inbound_screen.dart';
 import 'package:msi_app/screens/inbound_sub_1/inbound_sub_1_screen.dart';
 import 'package:msi_app/screens/inbound_sub_2/inbound_sub_2_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch/inventory_dispatch_header_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_bin/inventory_dispatch_bin_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_check/inventory_dispatch_check_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_detail/inventory_dispatch_detail_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_item/inventory_dispatch_item_screen.dart';
 import 'package:msi_app/screens/list_put_away_submited/list_put_away_submited_screen.dart';
@@ -131,8 +133,10 @@ final Map<String, WidgetBuilder> routes = {
       InventoryDispatchItemScreen(),
   InventoryDispatchBinScreen.routeName: (context) =>
       InventoryDispatchBinScreen(),
-  // InventoryDispatchBatchScreen.routeName: (context) =>
-  //     InventoryDispatchBatchScreen(),
+  InventoryDispatchBatchScreen.routeName: (context) =>
+      InventoryDispatchBatchScreen(),
+  InventoryDispatchCheckScreen.routeName: (context) =>
+      InventoryDispatchCheckScreen(),
 
   // Return To Vendor
   ReturnVendorScreen.routeName: (context) => ReturnVendorScreen(),

@@ -1,93 +1,70 @@
 import 'dart:convert';
 
-class InventoryDispatchDetail {
-  final String itemCode;
-  final String itemName;
-  final double totalToPick;
-  final double remainingQty;
-  final String inventoryUom;
-  final int batchNumber;
-  InventoryDispatchDetail({
-    this.itemCode,
-    this.itemName,
-    this.totalToPick,
-    this.remainingQty,
-    this.inventoryUom,
-    this.batchNumber,
-  });
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
-  InventoryDispatchDetail copyWith({
-    String itemCode,
-    String itemName,
-    double totalToPick,
-    double remainingQty,
-    String inventoryUom,
-    int batchNumber,
-  }) {
-    return InventoryDispatchDetail(
-      itemCode: itemCode ?? this.itemCode,
-      itemName: itemName ?? this.itemName,
-      totalToPick: totalToPick ?? this.totalToPick,
-      remainingQty: remainingQty ?? this.remainingQty,
-      inventoryUom: inventoryUom ?? this.inventoryUom,
-      batchNumber: batchNumber ?? this.batchNumber,
-    );
-  }
+import 'package:msi_app/models/inventory_dispatch_item.dart';
+
+class InventoryDispatchDetail with ChangeNotifier {
+  final String docNumber;
+  final DateTime docDate;
+  final DateTime postingDate;
+  final String cardCode;
+  final String cardName;
+  final String pickRemark;
+  final String filename;
+  String storageLocation;
+
+  List<InventoryDispatchItem> itemList;
+  InventoryDispatchDetail({
+    this.docNumber,
+    this.docDate,
+    this.postingDate,
+    this.cardCode,
+    this.cardName,
+    this.pickRemark,
+    this.filename,
+    this.storageLocation,
+    this.itemList,
+  });
 
   Map<String, dynamic> toMap() {
     return {
-      'itemCode': itemCode,
-      'itemName': itemName,
-      'totalToPick': totalToPick,
-      'remainingQty': remainingQty,
-      'inventoryUom': inventoryUom,
-      'batchNumber': batchNumber,
+      'doNo': docNumber,
+      'deliveryDate': docDate?.toIso8601String(),
+      'postingDate': DateTime.now().toIso8601String(),
+      'plant': cardCode,
+      'plantName': cardName,
+      'remark': pickRemark,
+      'filename': 'Inventory Dispatch',
+      'storageLocation': storageLocation,
+      'details': itemList?.map((x) => x?.toMap())?.toList(),
     };
   }
-
+  
   factory InventoryDispatchDetail.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-
+  
     return InventoryDispatchDetail(
-      itemCode: map['itemCode'] ?? '',
-      itemName: map['itemName'] ?? '',
-      totalToPick: map['totalToPick'] ?? 0.0,
-      remainingQty: map['remainingQty'] ?? 0.0,
-      inventoryUom: map['inventoryUom'] ?? 0.0,
-      batchNumber: map['batchNumber'] ?? 0,
+      docNumber: map['uDocNum'] ?? '',
+      docDate: DateTime.parse(map['docDate']),
+      cardCode: map['cardCode'] ?? '',
+      cardName: map['cardName'] ?? '',
+      pickRemark: map['pickRemark'] ?? '',
+      filename: 'Inventory Dispatch',
+      storageLocation: map['storageLocation'],
+      itemList: map['itemList'] ?? [],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory InventoryDispatchDetail.fromJson(String source) =>
-      InventoryDispatchDetail.fromMap(json.decode(source));
+  factory InventoryDispatchDetail.fromJson(String source) => InventoryDispatchDetail.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'InventoryDispatchDetail(itemCode: $itemCode, itemName: $itemName, totalToPick: $totalToPick, remainingQty: $remainingQty, inventoryUom: $inventoryUom, batchNumber: $batchNumber)';
+    return 'InventoryDispatchDetail(docNumber: $docNumber, docDate: $docDate, postingDate: $postingDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, filename: $filename, storageLocation: $storageLocation, itemList: $itemList)';
   }
 
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is InventoryDispatchDetail &&
-        o.itemCode == itemCode &&
-        o.itemName == itemName &&
-        o.totalToPick == totalToPick &&
-        o.remainingQty == remainingQty &&
-        o.inventoryUom == inventoryUom &&
-        o.batchNumber == batchNumber;
-  }
-
-  @override
-  int get hashCode {
-    return itemCode.hashCode ^
-        itemName.hashCode ^
-        totalToPick.hashCode ^
-        remainingQty.hashCode ^
-        inventoryUom.hashCode ^
-        batchNumber.hashCode;
-  }
+ 
 }

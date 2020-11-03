@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/pick_item_receive.dart';
-import 'package:msi_app/models/pick_list_bin.dart';
-import 'package:msi_app/providers/pick_batch_provider.dart';
-import 'package:msi_app/providers/pick_item_receive_provider.dart';
-import 'package:msi_app/screens/pick_item_batch/widget/dialog_pick_batch.dart';
-import 'package:msi_app/screens/pick_item_batch/widget/item_pick_batch.dart';
-import 'package:msi_app/screens/pick_item_receive/pick_item_receive_screen.dart';
+import 'package:msi_app/models/inventory_dispatch_bin.dart';
+import 'package:msi_app/models/inventory_dispatch_item.dart';
+import 'package:msi_app/providers/inventory_dispatch_batch_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_detail_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_header_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_item_provider.dart';
+import 'package:msi_app/screens/Inventory_dispatch_batch/widget/dialog_inventory_dispatch_batch.dart';
+import 'package:msi_app/screens/Inventory_dispatch_batch/widget/item_inventory_dispatch_batch.dart';
+import 'package:msi_app/screens/inventory_dispatch_item/inventory_dispatch_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -15,31 +17,44 @@ import 'package:msi_app/widgets/input_scan.dart';
 import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
-class PickItemBatchScreen extends StatelessWidget {
-  static const routeName = '/pick_item_batch';
+class InventoryDispatchBatchScreen extends StatelessWidget {
+  static const routeName = '/inventory_dispatch_batch';
 
   Future<void> fetchData(
     BuildContext context,
     String itemCode,
-    String binCode,
   ) async {
-    final provider = Provider.of<PickBatchProvider>(context, listen: false);
-    await provider.getPlBatchByItemWhs(itemCode, binCode);
+    final provider =
+        Provider.of<InventoryDispathBatchProvider>(context, listen: false);
+    final providerBinHeader =
+        Provider.of<InventoryDispatchHeaderProvider>(context, listen: false);
+    final providerDetail =
+        Provider.of<InventoryDispatchDetailProvider>(context, listen: false);
+    final binHeader = providerBinHeader.selected;
+    final details = providerDetail.selected;
+    await provider.getPlBatchByItemWhs(itemCode, binHeader.binCode, details.docNumber);
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider =
+        Provider.of<InventoryDispatchHeaderProvider>(context, listen: false);
+    print("TST SELECTED");
+    print(provider.selected);
     final pickItemProvider =
-        Provider.of<PickItemReceiveProvider>(context, listen: false);
+        Provider.of<InventoryDispatchItemProvider>(context, listen: false);
     final pickBatchProvider =
-        Provider.of<PickBatchProvider>(context, listen: false);
+        Provider.of<InventoryDispathBatchProvider>(context, listen: false);
     Map map = ModalRoute.of(context).settings.arguments;
-    PickItemReceive pickItem = map['pickItemReceive'];
-    PickListBin itemBin = map['pickListBin'];
-
+    InventoryDispatchItem pickItem = map['inventoryDispatchItem'];
+    InventoryDispatchBin itemBin = map['inventoryDispatchBin'];
+    print("ITEM BIN");
+    print(itemBin);
+    print("PICK ITEM");
+    print(pickItem);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Picker Pick List'),
+        title: Text('Inventory Dispatch Error'),
         actions: [
           IconButton(
             icon: Icon(Icons.check_box_outlined),
@@ -51,7 +66,7 @@ class PickItemBatchScreen extends StatelessWidget {
               pickItemProvider.addBatchList(pickItem, batchList);
 
               Navigator.of(context).popUntil(
-                  ModalRoute.withName(PickItemReceiveScreen.routeName));
+                  ModalRoute.withName(InventoryDispatchItemScreen.routeName));
             },
           )
         ],
@@ -67,7 +82,7 @@ class PickItemBatchScreen extends StatelessWidget {
             buildInputScan(context),
             Row(
               children: [
-                Consumer<PickBatchProvider>(
+                Consumer<InventoryDispathBatchProvider>(
                     builder: (BuildContext _, provider, Widget child) {
                   return Expanded(
                     child: BaseTextLine(
@@ -86,7 +101,7 @@ class PickItemBatchScreen extends StatelessWidget {
                     label: Text('CLEAR'))
               ],
             ),
-            // BaseTitle(pickItem.itemCode),
+            BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),
@@ -100,12 +115,12 @@ class PickItemBatchScreen extends StatelessWidget {
 
   Widget buildItemList(
     BuildContext context,
-    PickItemReceive pickItem,
-    PickListBin itemBin,
+    InventoryDispatchItem pickItem,
+    InventoryDispatchBin itemBin,
   ) {
     return Expanded(
       child: FutureBuilder(
-        future: fetchData(context, pickItem.itemCode, itemBin.binLocation),
+        future: fetchData(context, pickItem.itemCode),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -113,7 +128,7 @@ class PickItemBatchScreen extends StatelessWidget {
 
           if (snapshot.hasError) return ErrorInfo();
 
-          return Consumer<PickBatchProvider>(
+          return Consumer<InventoryDispathBatchProvider>(
             builder: (_, provider, child) => provider.items.length == 0
                 ? NoData()
                 : ListView.builder(
@@ -121,7 +136,8 @@ class PickItemBatchScreen extends StatelessWidget {
                     itemBuilder: (_, index) {
                       return ChangeNotifierProvider.value(
                         value: provider.items[index],
-                        child: ItemPickBatch(provider.items[index]),
+                        child:
+                            ItemInventoryDispatchBatch(provider.items[index]),
                       );
                     },
                   ),
@@ -132,7 +148,8 @@ class PickItemBatchScreen extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<PickBatchProvider>(context, listen: false);
+    final provider =
+        Provider.of<InventoryDispathBatchProvider>(context, listen: false);
     return InputScan(
       label: 'Batch Number',
       hint: 'Input or scan Item Batch Number',
@@ -140,7 +157,7 @@ class PickItemBatchScreen extends StatelessWidget {
         final item = provider.findByBatchNo(value);
         showModalBottomSheet(
           context: context,
-          builder: (_) => DialogPickBatch(item),
+          builder: (_) => DialogInventoryDispatchBatch(item),
         );
       },
     );

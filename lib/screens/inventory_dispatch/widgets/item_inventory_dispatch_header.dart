@@ -14,42 +14,22 @@ class ItemInventoryDispatchHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final invDisHeader =
-        Provider.of<InventoryDispatchHeaderProvider>(context, listen: false);
+    final provider = Provider.of<InventoryDispatchHeaderProvider>(context, listen: false);
 
     return InkWell(
-      onTap: () async {
-        if (invDisHeader.zonation == null) {
-          Scaffold.of(context).showSnackBar(
-            SnackBar(
-              content: Row(
-                children: [
-                  Icon(Icons.error_outline, color: Colors.red),
-                  SizedBox(width: getProportionateScreenWidth(kLarge)),
-                  Text('Please select Zonation'),
-                ],
-              ),
-            ),
-          );
-          return;
-        }
-
-        invDisHeader.setHeader(item);
-        Navigator.of(context)
-            .pushNamed(InventoryDispatchDetailScreen.routeName);
+      onTap: () {
+        provider.selectStagingBin(item);
+        Navigator.of(context).pushNamed(InventoryDispatchDetailScreen.routeName);
       },
       child: Container(
-        width: double.infinity,
         margin: const EdgeInsets.all(kTiny),
-        decoration: kBoxDecoration,
         padding: const EdgeInsets.all(kSmall),
+        decoration: kBoxDecoration,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('Doc Number', item.docNumber),
-            BaseTextLine('Require Date', convertDate(item.requireDate)),
-            BaseTextLine('To Warehouse', item.toWarehouse),
-            BaseTextLine('Memo', item.memo),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTextLine(item.binCode, ''),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
           ],
         ),
       ),

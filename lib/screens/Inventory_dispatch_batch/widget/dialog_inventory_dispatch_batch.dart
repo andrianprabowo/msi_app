@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/inventory_dispatch_item.dart';
-import 'package:msi_app/providers/inventory_dispatch_item_provider.dart';
-import 'package:msi_app/screens/inventory_dispatch_bin/inventory_dispatch_bin_screen.dart';
+import 'package:msi_app/models/inventory_dispatch_batch.dart';
+import 'package:msi_app/providers/inventory_dispatch_batch_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:provider/provider.dart';
 
-class DialogInvDispNonbatch extends StatefulWidget {
-  final InventoryDispatchItem item;
+class DialogInventoryDispatchBatch extends StatefulWidget {
+  final InventoryDispatchBatch item;
 
-  const DialogInvDispNonbatch(this.item);
+  const DialogInventoryDispatchBatch(this.item);
 
   @override
-  _DialogInvDispNonbatchState createState() => _DialogInvDispNonbatchState();
+  _DialogInventoryDispatchBatchState createState() => _DialogInventoryDispatchBatchState();
 }
 
-class _DialogInvDispNonbatchState extends State<DialogInvDispNonbatch> {
+class _DialogInventoryDispatchBatchState extends State<DialogInventoryDispatchBatch> {
   final _quantity = TextEditingController();
-
-  InventoryDispatchItem get item {
-    return widget.item;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +26,14 @@ class _DialogInvDispNonbatchState extends State<DialogInvDispNonbatch> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BaseTitle('Input Quantity'),
+          BaseTitle('Input Batch Quantity'),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTextLine('Batch Number', widget.item.batchNo),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTextLine('Expired Date', convertDate(widget.item.expiredDate)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Available Quantity',
-              widget.item.openQty.toStringAsFixed(2)),
+              widget.item.availableQty.toStringAsFixed(2)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -65,20 +64,18 @@ class _DialogInvDispNonbatchState extends State<DialogInvDispNonbatch> {
       child: RaisedButton(
         child: Text('Submit'),
         onPressed: () {
-          if (double.parse(_quantity.text) > widget.item.openQty) {
-            
-            print('Tidak boleh lebih besar dari Available Qty ');
+          // handle if input not double to return nothing
+          double qty;
+          try {
+            qty = double.parse(_quantity.text);
+          } on FormatException {
             return;
           }
-          final inventoryDispatchItem =
-              Provider.of<InventoryDispatchItemProvider>(context, listen: false);
-          inventoryDispatchItem.inputQtyNonBatch(
-            item,
-            double.parse(_quantity.text),
-          );
-           Navigator.of(context)
-            .pushNamed(InventoryDispatchBinScreen.routeName, arguments: item);
-            //  Navigator.of(context).pop();
+
+          Provider.of<InventoryDispathBatchProvider>(context, listen: false)
+              .updatePickQty(widget.item.batchNo, qty);
+
+          Navigator.of(context).pop();
         },
       ),
     );
