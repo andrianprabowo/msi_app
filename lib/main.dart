@@ -2,10 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_batch_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_batch_rtv_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_batch_so_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_bin_Rtv_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_bin_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_bin_so_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_detail_rtv_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_detail_so_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_header_Rtv_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_header_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_header_so_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_item_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_item_rtv_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_item_so_provider.dart';
 import 'package:msi_app/providers/item_batch_provider.dart';
 import 'package:msi_app/providers/item_batch_rfo_provider.dart';
 import 'package:msi_app/providers/item_bin_provider.dart';
@@ -75,6 +85,22 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ItemBatchRfoProvider()),
         ChangeNotifierProvider(create: (_) => InventoryDispatchBinProvider()),
         ChangeNotifierProvider(create: (_) => InventoryDispathBatchProvider()),
+
+        ChangeNotifierProvider(
+            create: (_) => InventoryDispatchHeaderSoProvider()),
+        ChangeNotifierProvider(
+            create: (_) => InventoryDispatchDetailSoProvider()),
+        ChangeNotifierProvider(create: (_) => InventoryDispatchItemSoProvider()),
+        ChangeNotifierProvider(create: (_) => InventoryDispatchBinSoProvider()),
+        ChangeNotifierProvider(create: (_) => InventoryDispathBatchSoProvider()),
+
+        ChangeNotifierProvider(
+            create: (_) => InventoryDispatchHeaderRtvProvider()),
+        ChangeNotifierProvider(
+            create: (_) => InventoryDispatchDetailRtvProvider()),
+        ChangeNotifierProvider(create: (_) => InventoryDispatchItemRtvProvider()),
+        ChangeNotifierProvider(create: (_) => InventoryDispatchBinRtvProvider()),
+        ChangeNotifierProvider(create: (_) => InventoryDispathBatchRtvProvider()),
       ],
       child: MyApp(),
     ),

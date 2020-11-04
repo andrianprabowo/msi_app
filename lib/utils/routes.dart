@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/screens/Inventory_dispatch_batch/inventory_dispatch_batch_screen.dart';
+import 'package:msi_app/screens/Inventory_dispatch_batch_rtv/inventory_dispatch_batch_rtv_screen.dart';
+import 'package:msi_app/screens/Inventory_dispatch_batch_so/inventory_dispatch_batch_so_screen.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/inbound/inbound_screen.dart';
 import 'package:msi_app/screens/inbound_sub_1/inbound_sub_1_screen.dart';
 import 'package:msi_app/screens/inbound_sub_2/inbound_sub_2_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch/inventory_dispatch_header_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_bin/inventory_dispatch_bin_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_bin_rtv/inventory_dispatch_bin_rtv_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_bin_so/inventory_dispatch_bin_so_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_check/inventory_dispatch_check_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_check_rtv/inventory_dispatch_check_rtv_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_check_so/inventory_dispatch_check_so_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_detail/inventory_dispatch_detail_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_detail_rtv/inventory_dispatch_detail_rtv_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_detail_so/inventory_dispatch_detail_so_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_item/inventory_dispatch_item_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_item_rtv/inventory_dispatch_item_rtv_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_item_so/inventory_dispatch_item_so_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_rtv/inventory_dispatch_header_screen_rtv.dart';
+import 'package:msi_app/screens/inventory_dispatch_so/inventory_dispatch_header_screen_so.dart';
 import 'package:msi_app/screens/list_put_away_submited/list_put_away_submited_screen.dart';
 import 'package:msi_app/screens/list_receipt_from_vendor/list_receipt_from_vendor_screen.dart';
 import 'package:msi_app/screens/login/login_screen.dart';
@@ -137,6 +149,35 @@ final Map<String, WidgetBuilder> routes = {
       InventoryDispatchBatchScreen(),
   InventoryDispatchCheckScreen.routeName: (context) =>
       InventoryDispatchCheckScreen(),
+
+// Inventory Dispatch
+  InventoryDispatchHeaderSoScreen.routeName: (context) =>
+      InventoryDispatchHeaderSoScreen(),
+  InventoryDispatchDetailSoScreen.routeName: (context) =>
+      InventoryDispatchDetailSoScreen(),
+  InventoryDispatchItemSoScreen.routeName: (context) =>
+      InventoryDispatchItemSoScreen(),
+  InventoryDispatchBinSoScreen.routeName: (context) =>
+      InventoryDispatchBinSoScreen(),
+  InventoryDispatchBatchSoScreen.routeName: (context) =>
+      InventoryDispatchBatchSoScreen(),
+  InventoryDispatchCheckSoScreen.routeName: (context) =>
+      InventoryDispatchCheckSoScreen(),
+
+      // Inventory Dispatch
+  InventoryDispatchHeaderRtvScreen.routeName: (context) =>
+      InventoryDispatchHeaderRtvScreen(),
+  InventoryDispatchDetailRtvScreen.routeName: (context) =>
+      InventoryDispatchDetailRtvScreen(),
+  InventoryDispatchItemRtvScreen.routeName: (context) =>
+      InventoryDispatchItemRtvScreen(),
+  InventoryDispatchBinRtvScreen.routeName: (context) =>
+      InventoryDispatchBinRtvScreen(),
+  InventoryDispatchBatchRtvScreen.routeName: (context) =>
+      InventoryDispatchBatchRtvScreen(),
+  InventoryDispatchCheckRtvScreen.routeName: (context) =>
+      InventoryDispatchCheckRtvScreen(),
+
 
   // Return To Vendor
   ReturnVendorScreen.routeName: (context) => ReturnVendorScreen(),

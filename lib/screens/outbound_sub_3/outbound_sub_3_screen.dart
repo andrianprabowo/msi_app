@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/screens/inventory_dispatch_rtv/inventory_dispatch_header_screen_rtv.dart';
 import 'package:msi_app/screens/picker_pick_rtv/picker_pick_rtv_screen.dart';
 import 'package:msi_app/widgets/base_app_bar.dart';
 import 'package:msi_app/widgets/item_header.dart';
@@ -18,7 +19,7 @@ class OutboundSub3Screen extends StatelessWidget {
     {
       'icon': Icons.moped,
       'label': 'Inventory Dispatch To Vendor',
-      // 'routeName': InventoryDispatchHeaderScreen.routeName,
+      'routeName': InventoryDispatchHeaderRtvScreen.routeName,
     },
     
   ];
