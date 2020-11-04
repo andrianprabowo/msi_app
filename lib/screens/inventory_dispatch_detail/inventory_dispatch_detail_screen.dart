@@ -30,7 +30,7 @@ class InventoryDispatchDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inventory Dispatch test'),
+        title: Text('Inventory Dispatch'),
         actions: [
           IconButton(
             icon: Icon(Icons.list_alt),

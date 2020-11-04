@@ -31,9 +31,6 @@ class InventoryDispatchItemScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final item =
         Provider.of<InventoryDispatchDetailProvider>(context, listen: false).selected;
-    // final pickItemProvider =
-    //     Provider.of<InventoryDispatchItemProvider>(context, listen: false);
-    // var status = 0;
     return Scaffold(
       appBar: AppBar(
         title: Text('Inventory Dispatch'),
@@ -41,18 +38,6 @@ class InventoryDispatchItemScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.post_add),
             onPressed: () {
-              // for (var i = 0; i < pickItemProvider.items.length; i++) {
-              //   if (pickItemProvider.items[i].itemStorageLocation != '' &&
-              //       pickItemProvider.items[i].pickedQty.toStringAsFixed(2) !=
-              //           '0.00') //pickItemProvider.items[i].itemStorageLocation != '' &&
-              //     status = 1;
-              // }
-              // if (status == 1)
-              //   Navigator.of(context)
-              //       .pushNamed(InventoryDispatchCheckScreen.routeName);
-              // else
-              //   showAlertOnZero(context);
-
               Navigator.of(context).pushNamed(InventoryDispatchCheckScreen.routeName);
             },
           )
@@ -126,20 +111,6 @@ class InventoryDispatchItemScreen extends StatelessWidget {
         Navigator.of(context)
             .pushNamed(InventoryDispatchBinScreen.routeName, arguments: item);
       },
-    );
-  }
-
-  Future<void> showAlertOnZero(BuildContext context) async {
-    return new Scaffold(
-      body: new Builder(
-        // Create an inner BuildContext so that the onPressed methods
-        // can refer to the Scaffold with Scaffold.of().
-        builder: (BuildContext context) {
-          Scaffold.of(context).showSnackBar(new SnackBar(
-            content: new Text('Hello!'),
-          ));
-        },
-      ),
     );
   }
 }

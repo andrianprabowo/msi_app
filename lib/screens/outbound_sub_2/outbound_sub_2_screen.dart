@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/screens/inventory_dispatch_so/inventory_dispatch_header_screen_so.dart';
 import 'package:msi_app/screens/picker_pick_so/picker_pick_so_screen.dart';
 import 'package:msi_app/widgets/base_app_bar.dart';
 import 'package:msi_app/widgets/item_header.dart';
@@ -18,7 +19,7 @@ class OutboundSub2Screen extends StatelessWidget {
     {
       'icon': Icons.moped,
       'label': 'Inventory Dispatch SO',
-      // 'routeName': InventoryDispatchHeaderScreen.routeName,
+      'routeName': InventoryDispatchHeaderSoScreen.routeName,
     },
   ];
 
