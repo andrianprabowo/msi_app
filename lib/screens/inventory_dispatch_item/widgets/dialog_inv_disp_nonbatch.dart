@@ -75,6 +75,7 @@ class _DialogInvDispNonbatchState extends State<DialogInvDispNonbatch> {
           inventoryDispatchItem.inputQtyNonBatch(
             item,
             double.parse(_quantity.text),
+            item.itemStorageLocation,
           );
            Navigator.of(context)
             .pushNamed(InventoryDispatchBinScreen.routeName, arguments: item);

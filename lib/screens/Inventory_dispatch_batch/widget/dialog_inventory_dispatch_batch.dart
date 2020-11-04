@@ -37,7 +37,15 @@ class _DialogInventoryDispatchBatchState extends State<DialogInventoryDispatchBa
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          buildButtonSubmit(context),
+          if (_quantity.text != '' &&
+                  (double.tryParse(_quantity.text) >
+                      double.tryParse(
+                          widget.item.availableQty.toStringAsFixed(2))) ||
+              _quantity.text == '0')
+            buildButtonNotif(
+                context, widget.item.availableQty.toStringAsFixed(2))
+          else
+            buildButtonSubmit(context),
         ],
       ),
     );
@@ -77,6 +85,17 @@ class _DialogInventoryDispatchBatchState extends State<DialogInventoryDispatchBa
 
           Navigator.of(context).pop();
         },
+      ),
+    );
+  }
+
+  Widget buildButtonNotif(BuildContext context, String avlQty) {
+    return SizedBox(
+      width: double.infinity,
+      child: RaisedButton(
+        color: Colors.red,
+        child: Text('Qty must be above 0 or equal to ' + avlQty),
+        onPressed: () {},
       ),
     );
   }
