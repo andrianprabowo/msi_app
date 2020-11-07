@@ -129,7 +129,7 @@ class InventoryDispatchCheckScreen extends StatelessWidget {
             BaseTextLine('Vendor Code', item.cardCode),
             BaseTextLine('Vendor Name', item.cardName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildInputScan(context),
+            // buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Item Details'),
             Divider(),

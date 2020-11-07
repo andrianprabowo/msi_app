@@ -12,6 +12,7 @@ import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/input_scan.dart';
+import 'package:msi_app/widgets/item_bin.dart';
 import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
@@ -61,7 +62,7 @@ class ReceiptDetailScreen extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Document Date', convertDate(po.docDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildInputScanbin(context, poProvider),
+            ItemBin(),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

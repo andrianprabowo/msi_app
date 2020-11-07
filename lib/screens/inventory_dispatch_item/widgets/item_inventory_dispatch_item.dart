@@ -17,11 +17,14 @@ class ItemInventoryDispatchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        item.fgBatch == 'Y'
-            ? Navigator.of(context)
-                .pushNamed(InventoryDispatchBinScreen.routeName, arguments: item)
-            : showModalBottomSheet(
-                context: context, builder: (_) => DialogInvDispNonbatch(item));
+        if (item.fgBatch == 'Y') {
+          Navigator.of(context)
+              .pushNamed(InventoryDispatchBinScreen.routeName, arguments: item);
+        } else {
+          item.itemStorageLocation = item.itemStorageLocation;
+          showModalBottomSheet(
+              context: context, builder: (_) => DialogInvDispNonbatch(item));
+        }
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),

@@ -10,7 +10,7 @@ import 'package:msi_app/utils/prefs.dart';
 class PurchaseOrderProvider with ChangeNotifier {
   List<PurchaseOrder> _items = [];
   PurchaseOrder _selected;
-
+  
   List<PurchaseOrder> get items => _items;
   PurchaseOrder get selected => _selected;
 
@@ -63,7 +63,9 @@ class PurchaseOrderProvider with ChangeNotifier {
       'Accept': 'application/json',
     };
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
+    final binId = await Prefs.getString(Prefs.binId);
 
+    _selected.storageLocation = binId;
     _selected.plant = warehouseId;
     _selected.detailList = detailList;
 

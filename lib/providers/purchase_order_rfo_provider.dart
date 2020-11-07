@@ -62,7 +62,9 @@ class PurchaseOrderRfoProvider with ChangeNotifier {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
+    final warehouseId = await Prefs.getString(Prefs.warehouseId);
 
+    _selected.plant = warehouseId;
     _selected.detailList = detailList;
 
     try {

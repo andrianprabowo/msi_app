@@ -12,6 +12,7 @@ import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/input_scan.dart';
+import 'package:msi_app/widgets/item_bin.dart';
 import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,8 @@ class ReceiptDetailRfoScreen extends StatelessWidget {
   static const routeName = '/receipt_detail_rfo';
 
   Future<void> fetchData(BuildContext context, String docNum) async {
-    final itemPoProvider = Provider.of<ItemPoRfoProvider>(context, listen: false);
+    final itemPoProvider =
+        Provider.of<ItemPoRfoProvider>(context, listen: false);
     await itemPoProvider.getPoDetailByDocNum(docNum);
 
     final poProvider =
@@ -44,8 +46,8 @@ class ReceiptDetailRfoScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.post_add),
-            onPressed: () =>
-                Navigator.of(context).pushNamed(ReceiptCheckRfoScreen.routeName),
+            onPressed: () => Navigator.of(context)
+                .pushNamed(ReceiptCheckRfoScreen.routeName),
           )
         ],
       ),
@@ -61,7 +63,7 @@ class ReceiptDetailRfoScreen extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Document Date', convertDate(po.docDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildInputScanbin(context, poProvider),
+            ItemBin(),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

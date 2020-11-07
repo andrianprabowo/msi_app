@@ -58,7 +58,7 @@ class InventoryDispatchDetailSoProvider with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> createInventoryDispatch(BuildContext context) async {
-    var url = '$kBaseUrl/tgrpo/tgrpo/api/listgrpodlvs';
+    var url = '$kBaseUrl/tgrpo/tgrpo/api/listsoidp';
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',

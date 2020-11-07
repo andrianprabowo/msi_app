@@ -67,7 +67,7 @@ class ReceiptCheckRfoScreen extends StatelessWidget {
               SizedBox(height: getProportionateScreenHeight(kLarge)),
               Text('Success create Receipt'),
               SizedBox(height: getProportionateScreenHeight(kLarge)),
-              Text('Receipt Return from Outlet'),
+              Text('Return from Outlet'),
               SizedBox(height: getProportionateScreenHeight(kLarge)),
               Text(
                 docId.toString(),
@@ -101,7 +101,7 @@ class ReceiptCheckRfoScreen extends StatelessWidget {
     final po = poProvider.selected;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Receipt 2 Check'),
+        title: Text('Receipt From Vendor Check'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
@@ -125,7 +125,7 @@ class ReceiptCheckRfoScreen extends StatelessWidget {
             BaseTextLine('Vendor Code', po.vendorCode),
             BaseTextLine('Vendor Name', po.vendorName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Staging Bin Code', po.storageLocation ?? 'Empty'),
+            BaseTextLine('Bin', po.storageLocation ?? 'Empty'),
             // BaseTextLine('Staging Bin Name', po.storageLocationName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Item Details'),

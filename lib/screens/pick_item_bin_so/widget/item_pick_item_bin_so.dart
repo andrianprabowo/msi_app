@@ -19,17 +19,19 @@ class ItemPickItemBinSo extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InkWell(
       onTap: () {
-        pickItemReceive.fgBatch == 'Y'
-            ? Navigator.of(context).pushNamed(
-                PickItemBatchSoScreen.routeName,
-                arguments: {
-                  'pickItemReceive': pickItemReceive,
-                  'pickListBin': item,
-                },
-              )
-            : 
-             Navigator.of(context).popUntil(
-                  ModalRoute.withName(PickItemReceiveSoScreen.routeName));
+        if (pickItemReceive.fgBatch == 'Y') {
+          Navigator.of(context).pushNamed(
+            PickItemBatchSoScreen.routeName,
+            arguments: {
+              'pickItemReceive': pickItemReceive,
+              'pickListBin': item,
+            },
+          );
+        } else {
+          pickItemReceive.itemStorageLocation = item.binLocation;
+          Navigator.of(context)
+              .popUntil(ModalRoute.withName(PickItemReceiveSoScreen.routeName));
+        }
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),

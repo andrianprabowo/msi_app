@@ -36,6 +36,7 @@ class PurchaseOrder with ChangeNotifier {
       'deliveryDate': docDate?.toIso8601String(),
       'kdVendor': vendorCode,
       'nmVendor': vendorName,
+      'fileName':'GRPO MOBILE',
       'storageLocation': storageLocation ?? '',
       'plant': plant ?? '',
       'storageLocationName': storageLocationName ?? '',

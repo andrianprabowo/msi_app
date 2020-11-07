@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/purchase_order_provider.dart';
 import 'package:msi_app/screens/list_receipt_from_vendor/list_receipt_from_vendor_screen.dart';
 import 'package:msi_app/screens/receipt_detail/receipt_detail_screen.dart';
@@ -87,12 +88,14 @@ class ReceiptVendorScreen extends StatelessWidget {
 
   Widget buildInputScan(BuildContext context) {
     final provider = Provider.of<PurchaseOrderProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InputScan(
       label: 'PO Number',
       hint: 'Input or scan PO Number',
       scanResult: (value) {
         final item = provider.findByPoNumber(value);
         provider.selectPo(item);
+        authProvider.clearBin();
         Navigator.of(context).pushNamed(ReceiptDetailScreen.routeName);
       },
     );

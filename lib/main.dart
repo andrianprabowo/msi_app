@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/bin_rtv_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_batch_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_batch_rtv_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_batch_so_provider.dart';
@@ -101,6 +102,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => InventoryDispatchItemRtvProvider()),
         ChangeNotifierProvider(create: (_) => InventoryDispatchBinRtvProvider()),
         ChangeNotifierProvider(create: (_) => InventoryDispathBatchRtvProvider()),
+        ChangeNotifierProvider(create: (_) => BinRtvProvider()),
       ],
       child: MyApp(),
     ),

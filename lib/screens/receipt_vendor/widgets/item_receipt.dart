@@ -20,6 +20,7 @@ class ItemReceipt extends StatelessWidget {
     return InkWell(
       onTap: () {
         poProvider.selectPo(item);
+        authProvider.clearBin();
         Navigator.of(context).pushNamed(ReceiptDetailScreen.routeName);
       },
       child: Container(

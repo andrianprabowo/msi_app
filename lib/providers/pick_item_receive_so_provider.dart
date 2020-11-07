@@ -73,8 +73,17 @@ class PickItemReceiveSoProvider with ChangeNotifier {
     print('Removed Item Batch: $itemBatch');
   }
 
-  void inputQtyNonBatch(PickItemReceiveSo pickItemReceive, double qty) {
+  // void updateQtyNBinNonBatch(ProductionPickListItemModel productionPickListItemModel, double qty, String bin) {
+  //   productionPickListItemModel.pickedQty = qty;
+  //   productionPickListItemModel.itemStorageLocation = bin;
+  //   notifyListeners();
+  //   print('Update Qty & Bin Loc Non batch: $productionPickListItemModel');
+  // }
+
+  void inputQtyNonBatch(
+      PickItemReceiveSo pickItemReceive, double qty) {
     pickItemReceive.pickedQty = qty;
+    // pickItemReceive.itemStorageLocation = bin;
     notifyListeners();
     print('Update Qty Non batch: $pickItemReceive');
   }

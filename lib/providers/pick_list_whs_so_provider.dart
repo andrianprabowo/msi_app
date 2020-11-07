@@ -10,13 +10,21 @@ import 'package:msi_app/utils/prefs.dart';
 class PickListWhsSoProvider with ChangeNotifier {
   List<PickListWhsSo> _items = [];
   PickListWhsSo _selected;
+  
+
+  // List<PickListBinSo> _itembin = [];
+  // PickListBinSo _selectedBin;
 
   List<PickListWhsSo> get items => _items;
   PickListWhsSo get selected => _selected;
 
+  // List<PickListBinSo> get itembin => _itembin;
+  // PickListBinSo get selectedBinSo => _selectedBin;
+
   List<PickItemReceiveSo> get detailList {
     return _selected.pickItemList.where((item) => item.pickedQty > 0).toList();
   }
+
 
   Future<void> getPlByWarehouse() async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
@@ -51,14 +59,28 @@ class PickListWhsSoProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // void selectBin(PickListBinSo pickListBinSo) {
+  //   _selectedBin = pickListBinSo;
+  //   notifyListeners();
+  // }
+
+  // void updateQtyNBinNonBatch(ProductionPickListItemModel productionPickListItemModel, double qty, String bin) {
+  //   productionPickListItemModel.pickedQty = qty;
+  //   productionPickListItemModel.itemStorageLocation = bin;
+  //   notifyListeners();
+  //   print('Update Qty & Bin Loc Non batch: $productionPickListItemModel');
+  // }
+
   Future<Map<String, dynamic>> createPickList() async {
     var url = '$kBaseUrl/tgrpo/tgrpo/api/listpickso';
+
 
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
 
+    // _selectedBin.binLocation = _selectedBin.toString();
     _selected.pickItemList = detailList;
 
     try {

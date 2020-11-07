@@ -6,13 +6,21 @@ import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/prefs.dart';
 import 'package:http/http.dart' as http;
 
+//  List<InventoryDispatchDetailRtv> _items = [];
+//   InventoryDispatchDetailRtv _selected;
+
+//   List<InventoryDispatchDetailRtv> get items => _items;
+//   InventoryDispatchDetailRtv get selected => _selected;
+
 class PickListBinProvider with ChangeNotifier {
   List<PickListBin> _items = [];
+  PickListBin _selected;
   var _showAllBin = false;
 
   List<PickListBin> get items {
     return _showAllBin ? _items : _items.take(5).toList();
   }
+  PickListBin get selected => _selected;
 
   bool get showAllBin => _showAllBin;
 
@@ -48,5 +56,10 @@ class PickListBinProvider with ChangeNotifier {
 
   PickListBin findByBinLocation(String binLocation) {
     return _items.firstWhere((element) => element.binLocation == binLocation);
+  }
+
+  void selectbin(PickListBin pickListBin) {
+    _selected = pickListBin;
+    notifyListeners();
   }
 }

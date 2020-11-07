@@ -10,6 +10,7 @@ class PurchaseOrderRfo with ChangeNotifier {
   final DateTime docDate;
   final String vendorCode;
   final String vendorName;
+  String plant;
   String storageLocation;
   String storageLocationName;
   final String docnum;
@@ -21,6 +22,7 @@ class PurchaseOrderRfo with ChangeNotifier {
     this.docDate,
     this.vendorCode,
     this.vendorName,
+    this.plant,
     this.storageLocation,
     this.storageLocationName,
     this.docnum,
@@ -34,6 +36,8 @@ class PurchaseOrderRfo with ChangeNotifier {
       'deliveryDate': docDate?.toIso8601String(),
       'kdVendor': vendorCode,
       'nmVendor': vendorName,
+      'fileName': 'GRPO MOBILE',
+      'plant': plant ?? '',
       'storageLocation': storageLocation ?? '',
       'storageLocationName': storageLocationName ?? '',
       'docnum': poNumber,
@@ -61,6 +65,6 @@ class PurchaseOrderRfo with ChangeNotifier {
 
   @override
   String toString() {
-    return 'PurchaseOrderRfo(docEntry: $docEntry, poNumber: $poNumber, docDate: $docDate, vendorCode: $vendorCode, vendorName: $vendorName, detailList: $detailList)';
+    return 'PurchaseOrderRfo(docEntry: $docEntry, poNumber: $poNumber, docDate: $docDate, vendorCode: $vendorCode, vendorName: $vendorName, plant: $plant ,detailList: $detailList)';
   }
 }

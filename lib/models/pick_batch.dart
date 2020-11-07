@@ -17,8 +17,8 @@ class PickBatch with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'batchNo': batchNo,
-      'batchQuantity': availableQty,
-      'pickQty': pickQty,
+      'batchQuantity': pickQty,
+     // 'pickQty': pickQty,
       'expDate': expiredDate?.toIso8601String(),
     };
   }
@@ -29,7 +29,7 @@ class PickBatch with ChangeNotifier {
     return PickBatch(
       batchNo: map['batchNo'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
-      pickQty: map['pickQty'] ?? 0.0,
+      pickQty: 0.0,
       expiredDate: DateTime.parse(map['expDate']),
     );
   }

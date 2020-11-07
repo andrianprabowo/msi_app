@@ -7,6 +7,7 @@ class Prefs {
   static const String token = 'token';
   static const String warehouseId = 'warehouseId';
   static const String warehouseName = 'warehouseName';
+  static const String binId = 'binId';
 
   static Future<bool> getBool(String key) async {
     final p = await prefs;
