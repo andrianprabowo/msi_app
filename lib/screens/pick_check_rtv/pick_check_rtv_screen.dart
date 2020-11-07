@@ -8,6 +8,7 @@ import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/input_scan.dart';
+import 'package:msi_app/widgets/item_bin_picklist_rtv.dart';
 import 'package:provider/provider.dart';
 
 class PickCheckRtvScreen extends StatelessWidget {
@@ -126,7 +127,8 @@ class PickCheckRtvScreen extends StatelessWidget {
             BaseTextLine('Vendor Code', item.cardCode),
             BaseTextLine('Vendor Name', item.cardName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildInputScan(context),
+            // buildInputScan(context),
+            ItemBinPicklistRtv(),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Item Details'),
             Divider(),

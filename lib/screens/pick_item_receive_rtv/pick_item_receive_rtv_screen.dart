@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/pick_list_whs_rtv.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/pick_item_receive_rtv_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_rtv_provider.dart';
 import 'package:msi_app/screens/pick_check_rtv/pick_check_rtv_screen.dart';
@@ -31,6 +32,8 @@ class PickItemReceiveRtvScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final item =
         Provider.of<PickListWhsRtvProvider>(context, listen: false).selected;
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Picker Pick List To Vendor'),
@@ -38,6 +41,7 @@ class PickItemReceiveRtvScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.post_add),
             onPressed: () {
+              authProvider.clearBin();
               Navigator.of(context).pushNamed(PickCheckRtvScreen.routeName);
             },
           )

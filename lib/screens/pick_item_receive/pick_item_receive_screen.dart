@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/pick_list_whs.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/pick_item_receive_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_provider.dart';
 import 'package:msi_app/screens/pick_check/pick_check_screen.dart';
@@ -31,6 +32,8 @@ class PickItemReceiveScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final item =
         Provider.of<PickListWhsProvider>(context, listen: false).selected;
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Picker Pick List'),
@@ -38,6 +41,7 @@ class PickItemReceiveScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.post_add),
             onPressed: () {
+              authProvider.clearBin();
               Navigator.of(context).pushNamed(PickCheckScreen.routeName);
             },
           )

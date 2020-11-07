@@ -10,7 +10,6 @@ import 'package:msi_app/utils/prefs.dart';
 class PickListWhsSoProvider with ChangeNotifier {
   List<PickListWhsSo> _items = [];
   PickListWhsSo _selected;
-  
 
   // List<PickListBinSo> _itembin = [];
   // PickListBinSo _selectedBin;
@@ -24,7 +23,6 @@ class PickListWhsSoProvider with ChangeNotifier {
   List<PickItemReceiveSo> get detailList {
     return _selected.pickItemList.where((item) => item.pickedQty > 0).toList();
   }
-
 
   Future<void> getPlByWarehouse() async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
@@ -71,16 +69,22 @@ class PickListWhsSoProvider with ChangeNotifier {
   //   print('Update Qty & Bin Loc Non batch: $productionPickListItemModel');
   // }
 
+   void setStagingBin(String stagingBin) {
+    _selected.storageLocation = stagingBin;
+    notifyListeners();
+  }
+
   Future<Map<String, dynamic>> createPickList() async {
     var url = '$kBaseUrl/tgrpo/tgrpo/api/listpickso';
-
 
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
 
-    // _selectedBin.binLocation = _selectedBin.toString();
+    final binId = await Prefs.getString(Prefs.binId);
+
+    _selected.storageLocation = binId;
     _selected.pickItemList = detailList;
 
     try {

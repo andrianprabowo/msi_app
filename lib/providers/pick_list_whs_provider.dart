@@ -51,6 +51,11 @@ class PickListWhsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setStagingBin(String stagingBin) {
+    _selected.storageLocation = stagingBin;
+    notifyListeners();
+  }
+
   Future<Map<String, dynamic>> createPickList() async {
     var url = '$kBaseUrl/tgrpo/tgrpo/api/listgrpodlvs';
     final headers = {
@@ -58,6 +63,9 @@ class PickListWhsProvider with ChangeNotifier {
       'Accept': 'application/json',
     };
 
+    final binId = await Prefs.getString(Prefs.binId);
+
+    _selected.storageLocation = binId;
     _selected.pickItemList = detailList;
 
     try {

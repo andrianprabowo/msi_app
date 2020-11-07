@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/pick_list_whs_so.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/pick_item_receive_so_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_so_provider.dart';
 import 'package:msi_app/screens/pick_check_so/pick_check_so_screen.dart';
@@ -31,6 +32,8 @@ class PickItemReceiveSoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final item =
         Provider.of<PickListWhsSoProvider>(context, listen: false).selected;
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Picker Pick List Sales Order'),
@@ -38,6 +41,7 @@ class PickItemReceiveSoScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.post_add),
             onPressed: () {
+              authProvider.clearBin();
               Navigator.of(context).pushNamed(PickCheckSoScreen.routeName);
             },
           )
