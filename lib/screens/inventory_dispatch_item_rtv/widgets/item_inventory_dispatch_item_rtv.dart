@@ -23,7 +23,7 @@ class ItemInventoryDispatchItemRtv extends StatelessWidget {
               InventoryDispatchBinRtvScreen.routeName,
               arguments: item);
         } else {
-          item.itemStorageLocation = item.itemStorageLocation;
+          // item.itemStorageLocation = item.itemStorageLocation;
           showModalBottomSheet(
               context: context, builder: (_) => DialogInvDispNonbatchRtv(item));
         }

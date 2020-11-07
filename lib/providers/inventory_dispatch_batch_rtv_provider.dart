@@ -23,7 +23,7 @@ class InventoryDispathBatchRtvProvider with ChangeNotifier {
   Future<void> getPlBatchByItemWhs(String itemCode, String binCode , String docNum) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
     final url =
-         '$kBaseUrl/api/inventorygetplbatchlistbyitmwhs/itemcode=$itemCode&whscode=$warehouseId&bincode=$binCode&docnum=$docNum';
+         '$kBaseUrl/api/getRVIDPbatchlistbyitmwhs/itemcode=$itemCode&whscode=$warehouseId&bincode=$binCode&docnum=$docNum';
       
       print('test $binCode');
 

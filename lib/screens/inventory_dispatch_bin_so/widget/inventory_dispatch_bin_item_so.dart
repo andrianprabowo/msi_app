@@ -18,31 +18,33 @@ class InventoryDispatchBinItemSo extends StatelessWidget {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InkWell(
-      onTap: () {
-        inventoryDispatchItem.fgBatch == 'Y'
-            ? Navigator.of(context).pushNamed(
-                InventoryDispatchBatchSoScreen.routeName,   //ddasdasdsadasadasdsadsa
-                arguments: {
-                  'inventoryDispatchItem': inventoryDispatchItem,
-                  'inventoryDispatchBin': item,
-                },
-              )
-            : 
-             Navigator.of(context).popUntil(
-                  ModalRoute.withName(InventoryDispatchItemSoScreen.routeName));
-      },
-      child: Container(
-        margin: const EdgeInsets.all(kTiny),
-        padding: const EdgeInsets.all(kSmall),
-        decoration: kBoxDecoration,
-        child: Column(
-          children: [
-            BaseTextLine('Bin Location', item.binLocation),
-            BaseTextLine('Warehouse', authProvider.warehouseName),
-            // BaseTextLine('Qty', item.avlQty.toString()),
-          ],
-        ),
-      )
-    );
+        onTap: () {
+          if (inventoryDispatchItem.fgBatch == 'Y') {
+            Navigator.of(context).pushNamed(
+              InventoryDispatchBatchSoScreen
+                  .routeName, //ddasdasdsadasadasdsadsa
+              arguments: {
+                'inventoryDispatchItem': inventoryDispatchItem,
+                'inventoryDispatchBin': item,
+              },
+            );
+          } else {
+            inventoryDispatchItem.itemStorageLocation = item.binLocation;
+            Navigator.of(context).popUntil(
+                ModalRoute.withName(InventoryDispatchItemSoScreen.routeName));
+          }
+        },
+        child: Container(
+          margin: const EdgeInsets.all(kTiny),
+          padding: const EdgeInsets.all(kSmall),
+          decoration: kBoxDecoration,
+          child: Column(
+            children: [
+              BaseTextLine('Bin Location', item.binLocation),
+              BaseTextLine('Warehouse', authProvider.warehouseName),
+              // BaseTextLine('Qty', item.avlQty.toString()),
+            ],
+          ),
+        ));
   }
 }

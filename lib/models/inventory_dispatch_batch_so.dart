@@ -17,7 +17,7 @@ class InventoryDispatchBatchSo with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'batchNo': batchNo,
-      'batchQuantity': availableQty,
+      'batchQuantity': pickQty,
       'pickQty': pickQty,
       'expDate': expiredDate?.toIso8601String(),
     };
@@ -29,7 +29,7 @@ class InventoryDispatchBatchSo with ChangeNotifier {
     return InventoryDispatchBatchSo(
       batchNo: map['batchNo'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
-      pickQty: map['pickQty'] ?? 0.0,
+      pickQty: 0.0,
       expiredDate: DateTime.parse(map['expDate']),
     );
   }

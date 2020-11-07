@@ -22,7 +22,7 @@ class ItemInventoryDispatchItemSo extends StatelessWidget {
               InventoryDispatchBinSoScreen.routeName,
               arguments: item);
         } else {
-          item.itemStorageLocation = item.itemStorageLocation;
+          // item.itemStorageLocation = item.itemStorageLocation;
           showModalBottomSheet(
               context: context, builder: (_) => DialogInvDispNonbatchSo(item));
         }
