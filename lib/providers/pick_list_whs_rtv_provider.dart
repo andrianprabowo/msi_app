@@ -65,6 +65,9 @@ class PickListWhsRtvProvider with ChangeNotifier {
     };
     
     final binId = await Prefs.getString(Prefs.binId);
+    final warehouseId = await Prefs.getString(Prefs.warehouseId);
+
+    _selected.cardCode = warehouseId;
 
     _selected.storageLocation = binId;
     _selected.pickItemList = detailList;

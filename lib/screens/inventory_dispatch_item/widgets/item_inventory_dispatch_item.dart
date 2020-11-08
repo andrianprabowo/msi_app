@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_batch.dart';
-import 'package:msi_app/models/inventory_dispatch_bin.dart';
 import 'package:msi_app/models/inventory_dispatch_item.dart';
 import 'package:msi_app/screens/inventory_dispatch_bin/inventory_dispatch_bin_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_item/widgets/dialog_inv_disp_nonbatch.dart';
@@ -8,7 +7,6 @@ import 'package:msi_app/screens/inventory_dispatch_item/widgets/inventory_dispat
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
-import 'package:provider/provider.dart';
 
 class ItemInventoryDispatchItem extends StatelessWidget {
   final InventoryDispatchItem item;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_purchase_order.dart';
-import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/purchase_order_provider.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/receipt_check/widget/item_detail_check.dart';
@@ -15,8 +14,8 @@ class ReceiptCheckScreen extends StatelessWidget {
 
   void postData(BuildContext context) {
 
-    final authProvider =
-        Provider.of<AuthProvider>(context, listen: false);
+    // final authProvider =
+    //     Provider.of<AuthProvider>(context, listen: false);
 
     showDialog(
       context: context,

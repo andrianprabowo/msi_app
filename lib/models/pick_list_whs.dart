@@ -7,7 +7,7 @@ class PickListWhs with ChangeNotifier {
   final String pickNumber;
   final DateTime pickDate;
   final DateTime postingDate;
-  final String cardCode;
+  String cardCode;
   final String cardName;
   final String pickRemark;
   final String filename;
