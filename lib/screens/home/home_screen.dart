@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
     {
       'icon': Icons.account_balance_wallet,
       'label': 'Stock Counting',
-      'routeName': StockCountingHeader.routeName,
+      'routeName': StockCountingHeaderScreen.routeName,
     },
     {
       'icon': Icons.find_in_page,
