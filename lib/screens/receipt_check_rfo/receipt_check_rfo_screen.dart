@@ -5,7 +5,6 @@ import 'package:msi_app/providers/purchase_order_rfo_provider.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/receipt_check_rfo/widget/item_detail_check_rfo.dart';
 import 'package:msi_app/utils/constants.dart';
-import 'package:msi_app/utils/prefs.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
@@ -56,7 +55,7 @@ class ReceiptCheckRfoScreen extends StatelessWidget {
   }
 
   Future<void> showSuccessDialog(BuildContext context, int docId) async {
-    final binId = await Prefs.getString(Prefs.binId);
+    // final binId = await Prefs.getString(Prefs.binId);
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -101,6 +100,7 @@ class ReceiptCheckRfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final poProvider =
         Provider.of<PurchaseOrderRfoProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final po = poProvider.selected;
     return Scaffold(
       appBar: AppBar(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/screens/stock_counting_header/stock_counting_header_screen.dart';
 import 'package:msi_app/widgets/base_app_bar.dart';
 import 'package:msi_app/widgets/item_header.dart';
 import 'package:msi_app/widgets/item_menu.dart';
@@ -31,7 +32,7 @@ class HomeScreen extends StatelessWidget {
     {
       'icon': Icons.account_balance_wallet,
       'label': 'Stock Counting',
-      // 'routeName': ReceiptVendorStockCountingScreen.routeName,
+      'routeName': StockCountingHeader.routeName,
     },
     {
       'icon': Icons.find_in_page,
