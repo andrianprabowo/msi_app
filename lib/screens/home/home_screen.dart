@@ -5,7 +5,6 @@ import 'package:msi_app/widgets/item_menu.dart';
 import 'package:msi_app/screens/inbound/inbound_screen.dart';
 import 'package:msi_app/screens/outbound/outbound_screen.dart';
 import 'package:msi_app/screens/production/production_screen.dart';
-import 'package:msi_app/screens/stock_counting/stock_counting_screen.dart';
 import 'package:msi_app/screens/stock_inquiry/stock_inquiry_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -32,7 +31,7 @@ class HomeScreen extends StatelessWidget {
     {
       'icon': Icons.account_balance_wallet,
       'label': 'Stock Counting',
-      'routeName': StockCountingScreen.routeName,
+      // 'routeName': ReceiptVendorStockCountingScreen.routeName,
     },
     {
       'icon': Icons.find_in_page,

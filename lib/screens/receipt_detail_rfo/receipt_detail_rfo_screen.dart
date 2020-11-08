@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/widgets/item_bin_rfo.dart';
 import 'package:msi_app/models/purchase_order_rfo.dart';
 import 'package:msi_app/providers/item_po_provider_rfo.dart';
 import 'package:msi_app/providers/purchase_order_rfo_provider.dart';
@@ -12,7 +13,6 @@ import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/input_scan.dart';
-import 'package:msi_app/widgets/item_bin.dart';
 import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
@@ -63,7 +63,7 @@ class ReceiptDetailRfoScreen extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Document Date', convertDate(po.docDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            ItemBin(),
+            ItemBinRfo(),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/providers/purchase_order_provider.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/purchase_order_rfo_provider.dart';
-import 'package:msi_app/screens/receipt_detail/receipt_detail_screen.dart';
+import 'package:msi_app/screens/receipt_detail_rfo/receipt_detail_rfo_screen.dart';
 import 'package:msi_app/screens/receipt_vendor_rfo/item_receipt_rfo.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -86,14 +86,16 @@ class ReceiptVendorRfoScreen extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<PurchaseOrderProvider>(context, listen: false);
+    final provider = Provider.of<PurchaseOrderRfoProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InputScan(
       label: 'PO Number',
       hint: 'Input or scan PO Number',
       scanResult: (value) {
         final item = provider.findByPoNumber(value);
         provider.selectPo(item);
-        Navigator.of(context).pushNamed(ReceiptDetailScreen.routeName);
+        authProvider.clearBin();
+        Navigator.of(context).pushNamed(ReceiptDetailRfoScreen.routeName);
       },
     );
   }

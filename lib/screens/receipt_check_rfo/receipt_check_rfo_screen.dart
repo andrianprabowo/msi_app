@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_purchase_order_rfo.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/purchase_order_rfo_provider.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/receipt_check_rfo/widget/item_detail_check_rfo.dart';
 import 'package:msi_app/utils/constants.dart';
+import 'package:msi_app/utils/prefs.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
@@ -54,6 +56,7 @@ class ReceiptCheckRfoScreen extends StatelessWidget {
   }
 
   Future<void> showSuccessDialog(BuildContext context, int docId) async {
+    final binId = await Prefs.getString(Prefs.binId);
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -125,7 +128,7 @@ class ReceiptCheckRfoScreen extends StatelessWidget {
             BaseTextLine('Vendor Code', po.vendorCode),
             BaseTextLine('Vendor Name', po.vendorName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Bin', po.storageLocation ?? 'Empty'),
+            BaseTextLine('Bin', authProvider.binId ?? 'Empty'),
             // BaseTextLine('Staging Bin Name', po.storageLocationName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Item Details'),

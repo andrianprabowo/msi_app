@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_purchase_order.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/purchase_order_provider.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/receipt_check/widget/item_detail_check.dart';
@@ -13,7 +14,6 @@ class ReceiptCheckScreen extends StatelessWidget {
   static const routeName = '/receipt_check';
 
   void postData(BuildContext context) {
-
     // final authProvider =
     //     Provider.of<AuthProvider>(context, listen: false);
 
@@ -102,6 +102,7 @@ class ReceiptCheckScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final poProvider =
         Provider.of<PurchaseOrderProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final po = poProvider.selected;
     return Scaffold(
       appBar: AppBar(
@@ -129,7 +130,7 @@ class ReceiptCheckScreen extends StatelessWidget {
             BaseTextLine('Vendor Code', po.vendorCode),
             BaseTextLine('Vendor Name', po.vendorName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Bin', po.storageLocation ?? 'Empty'),
+            BaseTextLine('Bin', authProvider.binId ??'Empty'),
             // BaseTextLine('Staging Bin Name', po.storageLocationName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Item Details'),

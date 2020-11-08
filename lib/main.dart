@@ -105,6 +105,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => InventoryDispathBatchRtvProvider()),
         ChangeNotifierProvider(create: (_) => BinRtvProvider()),
         ChangeNotifierProvider(create: (_) => BinnyaPicListProvider()),
+
+        
       ],
       child: MyApp(),
     ),
