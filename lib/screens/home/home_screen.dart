@@ -34,11 +34,11 @@ class HomeScreen extends StatelessWidget {
       'label': 'Stock Counting',
       'routeName': StockCountingHeaderScreen.routeName,
     },
-    {
-      'icon': Icons.find_in_page,
-      'label': 'Stock Inquiry',
-      'routeName': StockInquiryScreen.routeName,
-    },
+    // {
+    //   'icon': Icons.find_in_page,
+    //   'label': 'Stock Inquiry',
+    //   'routeName': StockInquiryScreen.routeName,
+    // },
   ];
 
   @override

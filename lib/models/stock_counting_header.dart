@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_bin.dart';
+import 'package:msi_app/models/stock_counting_item.dart';
 
 class StockCountingHeader with ChangeNotifier {
   final int docEntry;
@@ -14,7 +15,7 @@ class StockCountingHeader with ChangeNotifier {
   String storageLocation;
   String storageLocationName;
   final String docnum;
-  List<StockCountingBin> detailList;
+  List<StockCountingItem> detailList;
   StockCountingHeader({
     this.docEntry,
     this.postingDate,
@@ -54,7 +55,7 @@ class StockCountingHeader with ChangeNotifier {
       docDate: DateTime.parse(map['docDate']),
       vendorCode: map['cardCode'] ?? '',
       vendorName: map['cardName'] ?? '',
-      detailList: map['detailList'] ?? [],
+      detailList: map['detailsList'] ?? [],
     );
   }
 

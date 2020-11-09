@@ -42,6 +42,7 @@ import 'package:msi_app/providers/purchase_order_rfo_provider.dart';
 import 'package:msi_app/providers/staging_bin.provider.dart';
 import 'package:msi_app/providers/staging_bin_rfo.provider.dart';
 import 'package:msi_app/providers/stock_counting_header_provider.dart';
+import 'package:msi_app/providers/stock_counting_item_provider.dart';
 import 'package:msi_app/providers/storage_bin_item_provider.dart';
 import 'package:msi_app/providers/storage_bin_item_rfo_provider.dart';
 import 'package:msi_app/providers/warehouse_provider.dart';
@@ -110,6 +111,7 @@ void main() async {
 
 
         ChangeNotifierProvider(create: (_) => StockCountingHeaderProvider()),
+        ChangeNotifierProvider(create: (_) => StockCountingItemProvider()),
         ChangeNotifierProvider(create: (_) => BinStockCountingProvider()),
 
         

@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/item_bin.dart';
+import 'package:msi_app/models/stock_counting_item.dart';
 
 
 class StockCountingBin with ChangeNotifier {
   final String binCode;
-  List<ItemBin> itemBinList;
+  List<StockCountingItem> itemBinList;
   StockCountingBin({
     this.binCode,
     this.itemBinList,

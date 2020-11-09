@@ -19,7 +19,6 @@ class BinStockCountingProvider with ChangeNotifier {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
     print("hjhjh");
     final url = '$kBaseUrl/api/getstcbin/whscode=$warehouseId';
-    print("hjhjh$url");
 
     try {
       final response = await http.get(url);
@@ -30,6 +29,8 @@ class BinStockCountingProvider with ChangeNotifier {
         list.add(StockCountingBin.fromMap(map));
       });
       _itemsBinList = list;
+    print(data);
+
       notifyListeners();
     } catch (error) {
       print('errror disini');

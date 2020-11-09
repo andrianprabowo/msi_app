@@ -64,6 +64,7 @@ import 'package:msi_app/screens/staging_item_rfo/staging_item_rfo_screen.dart';
 import 'package:msi_app/screens/stock_counting/stock_counting_screen.dart';
 import 'package:msi_app/screens/stock_counting_bin/stock_counting_bin_screen.dart';
 import 'package:msi_app/screens/stock_counting_header/stock_counting_header_screen.dart';
+import 'package:msi_app/screens/stock_counting_item/stock_counting_item_screen.dart';
 import 'package:msi_app/screens/stock_inquiry/stock_inquiry_screen.dart';
 import 'package:msi_app/screens/storage_bin_item/storage_bin_item_screen.dart';
 import 'package:msi_app/screens/storage_bin_item_rfo/storage_bin_item_rfo_screen.dart';
@@ -189,5 +190,6 @@ final Map<String, WidgetBuilder> routes = {
   // Stock Counting
   StockCountingHeaderScreen.routeName: (context) => StockCountingHeaderScreen(),
   StockCountingBinScreen.routeName: (context) => StockCountingBinScreen(),
+  StockCountingItemScreen.routeName: (context) => StockCountingItemScreen(),
 
 };
