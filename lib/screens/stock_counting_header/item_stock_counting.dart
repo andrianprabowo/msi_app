@@ -28,8 +28,8 @@ class ItemStockCounting extends StatelessWidget {
         decoration: kBoxDecoration,
         child: Column(
           children: [
-            BaseTextLine('Cycle Count No', item.poNumber),
-            BaseTextLine('Count Date', convertDate(item.docDate)),
+            BaseTextLine('Cycle Count No', item.pickNumber),
+            BaseTextLine('Count Date', convertDate(item.pickDate)),
             BaseTextLine('Counter Assign', authProvider.username),
             BaseTextLine('Warehouse', authProvider.warehouseName)
           ],

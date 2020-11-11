@@ -2,51 +2,47 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/stock_counting_item.dart';
 
 
 class StockCountingBin with ChangeNotifier {
-  final String binCode;
-  List<StockCountingItem> itemBinList;
+   final String binLocation;
+  final double capacity;
+  final String warehouse;
+  final double avlQty;
   StockCountingBin({
-    this.binCode,
-    this.itemBinList,
+    this.binLocation,
+    this.capacity,
+    this.warehouse,
+    this.avlQty,
   });
-
-  
 
   Map<String, dynamic> toMap() {
     return {
-      'binCode': binCode,
-      'itemBinList': itemBinList?.map((x) => x?.toMap())?.toList(),
+      'binLocation': binLocation,
+      'capacity': capacity,
+      'warehouse': warehouse,
+      'avlQty': avlQty,
     };
   }
 
   factory StockCountingBin.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return StockCountingBin(
-      binCode: map['binCode'] ?? '',
-      itemBinList: map['itemBinList'] ?? [],
+      binLocation: map['binCode'] ?? '',
+      capacity: map['capacity'] ?? 0.0,
+      warehouse: map['warehouse'] ?? '',
+      avlQty: map['avlqty'] ?? 0.0,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory StockCountingBin.fromJson(String source) => StockCountingBin.fromMap(json.decode(source));
+  factory StockCountingBin.fromJson(String source) =>
+      StockCountingBin.fromMap(json.decode(source));
 
   @override
-  String toString() => 'StockCountingBin(binCode: $binCode, itemBinList: $itemBinList)';
-
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-  
-    return o is StockCountingBin &&
-      o.binCode == binCode &&
-      listEquals(o.itemBinList, itemBinList);
+  String toString() {
+    return 'StockCountingBin(binLocation: $binLocation, capacity: $capacity, warehouse: $warehouse, avlQty: $avlQty)';
   }
-
-  @override
-  int get hashCode => binCode.hashCode ^ itemBinList.hashCode;
 }

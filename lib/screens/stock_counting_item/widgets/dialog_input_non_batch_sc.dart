@@ -26,17 +26,18 @@ class _DialogInputQtyNonBatchScState extends State<DialogInputQtyNonBatchSc> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(kLarge),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            BaseTitle('Input Item Quantity'),
-            SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildQtyFormField(),
-            SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildButtonSubmit(context),
-          ],
-        ));
+      padding: const EdgeInsets.all(kLarge),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          BaseTitle('Input Quantity'),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          buildQtyFormField(),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          buildButtonSubmit(context),
+        ],
+      ),
+    );
   }
 
   Widget buildQtyFormField() {
@@ -58,22 +59,20 @@ class _DialogInputQtyNonBatchScState extends State<DialogInputQtyNonBatchSc> {
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(
-          child: Text('Submit'),
-          onPressed: () {
-          // if (double.parse(_quantity.text) > widget.item.openQty) {
-           
-          //   print('Tidak boleh lebih besar dari Available Qty ');
-          //   return;
-          // }
-            final itemPoProvider =
-                Provider.of<StockCountingItemProvider>(context, listen: false);
-            itemPoProvider.inputQty(
-              item,
-              double.parse(_quantity.text),
-            );
-            Navigator.of(context)
+        child: Text('Submit'),
+        onPressed: () {
+         
+          final pickItemReceiveProvider =
+              Provider.of<StockCountingItemProvider>(context, listen: false);
+          pickItemReceiveProvider.inputQty(
+            item,
+            double.parse(_quantity.text),
+          );
+           Navigator.of(context)
             .pushNamed(StockCountingBinScreen.routeName, arguments: item);
-          }),
+            //  Navigator.of(context).pop();
+        },
+      ),
     );
   }
 }

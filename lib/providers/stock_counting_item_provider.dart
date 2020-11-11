@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/item_batch.dart';
+import 'package:msi_app/models/stock_counting_batch.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -21,18 +21,16 @@ class StockCountingItemProvider with ChangeNotifier {
         detail.quantity = totalBatch;
       }
       // calculate remaining qty
-      detail.remainingQty = detail.openQty - detail.quantity;
+      // detail.remainingQty = detail.openQty - detail.quantity;
     });
 
-
-    // _item = _item.where((item) => item.remainingQty > 0).toList();
+    // _item = _item.where((item) => item.quantity > 0).toList();
 
     return _item;
   }
 
   Future<void> getScDetailByDocNum(String docNum) async {
-    final url =
-        '$kBaseUrl/api/getstcdetail/docnum=$docNum';
+    final url = '$kBaseUrl/api/getstcdetail/docnum=$docNum';
 
     try {
       final response = await http.get(url);
@@ -58,13 +56,22 @@ class StockCountingItemProvider with ChangeNotifier {
     return _item.firstWhere((element) => element.itemCode == itemCode);
   }
 
-  void addBatch(StockCountingItem itemPo, ItemBatch itemBatch) {
+  void addBatch(
+    StockCountingItem itemPo,
+    List<StockCountingBatch> itemBatch,
+  ) {
+    itemPo.batchList = itemBatch;
+    notifyListeners();
+    print('Added Batch: $itemBatch');
+  }
+
+  void addBatchQtyBatchDate(StockCountingItem itemPo, StockCountingBatch itemBatch) {
     itemPo.batchList.add(itemBatch);
     notifyListeners();
     print('Added Batch: $itemBatch');
   }
 
-  void removeBatch(StockCountingItem itemPo, ItemBatch itemBatch) {
+  void removeBatch(StockCountingItem itemPo, StockCountingBatch itemBatch) {
     itemPo.batchList.remove(itemBatch);
     notifyListeners();
     print('Removed Batch: $itemBatch');

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/inventory_dispatch_bin_rtv.dart';
 import 'package:msi_app/models/inventory_dispatch_item_rtv.dart';
 import 'package:msi_app/providers/inventory_dispatch_batch_rtv_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_rtv_provider.dart';
@@ -32,7 +31,8 @@ class InventoryDispatchBatchRtvScreen extends StatelessWidget {
         Provider.of<InventoryDispatchDetailRtvProvider>(context, listen: false);
     final binHeader = providerBinHeader.selected;
     final details = providerDetail.selected;
-    await provider.getPlBatchByItemWhs(itemCode, binHeader.binCode, details.docNumber);
+    await provider.getPlBatchByItemWhs(
+        itemCode, binHeader.binCode, details.docNumber);
   }
 
   @override
@@ -45,11 +45,14 @@ class InventoryDispatchBatchRtvScreen extends StatelessWidget {
         Provider.of<InventoryDispatchItemRtvProvider>(context, listen: false);
     final pickBatchProvider =
         Provider.of<InventoryDispathBatchRtvProvider>(context, listen: false);
-    Map map = ModalRoute.of(context).settings.arguments;
-    InventoryDispatchItemRtv pickItem = map['inventoryDispatchItem'];
-    InventoryDispatchBinRtv itemBin = map['inventoryDispatchBin'];
+    InventoryDispatchItemRtv pickItem =
+        ModalRoute.of(context).settings.arguments;
+    //     Provider.of<InventoryDispathBatchRtvProvider>(context, listen: false);
+    // Map map = ModalRoute.of(context).settings.arguments;
+    // InventoryDispatchItemRtv pickItem = map['inventoryDispatchItem'];
+    // InventoryDispatchBinRtv itemBin = map['inventoryDispatchBin'];
     print("ITEM BIN");
-    print(itemBin);
+    // print(itemBin);
     print("PICK ITEM");
     print(pickItem);
     return Scaffold(
@@ -60,13 +63,13 @@ class InventoryDispatchBatchRtvScreen extends StatelessWidget {
             icon: Icon(Icons.check_box_outlined),
             onPressed: () {
               // update bin location
-              pickItem.itemStorageLocation = itemBin.binLocation;
+              // pickItem.itemStorageLocation = itemBin.binLocation;
               // add batch list
               final batchList = pickBatchProvider.pickedItems;
               pickItemProvider.addBatchList(pickItem, batchList);
 
-              Navigator.of(context).popUntil(
-                  ModalRoute.withName(InventoryDispatchItemRtvScreen.routeName));
+              Navigator.of(context).popUntil(ModalRoute.withName(
+                  InventoryDispatchItemRtvScreen.routeName));
             },
           )
         ],
@@ -106,7 +109,7 @@ class InventoryDispatchBatchRtvScreen extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),
             Divider(),
-            buildItemList(context, pickItem, itemBin),
+            buildItemList(context, pickItem),
           ],
         ),
       ),
@@ -116,7 +119,7 @@ class InventoryDispatchBatchRtvScreen extends StatelessWidget {
   Widget buildItemList(
     BuildContext context,
     InventoryDispatchItemRtv pickItem,
-    InventoryDispatchBinRtv itemBin,
+    // InventoryDispatchBinRtv itemBin,
   ) {
     return Expanded(
       child: FutureBuilder(
@@ -136,8 +139,8 @@ class InventoryDispatchBatchRtvScreen extends StatelessWidget {
                     itemBuilder: (_, index) {
                       return ChangeNotifierProvider.value(
                         value: provider.items[index],
-                        child:
-                            ItemInventoryDispatchBatchRtv(provider.items[index]),
+                        child: ItemInventoryDispatchBatchRtv(
+                            provider.items[index]),
                       );
                     },
                   ),

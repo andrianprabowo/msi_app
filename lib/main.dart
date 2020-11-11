@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/bin_rtv_provider.dart';
-import 'package:msi_app/providers/bin_stock_counting_provider.dart';
+import 'package:msi_app/providers/item_batch_si_provider.dart';
+import 'package:msi_app/providers/item_bin_si_provider.dart';
+import 'package:msi_app/providers/staging_bin_si.provider.dart';
+import 'package:msi_app/providers/stock_counting_batch_provider.dart';
+import 'package:msi_app/providers/stock_counting_bin_provider.dart';
 import 'package:msi_app/providers/binnya_pick_list_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_batch_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_batch_rtv_provider.dart';
@@ -112,7 +116,12 @@ void main() async {
 
         ChangeNotifierProvider(create: (_) => StockCountingHeaderProvider()),
         ChangeNotifierProvider(create: (_) => StockCountingItemProvider()),
-        ChangeNotifierProvider(create: (_) => BinStockCountingProvider()),
+        ChangeNotifierProvider(create: (_) => StockCountingBinProvider()),
+        ChangeNotifierProvider(create: (_) => StockCountingBatchProvider()),
+
+        ChangeNotifierProvider(create: (_) => StagingBinSiProvider()),
+        ChangeNotifierProvider(create: (_) => ItemBinSiProvider()),
+        ChangeNotifierProvider(create: (_) => ItemBatchSiProvider()),
 
         
       ],

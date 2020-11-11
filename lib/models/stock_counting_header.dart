@@ -1,48 +1,42 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/stock_counting_bin.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 
 class StockCountingHeader with ChangeNotifier {
-  final int docEntry;
+ final String pickNumber;
+  final DateTime pickDate;
   final DateTime postingDate;
-  final String poNumber;
-  final DateTime docDate;
-  final String vendorCode;
-  final String vendorName;
-  String plant;
+  String cardCode;
+  final String cardName;
+  final String pickRemark;
+  final String filename;
   String storageLocation;
-  String storageLocationName;
-  final String docnum;
-  List<StockCountingItem> detailList;
+  List<StockCountingItem> pickItemList;
   StockCountingHeader({
-    this.docEntry,
+    this.pickNumber,
+    this.pickDate,
     this.postingDate,
-    this.poNumber,
-    this.docDate,
-    this.vendorCode,
-    this.vendorName,
-    this.plant,
+    this.cardCode,
+    this.cardName,
+    this.pickRemark,
+    this.filename,
     this.storageLocation,
-    this.storageLocationName,
-    this.docnum,
-    this.detailList,
+    this.pickItemList,
   });
 
   Map<String, dynamic> toMap() {
     return {
+      'doNo': pickNumber,
+      'deliveryDate': pickDate?.toIso8601String(),
       'postingDate': DateTime.now().toIso8601String(),
-      'poNo': poNumber,
-      'deliveryDate': docDate?.toIso8601String(),
-      'kdVendor': vendorCode,
-      'nmVendor': vendorName,
-      'fileName': 'GRPO MOBILE',
-      'plant': plant ?? '',
-      'storageLocation': storageLocation ?? '',
-      'storageLocationName': storageLocationName ?? '',
-      'docnum': poNumber,
-      'details': detailList?.map((x) => x?.toMap())?.toList(),
+      'createdDate': DateTime.now().toIso8601String(),
+      'plant': cardCode,
+      'plantName': cardName,
+      'remark': pickRemark,
+      'filename': 'Stock COunting',
+      // 'storageLocation': storageLocation,
+      'details': pickItemList?.map((x) => x?.toMap())?.toList(),
     };
   }
 
@@ -50,12 +44,14 @@ class StockCountingHeader with ChangeNotifier {
     if (map == null) return null;
 
     return StockCountingHeader(
-      docEntry: map['h_DocEntry'] ?? 0,
-      poNumber: map['uDocNum'] ?? '',
-      docDate: DateTime.parse(map['docDate']),
-      vendorCode: map['cardCode'] ?? '',
-      vendorName: map['cardName'] ?? '',
-      detailList: map['detailsList'] ?? [],
+      pickNumber: map['uDocNum'] ?? '',
+      pickDate: DateTime.parse(map['docDate']),
+      cardCode: map['cardCode'] ?? '',
+      cardName: map['cardName'] ?? '',
+      pickRemark: map['pickRemark'] ?? '',
+      filename: 'Stock Counting',
+      storageLocation: map['storageLocation'] ?? '',
+      pickItemList: map['pickItemList'] ?? [],
     );
   }
 
@@ -66,6 +62,6 @@ class StockCountingHeader with ChangeNotifier {
 
   @override
   String toString() {
-    return 'StockCountingHeader(docEntry: $docEntry, poNumber: $poNumber, docDate: $docDate, vendorCode: $vendorCode, vendorName: $vendorName, plant: $plant ,detailList: $detailList)';
+    return 'StockCountingHeader(pickNumber: $pickNumber, pickDate: $pickDate, postingDate: $postingDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, filename: $filename, storageLocation: $storageLocation, pickItemList: $pickItemList)';
   }
 }

@@ -15,7 +15,7 @@ class StockCountingHeaderProvider with ChangeNotifier {
   StockCountingHeader get selected => _selected;
 
   List<StockCountingItem> get detailList {
-    return _selected.detailList.where((item) => item.quantity > 0).toList();
+    return _selected.pickItemList.where((item) => item.quantity > 0).toList();
   }
 
   Future<void> getAllPoByWarehouseId() async {
@@ -43,7 +43,7 @@ class StockCountingHeaderProvider with ChangeNotifier {
   }
 
   StockCountingHeader findByPoNumber(String poNumber) {
-    return _items.firstWhere((element) => element.poNumber == poNumber);
+    return _items.firstWhere((element) => element.pickNumber == poNumber);
   }
 
   void selectPo(StockCountingHeader purchaseOrder) {
@@ -62,17 +62,17 @@ class StockCountingHeaderProvider with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> createReceiptVendor() async {
-    var url = '$kBaseUrl/tgrpo/tgrpo/api/ListReceiptRFO';
+    var url = '$kBaseUrl/tgrpo/tgrpo/api/ListSTCK';
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
-    final warehouseId = await Prefs.getString(Prefs.warehouseId);
-    final binId = await Prefs.getString(Prefs.binId);
+    // final warehouseId = await Prefs.getString(Prefs.warehouseId);
+    // final binId = await Prefs.getString(Prefs.binId);
 
-    _selected.storageLocation = binId;
-    _selected.plant = warehouseId;
-    // _selected.detailList = detailList;
+    // _selected.storageLocation = binId;
+    // _selected.plant = warehouseId;
+    _selected.pickItemList = detailList;
 
     try {
       var response = await http.post(

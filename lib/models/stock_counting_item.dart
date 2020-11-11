@@ -1,65 +1,43 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/item_batch.dart';
+import 'package:msi_app/models/stock_counting_batch.dart';
 
 class StockCountingItem with ChangeNotifier {
-  final String itemCode;
-  final String itemDesc;
+   final String itemCode;
+  final String description;
   double openQty;
   double quantity;
-  double remainingQty;
-  final String uom;
-  final String filename;
-  final String docNum;
-  final String fgBatch;
-  List<ItemBatch> batchList;
+  double pickedQty;
+  String fgBatch;
+  final String unitMsr;
+  final int val;
+  String itemStorageLocation;
+  List<StockCountingBatch> batchList;
+
   StockCountingItem({
     this.itemCode,
-    this.itemDesc,
+    this.description,
     this.openQty,
     this.quantity,
-    this.remainingQty,
-    this.uom,
-    this.filename,
-    this.docNum,
+    this.pickedQty,
     this.fgBatch,
+    this.unitMsr,
+    this.val,
+    this.itemStorageLocation,
     this.batchList,
   });
-
-  StockCountingItem copyWith({
-    String itemCode,
-    String itemDesc,
-    double openQty,
-    double quantity,
-    double remainingQty,
-    String uom,
-    String filename,
-    String docNum,
-    String fgBatch,
-    List<ItemBatch> batchList,
-  }) {
-    return StockCountingItem(
-      itemCode: itemCode ?? this.itemCode,
-      itemDesc: itemDesc ?? this.itemDesc,
-      openQty: openQty ?? this.openQty,
-      quantity: quantity ?? this.quantity,
-      remainingQty: remainingQty ?? this.remainingQty,
-      uom: uom ?? this.uom,
-      filename: filename ?? this.filename,
-      docNum: docNum ?? this.docNum,
-      fgBatch: fgBatch ?? this.fgBatch,
-      batchList: batchList ?? this.batchList,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
       'materialNo': itemCode,
-      'materialDesc': itemDesc,
-      'grQuantity': quantity.toString(),
-      'uom': uom,
-      'filename': 'Receipt Vendor',
+      'materialDesc': description,
+      'openQty': openQty,
+      'requirementQty': quantity,
+      'grQuantity': pickedQty,
+      'uom': unitMsr,
+      'val': val,
+      'num': itemStorageLocation,
       'listBatches': batchList?.map((x) => x?.toMap())?.toList(),
     };
   }
@@ -69,14 +47,14 @@ class StockCountingItem with ChangeNotifier {
 
     return StockCountingItem(
       itemCode: map['itemCode'] ?? '',
-      itemDesc: map['itemDesc'] ?? '',
+      description: map['itemDesc'] ?? '',
       openQty: map['openQty'] ?? 0.0,
       quantity: 0.0,
-      remainingQty: map['remainingQty'] ?? 0.0,
-      uom: map['unitMsr'] ?? '',
-      filename: 'Receipt Vendor',
-      docNum: map['docNum'] ?? '',
       fgBatch: map['fgBatch'] ?? '',
+      pickedQty:0.0,
+      unitMsr: map['unitmsr'] ?? '',
+      val: map['val'] ?? 0,
+      itemStorageLocation: map['itemStorageLocation'] ?? '',
       batchList: map['batchList'] ?? [],
     );
   }
@@ -88,6 +66,6 @@ class StockCountingItem with ChangeNotifier {
 
   @override
   String toString() {
-    return 'StockCountingItem(itemCode: $itemCode, itemDesc: $itemDesc, openQty: $openQty, quantity: $quantity, remainingQty: $remainingQty, uom: $uom, filename: $filename, docNum: $docNum, fgBatch: $fgBatch, batchList: $batchList)';
+    return 'StockCountingItem(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, pickedQty: $pickedQty, fgBatch: $fgBatch, unitMsr: $unitMsr, val: $val, itemStorageLocation: $itemStorageLocation, batchList: $batchList)';
   }
 }

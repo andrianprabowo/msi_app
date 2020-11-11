@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_batch_so.dart';
 import 'package:msi_app/models/inventory_dispatch_item_so.dart';
-import 'package:msi_app/screens/inventory_dispatch_bin_so/inventory_dispatch_bin_so_screen.dart';
+import 'package:msi_app/screens/Inventory_dispatch_batch_so/inventory_dispatch_batch_so_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_item_so/widgets/dialog_inv_disp_nonbatch_so.dart';
 import 'package:msi_app/screens/inventory_dispatch_item_so/widgets/inventory_dispatch_batch_widget_so.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -19,7 +19,8 @@ class ItemInventoryDispatchItemSo extends StatelessWidget {
       onTap: () {
         if (item.fgBatch == 'Y') {
           Navigator.of(context).pushNamed(
-              InventoryDispatchBinSoScreen.routeName,
+              // InventoryDispatchBinSoScreen.routeName,
+              InventoryDispatchBatchSoScreen.routeName,
               arguments: item);
         } else {
           // item.itemStorageLocation = item.itemStorageLocation;

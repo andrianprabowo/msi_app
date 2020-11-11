@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_batch_rtv.dart';
 import 'package:msi_app/models/inventory_dispatch_item_rtv.dart';
-import 'package:msi_app/screens/inventory_dispatch_bin_rtv/inventory_dispatch_bin_rtv_screen.dart';
+import 'package:msi_app/screens/Inventory_dispatch_batch_rtv/inventory_dispatch_batch_rtv_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_item_rtv/widgets/dialog_inv_disp_nonbatch_rtv.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -20,7 +20,8 @@ class ItemInventoryDispatchItemRtv extends StatelessWidget {
       onTap: () {
         if (item.fgBatch == 'Y') {
           Navigator.of(context).pushNamed(
-              InventoryDispatchBinRtvScreen.routeName,
+              // InventoryDispatchBinRtvScreen.routeName,
+              InventoryDispatchBatchRtvScreen.routeName,
               arguments: item);
         } else {
           // item.itemStorageLocation = item.itemStorageLocation;

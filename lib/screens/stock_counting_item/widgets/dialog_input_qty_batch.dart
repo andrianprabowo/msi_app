@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:msi_app/models/item_batch.dart';
+import 'package:msi_app/models/stock_counting_batch.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
 import 'package:msi_app/screens/stock_counting_bin/stock_counting_bin_screen.dart';
@@ -9,16 +9,16 @@ import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:provider/provider.dart';
 
-class DialogInputQtySc extends StatefulWidget {
+class DialogInputQtyBatch extends StatefulWidget {
   final StockCountingItem item;
 
-  const DialogInputQtySc(this.item);
+  const DialogInputQtyBatch(this.item);
 
   @override
-  _DialogInputQtyScState createState() => _DialogInputQtyScState();
+  _DialogInputQtyBatchState createState() => _DialogInputQtyBatchState();
 }
 
-class _DialogInputQtyScState extends State<DialogInputQtySc> {
+class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
   final _batchNumber = TextEditingController();
   final _quantity = TextEditingController();
   DateTime _selectedDate = DateTime.now();
@@ -133,9 +133,9 @@ class _DialogInputQtyScState extends State<DialogInputQtySc> {
               Provider.of<StockCountingItemProvider>(context, listen: false);
           String dateString =
               DateFormat().addPattern('dd/MM/yy').format(_selectedDate);
-          itemPoProvider.addBatch(
+          itemPoProvider.addBatchQtyBatchDate(
             item,
-            ItemBatch(
+            StockCountingBatch(
               batchNo: _batchNumber.text.isEmpty
                   ? "BatchNo-$dateString"
                   : _batchNumber.text,
@@ -143,8 +143,9 @@ class _DialogInputQtyScState extends State<DialogInputQtySc> {
               availableQty: double.parse(_quantity.text),
             ),
           );
-         Navigator.of(context)
+          Navigator.of(context)
             .pushNamed(StockCountingBinScreen.routeName, arguments: item);
+            //  Navigator.of(context).pop();
         },
       ),
     );

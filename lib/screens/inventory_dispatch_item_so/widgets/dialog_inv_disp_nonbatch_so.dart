@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_item_so.dart';
 import 'package:msi_app/providers/inventory_dispatch_item_so_provider.dart';
-import 'package:msi_app/screens/inventory_dispatch_bin_so/inventory_dispatch_bin_so_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -77,9 +76,9 @@ class _DialogInvDispNonbatchSoState extends State<DialogInvDispNonbatchSo> {
             double.parse(_quantity.text),
             item.itemStorageLocation,
           );
-           Navigator.of(context)
-            .pushNamed(InventoryDispatchBinSoScreen.routeName, arguments: item);
-            //  Navigator.of(context).pop();
+          //  Navigator.of(context)
+            // .pushNamed(InventoryDispatchBinSoScreen.routeName, arguments: item);
+             Navigator.of(context).pop();
         },
       ),
     );

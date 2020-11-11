@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/screens/stock_counting_header/stock_counting_header_screen.dart';
+import 'package:msi_app/screens/stock_inquiry_header/stock_inquiry_header_screen.dart';
 import 'package:msi_app/widgets/base_app_bar.dart';
 import 'package:msi_app/widgets/item_header.dart';
 import 'package:msi_app/widgets/item_menu.dart';
 import 'package:msi_app/screens/inbound/inbound_screen.dart';
 import 'package:msi_app/screens/outbound/outbound_screen.dart';
 import 'package:msi_app/screens/production/production_screen.dart';
-import 'package:msi_app/screens/stock_inquiry/stock_inquiry_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 
@@ -34,11 +34,11 @@ class HomeScreen extends StatelessWidget {
       'label': 'Stock Counting',
       'routeName': StockCountingHeaderScreen.routeName,
     },
-    // {
-    //   'icon': Icons.find_in_page,
-    //   'label': 'Stock Inquiry',
-    //   'routeName': StockInquiryScreen.routeName,
-    // },
+    {
+      'icon': Icons.find_in_page,
+      'label': 'Stock Inquiry',
+      'routeName': StockInquiryHeaderScreen.routeName,
+    },
   ];
 
   @override
