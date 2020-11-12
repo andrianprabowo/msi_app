@@ -37,10 +37,6 @@ class InventoryDispatchBatchRtvScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider =
-        Provider.of<InventoryDispatchHeaderRtvProvider>(context, listen: false);
-    print("TST SELECTED");
-    print(provider.selected);
     final pickItemProvider =
         Provider.of<InventoryDispatchItemRtvProvider>(context, listen: false);
     final pickBatchProvider =
@@ -51,10 +47,7 @@ class InventoryDispatchBatchRtvScreen extends StatelessWidget {
     // Map map = ModalRoute.of(context).settings.arguments;
     // InventoryDispatchItemRtv pickItem = map['inventoryDispatchItem'];
     // InventoryDispatchBinRtv itemBin = map['inventoryDispatchBin'];
-    print("ITEM BIN");
-    // print(itemBin);
-    print("PICK ITEM");
-    print(pickItem);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Inventory Dispatch RTV'),

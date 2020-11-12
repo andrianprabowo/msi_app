@@ -9,7 +9,7 @@ class InventoryDispatchDetailSo with ChangeNotifier {
   final String docNumber;
   final DateTime docDate;
   final DateTime postingDate;
-  final String cardCode;
+  String cardCode;
   final String cardName;
   final String pickRemark;
   final String filename;
@@ -41,10 +41,10 @@ class InventoryDispatchDetailSo with ChangeNotifier {
       'details': itemList?.map((x) => x?.toMap())?.toList(),
     };
   }
-  
+
   factory InventoryDispatchDetailSo.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return InventoryDispatchDetailSo(
       docNumber: map['uDocNum'] ?? '',
       docDate: DateTime.parse(map['docDate']),
@@ -59,12 +59,11 @@ class InventoryDispatchDetailSo with ChangeNotifier {
 
   String toJson() => json.encode(toMap());
 
-  factory InventoryDispatchDetailSo.fromJson(String source) => InventoryDispatchDetailSo.fromMap(json.decode(source));
+  factory InventoryDispatchDetailSo.fromJson(String source) =>
+      InventoryDispatchDetailSo.fromMap(json.decode(source));
 
   @override
   String toString() {
     return 'InventoryDispatchDetailSo(docNumber: $docNumber, docDate: $docDate, postingDate: $postingDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, filename: $filename, storageLocation: $storageLocation, itemList: $itemList)';
   }
-
- 
 }

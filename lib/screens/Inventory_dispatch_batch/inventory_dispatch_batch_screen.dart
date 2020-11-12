@@ -32,15 +32,15 @@ class InventoryDispatchBatchScreen extends StatelessWidget {
         Provider.of<InventoryDispatchDetailProvider>(context, listen: false);
     final binHeader = providerBinHeader.selected;
     final details = providerDetail.selected;
-    await provider.getPlBatchByItemWhs(itemCode, binHeader.binCode, details.docNumber);
+    await provider.getPlBatchByItemWhs(
+        itemCode, binHeader.binCode, details.docNumber);
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider =
-        Provider.of<InventoryDispatchHeaderProvider>(context, listen: false);
-    print("TST SELECTED");
-    print(provider.selected);
+    // final provider =
+    //     Provider.of<InventoryDispatchHeaderProvider>(context, listen: false);
+    
     final pickItemProvider =
         Provider.of<InventoryDispatchItemProvider>(context, listen: false);
     final pickBatchProvider =
@@ -48,13 +48,10 @@ class InventoryDispatchBatchScreen extends StatelessWidget {
     Map map = ModalRoute.of(context).settings.arguments;
     InventoryDispatchItem pickItem = map['inventoryDispatchItem'];
     InventoryDispatchBin itemBin = map['inventoryDispatchBin'];
-    print("ITEM BIN");
-    print(itemBin);
-    print("PICK ITEM");
-    print(pickItem);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inventory Dispatch Error'),
+        title: Text('Inventory Dispatch'),
         actions: [
           IconButton(
             icon: Icon(Icons.check_box_outlined),
@@ -65,8 +62,20 @@ class InventoryDispatchBatchScreen extends StatelessWidget {
               final batchList = pickBatchProvider.pickedItems;
               pickItemProvider.addBatchList(pickItem, batchList);
 
-              Navigator.of(context).popUntil(
-                  ModalRoute.withName(InventoryDispatchItemScreen.routeName));
+              var guider =
+                  double.tryParse(pickItem.openQty.toStringAsFixed(2)) >
+                          double.tryParse(itemBin.avlQty.toStringAsFixed(2))
+                      ? double.tryParse(itemBin.avlQty.toStringAsFixed(2))
+                      : double.tryParse(pickItem.openQty.toStringAsFixed(2));
+
+              pickBatchProvider.totalPicked.toStringAsFixed(2) == '0.00'
+                  ? showAlertOnZero(context)
+                  : double.tryParse(pickBatchProvider.totalPicked
+                              .toStringAsFixed(2)) >
+                          guider
+                      ? showAlertGreaterThanZero(context, guider.toString())
+                      : Navigator.of(context).popUntil(ModalRoute.withName(
+                          InventoryDispatchItemScreen.routeName));
             },
           )
         ],
@@ -158,6 +167,71 @@ class InventoryDispatchBatchScreen extends StatelessWidget {
         showModalBottomSheet(
           context: context,
           builder: (_) => DialogInventoryDispatchBatch(item),
+        );
+      },
+    );
+  }
+
+  Future<void> showAlertOnZero(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.info_outline, color: Colors.red, size: 50),
+              Divider(),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
+              Text('Please Select at Least 1 Batch Item'),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
+              SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  color: Colors.red,
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> showAlertGreaterThanZero(
+      BuildContext context, String toPick) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.info_outline, color: Colors.red, size: 50),
+              Divider(),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
+              Text('Total Picked must be less than or equal to ' + toPick),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
+              SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  color: Colors.red,
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

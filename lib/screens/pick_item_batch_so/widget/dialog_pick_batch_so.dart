@@ -37,8 +37,26 @@ class _DialogPickBatchSoState extends State<DialogPickBatchSo> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          buildButtonSubmit(context),
+          if (_quantity.text != '' &&
+                  (double.parse(_quantity.text) >
+                      double.tryParse(
+                          widget.item.availableQty.toStringAsFixed(2))) ||
+              _quantity.text == '0')
+            buildButtonNotif(context, widget.item.availableQty.toString())
+          else
+            buildButtonSubmit(context),
         ],
+      ),
+    );
+  }
+
+  Widget buildButtonNotif(BuildContext context, String avlQty) {
+    return SizedBox(
+      width: double.infinity,
+      child: RaisedButton(
+        color: Colors.red,
+        child: Text('Qty must be above 0 or equal to ' + avlQty),
+        onPressed: () {},
       ),
     );
   }

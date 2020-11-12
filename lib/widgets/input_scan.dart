@@ -28,6 +28,7 @@ class _InputScanState extends State<InputScan> {
         hintText: widget.hint,
         suffixIcon: Icon(Icons.assessment_outlined),
       ),
+      autofocus: true,
     );
   }
 }

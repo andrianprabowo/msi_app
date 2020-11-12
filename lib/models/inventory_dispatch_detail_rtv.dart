@@ -8,7 +8,7 @@ class InventoryDispatchDetailRtv with ChangeNotifier {
   final String docNumber;
   final DateTime docDate;
   final DateTime postingDate;
-  final String cardCode;
+  String cardCode;
   final String cardName;
   final String pickRemark;
   final String filename;
@@ -40,10 +40,10 @@ class InventoryDispatchDetailRtv with ChangeNotifier {
       'details': itemList?.map((x) => x?.toMap())?.toList(),
     };
   }
-  
+
   factory InventoryDispatchDetailRtv.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return InventoryDispatchDetailRtv(
       docNumber: map['uDocNum'] ?? '',
       docDate: DateTime.parse(map['docDate']),
@@ -58,12 +58,11 @@ class InventoryDispatchDetailRtv with ChangeNotifier {
 
   String toJson() => json.encode(toMap());
 
-  factory InventoryDispatchDetailRtv.fromJson(String source) => InventoryDispatchDetailRtv.fromMap(json.decode(source));
+  factory InventoryDispatchDetailRtv.fromJson(String source) =>
+      InventoryDispatchDetailRtv.fromMap(json.decode(source));
 
   @override
   String toString() {
     return 'InventoryDispatchDetailRtv(docNumber: $docNumber, docDate: $docDate, postingDate: $postingDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, filename: $filename, storageLocation: $storageLocation, itemList: $itemList)';
   }
-
- 
 }

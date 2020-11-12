@@ -28,8 +28,8 @@ class StockCountingCheckScreen extends StatelessWidget {
           FlatButton(
             child: Text('OK'),
             onPressed: () async {
-              final provider =
-                  Provider.of<StockCountingHeaderProvider>(context, listen: false);
+              final provider = Provider.of<StockCountingHeaderProvider>(context,
+                  listen: false);
               try {
                 final response = await provider.createReceiptVendor();
                 final docId = response['id'];
@@ -96,20 +96,40 @@ class StockCountingCheckScreen extends StatelessWidget {
     );
   }
 
+  final globalKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<StockCountingHeaderProvider>(context, listen: false);
+    final provider =
+        Provider.of<StockCountingHeaderProvider>(context, listen: false);
     final item = provider.selected;
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     return Scaffold(
+      key: globalKey,
       appBar: AppBar(
         title: Text('Stock Counting Check'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
-              postData(context);
+              
+
+              if (provider.detailList.isEmpty) {
+                final snackBar = SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(Icons.error_outline, color: Colors.red),
+                      SizedBox(width: getProportionateScreenWidth(kLarge)),
+                      Text('Please Select One or More Item First'),
+                    ],
+                  ),
+                );
+                globalKey.currentState.showSnackBar(snackBar);
+                return;
+              } else {
+                postData(context);
+              }
             },
           )
         ],
@@ -155,7 +175,8 @@ class StockCountingCheckScreen extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<StockCountingHeaderProvider>(context, listen: false);
+    final provider =
+        Provider.of<StockCountingHeaderProvider>(context, listen: false);
     return InputScan(
       label: 'Storage Location',
       hint: 'Input or scan Storage Location',

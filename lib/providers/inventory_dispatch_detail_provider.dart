@@ -64,7 +64,9 @@ class InventoryDispatchDetailProvider with ChangeNotifier {
     };
 
     final header =  Provider.of<InventoryDispatchHeaderProvider>(context, listen: false).selected;
+    final warehouseId = await Prefs.getString(Prefs.warehouseId);
 
+    _selected.cardCode = warehouseId;
     _selected.storageLocation = header.binCode;
     _selected.itemList = detailList;
 

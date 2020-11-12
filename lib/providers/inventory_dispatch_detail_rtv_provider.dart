@@ -9,8 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:msi_app/utils/prefs.dart';
 import 'package:provider/provider.dart';
 
-
-
 class InventoryDispatchDetailRtvProvider with ChangeNotifier {
   List<InventoryDispatchDetailRtv> _items = [];
   InventoryDispatchDetailRtv _selected;
@@ -57,15 +55,20 @@ class InventoryDispatchDetailRtvProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Map<String, dynamic>> createInventoryDispatch(BuildContext context) async {
+  Future<Map<String, dynamic>> createInventoryDispatch(
+      BuildContext context) async {
     var url = '$kBaseUrl/tgrpo/tgrpo/api/listrvidp';
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
 
-    final header =  Provider.of<InventoryDispatchHeaderRtvProvider>(context, listen: false).selected;
+    final header =
+        Provider.of<InventoryDispatchHeaderRtvProvider>(context, listen: false)
+            .selected;
+    final warehouseId = await Prefs.getString(Prefs.warehouseId);
 
+    _selected.cardCode = warehouseId;
     _selected.storageLocation = header.binCode;
     _selected.itemList = detailList;
 

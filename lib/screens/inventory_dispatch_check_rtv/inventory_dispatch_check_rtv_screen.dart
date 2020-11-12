@@ -97,19 +97,51 @@ class InventoryDispatchCheckRtvScreen extends StatelessWidget {
     );
   }
 
+  final globalKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     final provider =
         Provider.of<InventoryDispatchDetailRtvProvider>(context, listen: false);
     final item = provider.selected;
+
     return Scaffold(
+      key: globalKey,
       appBar: AppBar(
         title: Text('Inventory Dispatch RTV'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
-              postData(context);
+              // if (authProvider.binId == 'Please Select Bin') {
+              //   final snackBar = SnackBar(
+              //     content: Row(
+              //       children: [
+              //         Icon(Icons.error_outline, color: Colors.red),
+              //         SizedBox(width: getProportionateScreenWidth(kLarge)),
+              //         Text('Please Select Bin First'),
+              //       ],
+              //     ),
+              //   );
+              //   globalKey.currentState.showSnackBar(snackBar);
+              //   return;
+              // }
+
+              if (provider.detailList.isEmpty) {
+                final snackBar = SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(Icons.error_outline, color: Colors.red),
+                      SizedBox(width: getProportionateScreenWidth(kLarge)),
+                      Text('Please Select One or More Item First'),
+                    ],
+                  ),
+                );
+                globalKey.currentState.showSnackBar(snackBar);
+                return;
+              } else {
+                postData(context);
+              }
             },
           )
         ],

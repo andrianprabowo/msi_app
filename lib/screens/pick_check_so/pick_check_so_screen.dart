@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/pick_item_receive_so.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_so_provider.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/pick_check_so/widget/pick_detail_check_so.dart';
@@ -96,18 +97,51 @@ class PickCheckSoScreen extends StatelessWidget {
     );
   }
 
+  final globalKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<PickListWhsSoProvider>(context, listen: false);
     final item = provider.selected;
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
     return Scaffold(
+      key: globalKey,
       appBar: AppBar(
         title: Text('Picker Pick List Sales Order'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
-              postData(context);
+              if (authProvider.binId == 'Please Select Bin') {
+                final snackBar = SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(Icons.error_outline, color: Colors.red),
+                      SizedBox(width: getProportionateScreenWidth(kLarge)),
+                      Text('Please Select Bin First'),
+                    ],
+                  ),
+                );
+                globalKey.currentState.showSnackBar(snackBar);
+                return;
+              }
+
+              if (provider.detailList.isEmpty) {
+                final snackBar = SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(Icons.error_outline, color: Colors.red),
+                      SizedBox(width: getProportionateScreenWidth(kLarge)),
+                      Text('Please Select One or More Item First'),
+                    ],
+                  ),
+                );
+                globalKey.currentState.showSnackBar(snackBar);
+                return;
+              } else {
+                postData(context);
+              }
             },
           )
         ],

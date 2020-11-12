@@ -14,7 +14,8 @@ class DialogPickListNonbatchRtv extends StatefulWidget {
   const DialogPickListNonbatchRtv(this.item);
 
   @override
-  _DialogPickListNonbatchRtvState createState() => _DialogPickListNonbatchRtvState();
+  _DialogPickListNonbatchRtvState createState() =>
+      _DialogPickListNonbatchRtvState();
 }
 
 class _DialogPickListNonbatchRtvState extends State<DialogPickListNonbatchRtv> {
@@ -33,13 +34,31 @@ class _DialogPickListNonbatchRtvState extends State<DialogPickListNonbatchRtv> {
         children: [
           BaseTitle('Input Quantity'),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('Available Quantity',
-              widget.item.openQty.toStringAsFixed(2)),
+          BaseTextLine(
+              'Available Quantity', widget.item.openQty.toStringAsFixed(2)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          buildButtonSubmit(context),
+          if (_quantity.text != '' &&
+                  (double.parse(_quantity.text) >
+                      double.tryParse(
+                          widget.item.openQty.toStringAsFixed(2))) ||
+              _quantity.text == '0')
+            buildButtonNotif(context, widget.item.openQty.toString())
+          else
+            buildButtonSubmit(context),
         ],
+      ),
+    );
+  }
+
+  Widget buildButtonNotif(BuildContext context, String avlQty) {
+    return SizedBox(
+      width: double.infinity,
+      child: RaisedButton(
+        color: Colors.red,
+        child: Text('Qty must be above 0 or equal to ' + avlQty),
+        onPressed: () {},
       ),
     );
   }
@@ -66,7 +85,6 @@ class _DialogPickListNonbatchRtvState extends State<DialogPickListNonbatchRtv> {
         child: Text('Submit'),
         onPressed: () {
           if (double.parse(_quantity.text) > widget.item.openQty) {
-            
             print('Tidak boleh lebih besar dari Available Qty ');
             return;
           }
@@ -76,9 +94,9 @@ class _DialogPickListNonbatchRtvState extends State<DialogPickListNonbatchRtv> {
             item,
             double.parse(_quantity.text),
           );
-           Navigator.of(context)
-            .pushNamed(PickListBinRtvScreen.routeName, arguments: item);
-            //  Navigator.of(context).pop();
+          Navigator.of(context)
+              .pushNamed(PickListBinRtvScreen.routeName, arguments: item);
+          //  Navigator.of(context).pop();
         },
       ),
     );

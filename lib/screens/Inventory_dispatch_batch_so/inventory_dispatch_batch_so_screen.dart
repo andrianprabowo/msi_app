@@ -31,26 +31,21 @@ class InventoryDispatchBatchSoScreen extends StatelessWidget {
         Provider.of<InventoryDispatchDetailSoProvider>(context, listen: false);
     final binHeader = providerBinHeader.selected;
     final details = providerDetail.selected;
-    await provider.getPlBatchByItemWhs(itemCode, binHeader.binCode, details.docNumber);
+    await provider.getPlBatchByItemWhs(
+        itemCode, binHeader.binCode, details.docNumber);
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider =
-        Provider.of<InventoryDispatchHeaderSoProvider>(context, listen: false);
-    print("TST SELECTED");
-    print(provider.selected);
     final pickItemProvider =
         Provider.of<InventoryDispatchItemSoProvider>(context, listen: false);
     final pickBatchProvider =
         Provider.of<InventoryDispathBatchSoProvider>(context, listen: false);
-    InventoryDispatchItemSo pickItem = ModalRoute.of(context).settings.arguments;
+    InventoryDispatchItemSo pickItem =
+        ModalRoute.of(context).settings.arguments;
     // InventoryDispatchItemSo pickItem = map['inventoryDispatchItem'];
     // InventoryDispatchBinSo itemBin = map['inventoryDispatchBin'];
-    print("ITEM BIN");
-    // print(itemBin);
-    print("PICK ITEM");
-    print(pickItem);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Inventory Dispatch Sales Order'),

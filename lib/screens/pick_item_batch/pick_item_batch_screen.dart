@@ -50,8 +50,23 @@ class PickItemBatchScreen extends StatelessWidget {
               final batchList = pickBatchProvider.pickedItems;
               pickItemProvider.addBatchList(pickItem, batchList);
 
-              Navigator.of(context).popUntil(
-                  ModalRoute.withName(PickItemReceiveScreen.routeName));
+              var guider =
+                  double.tryParse(pickItem.openQty.toStringAsFixed(2)) >
+                          double.tryParse(itemBin.avlQty.toStringAsFixed(2))
+                      ? double.tryParse(itemBin.avlQty.toStringAsFixed(2))
+                      : double.tryParse(pickItem.openQty.toStringAsFixed(2));
+
+              pickBatchProvider.totalPicked
+                          .toStringAsFixed(2) ==
+                      '0.00'
+                  ? showAlertOnZero(context)
+                  : double.tryParse(pickBatchProvider
+                              .totalPicked
+                              .toStringAsFixed(2)) >
+                          guider
+                      ? showAlertGreaterThanZero(context, guider.toString())
+                      : Navigator.of(context).popUntil(
+                          ModalRoute.withName(PickItemReceiveScreen.routeName));
             },
           )
         ],
@@ -145,4 +160,70 @@ class PickItemBatchScreen extends StatelessWidget {
       },
     );
   }
+
+  Future<void> showAlertOnZero(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.info_outline, color: Colors.red, size: 50),
+              Divider(),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
+              Text('Please Select at Least 1 Batch Item'),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
+              SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  color: Colors.red,
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> showAlertGreaterThanZero(
+      BuildContext context, String toPick) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.info_outline, color: Colors.red, size: 50),
+              Divider(),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
+              Text('Total Picked must be less than or equal to ' + toPick),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
+              SizedBox(height: getProportionateScreenHeight(kLarge)),
+              SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  color: Colors.red,
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
 }

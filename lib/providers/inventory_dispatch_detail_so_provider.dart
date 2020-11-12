@@ -9,8 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:msi_app/utils/prefs.dart';
 import 'package:provider/provider.dart';
 
-
-
 class InventoryDispatchDetailSoProvider with ChangeNotifier {
   List<InventoryDispatchDetailSo> _items = [];
   InventoryDispatchDetailSo _selected;
@@ -57,15 +55,20 @@ class InventoryDispatchDetailSoProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Map<String, dynamic>> createInventoryDispatch(BuildContext context) async {
+  Future<Map<String, dynamic>> createInventoryDispatch(
+      BuildContext context) async {
     var url = '$kBaseUrl/tgrpo/tgrpo/api/listsoidp';
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
 
-    final header =  Provider.of<InventoryDispatchHeaderSoProvider>(context, listen: false).selected;
+    final header =
+        Provider.of<InventoryDispatchHeaderSoProvider>(context, listen: false)
+            .selected;
+    final warehouseId = await Prefs.getString(Prefs.warehouseId);
 
+    _selected.cardCode = warehouseId;
     _selected.storageLocation = header.binCode;
     _selected.itemList = detailList;
 

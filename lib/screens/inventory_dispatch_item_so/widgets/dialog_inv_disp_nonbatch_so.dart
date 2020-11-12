@@ -13,7 +13,8 @@ class DialogInvDispNonbatchSo extends StatefulWidget {
   const DialogInvDispNonbatchSo(this.item);
 
   @override
-  _DialogInvDispNonbatchSoState createState() => _DialogInvDispNonbatchSoState();
+  _DialogInvDispNonbatchSoState createState() =>
+      _DialogInvDispNonbatchSoState();
 }
 
 class _DialogInvDispNonbatchSoState extends State<DialogInvDispNonbatchSo> {
@@ -32,13 +33,31 @@ class _DialogInvDispNonbatchSoState extends State<DialogInvDispNonbatchSo> {
         children: [
           BaseTitle('Input Quantity'),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('Available Quantity',
-              widget.item.openQty.toStringAsFixed(2)),
+          BaseTextLine(
+              'Available Quantity', widget.item.openQty.toStringAsFixed(2)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          buildButtonSubmit(context),
+          if (_quantity.text != '' &&
+                  (double.parse(_quantity.text) >
+                      double.tryParse(
+                          widget.item.openQty.toStringAsFixed(2))) ||
+              _quantity.text == '0')
+            buildButtonNotif(context, widget.item.openQty.toString())
+          else
+            buildButtonSubmit(context),
         ],
+      ),
+    );
+  }
+
+  Widget buildButtonNotif(BuildContext context, String avlQty) {
+    return SizedBox(
+      width: double.infinity,
+      child: RaisedButton(
+        color: Colors.red,
+        child: Text('Qty must be above 0 or equal to ' + avlQty),
+        onPressed: () {},
       ),
     );
   }
@@ -65,20 +84,20 @@ class _DialogInvDispNonbatchSoState extends State<DialogInvDispNonbatchSo> {
         child: Text('Submit'),
         onPressed: () {
           if (double.parse(_quantity.text) > widget.item.openQty) {
-            
             print('Tidak boleh lebih besar dari Available Qty ');
             return;
           }
           final inventoryDispatchItem =
-              Provider.of<InventoryDispatchItemSoProvider>(context, listen: false);
+              Provider.of<InventoryDispatchItemSoProvider>(context,
+                  listen: false);
           inventoryDispatchItem.inputQtyNonBatch(
             item,
             double.parse(_quantity.text),
             item.itemStorageLocation,
           );
           //  Navigator.of(context)
-            // .pushNamed(InventoryDispatchBinSoScreen.routeName, arguments: item);
-             Navigator.of(context).pop();
+          // .pushNamed(InventoryDispatchBinSoScreen.routeName, arguments: item);
+          Navigator.of(context).pop();
         },
       ),
     );
