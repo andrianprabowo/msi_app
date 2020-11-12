@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/widgets/item_bin_rfo.dart';
 import 'package:msi_app/models/purchase_order_rfo.dart';
 import 'package:msi_app/providers/item_po_provider_rfo.dart';
@@ -34,21 +35,38 @@ class ReceiptDetailRfoScreen extends StatelessWidget {
         .createReceiptVendor();
   }
 
+  final globalKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     final poProvider =
         Provider.of<PurchaseOrderRfoProvider>(context, listen: false);
     final po = poProvider.selected;
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     return Scaffold(
+      key: globalKey,
       appBar: AppBar(
         title: Text('Receipt Return from Outlet'),
         actions: [
           IconButton(
-            icon: Icon(Icons.post_add),
-            onPressed: () => Navigator.of(context)
-                .pushNamed(ReceiptCheckRfoScreen.routeName),
-          )
+              icon: Icon(Icons.post_add),
+              onPressed: () {
+                if (authProvider.binId == 'Please Select Bin') {
+                  final snackBar = SnackBar(
+                    content: Row(
+                      children: [
+                        Icon(Icons.error_outline, color: Colors.red),
+                        SizedBox(width: getProportionateScreenWidth(kLarge)),
+                        Text('Please Select Bin First'),
+                      ],
+                    ),
+                  );
+                  globalKey.currentState.showSnackBar(snackBar);
+                  return;
+                }
+                Navigator.of(context).pushNamed(ReceiptCheckRfoScreen.routeName);
+              })
         ],
       ),
       body: Container(

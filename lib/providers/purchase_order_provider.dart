@@ -10,7 +10,7 @@ import 'package:msi_app/utils/prefs.dart';
 class PurchaseOrderProvider with ChangeNotifier {
   List<PurchaseOrder> _items = [];
   PurchaseOrder _selected;
-  
+
   List<PurchaseOrder> get items => _items;
   PurchaseOrder get selected => _selected;
 

@@ -16,7 +16,7 @@ class StagingCheckRfoScreen extends StatelessWidget {
     showDialog(
       context: context,
       child: AlertDialog(
-        title: Text('Post Put Away 2'),
+        title: Text('Post Put Away RFO'),
         content: Text('Are you sure want to process?'),
         actions: [
           FlatButton(
@@ -94,18 +94,35 @@ class StagingCheckRfoScreen extends StatelessWidget {
     );
   }
 
+  final globalKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<StagingBinRfoProvider>(context, listen: false);
     final item = provider.selected;
     return Scaffold(
+      key: globalKey,
       appBar: AppBar(
         title: Text('Put Away From Outlet'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
-              postData(context);
+             if (provider.itemBinList.isEmpty) {
+                final snackBar = SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(Icons.error_outline, color: Colors.red),
+                      SizedBox(width: getProportionateScreenWidth(kLarge)),
+                      Text('Please Select One or More Item First'),
+                    ],
+                  ),
+                );
+                globalKey.currentState.showSnackBar(snackBar);
+                return;
+              } else {
+                postData(context);
+              }
             },
           )
         ],

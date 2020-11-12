@@ -14,9 +14,6 @@ class ReceiptCheckScreen extends StatelessWidget {
   static const routeName = '/receipt_check';
 
   void postData(BuildContext context) {
-    // final authProvider =
-    //     Provider.of<AuthProvider>(context, listen: false);
-
     showDialog(
       context: context,
       child: AlertDialog(
@@ -98,6 +95,8 @@ class ReceiptCheckScreen extends StatelessWidget {
     );
   }
 
+  final globalKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     final poProvider =
@@ -105,13 +104,28 @@ class ReceiptCheckScreen extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final po = poProvider.selected;
     return Scaffold(
+      key: globalKey,
       appBar: AppBar(
         title: Text('Receipt Check'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
-              postData(context);
+              if (poProvider.detailList.isEmpty) {
+                final snackBar = SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(Icons.error_outline, color: Colors.red),
+                      SizedBox(width: getProportionateScreenWidth(kLarge)),
+                      Text('Please Select One or More Item First'),
+                    ],
+                  ),
+                );
+                globalKey.currentState.showSnackBar(snackBar);
+                return;
+              } else {
+                postData(context);
+              }
             },
           )
         ],
@@ -130,7 +144,7 @@ class ReceiptCheckScreen extends StatelessWidget {
             BaseTextLine('Vendor Code', po.vendorCode),
             BaseTextLine('Vendor Name', po.vendorName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Bin', authProvider.binId ??'Empty'),
+            BaseTextLine('Bin', authProvider.binId ?? 'Empty'),
             // BaseTextLine('Staging Bin Name', po.storageLocationName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Item Details'),

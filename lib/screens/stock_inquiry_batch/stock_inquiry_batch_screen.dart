@@ -6,7 +6,6 @@ import 'package:msi_app/screens/stock_inquiry_batch/widgets/item_batch_staging_s
 import 'package:msi_app/screens/stock_inquiry_header/stock_inquiry_header_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
-import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/no_data.dart';
@@ -51,27 +50,27 @@ class StockInquiryBatchScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // buildInputScan(context),
-            Row(
-              children: [
-                Consumer<ItemBatchSiProvider>(
-                    builder: (BuildContext _, provider, Widget child) {
-                  return Expanded(
-                    child: BaseTextLine(
-                      'Total Picked',
-                      provider.totalPicked.toStringAsFixed(2),
-                    ),
-                  );
-                }),
-                SizedBox(width: getProportionateScreenWidth(kLarge)),
-                FlatButton.icon(
-                    onPressed: () {
-                      itemBatchProvider.clear();
-                    },
-                    icon: Icon(Icons.delete),
-                    color: Colors.red,
-                    label: Text('CLEAR'))
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Consumer<ItemBatchSiProvider>(
+            //         builder: (BuildContext _, provider, Widget child) {
+            //       return Expanded(
+            //         child: BaseTextLine(
+            //           'Total Picked',
+            //           provider.totalPicked.toStringAsFixed(2),
+            //         ),
+            //       );
+            //     }),
+            //     SizedBox(width: getProportionateScreenWidth(kLarge)),
+            //     FlatButton.icon(
+            //         onPressed: () {
+            //           itemBatchProvider.clear();
+            //         },
+            //         icon: Icon(Icons.delete),
+            //         color: Colors.red,
+            //         label: Text('CLEAR'))
+            //   ],
+            // ),
             BaseTitle(item.itemCode),
             BaseTitle(item.itemName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

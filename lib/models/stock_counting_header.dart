@@ -27,7 +27,7 @@ class StockCountingHeader with ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     return {
-      'doNo': pickNumber,
+      'stckcntingNo': pickNumber,
       'deliveryDate': pickDate?.toIso8601String(),
       'postingDate': DateTime.now().toIso8601String(),
       'createdDate': DateTime.now().toIso8601String(),

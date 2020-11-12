@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/purchase_order.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/item_po_provider.dart';
 import 'package:msi_app/providers/purchase_order_provider.dart';
 import 'package:msi_app/screens/receipt_check/receipt_check_screen.dart';
@@ -33,21 +34,39 @@ class ReceiptDetailScreen extends StatelessWidget {
         .createReceiptVendor();
   }
 
+  final globalKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     final poProvider =
         Provider.of<PurchaseOrderProvider>(context, listen: false);
     final po = poProvider.selected;
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     return Scaffold(
+      key: globalKey,
       appBar: AppBar(
         title: Text('Receipt From Vendor'),
         actions: [
           IconButton(
-            icon: Icon(Icons.post_add),
-            onPressed: () =>
-                Navigator.of(context).pushNamed(ReceiptCheckScreen.routeName),
-          )
+              icon: Icon(Icons.post_add),
+              onPressed: () {
+                if (authProvider.binId == 'Please Select Bin') {
+                  final snackBar = SnackBar(
+                    content: Row(
+                      children: [
+                        Icon(Icons.error_outline, color: Colors.red),
+                        SizedBox(width: getProportionateScreenWidth(kLarge)),
+                        Text('Please Select Bin First'),
+                      ],
+                    ),
+                  );
+                  globalKey.currentState.showSnackBar(snackBar);
+                  return;
+                }
+
+                Navigator.of(context).pushNamed(ReceiptCheckScreen.routeName);
+              })
         ],
       ),
       body: Container(

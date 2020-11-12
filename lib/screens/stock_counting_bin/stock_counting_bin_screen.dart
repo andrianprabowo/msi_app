@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/stock_counting_bin_provider.dart';
-import 'package:msi_app/providers/stock_counting_header_provider.dart';
 import 'package:msi_app/screens/stock_counting_batch/stock_counting_batch_screen.dart';
 import 'package:msi_app/screens/stock_counting_bin/widgets/item_stock_counting_bin.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -23,9 +22,9 @@ class StockCountingBinScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pickList =
-        Provider.of<StockCountingHeaderProvider>(context, listen: false)
-            .selected;
+    // final pickList =
+    //     Provider.of<StockCountingHeaderProvider>(context, listen: false)
+    //         .selected;
     StockCountingItem pickItemReceive =
         ModalRoute.of(context).settings.arguments;
 

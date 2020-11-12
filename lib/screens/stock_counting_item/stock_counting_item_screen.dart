@@ -36,7 +36,7 @@ class StockCountingItemScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Stock Toko Card'),
+        title: Text('Stock Counting'),
         actions: [
           IconButton(
             icon: Icon(Icons.post_add),

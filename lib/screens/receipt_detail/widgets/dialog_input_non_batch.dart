@@ -3,6 +3,7 @@ import 'package:msi_app/models/item_purchase_order.dart';
 import 'package:msi_app/providers/item_po_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:provider/provider.dart';
 
@@ -31,11 +32,32 @@ class _DialogInputQtyNonBatchState extends State<DialogInputQtyNonBatch> {
           children: [
             BaseTitle('Input Item Quantity'),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTextLine('PO Qty', item.openQty.toStringAsFixed(2)),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildQtyFormField(),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildButtonSubmit(context),
+            // if (double.tryParse(_quantity.text) > double.tryParse(widget.item.openQty.toStringAsFixed(2)))
+            if (_quantity.text != '' &&
+                    (double.parse(_quantity.text) >
+                        double.tryParse(
+                            widget.item.openQty.toStringAsFixed(2))) ||
+                _quantity.text == '0')
+              buildButtonNotif(context, widget.item.openQty.toString())
+            else
+              buildButtonSubmit(context),
           ],
         ));
+  }
+
+  Widget buildButtonNotif(BuildContext context, String avlQty) {
+    return SizedBox(
+      width: double.infinity,
+      child: RaisedButton(
+        color: Colors.red,
+        child: Text('Qty must be above 0 or equal to ' + avlQty),
+        onPressed: () {},
+      ),
+    );
   }
 
   Widget buildQtyFormField() {
