@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-class ListGoodReceiptPo with ChangeNotifier {
+class ListPutAwayRfo with ChangeNotifier {
   final String grpono;
   final String poNo;
   final DateTime docDate;
   final String vendor;
   final int status;
   final String logMessage;
-  ListGoodReceiptPo({
+  ListPutAwayRfo({
     this.grpono,
     this.poNo,
     this.docDate,
@@ -18,14 +18,14 @@ class ListGoodReceiptPo with ChangeNotifier {
     this.logMessage,
   });
 
-  ListGoodReceiptPo copyWith({
+  ListPutAwayRfo copyWith({
     String grpono,
     String poNo,
     DateTime docDate,
     String vendor,
     int status,
   }) {
-    return ListGoodReceiptPo(
+    return ListPutAwayRfo(
       grpono: grpono ?? this.grpono,
       poNo: poNo ?? this.poNo,
       docDate: docDate ?? this.docDate,
@@ -45,12 +45,12 @@ class ListGoodReceiptPo with ChangeNotifier {
     };
   }
 
-  factory ListGoodReceiptPo.fromMap(Map<String, dynamic> map) {
+  factory ListPutAwayRfo.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
-    return ListGoodReceiptPo(
-      grpono: map['grpono'] ?? '',
-      poNo: map['poNo'] ?? '',
+    return ListPutAwayRfo(
+      grpono: map['putAwayNo'] ?? '',
+      poNo: map['doNo'] ?? '',
       docDate: DateTime.parse(map['docDate']),
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
@@ -60,19 +60,19 @@ class ListGoodReceiptPo with ChangeNotifier {
 
   String toJson() => json.encode(toMap());
 
-  factory ListGoodReceiptPo.fromJson(String source) =>
-      ListGoodReceiptPo.fromMap(json.decode(source));
+  factory ListPutAwayRfo.fromJson(String source) =>
+      ListPutAwayRfo.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'ListGoodReceiptPo(grpono: $grpono, poNo: $poNo, docDate: $docDate, vendor: $vendor, status: $status, logMessage: $logMessage)';
+    return 'ListPutAwayRfo(grpono: $grpono, poNo: $poNo, docDate: $docDate, vendor: $vendor, status: $status, logMessage: $logMessage)';
   }
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is ListGoodReceiptPo &&
+    return o is ListPutAwayRfo &&
         o.grpono == grpono &&
         o.poNo == poNo &&
         o.docDate == docDate &&

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/providers/pick_list_whs_rtv_provider.dart';
+import 'package:msi_app/screens/list_pick_list_rtv/list_pick_list_rtv_screen.dart';
 import 'package:msi_app/screens/pick_item_receive_rtv/pick_item_receive_rtv_screen.dart';
 import 'package:msi_app/screens/picker_pick_rtv/widgets/item_pick_list_whs_rtv.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -27,8 +28,8 @@ class PickerPickRtvScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.list_alt),
             onPressed: () {
-              // Navigator.of(context)
-              //     .pushNamed(ListReceiptFromVendorScreen.routeName);
+              Navigator.of(context)
+                  .pushNamed(ListPickListRtvScreen.routeName);
             },
           ),
         ],

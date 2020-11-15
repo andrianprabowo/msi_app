@@ -3,6 +3,7 @@ import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_header_provider.dart';
 import 'package:msi_app/screens/inventory_dispatch/widgets/item_inventory_dispatch_header.dart';
 import 'package:msi_app/screens/inventory_dispatch_item/inventory_dispatch_item_screen.dart';
+import 'package:msi_app/screens/list_inv_dispatch/list_inv_dispatch_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -29,8 +30,8 @@ class InventoryDispatchHeaderScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.list_alt),
             onPressed: () {
-              // Navigator.of(context)
-              //     .pushNamed(InventoryDispatchDetailScreen.routeName);
+              Navigator.of(context)
+                  .pushNamed(ListInvDispatchScreen.routeName);
             },
           ),
         ],

@@ -4,6 +4,17 @@ import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/bin_rtv_provider.dart';
 import 'package:msi_app/providers/item_batch_si_provider.dart';
 import 'package:msi_app/providers/item_bin_si_provider.dart';
+import 'package:msi_app/providers/list_grpo_outlet_provider.dart';
+import 'package:msi_app/providers/list_grpo_provider.dart';
+import 'package:msi_app/providers/list_inv_dispatch_provider.dart';
+import 'package:msi_app/providers/list_inv_dispatch_rtv_provider.dart';
+import 'package:msi_app/providers/list_inv_dispatch_so_provider.dart';
+import 'package:msi_app/providers/list_pick_list_provider.dart';
+import 'package:msi_app/providers/list_pick_list_rtv_provider.dart';
+import 'package:msi_app/providers/list_pick_list_so_provider.dart';
+import 'package:msi_app/providers/list_put_away_provider.dart';
+import 'package:msi_app/providers/list_put_away_rfo_provider.dart';
+import 'package:msi_app/providers/list_stck_count_provider.dart';
 import 'package:msi_app/providers/staging_bin_si.provider.dart';
 import 'package:msi_app/providers/stock_counting_batch_provider.dart';
 import 'package:msi_app/providers/stock_counting_bin_provider.dart';
@@ -123,7 +134,22 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ItemBinSiProvider()),
         ChangeNotifierProvider(create: (_) => ItemBatchSiProvider()),
 
-        
+        ChangeNotifierProvider(create: (_) => ListGrpoProvider()),
+        ChangeNotifierProvider(create: (_) => ListGrpoOutletProvider()),
+
+        ChangeNotifierProvider(create: (_) => ListPutAwayProvider()),
+        ChangeNotifierProvider(create: (_) => ListPutAwayRfoProvider()),
+
+        ChangeNotifierProvider(create: (_) => ListInvDispatchProvider()),
+        ChangeNotifierProvider(create: (_) => ListInvDispatchRtvProvider()),
+        ChangeNotifierProvider(create: (_) => ListInvDispatchSoProvider()),
+
+        ChangeNotifierProvider(create: (_) => ListPickListProvider()),
+        ChangeNotifierProvider(create: (_) => ListPickListRtvProvider()),
+        ChangeNotifierProvider(create: (_) => ListPickListSoProvider()),
+
+        ChangeNotifierProvider(create: (_) => ListStckCountProvider()),
+
       ],
       child: MyApp(),
     ),

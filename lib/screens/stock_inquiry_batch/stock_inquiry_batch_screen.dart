@@ -25,8 +25,8 @@ class StockInquiryBatchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final itemBatchProvider =
-        Provider.of<ItemBatchSiProvider>(context, listen: false);
+    // final itemBatchProvider =
+    //     Provider.of<ItemBatchSiProvider>(context, listen: false);
     ItemBinSi item = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(

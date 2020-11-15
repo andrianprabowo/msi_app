@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/staging_bin.provider.dart';
-import 'package:msi_app/screens/list_put_away_submited/list_put_away_submited_screen.dart';
+import 'package:msi_app/screens/list_put_away/list_put_away_screen.dart';
 import 'package:msi_app/screens/put_away/widgets/item_staging.dart';
 import 'package:msi_app/screens/staging_item/staging_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -31,7 +31,7 @@ class PutAwayScreen extends StatelessWidget {
             icon: Icon(Icons.list_alt),
             onPressed: () {
               Navigator.of(context)
-                  .pushNamed(ListPutAwaySubmitedScreen.routeName);
+                  .pushNamed(ListPutAwayScreen.routeName);
             },
           ),
         ],

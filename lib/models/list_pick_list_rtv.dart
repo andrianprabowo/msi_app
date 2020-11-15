@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-class ListGoodReceiptPo with ChangeNotifier {
+class ListPickListRtv with ChangeNotifier {
   final String grpono;
   final String poNo;
   final DateTime docDate;
   final String vendor;
   final int status;
   final String logMessage;
-  ListGoodReceiptPo({
+  ListPickListRtv({
     this.grpono,
     this.poNo,
     this.docDate,
@@ -18,14 +18,14 @@ class ListGoodReceiptPo with ChangeNotifier {
     this.logMessage,
   });
 
-  ListGoodReceiptPo copyWith({
+  ListPickListRtv copyWith({
     String grpono,
     String poNo,
     DateTime docDate,
     String vendor,
     int status,
   }) {
-    return ListGoodReceiptPo(
+    return ListPickListRtv(
       grpono: grpono ?? this.grpono,
       poNo: poNo ?? this.poNo,
       docDate: docDate ?? this.docDate,
@@ -36,7 +36,7 @@ class ListGoodReceiptPo with ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     return {
-      'putAwayNo': grpono,
+      'pickListNo': grpono,
       'doNo': poNo,
       'docDate': docDate?.toIso8601String(),
       'vendor': vendor,
@@ -45,12 +45,12 @@ class ListGoodReceiptPo with ChangeNotifier {
     };
   }
 
-  factory ListGoodReceiptPo.fromMap(Map<String, dynamic> map) {
+  factory ListPickListRtv.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
-    return ListGoodReceiptPo(
-      grpono: map['grpono'] ?? '',
-      poNo: map['poNo'] ?? '',
+    return ListPickListRtv(
+      grpono: map['pickListNo'] ?? '',
+      poNo: map['returnNo'] ?? '',
       docDate: DateTime.parse(map['docDate']),
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
@@ -60,19 +60,19 @@ class ListGoodReceiptPo with ChangeNotifier {
 
   String toJson() => json.encode(toMap());
 
-  factory ListGoodReceiptPo.fromJson(String source) =>
-      ListGoodReceiptPo.fromMap(json.decode(source));
+  factory ListPickListRtv.fromJson(String source) =>
+      ListPickListRtv.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'ListGoodReceiptPo(grpono: $grpono, poNo: $poNo, docDate: $docDate, vendor: $vendor, status: $status, logMessage: $logMessage)';
+    return 'ListPickListRtv(grpono: $grpono, poNo: $poNo, docDate: $docDate, vendor: $vendor, status: $status, logMessage: $logMessage)';
   }
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is ListGoodReceiptPo &&
+    return o is ListPickListRtv &&
         o.grpono == grpono &&
         o.poNo == poNo &&
         o.docDate == docDate &&

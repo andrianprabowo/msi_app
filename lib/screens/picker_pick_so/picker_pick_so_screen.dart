@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/providers/pick_list_whs_so_provider.dart';
+import 'package:msi_app/screens/list_pick_list_so/list_pick_list_so_screen.dart';
 import 'package:msi_app/screens/pick_item_receive_so/pick_item_receive_so_screen.dart';
 import 'package:msi_app/screens/picker_pick_so/widgets/item_pick_list_whs_so.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -27,8 +28,8 @@ class PickerPickSoScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.list_alt),
             onPressed: () {
-              // Navigator.of(context)
-              //     .pushNamed(ListReceiptFromVendorScreen.routeName);
+              Navigator.of(context)
+                  .pushNamed(ListPickListSoScreen.routeName);
             },
           ),
         ],

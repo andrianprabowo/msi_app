@@ -1,38 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/providers/auth_provider.dart';
-import 'package:msi_app/providers/purchase_order_rfo_provider.dart';
-import 'package:msi_app/screens/list_receipt_from_vendor_outlet/list_receipt_from_vendor_outlet_screen.dart';
-import 'package:msi_app/screens/receipt_detail_rfo/receipt_detail_rfo_screen.dart';
-import 'package:msi_app/screens/receipt_vendor_rfo/item_receipt_rfo.dart';
+import 'package:msi_app/providers/list_pick_list_provider.dart';
+import 'package:msi_app/screens/list_pick_list/widgets/item_list_pick_list.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/error_info.dart';
-import 'package:msi_app/widgets/input_scan.dart';
 import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
-class ReceiptVendorRfoScreen extends StatelessWidget {
-  static const routeName = '/receipt_vendor_rfo';
+class ListPickListScreen extends StatelessWidget {
+  static const routeName = '/list_pick_list';
 
   Future<void> refreshData(BuildContext context) async {
-    await Provider.of<PurchaseOrderRfoProvider>(context, listen: false)
-        .getAllPoByWarehouseId();
+    await Provider.of<ListPickListProvider>(context, listen: false)
+        .getAllData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Receipt Return from Outlet'),
+        title: Text('List Pick List'),
         actions: [
-          IconButton(
-            icon: Icon(Icons.list_alt),
-            onPressed: () {
-              Navigator.of(context)
-                  .pushNamed(ListReceiptFromVendorOutletScreen.routeName);
-            },
-          ),
+        
         ],
       ),
       body: Container(
@@ -43,9 +33,8 @@ class ReceiptVendorRfoScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTitle('List Purchase Order'),
+            BaseTitle('List Pick List'),
             Divider(),
             buildItemList(context),
           ],
@@ -67,7 +56,7 @@ class ReceiptVendorRfoScreen extends StatelessWidget {
 
           return RefreshIndicator(
             onRefresh: () => refreshData(context),
-            child: Consumer<PurchaseOrderRfoProvider>(
+            child: Consumer<ListPickListProvider>(
               builder: (_, provider, child) => provider.items.length == 0
                   ? NoData()
                   : ListView.builder(
@@ -75,7 +64,7 @@ class ReceiptVendorRfoScreen extends StatelessWidget {
                       itemBuilder: (_, index) {
                         return ChangeNotifierProvider.value(
                           value: provider.items[index],
-                          child: ItemReceiptRfo(provider.items[index]),
+                          child: ItemListPickList(provider.items[index]),
                         );
                       },
                     ),
@@ -83,21 +72,6 @@ class ReceiptVendorRfoScreen extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<PurchaseOrderRfoProvider>(context, listen: false);
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    return InputScan(
-      label: 'PO Number',
-      hint: 'Input or scan PO Number',
-      scanResult: (value) {
-        final item = provider.findByPoNumber(value);
-        provider.selectPo(item);
-        authProvider.clearBin();
-        Navigator.of(context).pushNamed(ReceiptDetailRfoScreen.routeName);
-      },
     );
   }
 }

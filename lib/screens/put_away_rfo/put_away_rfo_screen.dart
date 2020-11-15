@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/staging_bin.provider.dart';
 import 'package:msi_app/providers/staging_bin_rfo.provider.dart';
+import 'package:msi_app/screens/list_put_away_outlet/list_put_away_outlet_screen.dart';
 import 'package:msi_app/screens/put_away_rfo/widgets/item_staging_rfo.dart';
 import 'package:msi_app/screens/staging_item_rfo/staging_item_rfo_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -30,8 +31,8 @@ class PutAwayRfoScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.list_alt),
             onPressed: () {
-              // Navigator.of(context)
-              //     .pushNamed(ListPutAwaySubmitedScreen.routeName);
+              Navigator.of(context)
+                  .pushNamed(ListPutAwayOutletScreen.routeName);
             },
           ),
         ],

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/list_good_receipt_po.dart';
+import 'package:msi_app/models/list_inv_dispatch_rtv.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 
-class ItemListReceiptFromVendor extends StatelessWidget {
-  final ListGoodReceiptPo item;
+class ItemListInvDispatchRtv extends StatelessWidget {
+  final ListInvDispatchRtv item;
 
-  const ItemListReceiptFromVendor(this.item);
+  const ItemListInvDispatchRtv(this.item);
 
   Widget get status {
     switch (item.status) {
@@ -41,10 +41,10 @@ class ItemListReceiptFromVendor extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  BaseTextLine('GRPO Number', item.grpono),
-                  BaseTextLine('Po Number', item.poNo),
+                  BaseTextLine('Pick List No ', item.grpono),
+                  BaseTextLine('Return No', item.poNo),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
-                  BaseTextLine('Vendor', item.vendor),
+                  BaseTextLine('Log Message', item.logMessage),
                 ],
               ),
             ),

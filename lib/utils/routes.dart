@@ -21,8 +21,17 @@ import 'package:msi_app/screens/inventory_dispatch_item_rtv/inventory_dispatch_i
 import 'package:msi_app/screens/inventory_dispatch_item_so/inventory_dispatch_item_so_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_rtv/inventory_dispatch_header_screen_rtv.dart';
 import 'package:msi_app/screens/inventory_dispatch_so/inventory_dispatch_header_screen_so.dart';
-import 'package:msi_app/screens/list_put_away_submited/list_put_away_submited_screen.dart';
+import 'package:msi_app/screens/list_inv_dispatch/list_inv_dispatch_screen.dart';
+import 'package:msi_app/screens/list_inv_dispatch_rtv/list_inv_dispatch_rtv_screen.dart';
+import 'package:msi_app/screens/list_inv_dispatch_so/list_inv_dispatch_so_screen.dart';
+import 'package:msi_app/screens/list_pick_list/list_pick_list_screen.dart';
+import 'package:msi_app/screens/list_pick_list_rtv/list_pick_list_rtv_screen.dart';
+import 'package:msi_app/screens/list_pick_list_so/list_pick_list_so_screen.dart';
+import 'package:msi_app/screens/list_put_away/list_put_away_screen.dart';
+import 'package:msi_app/screens/list_put_away_outlet/list_put_away_outlet_screen.dart';
 import 'package:msi_app/screens/list_receipt_from_vendor/list_receipt_from_vendor_screen.dart';
+import 'package:msi_app/screens/list_receipt_from_vendor_outlet/list_receipt_from_vendor_outlet_screen.dart';
+import 'package:msi_app/screens/list_stck_count/list_stck_count_screen.dart';
 import 'package:msi_app/screens/login/login_screen.dart';
 import 'package:msi_app/screens/outbound/outbound_screen.dart';
 import 'package:msi_app/screens/outbound_sub_1/outbound_sub_1_screen.dart';
@@ -102,8 +111,6 @@ final Map<String, WidgetBuilder> routes = {
   ReceiptDetailRfoScreen.routeName: (context) => ReceiptDetailRfoScreen(),
   ReceiptCheckScreen.routeName: (context) => ReceiptCheckScreen(),
   ReceiptCheckRfoScreen.routeName: (context) => ReceiptCheckRfoScreen(),
-  ListReceiptFromVendorScreen.routeName: (context) =>
-      ListReceiptFromVendorScreen(),
 
   // Put Away
   PutAwayScreen.routeName: (context) => PutAwayScreen(),
@@ -116,7 +123,6 @@ final Map<String, WidgetBuilder> routes = {
   StorageBinItemRfoScreen.routeName: (context) => StorageBinItemRfoScreen(),
   StagingCheckScreen.routeName: (context) => StagingCheckScreen(),
   StagingCheckRfoScreen.routeName: (context) => StagingCheckRfoScreen(),
-  ListPutAwaySubmitedScreen.routeName: (context) => ListPutAwaySubmitedScreen(),
 
   // Return From Outlet
   ReturnOutletScreen.routeName: (context) => ReturnOutletScreen(),
@@ -129,7 +135,7 @@ final Map<String, WidgetBuilder> routes = {
   PickListBinScreen.routeName: (context) => PickListBinScreen(),
   PickItemBatchScreen.routeName: (context) => PickItemBatchScreen(),
   PickCheckScreen.routeName: (context) => PickCheckScreen(),
-  
+
   // Picker Pick List So
   PickerPickSoScreen.routeName: (context) => PickerPickSoScreen(),
   PickItemReceiveSoScreen.routeName: (context) => PickItemReceiveSoScreen(),
@@ -172,7 +178,7 @@ final Map<String, WidgetBuilder> routes = {
   InventoryDispatchCheckSoScreen.routeName: (context) =>
       InventoryDispatchCheckSoScreen(),
 
-      // Inventory Dispatch
+  // Inventory Dispatch
   InventoryDispatchHeaderRtvScreen.routeName: (context) =>
       InventoryDispatchHeaderRtvScreen(),
   InventoryDispatchDetailRtvScreen.routeName: (context) =>
@@ -186,11 +192,8 @@ final Map<String, WidgetBuilder> routes = {
   InventoryDispatchCheckRtvScreen.routeName: (context) =>
       InventoryDispatchCheckRtvScreen(),
 
-
   // Return To Vendor
   ReturnVendorScreen.routeName: (context) => ReturnVendorScreen(),
-
-
 
   // Stock Counting
   StockCountingHeaderScreen.routeName: (context) => StockCountingHeaderScreen(),
@@ -204,5 +207,22 @@ final Map<String, WidgetBuilder> routes = {
   StockInquiryDetailScreen.routeName: (context) => StockInquiryDetailScreen(),
   StockInquiryBatchScreen.routeName: (context) => StockInquiryBatchScreen(),
 
+// List
+  ListReceiptFromVendorScreen.routeName: (context) =>
+      ListReceiptFromVendorScreen(),
+  ListReceiptFromVendorOutletScreen.routeName: (context) =>
+      ListReceiptFromVendorOutletScreen(),
+  ListInvDispatchScreen.routeName: (context) => ListInvDispatchScreen(),
+  ListInvDispatchSoScreen.routeName: (context) => ListInvDispatchSoScreen(),
+  ListInvDispatchRtvScreen.routeName: (context) => ListInvDispatchRtvScreen(),
+
+  ListPutAwayScreen.routeName: (context) => ListPutAwayScreen(),
+  ListPutAwayOutletScreen.routeName: (context) => ListPutAwayOutletScreen(),
+
+  ListPickListScreen.routeName: (context) => ListPickListScreen(),
+  ListPickListSoScreen.routeName: (context) => ListPickListSoScreen(),
+  ListPickListRtvScreen.routeName: (context) => ListPickListRtvScreen(),
+
+  ListStckCountScreen.routeName: (context) => ListStckCountScreen(),
 
 };

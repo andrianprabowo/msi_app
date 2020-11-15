@@ -1,92 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/list_good_receipt_po.dart';
+import 'package:msi_app/providers/list_grpo_provider.dart';
 import 'package:msi_app/screens/list_receipt_from_vendor/widgets/item_list_receipt_from_vendor.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/error_info.dart';
+import 'package:msi_app/widgets/no_data.dart';
+import 'package:provider/provider.dart';
 
 class ListReceiptFromVendorScreen extends StatelessWidget {
   static const routeName = '/list_receipt_from_vendor';
 
-  final List<ListGoodReceiptPo> items = [
-    ListGoodReceiptPo(
-      grpoNumber: 'GRPO MSI 0192319411',
-      poNumber: 'Po 1238751211',
-      docDate: DateTime.now(),
-      vendor: 'VEndor ABC DEF',
-      status: '',
-    ),
-    ListGoodReceiptPo(
-      grpoNumber: 'GRPO MSI 0192319412',
-      poNumber: 'Po 1238751212',
-      docDate: DateTime.now(),
-      vendor: 'VEndor ABC DEF',
-      status: 'O',
-    ),
-    ListGoodReceiptPo(
-      grpoNumber: 'GRPO MSI 0192319413',
-      poNumber: 'Po 1238751213',
-      docDate: DateTime.now(),
-      vendor: 'VEndor ABC DEF',
-      status: 'P',
-    ),
-    ListGoodReceiptPo(
-      grpoNumber: 'GRPO MSI 0192319411',
-      poNumber: 'Po 1238751211',
-      docDate: DateTime.now(),
-      vendor: 'VEndor ABC DEF',
-      status: 'P',
-    ),
-    ListGoodReceiptPo(
-      grpoNumber: 'GRPO MSI 0192319411',
-      poNumber: 'Po 1238751211',
-      docDate: DateTime.now(),
-      vendor: 'VEndor ABC DEF',
-      status: 'P',
-    ),
-    ListGoodReceiptPo(
-      grpoNumber: 'GRPO MSI 0192319411',
-      poNumber: 'Po 1238751211',
-      docDate: DateTime.now(),
-      vendor: 'VEndor ABC DEF',
-      status: 'P',
-    ),
-    ListGoodReceiptPo(
-      grpoNumber: 'GRPO MSI 0192319411',
-      poNumber: 'Po 1238751211',
-      docDate: DateTime.now(),
-      vendor: 'VEndor ABC DEF',
-      status: 'P',
-    ),
-  ];
+  Future<void> refreshData(BuildContext context) async {
+    await Provider.of<ListGrpoProvider>(context, listen: false)
+        .getAllData();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('List Receipt From Vendor'),
+        actions: [
+        
+        ],
       ),
       body: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(kMedium),
+        padding: const EdgeInsets.symmetric(
+          vertical: kLarge,
+          horizontal: kMedium,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: getProportionateScreenHeight(kLarge),
-            ),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Good Receipt PO'),
             Divider(),
-            Expanded(
-              child: ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (_, index) {
-                  return ItemListReceiptFromVendor(items[index]);
-                },
-              ),
-            ),
+            buildItemList(context),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildItemList(BuildContext context) {
+    return Expanded(
+      child: FutureBuilder(
+        future: refreshData(context),
+        builder: (_, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) return ErrorInfo();
+
+          return RefreshIndicator(
+            onRefresh: () => refreshData(context),
+            child: Consumer<ListGrpoProvider>(
+              builder: (_, provider, child) => provider.items.length == 0
+                  ? NoData()
+                  : ListView.builder(
+                      itemCount: provider.items.length,
+                      itemBuilder: (_, index) {
+                        return ChangeNotifierProvider.value(
+                          value: provider.items[index],
+                          child: ItemListReceiptFromVendor(provider.items[index]),
+                        );
+                      },
+                    ),
+            ),
+          );
+        },
       ),
     );
   }

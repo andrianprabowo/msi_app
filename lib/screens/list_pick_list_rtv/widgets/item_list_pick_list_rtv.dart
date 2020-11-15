@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/list_put_away_submited.dart';
+import 'package:msi_app/models/list_pick_list_rtv.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 
-class ItemListPutAwaySubmited extends StatelessWidget {
-  final ListPutAwaySubmited item;
+class ItemListPickListRtv extends StatelessWidget {
+  final ListPickListRtv item;
 
-  const ItemListPutAwaySubmited(this.item);
+  const ItemListPickListRtv(this.item);
 
   Widget get status {
     switch (item.status) {
-      case "O":
+      case 0:
         return Icon(Icons.close, color: Colors.red, size: 48);
         break;
-      case "P":
+      case 1:
         return Icon(Icons.check, color: Colors.green, size: 48);
         break;
       default:
@@ -41,10 +41,10 @@ class ItemListPutAwaySubmited extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  BaseTextLine('Put Away No', item.putAwayNumber),
-                  BaseTextLine('From Stg Bin', item.fromStgBin),
+                  BaseTextLine('Pick List No ', item.grpono),
+                  BaseTextLine('Return No', item.poNo),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
-                  BaseTextLine('Binner', item.binner),
+                  BaseTextLine('Log Message', item.logMessage),
                 ],
               ),
             ),
