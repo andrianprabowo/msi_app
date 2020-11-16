@@ -9,10 +9,12 @@ import 'package:http/http.dart' as http;
 class InventoryDispatchBinProvider with ChangeNotifier {
   List<InventoryDispatchBin> _items = [];
   var _showAllBin = false;
+  String _recBin;
 
   List<InventoryDispatchBin> get items {
     return _showAllBin ? _items : _items.take(5).toList();
   }
+  String get recBin => _recBin;
 
   bool get showAllBin => _showAllBin;
 
@@ -23,8 +25,7 @@ class InventoryDispatchBinProvider with ChangeNotifier {
 
   Future<void> getPlBinList(String itemCode) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
-    final url =
-        '$kBaseUrl/api/getcontainerbin/whscode=$warehouseId';
+    final url = '$kBaseUrl/api/getcontainerbin/whscode=$warehouseId';
 
     try {
       final response = await http.get(url);
@@ -39,6 +40,7 @@ class InventoryDispatchBinProvider with ChangeNotifier {
       });
 
       _items = list;
+      _recBin = _items.first.binLocation;
       notifyListeners();
     } catch (error) {
       print(error);

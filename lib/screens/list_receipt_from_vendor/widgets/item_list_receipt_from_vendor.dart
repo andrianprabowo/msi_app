@@ -3,6 +3,7 @@ import 'package:msi_app/models/list_good_receipt_po.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_text_line_list.dart';
 
 class ItemListReceiptFromVendor extends StatelessWidget {
   final ListGoodReceiptPo item;
@@ -44,7 +45,7 @@ class ItemListReceiptFromVendor extends StatelessWidget {
                   BaseTextLine('GRPO Number', item.grpono),
                   BaseTextLine('Po Number', item.poNo),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
-                  BaseTextLine('Vendor', item.vendor),
+                  BaseTextLineList('Vendor', item.vendor,235),
                 ],
               ),
             ),

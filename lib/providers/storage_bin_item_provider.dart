@@ -8,11 +8,14 @@ import 'package:http/http.dart' as http;
 
 class StorageBinItemProvider with ChangeNotifier {
   List<StorageBinItem> _items = [];
+  String _recBin;
   var _showAllBin = false;
 
   List<StorageBinItem> get items {
     return _showAllBin ? _items : _items.take(2).toList();
   }
+  String get recBin => _recBin;
+
 
   bool get showAllBin => _showAllBin;
 
@@ -38,6 +41,7 @@ class StorageBinItemProvider with ChangeNotifier {
       });
 
       _items = list;
+      _recBin = _items.first.binCode;
       notifyListeners();
     } catch (error) {
       print(error);

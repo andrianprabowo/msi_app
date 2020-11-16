@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_item.dart';
 import 'package:msi_app/providers/inventory_dispatch_bin_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_provider.dart';
-import 'package:msi_app/providers/pick_list_bin_provider.dart';
 import 'package:msi_app/screens/Inventory_dispatch_batch/inventory_dispatch_batch_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_bin/widget/inventory_dispatch_bin_item.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -43,7 +42,13 @@ class InventoryDispatchBinScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('Recommendation Bin', ''),
+            Consumer<InventoryDispatchBinProvider>(
+              builder: (_, provider, child) {
+                String binLoc = provider.recBin ?? '';
+                return BaseTextLine('Recommendation Bin', binLoc);
+              },
+            ),
+            // BaseTextLine('Recommendation Bin', ''),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Memo', pickList.pickRemark),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -55,7 +60,7 @@ class InventoryDispatchBinScreen extends StatelessWidget {
                   child: BaseTitle('List Bin Location'),
                 ),
                 Text('Show All Bin'),
-                Consumer<PickListBinProvider>(
+                Consumer<InventoryDispatchBinProvider>(
                   builder: (_, provider, child) {
                     return Switch(
                       value: provider.showAllBin,

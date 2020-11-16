@@ -39,7 +39,13 @@ class StorageBinItemScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('Recommendation Bin', ''),
+             Consumer<StorageBinItemProvider>(
+              builder: (_, provider, child) {
+                String binLoc = provider.recBin ?? '';
+                return BaseTextLine('Recommendation Bin', binLoc);
+              },
+            ),
+            // BaseTextLine('Recommendation Bin', ''),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildInputScan(context, itemBin),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

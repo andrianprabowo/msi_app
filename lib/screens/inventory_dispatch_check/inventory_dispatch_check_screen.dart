@@ -85,8 +85,8 @@ class InventoryDispatchCheckScreen extends StatelessWidget {
                 child: RaisedButton(
                   child: Text('OK'),
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(HomeScreen.routeName);
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        HomeScreen.routeName, (route) => false);
                   },
                 ),
               ),

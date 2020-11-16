@@ -40,7 +40,13 @@ class PickListBinSoScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('Recommendation Bin', ''),
+            Consumer<PickListBinSoProvider>(
+              builder: (_, provider, child) {
+                String binLoc = provider.recBin ?? '';
+                return BaseTextLine('Recommendation Bin', binLoc);
+              },
+            ),
+            // BaseTextLine('Recommendation Bin', ''),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Memo', pickList.pickRemark),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

@@ -29,6 +29,7 @@ dependencies:
   shared_preferences: ^0.5.12
   select_dialog: ^1.2.1
   search_widget: ^1.0.2
+  crypto: ^2.1.5
 
 
   # The following adds the Cupertino Icons font to your application.

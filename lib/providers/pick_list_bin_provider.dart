@@ -15,12 +15,15 @@ import 'package:http/http.dart' as http;
 class PickListBinProvider with ChangeNotifier {
   List<PickListBin> _items = [];
   PickListBin _selected;
+  String _recBin;
   var _showAllBin = false;
 
   List<PickListBin> get items {
     return _showAllBin ? _items : _items.take(5).toList();
   }
+
   PickListBin get selected => _selected;
+  String get recBin => _recBin;
 
   bool get showAllBin => _showAllBin;
 
@@ -47,6 +50,7 @@ class PickListBinProvider with ChangeNotifier {
       });
 
       _items = list;
+      _recBin = _items.first.binLocation;
       notifyListeners();
     } catch (error) {
       print(error);

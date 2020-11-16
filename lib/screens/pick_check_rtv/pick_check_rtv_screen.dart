@@ -85,8 +85,8 @@ class PickCheckRtvScreen extends StatelessWidget {
                 child: RaisedButton(
                   child: Text('OK'),
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(HomeScreen.routeName);
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        HomeScreen.routeName, (route) => false);
                   },
                 ),
               ),
@@ -101,7 +101,8 @@ class PickCheckRtvScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<PickListWhsRtvProvider>(context, listen: false);
+    final provider =
+        Provider.of<PickListWhsRtvProvider>(context, listen: false);
     final item = provider.selected;
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
@@ -114,18 +115,18 @@ class PickCheckRtvScreen extends StatelessWidget {
             icon: Icon(Icons.save),
             onPressed: () {
               if (authProvider.binId == 'Please Select Bin') {
-                  final snackBar = SnackBar(
-                    content: Row(
-                      children: [
-                        Icon(Icons.error_outline, color: Colors.red),
-                        SizedBox(width: getProportionateScreenWidth(kLarge)),
-                        Text('Please Select Bin First'),
-                      ],
-                    ),
-                  );
-                  globalKey.currentState.showSnackBar(snackBar);
-                  return;
-                }
+                final snackBar = SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(Icons.error_outline, color: Colors.red),
+                      SizedBox(width: getProportionateScreenWidth(kLarge)),
+                      Text('Please Select Bin First'),
+                    ],
+                  ),
+                );
+                globalKey.currentState.showSnackBar(snackBar);
+                return;
+              }
 
               if (provider.detailList.isEmpty) {
                 final snackBar = SnackBar(
@@ -185,7 +186,8 @@ class PickCheckRtvScreen extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<PickListWhsRtvProvider>(context, listen: false);
+    final provider =
+        Provider.of<PickListWhsRtvProvider>(context, listen: false);
     return InputScan(
       label: 'Storage Location',
       hint: 'Input or scan Storage Location',

@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/bin.rfv.dart';
 import 'package:msi_app/models/warehouse.dart';
-import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/login/login_screen.dart';
+import 'package:msi_app/utils/constants.dart';
+import 'package:http/http.dart' as http;
 import 'package:msi_app/utils/prefs.dart';
+import 'package:crypto/crypto.dart';
+
+// final _usage = 'Usage: dart hash.dart <md5|sha1|sha256> <input_filename>';
 
 class AuthProvider with ChangeNotifier {
   String _token;
@@ -27,14 +33,30 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> login({
-    BuildContext context,
+  Future<bool> login({
     String username,
+    String password,
   }) async {
-    await Prefs.setString(Prefs.username, username);
-    await Prefs.setString(Prefs.token, 'TOKEN');
+    var pass = md5.convert(utf8.encode(password)).toString();
+    print('password: $password');
+    print('md5: $pass');
+    final url = '$kBaseUrl/tgrpo/tgrpo/api/pass/username=$username&pass=$pass';
+    try {
+      final response = await http.get(url);
+      print(response.request);
+      final data = json.decode(response.body) as List;
+      if (data == null) return false;
+      print(data);
+      if (data.length == 0) return false;
 
-    Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+      Map obj = data[0];
+      await Prefs.setString(Prefs.username, obj['username']);
+      await Prefs.setString(Prefs.token, obj['adminPassword']);
+      return true;
+    } catch (error) {
+      print(error);
+      return false;
+    }
   }
 
   Future<void> logout(BuildContext context) async {
@@ -48,7 +70,6 @@ class AuthProvider with ChangeNotifier {
     // final prefs =  Prefs.binId;
     await Prefs.setString(Prefs.binId, 'Please Select Bin');
     // prefs.replaceAll(Prefs.binId, 'select bin');
-
   }
 
   void selectWarehouse(Warehouse warehouse) async {

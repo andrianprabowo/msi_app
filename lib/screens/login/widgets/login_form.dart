@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -56,7 +57,25 @@ class _LoginFormState extends State<LoginForm> {
 
           final authProvider =
               Provider.of<AuthProvider>(context, listen: false);
-          await authProvider.login(context: context, username: _username);
+
+          var loginSuccess = await authProvider.login(
+            username: _username,
+            password: _password,
+          );
+
+          if (loginSuccess) {
+            Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+          } else {
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Row(
+                children: [
+                  Icon(Icons.error_outline, color: Colors.red),
+                  SizedBox(width: getProportionateScreenWidth(kLarge)),
+                  Text('Wrong username or password'),
+                ],
+              ),
+            ));
+          }
         },
       ),
     );
@@ -64,7 +83,7 @@ class _LoginFormState extends State<LoginForm> {
 
   TextFormField buildUsernameFormField() {
     return TextFormField(
-      initialValue: 'SX_Senopati',
+      // initialValue: 'SX_Senopati',
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person),
@@ -78,7 +97,7 @@ class _LoginFormState extends State<LoginForm> {
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
-      initialValue: 'password',
+      // initialValue: 'password',
       textInputAction: TextInputAction.done,
       obscureText: true,
       decoration: InputDecoration(

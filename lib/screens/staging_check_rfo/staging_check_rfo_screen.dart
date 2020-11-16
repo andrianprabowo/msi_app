@@ -82,8 +82,8 @@ class StagingCheckRfoScreen extends StatelessWidget {
                 child: RaisedButton(
                   child: Text('OK'),
                   onPressed: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(HomeScreen.routeName);
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        HomeScreen.routeName, (route) => false);
                   },
                 ),
               ),
@@ -108,7 +108,7 @@ class StagingCheckRfoScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
-             if (provider.itemBinList.isEmpty) {
+              if (provider.itemBinList.isEmpty) {
                 final snackBar = SnackBar(
                   content: Row(
                     children: [
