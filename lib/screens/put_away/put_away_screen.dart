@@ -25,7 +25,7 @@ class PutAwayScreen extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Put Away'),
+        title: Text('Put Away From vendor'),
         actions: [
           IconButton(
             icon: Icon(Icons.list_alt),

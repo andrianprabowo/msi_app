@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
-import 'package:msi_app/providers/list_put_away_provider.dart';
-import 'package:msi_app/screens/list_put_away/widgets/item_list_put_away.dart';
+import 'package:msi_app/providers/barcode_grpo_provider.dart';
+import 'package:msi_app/providers/list_grpo_provider.dart';
+import 'package:msi_app/screens/barcode_grpo/widgets/item_barcode_grpo.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_title.dart';
@@ -8,19 +10,20 @@ import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
-class ListPutAwayScreen extends StatelessWidget {
-  static const routeName = '/list_put_away';
+class BarcodeGrpoScreen extends StatelessWidget {
+  static const routeName = '/barcode_grpo';
 
   Future<void> refreshData(BuildContext context) async {
-    await Provider.of<ListPutAwayProvider>(context, listen: false)
-        .getAllData();
+    final listProv =
+        Provider.of<ListGrpoProvider>(context, listen: false);
+    await listProv.getAllData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('List Put Away From Vendor'),
+        title: Text('Barcode'),
         actions: [
         
         ],
@@ -34,13 +37,20 @@ class ListPutAwayScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTitle('List Good Receipt PO'),
+            BaseTitle('Barcode GRPO'),
+            
             Divider(),
             buildItemList(context),
+            
           ],
         ),
       ),
     );
+
+
+
+
+
   }
 
   Widget buildItemList(BuildContext context) {
@@ -56,7 +66,7 @@ class ListPutAwayScreen extends StatelessWidget {
 
           return RefreshIndicator(
             onRefresh: () => refreshData(context),
-            child: Consumer<ListPutAwayProvider>(
+            child: Consumer<BarcodeGrpoProvider>(
               builder: (_, provider, child) => provider.items.length == 0
                   ? NoData()
                   : ListView.builder(
@@ -64,7 +74,7 @@ class ListPutAwayScreen extends StatelessWidget {
                       itemBuilder: (_, index) {
                         return ChangeNotifierProvider.value(
                           value: provider.items[index],
-                          child: ItemListPutAway(provider.items[index]),
+                          child: ItemBarcodeGrpo(provider.items[index]),
                         );
                       },
                     ),

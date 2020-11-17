@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/list_good_receipt_po.dart';
+import 'package:msi_app/screens/barcode_grpo/barcode_grpo_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -27,7 +28,7 @@ class ItemListReceiptFromVendor extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        //Navigator.of(context).pushNamed(StagingItemScreen.routeName);
+        // Navigator.of(context).pushNamed(BarcodeGrpoScreen.routeName);
       },
       child: Container(
         width: double.infinity,
@@ -46,6 +47,8 @@ class ItemListReceiptFromVendor extends StatelessWidget {
                   BaseTextLine('Po Number', item.poNo),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
                   BaseTextLineList('Vendor', item.vendor,235),
+                  BaseTextLine('Log Message', item.logMessage),
+
                 ],
               ),
             ),

@@ -59,7 +59,7 @@ class StockCountingItemScreen extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Counting Date', convertDate(item.pickDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Stock Counter', authProvider.username),
+            BaseTextLine('Counter Assign', authProvider.username),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Warehouse Name', authProvider.warehouseName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

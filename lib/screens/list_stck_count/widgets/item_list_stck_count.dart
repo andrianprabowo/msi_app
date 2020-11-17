@@ -41,7 +41,7 @@ class ItemListStckCount extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  BaseTextLine('Pick List No ', item.grpono),
+                  BaseTextLine('Stock Counting No', item.grpono),
                   // BaseTextLine('Return No', item.poNo),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
                   BaseTextLine('Log Message', item.logMessage),

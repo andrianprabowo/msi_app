@@ -39,6 +39,11 @@ class HomeScreen extends StatelessWidget {
       'label': 'Stock Inquiry',
       'routeName': StockInquiryHeaderScreen.routeName,
     },
+    {
+      'icon': Icons.account_balance,
+      'label': 'Dashboard',
+      // 'routeName': StockInquiryHeaderScreen.routeName,
+    },
   ];
 
   @override

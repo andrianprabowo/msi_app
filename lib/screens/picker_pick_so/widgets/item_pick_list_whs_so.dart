@@ -31,8 +31,8 @@ class ItemPickListWhsSo extends StatelessWidget {
           children: [
             BaseTextLine('Pick Number', item.pickNumber),
             BaseTextLine('Pick Date', convertDate(item.pickDate)),
-            BaseTextLine('Card Code', item.cardCode),
-            BaseTextLineList('Card Name', item.cardName,255),
+            BaseTextLine('Whs Code', item.cardCode),
+            BaseTextLineList('Whs Name', item.cardName,255),
             BaseTextLine('Picker', authProvider.username),
             BaseTextLine('Memo', item.pickRemark),
           ],

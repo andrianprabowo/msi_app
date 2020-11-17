@@ -148,7 +148,7 @@ class StockCountingCheckScreen extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kMedium)),
             BaseTextLine('Remark', item.pickRemark),
             SizedBox(height: getProportionateScreenHeight(kMedium)),
-            BaseTextLine('Stock Counter', authProvider.username),
+            BaseTextLine('Counter Assign', authProvider.username),
             SizedBox(height: getProportionateScreenHeight(kMedium)),
             BaseTextLine('Warehouse Name', authProvider.warehouseName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
