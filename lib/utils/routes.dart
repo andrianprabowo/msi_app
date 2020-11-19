@@ -3,6 +3,7 @@ import 'package:msi_app/screens/Inventory_dispatch_batch/inventory_dispatch_batc
 import 'package:msi_app/screens/Inventory_dispatch_batch_rtv/inventory_dispatch_batch_rtv_screen.dart';
 import 'package:msi_app/screens/Inventory_dispatch_batch_so/inventory_dispatch_batch_so_screen.dart';
 import 'package:msi_app/screens/barcode_grpo/barcode_grpo_screen.dart';
+import 'package:msi_app/screens/dashboard/dashboard_screen.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/inbound/inbound_screen.dart';
 import 'package:msi_app/screens/inbound_sub_1/inbound_sub_1_screen.dart';
@@ -227,6 +228,7 @@ final Map<String, WidgetBuilder> routes = {
   ListStckCountScreen.routeName: (context) => ListStckCountScreen(),
 
   BarcodeGrpoScreen.routeName: (context) => BarcodeGrpoScreen(),
+  DashboardScreen.routeName: (context) => DashboardScreen(),
 
 
 };

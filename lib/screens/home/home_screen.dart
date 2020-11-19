@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/screens/dashboard/dashboard_screen.dart';
 import 'package:msi_app/screens/stock_counting_header/stock_counting_header_screen.dart';
 import 'package:msi_app/screens/stock_inquiry_header/stock_inquiry_header_screen.dart';
 import 'package:msi_app/widgets/base_app_bar.dart';
@@ -42,7 +43,7 @@ class HomeScreen extends StatelessWidget {
     {
       'icon': Icons.account_balance,
       'label': 'Dashboard',
-      // 'routeName': StockInquiryHeaderScreen.routeName,
+      'routeName': DashboardScreen.routeName,
     },
   ];
 

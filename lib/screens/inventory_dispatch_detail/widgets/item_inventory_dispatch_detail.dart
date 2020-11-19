@@ -30,8 +30,8 @@ class ItemInventoryDispatchDetail extends StatelessWidget {
           children: [
             BaseTextLine('Doc Number', item.docNumber),
             BaseTextLine('Doc Date', convertDate(item.docDate)),
-            BaseTextLine('Card Code', item.cardCode),
-            BaseTextLine('Card Name', item.cardName),
+            BaseTextLine('Disp Whs Code', item.cardCode),
+            BaseTextLine('Disp Whs Name', item.cardName),
             BaseTextLine('Picker', authProvider.username),
             BaseTextLine('Memo', item.pickRemark),
           ],

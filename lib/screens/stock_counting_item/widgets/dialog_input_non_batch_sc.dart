@@ -25,7 +25,7 @@ class _DialogInputQtyNonBatchScState extends State<DialogInputQtyNonBatchSc> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,6 +51,7 @@ class _DialogInputQtyNonBatchScState extends State<DialogInputQtyNonBatchSc> {
           labelText: 'Quantity',
           hintText: 'Input Quantity',
         ),
+        autofocus: true,
       ),
     );
   }

@@ -62,19 +62,21 @@ class InventoryDispatchBatchScreen extends StatelessWidget {
               final batchList = pickBatchProvider.pickedItems;
               pickItemProvider.addBatchList(pickItem, batchList);
 
-              var guider =
-                  double.tryParse(pickItem.openQty.toStringAsFixed(2)) >
-                          double.tryParse(itemBin.avlQty.toStringAsFixed(2))
-                      ? double.tryParse(itemBin.avlQty.toStringAsFixed(2))
-                      : double.tryParse(pickItem.openQty.toStringAsFixed(2));
+              // var guider =
+              //     double.tryParse(pickItem.openQty.toStringAsFixed(2)) >
+              //             double.tryParse(itemBin.avlQty.toStringAsFixed(2))
+              //         ? double.tryParse(itemBin.avlQty.toStringAsFixed(2))
+              //         : double.tryParse(pickItem.openQty.toStringAsFixed(2));
 
-              pickBatchProvider.totalPicked.toStringAsFixed(2) == '0.00'
-                  ? showAlertOnZero(context)
-                  : double.tryParse(pickBatchProvider.totalPicked
-                              .toStringAsFixed(2)) >
-                          guider
-                      ? showAlertGreaterThanZero(context, guider.toString())
-                      : Navigator.of(context).popUntil(ModalRoute.withName(
+              // pickBatchProvider.totalPicked.toStringAsFixed(2) == '0.00'
+              //     ? showAlertOnZero(context)
+              //     : double.tryParse(pickBatchProvider.totalPicked
+              //                 .toStringAsFixed(2)) >
+              //             guider
+              //         ? showAlertGreaterThanZero(context, guider.toString())
+              //         : Navigator.of(context).popUntil(ModalRoute.withName(
+              //             InventoryDispatchItemScreen.routeName));
+              Navigator.of(context).popUntil(ModalRoute.withName(
                           InventoryDispatchItemScreen.routeName));
             },
           )

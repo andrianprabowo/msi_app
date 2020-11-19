@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 
 class PutBatch with ChangeNotifier {
   final String batchNo;
+  final String uom;
   final double availableQty;
   double putQty;
   final DateTime expiredDate;
   PutBatch({
     this.batchNo,
+    this.uom,
     this.availableQty,
     this.putQty,
     this.expiredDate,
@@ -27,6 +29,7 @@ class PutBatch with ChangeNotifier {
 
     return PutBatch(
       batchNo: map['batchNo'] ?? '',
+      uom: map['uom'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
       putQty: map['putqty'] ?? 0.0,
       expiredDate: DateTime.parse(map['expDate']),
@@ -40,5 +43,5 @@ class PutBatch with ChangeNotifier {
 
   @override
   String toString() =>
-      'PutBatch(batchNo: $batchNo, availableQty: $availableQty,putQty: $putQty, expiredDate: $expiredDate)';
+      'PutBatch(batchNo: $batchNo, availableQty: $availableQty,putQty: $putQty, expiredDate: $expiredDate,uom: $uom)';
 }

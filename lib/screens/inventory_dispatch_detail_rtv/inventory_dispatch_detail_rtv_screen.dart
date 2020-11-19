@@ -32,13 +32,13 @@ class InventoryDispatchDetailRtvScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Inventory Dispatch RTV'),
         actions: [
-          IconButton(
-            icon: Icon(Icons.list_alt),
-            onPressed: () {
-              // Navigator.of(context)
-              //     .pushNamed(ListReceiptFromVendorScreen.routeName);
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.list_alt),
+          //   onPressed: () {
+          //     // Navigator.of(context)
+          //     //     .pushNamed(ListReceiptFromVendorScreen.routeName);
+          //   },
+          // ),
         ],
       ),
       body: Container(

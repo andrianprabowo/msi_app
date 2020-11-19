@@ -65,7 +65,7 @@ class ItemHeader extends StatelessWidget {
           },
           searchBoxDecoration: InputDecoration(hintText: 'Search by name'),
           onChange: (Warehouse selected) {
-            authProvider.selectWarehouse(selected);
+            authProvider.selectWarehouse(context, selected);
           },
         );
       },

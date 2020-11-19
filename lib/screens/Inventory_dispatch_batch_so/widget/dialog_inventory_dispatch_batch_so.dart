@@ -21,7 +21,7 @@ class _DialogInventoryDispatchBatchSoState extends State<DialogInventoryDispatch
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,6 +62,7 @@ class _DialogInventoryDispatchBatchSoState extends State<DialogInventoryDispatch
           labelText: 'Quantity',
           hintText: 'Input Quantity',
         ),
+        autofocus: true,
       ),
     );
   }

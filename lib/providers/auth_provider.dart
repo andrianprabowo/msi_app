@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/bin.rfv.dart';
 import 'package:msi_app/models/warehouse.dart';
+import 'package:msi_app/screens/dashboard/dashboard_screen.dart';
 import 'package:msi_app/screens/login/login_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -72,7 +73,7 @@ class AuthProvider with ChangeNotifier {
     // prefs.replaceAll(Prefs.binId, 'select bin');
   }
 
-  void selectWarehouse(Warehouse warehouse) async {
+  void selectWarehouse(BuildContext context, Warehouse warehouse) async {
     await Prefs.setString(Prefs.warehouseId, warehouse.whsCode);
     await Prefs.setString(Prefs.warehouseName, warehouse.whsName);
 
@@ -80,6 +81,7 @@ class AuthProvider with ChangeNotifier {
     _warehouseName = warehouse.whsName;
 
     notifyListeners();
+    Navigator.of(context).pushNamed(DashboardScreen.routeName);
   }
 
   void selectBin(BinRtv binRtv) async {

@@ -27,6 +27,7 @@ class ItemBatchStaging extends StatelessWidget {
             BaseTextLine('Batch Number', item.batchNo),
             BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(2)),
             BaseTextLine('Expired Date', convertDate(item.expiredDate)),
+            BaseTextLine('uom', item.uom),
             BaseTextLine('Put Qty', item.putQty.toStringAsFixed(2)),
           ],
         ),

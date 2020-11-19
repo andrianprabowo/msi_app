@@ -73,6 +73,7 @@ class _DialogPutAwayNonbatchState extends State<DialogPutAwayNonbatch> {
           labelText: 'Quantity',
           hintText: 'Input Quantity',
         ),
+        autofocus: true,
       ),
     );
   }

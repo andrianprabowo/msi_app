@@ -26,7 +26,7 @@ class _DialogInvDispNonbatchSoState extends State<DialogInvDispNonbatchSo> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,6 +73,7 @@ class _DialogInvDispNonbatchSoState extends State<DialogInvDispNonbatchSo> {
           labelText: 'Quantity',
           hintText: 'Input Quantity',
         ),
+        autofocus: true,
       ),
     );
   }

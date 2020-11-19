@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 
 class PickBatchRtv with ChangeNotifier {
   final String batchNo;
+  final String uom;
   double availableQty;
+  double remainQty;
   double pickQty;
   final DateTime expiredDate;
   PickBatchRtv({
     this.batchNo,
+    this.uom,
     this.availableQty,
+    this.remainQty,
     this.pickQty,
     this.expiredDate,
   });
@@ -28,7 +32,9 @@ class PickBatchRtv with ChangeNotifier {
 
     return PickBatchRtv(
       batchNo: map['batchNo'] ?? '',
+      uom: map['uom'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
+      remainQty: map['remainQty'] ?? 0.0,
       pickQty: 0.0,
       expiredDate: DateTime.parse(map['expDate']),
     );
@@ -41,5 +47,5 @@ class PickBatchRtv with ChangeNotifier {
 
   @override
   String toString() =>
-      'PickBatchRtv(batchNo: $batchNo, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate)';
+      'PickBatchRtv(batchNo: $batchNo, uom: $uom, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate, remainQty: $remainQty)';
 }

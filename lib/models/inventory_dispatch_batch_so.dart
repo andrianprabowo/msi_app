@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 
 class InventoryDispatchBatchSo with ChangeNotifier {
   final String batchNo;
+  final String uom;
   double availableQty;
   double pickQty;
+  double remainQty;
   final DateTime expiredDate;
   InventoryDispatchBatchSo({
     this.batchNo,
+    this.uom,
     this.availableQty,
     this.pickQty,
+    this.remainQty,
     this.expiredDate,
   });
 
@@ -28,7 +32,9 @@ class InventoryDispatchBatchSo with ChangeNotifier {
 
     return InventoryDispatchBatchSo(
       batchNo: map['batchNo'] ?? '',
+      uom: map['uom'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
+      remainQty: map['remainQty'] ?? 0.0,
       pickQty: 0.0,
       expiredDate: DateTime.parse(map['expDate']),
     );
@@ -41,5 +47,5 @@ class InventoryDispatchBatchSo with ChangeNotifier {
 
   @override
   String toString() =>
-      'InventoryDispatchBatchSo(batchNo: $batchNo, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate)';
+      'InventoryDispatchBatchSo(batchNo: $batchNo, uom: $uom, remainQty: $remainQty, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate)';
 }

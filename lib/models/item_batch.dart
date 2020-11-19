@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 class ItemBatch with ChangeNotifier {
   final String batchNo;
+  final String uom;
   final double availableQty;
   final DateTime expiredDate;
   ItemBatch({
     this.batchNo,
+    this.uom,
     this.availableQty,
     this.expiredDate,
   });
@@ -37,6 +39,7 @@ class ItemBatch with ChangeNotifier {
 
     return ItemBatch(
       batchNo: map['batchNo'] ?? '',
+      uom: map['uom'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
       expiredDate: DateTime.parse(map['expDate']),
     );
@@ -49,7 +52,7 @@ class ItemBatch with ChangeNotifier {
 
   @override
   String toString() =>
-      'ItemBatch(batchNo: $batchNo, availableQty: $availableQty, expiredDate: $expiredDate)';
+      'ItemBatch(batchNo: $batchNo, availableQty: $availableQty, expiredDate: $expiredDate,uom: $uom)';
 
   @override
   bool operator ==(Object o) {

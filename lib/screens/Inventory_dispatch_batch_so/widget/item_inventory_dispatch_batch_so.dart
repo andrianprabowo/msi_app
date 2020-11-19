@@ -25,7 +25,9 @@ class ItemInventoryDispatchBatchSo extends StatelessWidget {
         child: Column(
           children: [
             BaseTextLine('Batch No', item.batchNo),
+            BaseTextLine('Uom', item.uom),
             BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(2)),
+            BaseTextLine('Remaining Qty', item.remainQty.toStringAsFixed(2)),
             BaseTextLine('Expired Date', convertDate(item.expiredDate)),
             BaseTextLine('Picked Qty', item.pickQty.toStringAsFixed(2)),
           ],

@@ -29,7 +29,7 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,9 +38,9 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildInput(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          buildDatePicker(context),
-          SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          buildDatePicker(context),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildButtonSubmit(context),
         ],
@@ -51,12 +51,14 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
   Widget buildInput() {
     return TextFormField(
       controller: _batchNumber,
+      textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: 'Batch Number',
         hintText: 'Scan /Input Batch Number',
         suffixIcon: Icon(Icons.local_see),
       ),
+      autofocus: true,
     );
   }
 
@@ -109,11 +111,13 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
       child: TextFormField(
         keyboardType: TextInputType.number,
         controller: _quantity,
+      textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: 'Quantity',
           hintText: 'Input Quantity',
         ),
+        autofocus: true,
       ),
     );
   }
@@ -125,7 +129,7 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
         child: Text('Submit'),
         onPressed: () {
           // if (double.parse(_quantity.text) > widget.item.openQty) {
-            
+
           //   print('Tidak boleh lebih besar dari Available Qty ');
           //   return;
           // }
@@ -144,8 +148,8 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
             ),
           );
           Navigator.of(context)
-            .pushNamed(StockCountingBinScreen.routeName, arguments: item);
-            //  Navigator.of(context).pop();
+              .pushNamed(StockCountingBinScreen.routeName, arguments: item);
+          //  Navigator.of(context).pop();
         },
       ),
     );

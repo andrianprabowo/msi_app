@@ -29,7 +29,7 @@ class _DialogInputQtyRfoState extends State<DialogInputQtyRfo> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,9 +40,9 @@ class _DialogInputQtyRfoState extends State<DialogInputQtyRfo> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildInput(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          buildDatePicker(context),
-          SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          buildDatePicker(context),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           if (_quantity.text != '' &&
                   (double.parse(_quantity.text) >
@@ -56,7 +56,7 @@ class _DialogInputQtyRfoState extends State<DialogInputQtyRfo> {
       ),
     );
   }
-  
+
   Widget buildButtonNotif(BuildContext context, String avlQty) {
     return SizedBox(
       width: double.infinity,
@@ -71,12 +71,14 @@ class _DialogInputQtyRfoState extends State<DialogInputQtyRfo> {
   Widget buildInput() {
     return TextFormField(
       controller: _batchNumber,
+      textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: 'Batch Number',
         hintText: 'Scan /Input Batch Number',
         suffixIcon: Icon(Icons.local_see),
       ),
+      autofocus: true,
     );
   }
 
@@ -129,11 +131,13 @@ class _DialogInputQtyRfoState extends State<DialogInputQtyRfo> {
       child: TextFormField(
         keyboardType: TextInputType.number,
         controller: _quantity,
+        textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: 'Quantity',
           hintText: 'Input Quantity',
         ),
+        autofocus: true,
       ),
     );
   }

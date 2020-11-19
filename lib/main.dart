@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/barcode_grpo_provider.dart';
 import 'package:msi_app/providers/bin_rtv_provider.dart';
+import 'package:msi_app/providers/dashboard_provider.dart';
 import 'package:msi_app/providers/item_batch_si_provider.dart';
 import 'package:msi_app/providers/item_bin_si_provider.dart';
 import 'package:msi_app/providers/list_grpo_outlet_provider.dart';
@@ -152,6 +153,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ListStckCountProvider()),
 
         ChangeNotifierProvider(create: (_) => BarcodeGrpoProvider()),
+        ChangeNotifierProvider(create: (_) => DashboardProvider()),
 
 
       ],

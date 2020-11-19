@@ -29,7 +29,7 @@ class _DialogInputQtyState extends State<DialogInputQty> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,24 +40,24 @@ class _DialogInputQtyState extends State<DialogInputQty> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildInput(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          buildDatePicker(context),
-          SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
+          buildDatePicker(context),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
           if (_quantity.text != '' &&
-                    (double.parse(_quantity.text) >
-                        double.tryParse(
-                            widget.item.openQty.toStringAsFixed(2))) ||
-                _quantity.text == '0')
-              buildButtonNotif(context, widget.item.openQty.toString())
-            else
-          buildButtonSubmit(context),
+                  (double.parse(_quantity.text) >
+                      double.tryParse(
+                          widget.item.openQty.toStringAsFixed(2))) ||
+              _quantity.text == '0')
+            buildButtonNotif(context, widget.item.openQty.toString())
+          else
+            buildButtonSubmit(context),
         ],
       ),
     );
   }
 
-   Widget buildButtonNotif(BuildContext context, String avlQty) {
+  Widget buildButtonNotif(BuildContext context, String avlQty) {
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(
@@ -71,12 +71,14 @@ class _DialogInputQtyState extends State<DialogInputQty> {
   Widget buildInput() {
     return TextFormField(
       controller: _batchNumber,
+      textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: 'Batch Number',
         hintText: 'Scan /Input Batch Number',
         suffixIcon: Icon(Icons.local_see),
       ),
+      autofocus: true,
     );
   }
 
@@ -129,11 +131,13 @@ class _DialogInputQtyState extends State<DialogInputQty> {
       child: TextFormField(
         keyboardType: TextInputType.number,
         controller: _quantity,
+        textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: 'Quantity',
           hintText: 'Input Quantity',
         ),
+        autofocus: true,
       ),
     );
   }

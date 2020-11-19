@@ -74,6 +74,7 @@ class _DialogPutAwayNonbatchRfoState extends State<DialogPutAwayNonbatchRfo> {
           labelText: 'Quantity',
           hintText: 'Input Quantity',
         ),
+        autofocus: true,
       ),
     );
   }

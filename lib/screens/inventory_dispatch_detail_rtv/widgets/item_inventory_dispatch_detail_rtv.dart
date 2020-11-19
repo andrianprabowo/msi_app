@@ -30,8 +30,8 @@ class ItemInventoryDispatchDetailRtv extends StatelessWidget {
           children: [
             BaseTextLine('Doc Number', item.docNumber),
             BaseTextLine('Doc Date', convertDate(item.docDate)),
-            BaseTextLine('Card Code', item.cardCode),
-            BaseTextLine('Card Name', item.cardName),
+            BaseTextLine('Vendor Code', item.cardCode),
+            BaseTextLine('Vendor Name', item.cardName),
             BaseTextLine('Picker', authProvider.username),
             BaseTextLine('Memo', item.pickRemark),
           ],

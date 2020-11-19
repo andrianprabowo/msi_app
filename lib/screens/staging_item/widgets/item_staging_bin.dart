@@ -32,6 +32,7 @@ class ItemStagingBin extends StatelessWidget {
             BaseTextLine('Item Code', item.itemCode),
             BaseTextLine('Item Name', item.itemName),
             BaseTextLine('Item Batch', item.fgBatch),
+            BaseTextLine('Uom', item.uom),
             BaseTextLine('Put Qty', item.putQty.toStringAsFixed(2)),
             if (item.binCodeDestination.isNotEmpty)
               BaseTextLine('Bin Code', item.binCodeDestination),

@@ -66,11 +66,13 @@ class _DialogInputQtyNonBatchRfoState extends State<DialogInputQtyNonBatchRfo> {
       child: TextFormField(
         keyboardType: TextInputType.number,
         controller: _quantity,
+        textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: 'Quantity',
           hintText: 'Input Quantity',
         ),
+        autofocus: true,
       ),
     );
   }

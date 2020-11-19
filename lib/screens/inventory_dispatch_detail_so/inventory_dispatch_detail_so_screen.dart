@@ -32,13 +32,13 @@ class InventoryDispatchDetailSoScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Inventory Dispatch Sales Order'),
         actions: [
-          IconButton(
-            icon: Icon(Icons.list_alt),
-            onPressed: () {
-              // Navigator.of(context)
-              //     .pushNamed(ListReceiptFromVendorScreen.routeName);
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.list_alt),
+          //   onPressed: () {
+          //     // Navigator.of(context)
+          //     //     .pushNamed(ListReceiptFromVendorScreen.routeName);
+          //   },
+          // ),
         ],
       ),
       body: Container(

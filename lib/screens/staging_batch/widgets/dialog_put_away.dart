@@ -21,7 +21,7 @@ class _DialogPutAwayState extends State<DialogPutAway> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,6 +72,7 @@ class _DialogPutAwayState extends State<DialogPutAway> {
           labelText: 'Quantity',
           hintText: 'Input Quantity',
         ),
+        autofocus: true,
       ),
     );
   }

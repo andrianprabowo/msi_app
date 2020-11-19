@@ -11,6 +11,13 @@ class PickBatchProvider with ChangeNotifier {
   double _totalPicked = 0.0;
 
   List<PickBatch> get items {
+
+    _items.forEach((detail) {
+      
+      // calculate remaining qty
+      detail.remainQty = detail.availableQty - detail.pickQty;
+    });
+
     return _items.where((item) => item.availableQty > item.pickQty).toList();
   }
 

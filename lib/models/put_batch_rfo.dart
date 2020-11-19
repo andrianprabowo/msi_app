@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 class PutBatchRfo with ChangeNotifier {
   final String batchNo;
   final double availableQty;
+  final String uom;
   double putQty;
   final DateTime expiredDate;
   PutBatchRfo({
     this.batchNo,
     this.availableQty,
+    this.uom,
     this.putQty,
     this.expiredDate,
   });
@@ -28,6 +30,7 @@ class PutBatchRfo with ChangeNotifier {
     return PutBatchRfo(
       batchNo: map['batchNo'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
+      uom: map['uom'] ?? '',
       putQty: map['putqty'] ?? 0.0,
       expiredDate: DateTime.parse(map['expDate']),
     );
@@ -40,5 +43,5 @@ class PutBatchRfo with ChangeNotifier {
 
   @override
   String toString() =>
-      'PutBatchRfo(batchNo: $batchNo, availableQty: $availableQty,putQty: $putQty, expiredDate: $expiredDate)';
+      'PutBatchRfo(batchNo: $batchNo, availableQty: $availableQty,putQty: $putQty,uom: $uom, expiredDate: $expiredDate)';
 }

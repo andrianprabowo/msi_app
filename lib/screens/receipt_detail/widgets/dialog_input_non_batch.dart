@@ -66,11 +66,13 @@ class _DialogInputQtyNonBatchState extends State<DialogInputQtyNonBatch> {
       child: TextFormField(
         keyboardType: TextInputType.number,
         controller: _quantity,
+        textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: 'Quantity',
           hintText: 'Input Quantity',
         ),
+        autofocus: true,
       ),
     );
   }
@@ -81,11 +83,10 @@ class _DialogInputQtyNonBatchState extends State<DialogInputQtyNonBatch> {
       child: RaisedButton(
           child: Text('Submit'),
           onPressed: () {
-          if (double.parse(_quantity.text) > widget.item.openQty) {
-           
-            print('Tidak boleh lebih besar dari Available Qty ');
-            return;
-          }
+            if (double.parse(_quantity.text) > widget.item.openQty) {
+              print('Tidak boleh lebih besar dari Available Qty ');
+              return;
+            }
             final itemPoProvider =
                 Provider.of<ItemPoProvider>(context, listen: false);
             itemPoProvider.inputQty(
