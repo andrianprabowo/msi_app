@@ -4,6 +4,7 @@ import 'package:msi_app/providers/inventory_dispatch_detail_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_item_provider.dart';
 import 'package:msi_app/screens/inventory_dispatch_bin/inventory_dispatch_bin_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_check/inventory_dispatch_check_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_item/widgets/dialog_inv_disp_nonbatch.dart';
 import 'package:msi_app/screens/inventory_dispatch_item/widgets/item_inventory_dispatch_item.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -24,13 +25,15 @@ class InventoryDispatchItemScreen extends StatelessWidget {
 
     final inventoryDispatchDetailProvider =
         Provider.of<InventoryDispatchDetailProvider>(context, listen: false);
-    inventoryDispatchDetailProvider.selected.itemList = inventoryItemProvider.items;
+    inventoryDispatchDetailProvider.selected.itemList =
+        inventoryItemProvider.items;
   }
 
   @override
   Widget build(BuildContext context) {
     final item =
-        Provider.of<InventoryDispatchDetailProvider>(context, listen: false).selected;
+        Provider.of<InventoryDispatchDetailProvider>(context, listen: false)
+            .selected;
     return Scaffold(
       appBar: AppBar(
         title: Text('Inventory Dispatch'),
@@ -38,7 +41,8 @@ class InventoryDispatchItemScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.post_add),
             onPressed: () {
-              Navigator.of(context).pushNamed(InventoryDispatchCheckScreen.routeName);
+              Navigator.of(context)
+                  .pushNamed(InventoryDispatchCheckScreen.routeName);
             },
           )
         ],
@@ -89,7 +93,8 @@ class InventoryDispatchItemScreen extends StatelessWidget {
                       itemBuilder: (_, index) {
                         return ChangeNotifierProvider.value(
                           value: provider.items[index],
-                          child: ItemInventoryDispatchItem(provider.items[index]),
+                          child:
+                              ItemInventoryDispatchItem(provider.items[index]),
                         );
                       },
                     ),
@@ -108,8 +113,13 @@ class InventoryDispatchItemScreen extends StatelessWidget {
       hint: 'Scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value);
-        Navigator.of(context)
-            .pushNamed(InventoryDispatchBinScreen.routeName, arguments: item);
+        if (item.fgBatch == 'Y') {
+          Navigator.of(context)
+              .pushNamed(InventoryDispatchBinScreen.routeName, arguments: item);
+        } else {
+          showModalBottomSheet(
+              context: context, builder: (_) => DialogInvDispNonbatch(item));
+        }
       },
     );
   }

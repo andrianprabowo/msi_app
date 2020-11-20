@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_header_Rtv_provider.dart';
-import 'package:msi_app/screens/inventory_dispatch_item_rtv/inventory_dispatch_item_rtv_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_detail_rtv/inventory_dispatch_detail_rtv_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_rtv/widgets/item_inventory_dispatch_header_rtv.dart';
 import 'package:msi_app/screens/list_inv_dispatch_rtv/list_inv_dispatch_rtv_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -99,7 +99,7 @@ class InventoryDispatchHeaderRtvScreen extends StatelessWidget {
       scanResult: (value) {
         final item = provider.findByBinCode(value);
         provider.selectStagingBin(item);
-        Navigator.of(context).pushNamed(InventoryDispatchItemRtvScreen.routeName);
+        Navigator.of(context).pushNamed(InventoryDispatchDetailRtvScreen.routeName);
       },
     );
   }

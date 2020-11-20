@@ -4,6 +4,7 @@ import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_text_line_list.dart';
+import 'package:msi_app/widgets/base_title.dart';
 
 class ItemListReceiptFromVendor extends StatelessWidget {
   final ListGoodReceiptPo item;
@@ -46,7 +47,7 @@ class ItemListReceiptFromVendor extends StatelessWidget {
                   BaseTextLine('Po Number', item.poNo),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
                   BaseTextLineList('Vendor', item.vendor,235),
-                  BaseTextLine('Log Message', item.logMessage),
+                  BaseTitle(item.logMessage),
 
                 ],
               ),

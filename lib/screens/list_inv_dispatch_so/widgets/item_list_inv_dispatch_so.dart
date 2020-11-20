@@ -3,6 +3,7 @@ import 'package:msi_app/models/list_inv_dispatch_so.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
 
 class ItemListInvDispatchSo extends StatelessWidget {
   final ListInvDispatchSo item;
@@ -44,7 +45,7 @@ class ItemListInvDispatchSo extends StatelessWidget {
                   BaseTextLine('Pick List No ', item.grpono),
                   BaseTextLine('So No', item.poNo),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
-                  BaseTextLine('Log Message', item.logMessage),
+                  BaseTitle(item.logMessage),
                 ],
               ),
             ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_header_so_provider.dart';
-import 'package:msi_app/screens/inventory_dispatch_item_so/inventory_dispatch_item_so_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_detail_so/inventory_dispatch_detail_so_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_so/widgets/item_inventory_dispatch_header_so.dart';
 import 'package:msi_app/screens/list_inv_dispatch_so/list_inv_dispatch_so_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -99,7 +99,7 @@ class InventoryDispatchHeaderSoScreen extends StatelessWidget {
       scanResult: (value) {
         final item = provider.findByBinCode(value);
         provider.selectStagingBin(item);
-        Navigator.of(context).pushNamed(InventoryDispatchItemSoScreen.routeName);
+        Navigator.of(context).pushNamed(InventoryDispatchDetailSoScreen.routeName);
       },
     );
   }

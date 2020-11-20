@@ -4,6 +4,7 @@ import 'package:msi_app/providers/item_bin_rfo_provider.dart';
 import 'package:msi_app/providers/staging_bin_rfo.provider.dart';
 import 'package:msi_app/screens/staging_batch_rfo/staging_batch_rfo_screen.dart';
 import 'package:msi_app/screens/staging_check_rfo/staging_check_rfo_screen.dart';
+import 'package:msi_app/screens/staging_item_rfo/widgets/dialog_put_away_nonbatch_rfo.dart';
 import 'package:msi_app/screens/staging_item_rfo/widgets/item_staging_bin_rfo.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -100,10 +101,15 @@ class StagingItemRfoScreen extends StatelessWidget {
       hint: 'Input or scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value);
-        Navigator.of(context).pushNamed(
-          StagingBatchRfoScreen.routeName,
-          arguments: item,
-        );
+        // Navigator.of(context).pushNamed(
+        //   StagingBatchRfoScreen.routeName,
+        //   arguments: item,
+        // );
+        item.fgBatch == 'Y'
+            ? Navigator.of(context)
+                .pushNamed(StagingBatchRfoScreen.routeName, arguments: item)
+            : showModalBottomSheet(
+                context: context, builder: (_) => DialogPutAwayNonbatchRfo(item));
       },
     );
   }

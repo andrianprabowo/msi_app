@@ -99,10 +99,9 @@ class StockInquiryDetailScreen extends StatelessWidget {
       hint: 'Input or scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value);
-        Navigator.of(context).pushNamed(
-          StockInquiryBatchScreen.routeName,
-          arguments: item,
-        );
+        if (item.fgBatch == 'Y')
+          Navigator.of(context)
+              .pushNamed(StockInquiryBatchScreen.routeName, arguments: item);
       },
     );
   }

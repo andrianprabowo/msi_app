@@ -4,6 +4,7 @@ import 'package:msi_app/providers/pick_list_bin_rtv_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_rtv_provider.dart';
 import 'package:msi_app/screens/pick_item_batch_rtv/pick_item_batch_rtv_screen.dart';
 import 'package:msi_app/screens/pick_item_bin_rtv/widget/item_pick_item_bin_rtv.dart';
+import 'package:msi_app/screens/pick_item_receive_rtv/pick_item_receive_rtv_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -117,13 +118,20 @@ class PickListBinRtvScreen extends StatelessWidget {
       hint: 'Scan Bin Location',
       scanResult: (value) {
         final item = provider.findByBinLocation(value);
-        Navigator.of(context).pushNamed(
-          PickItemBatchRtvScreen.routeName,
-          arguments: {
-            'pickItemReceive': pickItemReceive,
-            'pickListBin': item,
-          },
-        );
+        if (pickItemReceive.fgBatch == 'Y') {
+          Navigator.of(context).pushNamed(
+            PickItemBatchRtvScreen.routeName,
+            arguments: {
+              'pickItemReceive': pickItemReceive,
+              'pickListBin': item,
+            },
+          );
+        } else {
+          // update bin location
+          pickItemReceive.itemStorageLocation = item.binLocation;
+          Navigator.of(context).popUntil(
+              ModalRoute.withName(PickItemReceiveRtvScreen.routeName));
+        }
       },
     );
   }

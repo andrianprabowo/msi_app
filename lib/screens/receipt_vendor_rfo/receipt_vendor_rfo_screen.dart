@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/purchase_order_rfo_provider.dart';
+import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/list_receipt_from_vendor_outlet/list_receipt_from_vendor_outlet_screen.dart';
 import 'package:msi_app/screens/receipt_detail_rfo/receipt_detail_rfo_screen.dart';
 import 'package:msi_app/screens/receipt_vendor_rfo/item_receipt_rfo.dart';
@@ -31,6 +32,49 @@ class ReceiptVendorRfoScreen extends StatelessWidget {
             onPressed: () {
               Navigator.of(context)
                   .pushNamed(ListReceiptFromVendorOutletScreen.routeName);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.home),
+            onPressed: () {
+              return showDialog<void>(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.home, color: Colors.green, size: 50),
+                        Divider(),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        Text('Back To Home'),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            child: Text('Cancel'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  HomeScreen.routeName, (route) => false);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
             },
           ),
         ],
@@ -87,7 +131,8 @@ class ReceiptVendorRfoScreen extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<PurchaseOrderRfoProvider>(context, listen: false);
+    final provider =
+        Provider.of<PurchaseOrderRfoProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InputScan(
       label: 'PO Number',

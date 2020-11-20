@@ -3,6 +3,7 @@ import 'package:msi_app/models/list_stck_count.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
 
 class ItemListStckCount extends StatelessWidget {
   final ListStckCount item;
@@ -44,7 +45,7 @@ class ItemListStckCount extends StatelessWidget {
                   BaseTextLine('Stock Counting No', item.grpono),
                   // BaseTextLine('Return No', item.poNo),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
-                  BaseTextLine('Log Message', item.logMessage),
+                  BaseTitle(item.logMessage),
                 ],
               ),
             ),

@@ -3,8 +3,9 @@ import 'package:msi_app/models/stock_counting_header.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/stock_counting_header_provider.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
-import 'package:msi_app/screens/stock_counting_bin/stock_counting_bin_screen.dart';
 import 'package:msi_app/screens/stock_counting_check/stock_counting_check.dart';
+import 'package:msi_app/screens/stock_counting_item/widgets/dialog_input_non_batch_sc.dart';
+import 'package:msi_app/screens/stock_counting_item/widgets/dialog_input_qty_batch.dart';
 import 'package:msi_app/screens/stock_counting_item/widgets/item_detail_sc.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -31,7 +32,8 @@ class StockCountingItemScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item =
-        Provider.of<StockCountingHeaderProvider>(context, listen: false).selected;
+        Provider.of<StockCountingHeaderProvider>(context, listen: false)
+            .selected;
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     return Scaffold(
@@ -42,7 +44,8 @@ class StockCountingItemScreen extends StatelessWidget {
             icon: Icon(Icons.post_add),
             onPressed: () {
               authProvider.clearBin();
-              Navigator.of(context).pushNamed(StockCountingCheckScreen.routeName);
+              Navigator.of(context)
+                  .pushNamed(StockCountingCheckScreen.routeName);
             },
           )
         ],
@@ -114,8 +117,14 @@ class StockCountingItemScreen extends StatelessWidget {
       hint: 'Scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value);
-        Navigator.of(context)
-            .pushNamed(StockCountingBinScreen.routeName, arguments: item);
+        item.fgBatch == 'Y'
+            ? showModalBottomSheet(
+                context: context, builder: (_) => DialogInputQtyBatch(item))
+            // Navigator.of(context)
+            //     .pushNamed(StockCountingBinScreen.routeName, arguments: item)
+            : showModalBottomSheet(
+                context: context,
+                builder: (_) => DialogInputQtyNonBatchSc(item));
       },
     );
   }

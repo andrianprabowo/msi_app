@@ -4,6 +4,7 @@ import 'package:msi_app/providers/item_bin_provider.dart';
 import 'package:msi_app/providers/staging_bin.provider.dart';
 import 'package:msi_app/screens/staging_batch/staging_batch_screen.dart';
 import 'package:msi_app/screens/staging_check/staging_check_screen.dart';
+import 'package:msi_app/screens/staging_item/widgets/dialog_put_away_nonbatch.dart';
 import 'package:msi_app/screens/staging_item/widgets/item_staging_bin.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -100,10 +101,15 @@ class StagingItemScreen extends StatelessWidget {
       hint: 'Input or scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value);
-        Navigator.of(context).pushNamed(
-          StagingBatchScreen.routeName,
-          arguments: item,
-        );
+        // Navigator.of(context).pushNamed(
+        //   StagingBatchScreen.routeName,
+        //   arguments: item,
+        // );
+        item.fgBatch == 'Y'
+            ? Navigator.of(context)
+                .pushNamed(StagingBatchScreen.routeName, arguments: item)
+            : showModalBottomSheet(
+                context: context, builder: (_) => DialogPutAwayNonbatch(item));
       },
     );
   }

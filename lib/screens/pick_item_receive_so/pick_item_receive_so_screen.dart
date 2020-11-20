@@ -5,6 +5,7 @@ import 'package:msi_app/providers/pick_item_receive_so_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_so_provider.dart';
 import 'package:msi_app/screens/pick_check_so/pick_check_so_screen.dart';
 import 'package:msi_app/screens/pick_item_bin_so/pick_list_bin_so_screen.dart';
+import 'package:msi_app/screens/pick_item_receive_so/widgets/dialog_pick_list_nonbatch_so.dart';
 import 'package:msi_app/screens/pick_item_receive_so/widgets/item_pick_receive_so.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -112,8 +113,11 @@ class PickItemReceiveSoScreen extends StatelessWidget {
       hint: 'Scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value);
-        Navigator.of(context)
-            .pushNamed(PickListBinSoScreen.routeName, arguments: item);
+        item.fgBatch == 'Y'
+            ? Navigator.of(context)
+                .pushNamed(PickListBinSoScreen.routeName, arguments: item)
+            : showModalBottomSheet(
+                context: context, builder: (_) => DialogPickListNonbatchSo(item));
       },
     );
   }

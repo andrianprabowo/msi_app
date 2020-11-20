@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/stock_counting_bin_provider.dart';
-import 'package:msi_app/screens/stock_counting_batch/stock_counting_batch_screen.dart';
 import 'package:msi_app/screens/stock_counting_bin/widgets/item_stock_counting_bin.dart';
+import 'package:msi_app/screens/stock_counting_item/stock_counting_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_title.dart';
@@ -96,13 +96,9 @@ class StockCountingBinScreen extends StatelessWidget {
       hint: 'Scan Bin Location',
       scanResult: (value) {
         final item = provider.findByBinLocation(value);
-        Navigator.of(context).pushNamed(
-          StockCountingBatchScreen.routeName,
-          arguments: {
-            'pickItemReceive': pickItemReceive,
-            'pickListBin': item,
-          },
-        );
+        pickItemReceive.itemStorageLocation = item.binLocation;
+          Navigator.of(context).popUntil(
+              ModalRoute.withName(StockCountingItemScreen.routeName));
       },
     );
   }

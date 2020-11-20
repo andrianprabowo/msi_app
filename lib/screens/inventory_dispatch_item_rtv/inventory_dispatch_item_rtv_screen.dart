@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_detail_rtv.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_rtv_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_item_rtv_provider.dart';
-import 'package:msi_app/screens/inventory_dispatch_bin_rtv/inventory_dispatch_bin_rtv_screen.dart';
+import 'package:msi_app/screens/Inventory_dispatch_batch_rtv/inventory_dispatch_batch_rtv_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_check_rtv/inventory_dispatch_check_rtv_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch_item_rtv/widgets/dialog_inv_disp_nonbatch_rtv.dart';
 import 'package:msi_app/screens/inventory_dispatch_item_rtv/widgets/item_inventory_dispatch_item_rtv.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -108,8 +109,18 @@ class InventoryDispatchItemRtvScreen extends StatelessWidget {
       hint: 'Scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value);
-        Navigator.of(context)
-            .pushNamed(InventoryDispatchBinRtvScreen.routeName, arguments: item);
+        // Navigator.of(context)
+        //     .pushNamed(InventoryDispatchBinRtvScreen.routeName, arguments: item);
+        if (item.fgBatch == 'Y') {
+          Navigator.of(context).pushNamed(
+              // InventoryDispatchBinRtvScreen.routeName,
+              InventoryDispatchBatchRtvScreen.routeName,
+              arguments: item);
+        } else {
+          // item.itemStorageLocation = item.itemStorageLocation;
+          showModalBottomSheet(
+              context: context, builder: (_) => DialogInvDispNonbatchRtv(item));
+        }
       },
     );
   }

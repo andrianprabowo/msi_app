@@ -3,6 +3,7 @@ import 'package:msi_app/models/list_pick_list_rtv.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
 
 class ItemListPickListRtv extends StatelessWidget {
   final ListPickListRtv item;
@@ -44,7 +45,7 @@ class ItemListPickListRtv extends StatelessWidget {
                   BaseTextLine('Pick List No ', item.grpono),
                   BaseTextLine('Return No', item.poNo),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
-                  BaseTextLine('Log Message', item.logMessage),
+                  BaseTitle(item.logMessage),
                 ],
               ),
             ),

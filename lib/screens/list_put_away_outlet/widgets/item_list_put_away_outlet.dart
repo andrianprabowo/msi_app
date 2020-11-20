@@ -3,6 +3,7 @@ import 'package:msi_app/models/list_put_away_rfo.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
 
 class ItemListPutAwayOutlet extends StatelessWidget {
   final ListPutAwayRfo item;
@@ -44,7 +45,7 @@ class ItemListPutAwayOutlet extends StatelessWidget {
                   BaseTextLine('Put Away No', item.grpono),
                   // BaseTextLine('Doc No', item.poNo),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
-                  BaseTextLine('Log Message', item.logMessage),
+                  BaseTitle(item.logMessage),
                 ],
               ),
             ),

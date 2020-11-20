@@ -4,6 +4,7 @@ import 'package:msi_app/providers/inventory_dispatch_bin_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_provider.dart';
 import 'package:msi_app/screens/Inventory_dispatch_batch/inventory_dispatch_batch_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_bin/widget/inventory_dispatch_bin_item.dart';
+import 'package:msi_app/screens/inventory_dispatch_item/inventory_dispatch_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -124,13 +125,21 @@ class InventoryDispatchBinScreen extends StatelessWidget {
       hint: 'Scan Bin Location',
       scanResult: (value) {
         final item = provider.findByBinLocation(value);
-        Navigator.of(context).pushNamed(
-          InventoryDispatchBatchScreen.routeName,
-          arguments: {
-            'inventoryDispatchItem': inventoryDispatchItem,
-            'inventoryDispatchBin': item,
-          },
-        );
+        if (inventoryDispatchItem.fgBatch == 'Y') {
+            Navigator.of(context).pushNamed(
+              InventoryDispatchBatchScreen.routeName, //ddasdasdsadasadasdsadsa
+              arguments: {
+                'inventoryDispatchItem': inventoryDispatchItem,
+                'inventoryDispatchBin': item,
+              },
+            );
+          } else {
+            inventoryDispatchItem.itemStorageLocation = item.binLocation;
+            print('isinya bin item $item');
+
+            Navigator.of(context).popUntil(
+                ModalRoute.withName(InventoryDispatchItemScreen.routeName));
+          }
       },
     );
   }
