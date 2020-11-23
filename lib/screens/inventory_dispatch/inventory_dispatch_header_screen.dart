@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_header_provider.dart';
+import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch/widgets/item_inventory_dispatch_header.dart';
 import 'package:msi_app/screens/inventory_dispatch_detail/inventory_dispatch_detail_screen.dart';
 import 'package:msi_app/screens/list_inv_dispatch/list_inv_dispatch_screen.dart';
@@ -17,7 +18,8 @@ class InventoryDispatchHeaderScreen extends StatelessWidget {
   static const routeName = '/inventory_dispatch_header';
 
   Future<void> refreshData(BuildContext context) async {
-    await Provider.of<InventoryDispatchHeaderProvider>(context, listen: false).getBinLoc();
+    await Provider.of<InventoryDispatchHeaderProvider>(context, listen: false)
+        .getBinLoc();
   }
 
   @override
@@ -30,8 +32,50 @@ class InventoryDispatchHeaderScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.list_alt),
             onPressed: () {
-              Navigator.of(context)
-                  .pushNamed(ListInvDispatchScreen.routeName);
+              Navigator.of(context).pushNamed(ListInvDispatchScreen.routeName);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.home),
+            onPressed: () {
+              return showDialog<void>(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.home, color: Colors.green, size: 50),
+                        Divider(),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        Text('Back To Home'),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            child: Text('Cancel'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  HomeScreen.routeName, (route) => false);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
             },
           ),
         ],
@@ -80,7 +124,8 @@ class InventoryDispatchHeaderScreen extends StatelessWidget {
                       itemBuilder: (_, index) {
                         return ChangeNotifierProvider.value(
                           value: provider.items[index],
-                          child: ItemInventoryDispatchHeader(provider.items[index]),
+                          child: ItemInventoryDispatchHeader(
+                              provider.items[index]),
                         );
                       },
                     ),
@@ -92,14 +137,16 @@ class InventoryDispatchHeaderScreen extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<InventoryDispatchHeaderProvider>(context, listen: false);
+    final provider =
+        Provider.of<InventoryDispatchHeaderProvider>(context, listen: false);
     return InputScan(
       label: 'Staging Bin',
       hint: 'Input or scan Staging Bin',
       scanResult: (value) {
         final item = provider.findByBinCode(value);
         provider.selectStagingBin(item);
-        Navigator.of(context).pushNamed(InventoryDispatchDetailScreen.routeName);
+        Navigator.of(context)
+            .pushNamed(InventoryDispatchDetailScreen.routeName);
       },
     );
   }

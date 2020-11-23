@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_purchase_order.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/purchase_order_provider.dart';
-import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/receipt_check/widget/item_detail_check.dart';
+import 'package:msi_app/screens/receipt_vendor/receipt_vendor_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -84,7 +84,7 @@ class ReceiptCheckScreen extends StatelessWidget {
                   child: Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        HomeScreen.routeName, (route) => false);
+                      ReceiptVendorScreen.routeName, (route) => false);
                   },
                 ),
               ),

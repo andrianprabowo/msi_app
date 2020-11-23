@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_item.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_provider.dart';
-import 'package:msi_app/screens/home/home_screen.dart';
+import 'package:msi_app/screens/inventory_dispatch/inventory_dispatch_header_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_check/widget/inventory_dispatch_detail_check.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -86,7 +86,7 @@ class InventoryDispatchCheckScreen extends StatelessWidget {
                   child: Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        HomeScreen.routeName, (route) => false);
+                        InventoryDispatchHeaderScreen.routeName, (route) => false);
                   },
                 ),
               ),

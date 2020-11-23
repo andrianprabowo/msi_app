@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_item_rtv.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_rtv_provider.dart';
-import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_check_rtv/widget/inventory_dispatch_detail_check_rtv.dart';
+import 'package:msi_app/screens/inventory_dispatch_rtv/inventory_dispatch_header_screen_rtv.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -86,7 +86,7 @@ class InventoryDispatchCheckRtvScreen extends StatelessWidget {
                   child: Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        HomeScreen.routeName, (route) => false);
+                        InventoryDispatchHeaderRtvScreen.routeName, (route) => false);
                   },
                 ),
               ),

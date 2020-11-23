@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/providers/pick_list_whs_provider.dart';
+import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/list_pick_list/list_pick_list_screen.dart';
 import 'package:msi_app/screens/pick_item_receive/pick_item_receive_screen.dart';
 import 'package:msi_app/screens/picker_pick/widgets/item_pick_list_whs.dart';
@@ -30,6 +31,49 @@ class PickerPickScreen extends StatelessWidget {
             onPressed: () {
               Navigator.of(context)
                   .pushNamed(ListPickListScreen.routeName);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.home),
+            onPressed: () {
+              return showDialog<void>(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.home, color: Colors.green, size: 50),
+                        Divider(),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        Text('Back To Home'),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            child: Text('Cancel'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  HomeScreen.routeName, (route) => false);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
             },
           ),
         ],

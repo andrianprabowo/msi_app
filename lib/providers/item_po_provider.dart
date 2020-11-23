@@ -5,6 +5,7 @@ import 'package:msi_app/models/item_batch.dart';
 import 'package:msi_app/models/item_purchase_order.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:msi_app/utils/prefs.dart';
 
 class ItemPoProvider with ChangeNotifier {
   List<ItemPurchaseOrder> _items;
@@ -29,7 +30,9 @@ class ItemPoProvider with ChangeNotifier {
   }
 
   Future<void> getPoDetailByDocNum(String docNum) async {
-    final url = '$kBaseUrl/api/newgetpodetail/docnum=$docNum';
+    final warehouseId = await Prefs.getString(Prefs.warehouseId);
+
+    final url = '$kBaseUrl/api/newgetpodetail/docnum=$docNum&whscode=$warehouseId';
 
     try {
       final response = await http.get(url);

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_provider.dart';
-import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/pick_check/widget/pick_detail_check.dart';
+import 'package:msi_app/screens/picker_pick/picker_pick_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -86,7 +86,7 @@ class PickCheckScreen extends StatelessWidget {
                   child: Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        HomeScreen.routeName, (route) => false);
+                        PickerPickScreen.routeName, (route) => false);
                   },
                 ),
               ),

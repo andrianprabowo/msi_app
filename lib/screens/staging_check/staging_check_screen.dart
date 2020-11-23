@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_bin.dart';
 import 'package:msi_app/providers/staging_bin.provider.dart';
-import 'package:msi_app/screens/home/home_screen.dart';
+import 'package:msi_app/screens/put_away/put_away_screen.dart';
 import 'package:msi_app/screens/staging_check/widgets/staging_detail_check.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -81,7 +81,7 @@ class StagingCheckScreen extends StatelessWidget {
                   child: Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        HomeScreen.routeName, (route) => false);
+                        PutAwayScreen.routeName, (route) => false);
                   },
                 ),
               ),

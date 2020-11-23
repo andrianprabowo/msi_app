@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/stock_counting_header_provider.dart';
-import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/stock_counting_check/widget/stock_counting_detail_check.dart';
+import 'package:msi_app/screens/stock_counting_header/stock_counting_header_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -85,7 +85,7 @@ class StockCountingCheckScreen extends StatelessWidget {
                   child: Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        HomeScreen.routeName, (route) => false);
+                        StockCountingHeaderScreen.routeName, (route) => false);
                   },
                 ),
               ),

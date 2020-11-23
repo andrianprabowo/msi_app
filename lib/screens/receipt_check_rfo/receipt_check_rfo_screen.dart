@@ -107,7 +107,7 @@ class ReceiptCheckRfoScreen extends StatelessWidget {
     return Scaffold(
       key: globalKey,
       appBar: AppBar(
-        title: Text('Receipt From Vendor Check'),
+        title: Text('Receipt Check'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),

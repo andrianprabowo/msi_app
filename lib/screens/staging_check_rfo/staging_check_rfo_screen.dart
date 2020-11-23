@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_bin_rfo.dart';
 import 'package:msi_app/providers/staging_bin_rfo.provider.dart';
-import 'package:msi_app/screens/home/home_screen.dart';
+import 'package:msi_app/screens/put_away_rfo/put_away_rfo_screen.dart';
 import 'package:msi_app/screens/staging_check_rfo/widgets/staging_detail_check_rfo.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -83,7 +83,7 @@ class StagingCheckRfoScreen extends StatelessWidget {
                   child: Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        HomeScreen.routeName, (route) => false);
+                        PutAwayRfoScreen.routeName, (route) => false);
                   },
                 ),
               ),
