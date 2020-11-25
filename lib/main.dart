@@ -17,6 +17,7 @@ import 'package:msi_app/providers/list_pick_list_so_provider.dart';
 import 'package:msi_app/providers/list_put_away_provider.dart';
 import 'package:msi_app/providers/list_put_away_rfo_provider.dart';
 import 'package:msi_app/providers/list_stck_count_provider.dart';
+import 'package:msi_app/providers/receipt_batch_rfo_provider.dart';
 import 'package:msi_app/providers/staging_bin_si.provider.dart';
 import 'package:msi_app/providers/stock_counting_batch_provider.dart';
 import 'package:msi_app/providers/stock_counting_bin_provider.dart';
@@ -59,6 +60,8 @@ import 'package:msi_app/providers/purchase_order_rfo_provider.dart';
 import 'package:msi_app/providers/staging_bin.provider.dart';
 import 'package:msi_app/providers/staging_bin_rfo.provider.dart';
 import 'package:msi_app/providers/stock_counting_header_provider.dart';
+import 'package:msi_app/providers/bin_production_receipt_provider.dart';
+import 'package:msi_app/providers/bin_production_picklist_provider.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
 import 'package:msi_app/providers/storage_bin_item_provider.dart';
 import 'package:msi_app/providers/storage_bin_item_rfo_provider.dart';
@@ -66,6 +69,24 @@ import 'package:msi_app/providers/warehouse_provider.dart';
 import 'package:msi_app/utils/routes.dart';
 import 'package:msi_app/utils/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:msi_app/providers/production_pick_list_provider.dart';
+import 'package:msi_app/providers/production_pick_list_bin_provider.dart';
+import 'package:msi_app/providers/production_pick_list_item_provider.dart';
+import 'package:msi_app/providers/production_pick_list_item_batch_provider.dart';
+import 'package:msi_app/providers/production_pick_list_all_transaction_provider.dart';
+import 'package:msi_app/providers/production_issue_provider.dart';
+import 'package:msi_app/providers/production_issue_number_provider.dart';
+import 'package:msi_app/providers/production_issue_item_provider.dart';
+import 'package:msi_app/providers/production_issue_item_batch_provider.dart';
+import 'package:msi_app/providers/production_issue_all_transaction_provider.dart';
+import 'package:msi_app/providers/production_receipt_provider.dart';
+import 'package:msi_app/providers/production_receipt_item_provider.dart';
+import 'package:msi_app/providers/production_receipt_all_transaction_provider.dart';
+import 'package:msi_app/providers/production_receipt_rm_provider.dart';
+import 'package:msi_app/providers/production_receipt_rm_number_list_provider.dart';
+import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
+import 'package:msi_app/providers/production_receipt_rm_item_list_batch_list_provider.dart';
+import 'package:msi_app/providers/production_receipt_rm_all_transaction_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -112,20 +133,24 @@ void main() async {
             create: (_) => InventoryDispatchHeaderSoProvider()),
         ChangeNotifierProvider(
             create: (_) => InventoryDispatchDetailSoProvider()),
-        ChangeNotifierProvider(create: (_) => InventoryDispatchItemSoProvider()),
+        ChangeNotifierProvider(
+            create: (_) => InventoryDispatchItemSoProvider()),
         ChangeNotifierProvider(create: (_) => InventoryDispatchBinSoProvider()),
-        ChangeNotifierProvider(create: (_) => InventoryDispathBatchSoProvider()),
+        ChangeNotifierProvider(
+            create: (_) => InventoryDispathBatchSoProvider()),
 
         ChangeNotifierProvider(
             create: (_) => InventoryDispatchHeaderRtvProvider()),
         ChangeNotifierProvider(
             create: (_) => InventoryDispatchDetailRtvProvider()),
-        ChangeNotifierProvider(create: (_) => InventoryDispatchItemRtvProvider()),
-        ChangeNotifierProvider(create: (_) => InventoryDispatchBinRtvProvider()),
-        ChangeNotifierProvider(create: (_) => InventoryDispathBatchRtvProvider()),
+        ChangeNotifierProvider(
+            create: (_) => InventoryDispatchItemRtvProvider()),
+        ChangeNotifierProvider(
+            create: (_) => InventoryDispatchBinRtvProvider()),
+        ChangeNotifierProvider(
+            create: (_) => InventoryDispathBatchRtvProvider()),
         ChangeNotifierProvider(create: (_) => BinRtvProvider()),
         ChangeNotifierProvider(create: (_) => BinnyaPicListProvider()),
-
 
         ChangeNotifierProvider(create: (_) => StockCountingHeaderProvider()),
         ChangeNotifierProvider(create: (_) => StockCountingItemProvider()),
@@ -155,7 +180,30 @@ void main() async {
         ChangeNotifierProvider(create: (_) => BarcodeGrpoProvider()),
         ChangeNotifierProvider(create: (_) => DashboardProvider()),
 
+        ChangeNotifierProvider(create: (_) => ReceiptBatchRfoProvider()),
 
+
+        //production
+        ChangeNotifierProvider(create: (_) => BinProductionReceiptProvider()),
+        ChangeNotifierProvider(create: (_) => BinProductionPickListProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionPickListProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionPickListBinProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionPickListItemProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionPickListItemBatchProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionPickListAllTransactionProvider()),
+		    ChangeNotifierProvider(create: (_) => ProductionIssueProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionIssueNumberProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionIssueItemProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionIssueItemBatchProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionIssueAllTransactionProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionReceiptProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionReceiptItemProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionReceiptAllTransactionProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionReceiptRMProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionReceiptRMItemListProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionReceiptRMNumberListProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionReceiptRMItemListBatchListProvider()),
+        ChangeNotifierProvider(create: (_) => ProductionReceiptRMAllTransactionProvider()),
       ],
       child: MyApp(),
     ),

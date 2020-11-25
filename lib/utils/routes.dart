@@ -57,6 +57,7 @@ import 'package:msi_app/screens/picker_pick_so/picker_pick_so_screen.dart';
 import 'package:msi_app/screens/production/production_screen.dart';
 import 'package:msi_app/screens/put_away/put_away_screen.dart';
 import 'package:msi_app/screens/put_away_rfo/put_away_rfo_screen.dart';
+import 'package:msi_app/screens/receipt_batch_rfo/receipt_batch_rfo_screen.dart';
 import 'package:msi_app/screens/receipt_check/receipt_check_screen.dart';
 import 'package:msi_app/screens/receipt_check_rfo/receipt_check_rfo_screen.dart';
 import 'package:msi_app/screens/receipt_detail/receipt_detail_screen.dart';
@@ -84,6 +85,29 @@ import 'package:msi_app/screens/stock_inquiry_detail/stock_inquiry_detail.dart';
 import 'package:msi_app/screens/stock_inquiry_header/stock_inquiry_header_screen.dart';
 import 'package:msi_app/screens/storage_bin_item/storage_bin_item_screen.dart';
 import 'package:msi_app/screens/storage_bin_item_rfo/storage_bin_item_rfo_screen.dart';
+import 'package:msi_app/screens/transfer_to_production/transfer_to_production_screen.dart';
+import 'package:msi_app/screens/production_pick_list/production_pick_list_screen.dart';
+import 'package:msi_app/screens/production_pick_list_bin/production_pick_list_bin_screen.dart';
+import 'package:msi_app/screens/production_pick_list_item/production_pick_list_item_screen.dart';
+import 'package:msi_app/screens/production_pick_list_item_batch/production_pick_list_item_batch_screen.dart';
+import 'package:msi_app/screens/production_pick_list_final_check/production_pick_list_final_check_screen.dart';
+import 'package:msi_app/screens/production_pick_list_all_transaction/production_pick_list_all_transaction_screen.dart';
+import 'package:msi_app/screens/production_issue/production_issue_screen.dart';
+import 'package:msi_app/screens/production_issue_number/production_issue_number_screen.dart';
+import 'package:msi_app/screens/production_issue_item/production_issue_item_screen.dart';
+import 'package:msi_app/screens/production_issue_item_batch/production_issue_item_batch_screen.dart';
+import 'package:msi_app/screens/production_issue_final_check/production_issue_final_check_screen.dart';
+import 'package:msi_app/screens/production_issue_all_transaction/production_issue_all_transaction_screen.dart';
+import 'package:msi_app/screens/production_receipt/production_receipt_screen.dart';
+import 'package:msi_app/screens/production_receipt_item/production_receipt_item_screen.dart';
+import 'package:msi_app/screens/production_receipt_final_check/production_receipt_final_check_screen.dart';
+import 'package:msi_app/screens/production_receipt_all_transaction/production_receipt_all_transaction_screen.dart';
+import 'package:msi_app/screens/production_receipt_rm/production_receipt_rm_screen.dart';
+import 'package:msi_app/screens/production_receipt_rm_number/production_receipt_rm_number_screen.dart';
+import 'package:msi_app/screens/production_receipt_rm_item/production_receipt_rm_item_screen.dart';
+import 'package:msi_app/screens/production_receipt_rm_item_batch/production_receipt_rm_item_batch_screen.dart';
+import 'package:msi_app/screens/production_receipt_rm_final_check/production_receipt_rm_final_check_screen.dart';
+import 'package:msi_app/screens/production_receipt_rm_all_transaction/production_receipt_rm_all_transaction_screen.dart';
 
 final String initialRoute = SplashScreen.routeName;
 
@@ -196,6 +220,7 @@ final Map<String, WidgetBuilder> routes = {
 
   // Return To Vendor
   ReturnVendorScreen.routeName: (context) => ReturnVendorScreen(),
+  ReceiptBatchRfoScreen.routeName: (context) => ReceiptBatchRfoScreen(),
 
   // Stock Counting
   StockCountingHeaderScreen.routeName: (context) => StockCountingHeaderScreen(),
@@ -230,5 +255,46 @@ final Map<String, WidgetBuilder> routes = {
   BarcodeGrpoScreen.routeName: (context) => BarcodeGrpoScreen(),
   DashboardScreen.routeName: (context) => DashboardScreen(),
 
+//PRODUCTION
+  TransferToProductionScreen.routeName: (context) =>
+      TransferToProductionScreen(),
 
+  //Pick List - Raw Mat
+  ProductionPickList.routeName: (context) => ProductionPickList(),
+  ProductionPickListBin.routeName: (context) => ProductionPickListBin(),
+  ProductionPickListItem.routeName: (context) => ProductionPickListItem(),
+  ProductionPickListItemBatch.routeName: (context) =>
+      ProductionPickListItemBatch(),
+  ProductionPickListFinalCheck.routeName: (context) =>
+      ProductionPickListFinalCheck(),
+  ProductionPickListAllTransaction.routeName: (context) =>
+      ProductionPickListAllTransaction(),
+
+  //Issue - Raw Mat
+  ProductionIssue.routeName: (context) => ProductionIssue(),
+  ProductionIssueNumber.routeName: (context) => ProductionIssueNumber(),
+  ProductionIssueItem.routeName: (context) => ProductionIssueItem(),
+  ProductionIssueItemBatch.routeName: (context) => ProductionIssueItemBatch(),
+  ProductionIssueFinalCheck.routeName: (context) => ProductionIssueFinalCheck(),
+  ProductionIssueAllTransaction.routeName: (context) =>
+      ProductionIssueAllTransaction(),
+
+  //Receipt Finish Good
+  ProductionReceipt.routeName: (context) => ProductionReceipt(),
+  ProductionReceiptItem.routeName: (context) => ProductionReceiptItem(),
+  ProductionReceiptFinalCheck.routeName: (context) =>
+      ProductionReceiptFinalCheck(),
+  ProductionReceiptAllTransaction.routeName: (context) =>
+      ProductionReceiptAllTransaction(),
+
+  //Receipt - Raw Material
+  ProductionReceiptRM.routeName: (context) => ProductionReceiptRM(),
+  ProductionReceiptRMNumber.routeName: (context) => ProductionReceiptRMNumber(),
+  ProductionReceiptRMItem.routeName: (context) => ProductionReceiptRMItem(),
+  ProductionReceiptRMItemBatch.routeName: (context) =>
+      ProductionReceiptRMItemBatch(),
+  ProductionReceiptRMFinalCheck.routeName: (context) =>
+      ProductionReceiptRMFinalCheck(),
+  ProductionReceiptRMAllTransaction.routeName: (context) =>
+      ProductionReceiptRMAllTransaction(),
 };

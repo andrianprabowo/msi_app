@@ -62,6 +62,15 @@ class ItemPoRfoProvider with ChangeNotifier {
     print('Added Batch: $itemBatch');
   }
 
+  void addBatchList(
+    ItemPurchaseOrderRfo pickItemReceive,
+    List<ItemBatchRfo> batchList,
+  ) {
+    pickItemReceive.batchList = batchList;
+    notifyListeners();
+    print('Added Batch List: $batchList');
+  }
+
   void removeBatch(ItemPurchaseOrderRfo itemPo, ItemBatchRfo itemBatch) {
     itemPo.batchList.remove(itemBatch);
     notifyListeners();

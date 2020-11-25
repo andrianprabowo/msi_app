@@ -6,6 +6,10 @@ import 'package:msi_app/screens/inventory_dispatch_so/inventory_dispatch_header_
 import 'package:msi_app/screens/picker_pick/picker_pick_screen.dart';
 import 'package:msi_app/screens/picker_pick_rtv/picker_pick_rtv_screen.dart';
 import 'package:msi_app/screens/picker_pick_so/picker_pick_so_screen.dart';
+import 'package:msi_app/screens/production_issue/production_issue_screen.dart';
+import 'package:msi_app/screens/production_pick_list/production_pick_list_screen.dart';
+import 'package:msi_app/screens/production_receipt/production_receipt_screen.dart';
+import 'package:msi_app/screens/production_receipt_rm/production_receipt_rm_screen.dart';
 import 'package:msi_app/screens/put_away/put_away_screen.dart';
 import 'package:msi_app/screens/put_away_rfo/put_away_rfo_screen.dart';
 import 'package:msi_app/screens/receipt_vendor/receipt_vendor_screen.dart';
@@ -65,13 +69,20 @@ class ItemDashboard extends StatelessWidget {
                 .pushNamed(InventoryDispatchHeaderRtvScreen.routeName);
             break;
           case 'Production - Transfer To Production - Pick List':
-            // Navigator.of(context).pushNamed();
+            Navigator.of(context).pushNamed(ProductionPickList.routeName);
             break;
           case 'Production - Transfer To Production - Receipt':
-            // Navigator.of(context).pushNamed();
+            Navigator.of(context).pushNamed(ProductionReceiptRM.routeName);
+            break;
+          case 'Production - Issue Raw Material':
+            Navigator.of(context).pushNamed(ProductionIssue.routeName);
+            break;
+          case 'Production - Receipt Finished Goods':
+            Navigator.of(context).pushNamed(ProductionReceipt.routeName);
             break;
           case 'Stock Counting':
-            Navigator.of(context).pushNamed(StockCountingHeaderScreen.routeName);
+            Navigator.of(context)
+                .pushNamed(StockCountingHeaderScreen.routeName);
             break;
         }
       },
@@ -83,7 +94,8 @@ class ItemDashboard extends StatelessWidget {
           children: [
             BaseTitle(item.module),
             // BaseTitle(item.whsCode),
-            BaseTitleColor('You have ${item.count.toString()} document waiting to Prosses'),
+            BaseTitleColor(
+                'You have ${item.count.toString()} document waiting to Prosses'),
           ],
         ),
       ),

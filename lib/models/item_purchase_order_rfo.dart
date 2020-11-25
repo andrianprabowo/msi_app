@@ -6,6 +6,7 @@ import 'package:msi_app/models/item_batch_rfo.dart';
 class ItemPurchaseOrderRfo with ChangeNotifier {
   final String itemCode;
   final String description;
+  final String cardCode;
   double openQty;
   double quantity;
   double remainingQty;
@@ -17,6 +18,7 @@ class ItemPurchaseOrderRfo with ChangeNotifier {
   ItemPurchaseOrderRfo({
     this.itemCode,
     this.description,
+    this.cardCode,
     this.openQty,
     this.quantity,
     this.remainingQty,
@@ -70,6 +72,7 @@ class ItemPurchaseOrderRfo with ChangeNotifier {
     return ItemPurchaseOrderRfo(
       itemCode: map['itemCode'] ?? '',
       description: map['dscription'] ?? '',
+      cardCode: map['cardCode'] ?? '',
       openQty: map['openQty'] ?? 0.0,
       quantity: 0.0,
       remainingQty: map['remainingQty'] ?? 0.0,
@@ -88,6 +91,6 @@ class ItemPurchaseOrderRfo with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ItemPurchaseOrderRfo(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, remainingQty: $remainingQty, uom: $uom, filename: $filename, docNum: $docNum, fgBatch: $fgBatch, batchList: $batchList)';
+    return 'ItemPurchaseOrderRfo(cardCode: $cardCode,itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, remainingQty: $remainingQty, uom: $uom, filename: $filename, docNum: $docNum, fgBatch: $fgBatch, batchList: $batchList)';
   }
 }

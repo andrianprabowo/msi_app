@@ -4,25 +4,19 @@ import 'package:flutter/material.dart';
 
 class ItemBatchRfo with ChangeNotifier {
   final String batchNo;
+  final String uom;
   final double availableQty;
   final DateTime expiredDate;
+  double putQty;
   ItemBatchRfo({
     this.batchNo,
+    this.uom,
     this.availableQty,
     this.expiredDate,
+    this.putQty,
   });
 
-  ItemBatchRfo copyWith({
-    String batchNo,
-    double availableQty,
-    DateTime expiredDate,
-  }) {
-    return ItemBatchRfo(
-      batchNo: batchNo ?? this.batchNo,
-      availableQty: availableQty ?? this.availableQty,
-      expiredDate: expiredDate ?? this.expiredDate,
-    );
-  }
+  
 
   Map<String, dynamic> toMap() {
     return {
@@ -37,8 +31,11 @@ class ItemBatchRfo with ChangeNotifier {
 
     return ItemBatchRfo(
       batchNo: map['batchNo'] ?? '',
+      uom: map['uom'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
       expiredDate: DateTime.parse(map['expDate']),
+      putQty: map['putqty'] ?? 0.0,
+
     );
   }
 
@@ -49,7 +46,7 @@ class ItemBatchRfo with ChangeNotifier {
 
   @override
   String toString() =>
-      'ItemBatchRfo(batchNo: $batchNo, availableQty: $availableQty, expiredDate: $expiredDate)';
+      'ItemBatchRfo(batchNo: $batchNo, uom: $uom, availableQty: $availableQty, expiredDate: $expiredDate, putQty: $putQty)';
 
   @override
   bool operator ==(Object o) {

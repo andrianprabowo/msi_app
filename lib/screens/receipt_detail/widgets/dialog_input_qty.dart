@@ -7,6 +7,7 @@ import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
 
 class DialogInputQty extends StatefulWidget {
@@ -150,23 +151,78 @@ class _DialogInputQtyState extends State<DialogInputQty> {
         onPressed: () {
           if (double.parse(_quantity.text) > widget.item.openQty) {
             print('Tidak boleh lebih besar dari Available Qty ');
-            return;
+            // return;
+          } else {
+            final itemPoProvider =
+                Provider.of<ItemPoProvider>(context, listen: false);
+            String dateString =
+                DateFormat().addPattern('dd/MM/yy').format(_selectedDate);
+            if (_batchNumber.text.isEmpty) {
+              return showDialog<void>(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.notification_important,
+                            color: Colors.red, size: 50),
+                        Divider(),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        BaseTitleColor('Please input batch number'),
+                        BaseTitleColor('or automatically filled with'),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        BaseTitle('BatchNo-$dateString'),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            child: Text('Cancel'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              itemPoProvider.addBatch(
+                                item,
+                                ItemBatch(
+                                  batchNo: _batchNumber.text.isEmpty
+                                      ? "BatchNo-$dateString"
+                                      : _batchNumber.text,
+                                  expiredDate: _selectedDate,
+                                  availableQty: double.parse(_quantity.text),
+                                ),
+                              );
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }
+
+            itemPoProvider.addBatch(
+              item,
+              ItemBatch(
+                batchNo: _batchNumber.text.isEmpty
+                    ? "BatchNo-$dateString"
+                    : _batchNumber.text,
+                expiredDate: _selectedDate,
+                availableQty: double.parse(_quantity.text),
+              ),
+            );
+            Navigator.of(context).pop();
           }
-          final itemPoProvider =
-              Provider.of<ItemPoProvider>(context, listen: false);
-          String dateString =
-              DateFormat().addPattern('dd/MM/yy').format(_selectedDate);
-          itemPoProvider.addBatch(
-            item,
-            ItemBatch(
-              batchNo: _batchNumber.text.isEmpty
-                  ? "BatchNo-$dateString"
-                  : _batchNumber.text,
-              expiredDate: _selectedDate,
-              availableQty: double.parse(_quantity.text),
-            ),
-          );
-          Navigator.of(context).pop();
         },
       ),
     );

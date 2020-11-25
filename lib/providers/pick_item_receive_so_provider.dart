@@ -5,6 +5,7 @@ import 'package:msi_app/models/pick_batch_so.dart';
 import 'package:msi_app/models/pick_item_receive_so.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:msi_app/utils/prefs.dart';
 
 class PickItemReceiveSoProvider with ChangeNotifier {
   List<PickItemReceiveSo> _items;
@@ -29,7 +30,8 @@ class PickItemReceiveSoProvider with ChangeNotifier {
   }
 
   Future<void> getPlActionByPlNo(String pickNumber) async {
-    final url = '$kBaseUrl/api/getplitemsbysono/docnum=$pickNumber';
+    final warehouseId = await Prefs.getString(Prefs.warehouseId);
+    final url = '$kBaseUrl/api/getplitemsbysono/docnum=$pickNumber&whscode=$warehouseId';
 
     try {
       final response = await http.get(url);
@@ -80,8 +82,7 @@ class PickItemReceiveSoProvider with ChangeNotifier {
   //   print('Update Qty & Bin Loc Non batch: $productionPickListItemModel');
   // }
 
-  void inputQtyNonBatch(
-      PickItemReceiveSo pickItemReceive, double qty) {
+  void inputQtyNonBatch(PickItemReceiveSo pickItemReceive, double qty) {
     pickItemReceive.pickedQty = qty;
     // pickItemReceive.itemStorageLocation = bin;
     notifyListeners();

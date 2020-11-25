@@ -5,6 +5,7 @@ import 'package:msi_app/models/pick_batch_rtv.dart';
 import 'package:msi_app/models/pick_item_receive_rtv.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:msi_app/utils/prefs.dart';
 
 class PickItemReceiveRtvProvider with ChangeNotifier {
   List<PickItemReceiveRtv> _items;
@@ -29,7 +30,8 @@ class PickItemReceiveRtvProvider with ChangeNotifier {
   }
 
   Future<void> getPlActionByPlNo(String pickNumber) async {
-    final url = '$kBaseUrl/api/getplitemsbyrvno/docnum=$pickNumber';
+    final warehouseId = await Prefs.getString(Prefs.warehouseId);
+    final url = '$kBaseUrl/api/getplitemsbyrvno/docnum=$pickNumber&whscode=$warehouseId';
 
     try {
       final response = await http.get(url);
