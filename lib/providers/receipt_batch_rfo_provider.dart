@@ -11,6 +11,11 @@ class ReceiptBatchRfoProvider with ChangeNotifier {
   double _totalPicked = 0.0;
 
   List<ItemBatchRfo> get items {
+     _items.forEach((detail) {
+      
+      // calculate remaining qty
+      detail.remainQty = detail.availableQty - detail.putQty;
+    });
     return _items.where((item) => item.availableQty > item.putQty).toList();
   }
 
@@ -22,7 +27,6 @@ class ReceiptBatchRfoProvider with ChangeNotifier {
 
   Future<void> getBatchListByItemWarehouse(
     String itemCode,
-    String cardCode,
   ) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
     final url =

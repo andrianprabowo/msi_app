@@ -15,7 +15,7 @@ class ItemPoRfoProvider with ChangeNotifier {
         // calculate total batch qty
         var totalBatch = 0.0;
         detail.batchList.forEach((batch) {
-          totalBatch = totalBatch + batch.availableQty;
+          totalBatch = totalBatch + batch.putQty;
         });
         detail.quantity = totalBatch;
       }
@@ -23,7 +23,7 @@ class ItemPoRfoProvider with ChangeNotifier {
       detail.remainingQty = detail.openQty - detail.quantity;
     });
 
-    _items = _items.where((item) => item.remainingQty > 0).toList();
+    // _items = _items.where((item) => item.remainingQty > 0).toList();
 
     return _items;
   }
@@ -63,10 +63,10 @@ class ItemPoRfoProvider with ChangeNotifier {
   }
 
   void addBatchList(
-    ItemPurchaseOrderRfo pickItemReceive,
+    ItemPurchaseOrderRfo itemPo,
     List<ItemBatchRfo> batchList,
   ) {
-    pickItemReceive.batchList = batchList;
+    itemPo.batchList = batchList;
     notifyListeners();
     print('Added Batch List: $batchList');
   }

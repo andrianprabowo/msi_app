@@ -14,7 +14,7 @@ class ItemBatchWidgetRfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final itemPoProvider = Provider.of<ItemPoRfoProvider>(context, listen: false);
+    final provider = Provider.of<ItemPoRfoProvider>(context, listen: false);
     return Container(
       margin: const EdgeInsets.all(kTiny),
       padding: const EdgeInsets.all(kSmall),
@@ -24,7 +24,7 @@ class ItemBatchWidgetRfo extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.delete, color: Colors.red),
             onPressed: () {
-              itemPoProvider.removeBatch(itemPo, item);
+              provider.removeBatch(itemPo, item);
             },
           ),
           Expanded(
@@ -32,7 +32,7 @@ class ItemBatchWidgetRfo extends StatelessWidget {
               children: [
                 BaseTextLine('Batch Number', item.batchNo),
                 BaseTextLine('Expired Date', convertDate(item.expiredDate)),
-                BaseTextLine('Quantity', item.availableQty.toStringAsFixed(2)),
+                BaseTextLine('Quantity', item.putQty.toStringAsFixed(2)),
               ],
             ),
           ),

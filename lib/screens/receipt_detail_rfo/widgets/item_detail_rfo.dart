@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_batch_rfo.dart';
 import 'package:msi_app/models/item_purchase_order_rfo.dart';
+import 'package:msi_app/screens/receipt_batch_rfo/receipt_batch_rfo_screen.dart';
 import 'package:msi_app/screens/receipt_detail_rfo/widgets/dialog_input_non_batch_rfo.dart';
-import 'package:msi_app/screens/receipt_detail_rfo/widgets/dialog_input_qty_rfo.dart';
 import 'package:msi_app/screens/receipt_detail_rfo/widgets/item_batch_widget_rfo.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -17,12 +17,17 @@ class ItemDetailRfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (_) => item.fgBatch == 'Y'
-              ? DialogInputQtyRfo(item)
-              : DialogInputQtyNonBatchRfo(item),
-        );
+        // showModalBottomSheet(
+        //   context: context,
+        //   builder: (_) => item.fgBatch == 'Y'
+        //       ? DialogInputQtyRfo(item)
+        //       : DialogInputQtyNonBatchRfo(item),
+        // );
+        item.fgBatch == 'Y'
+            ? Navigator.of(context)
+                .pushNamed(ReceiptBatchRfoScreen.routeName, arguments: item)
+            : showModalBottomSheet(
+                context: context, builder: (_) => DialogInputQtyNonBatchRfo(item));
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),

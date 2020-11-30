@@ -43,13 +43,13 @@ class _ProductionIssueItemNonBatchDialogState
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          if (_quantity.text != '' &&
-                  (double.parse(_quantity.text) >
-                      double.tryParse(
-                          widget.item.availableQty.toStringAsFixed(4))) ||
-              _quantity.text == '0')
-            buildButtonNotif(context, avlQty)
-          else
+          // if (_quantity.text != '' &&
+          //         (double.parse(_quantity.text) >
+          //             double.tryParse(
+          //                 widget.item.availableQty.toStringAsFixed(4))) ||
+          //     _quantity.text == '0')
+          //   buildButtonNotif(context, avlQty)
+          // else
             buildButtonSubmit(context),
         ],
       ),

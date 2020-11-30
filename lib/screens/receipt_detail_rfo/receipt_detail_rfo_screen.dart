@@ -5,8 +5,6 @@ import 'package:msi_app/models/purchase_order_rfo.dart';
 import 'package:msi_app/providers/item_po_provider_rfo.dart';
 import 'package:msi_app/providers/purchase_order_rfo_provider.dart';
 import 'package:msi_app/screens/receipt_check_rfo/receipt_check_rfo_screen.dart';
-import 'package:msi_app/screens/receipt_detail_rfo/widgets/dialog_input_non_batch_rfo.dart';
-import 'package:msi_app/screens/receipt_detail_rfo/widgets/dialog_input_qty_rfo.dart';
 import 'package:msi_app/screens/receipt_detail_rfo/widgets/item_detail_rfo.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -124,18 +122,18 @@ class ReceiptDetailRfoScreen extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<ItemPoRfoProvider>(context, listen: false);
+    // final provider = Provider.of<ItemPoRfoProvider>(context, listen: false);
     return InputScan(
       label: 'Item Barcode',
       hint: 'Input or scan Item Barcode',
       scanResult: (value) {
-        final item = provider.findByItemCode(value);
-        showModalBottomSheet(
-          context: context,
-          builder: (_) => item.fgBatch == 'Y'
-              ? DialogInputQtyRfo(item)
-              : DialogInputQtyNonBatchRfo(item),
-        );
+        // final item = provider.findByItemCode(value);
+        // showModalBottomSheet(
+        //   context: context,
+        //   builder: (_) => item.fgBatch == 'Y'
+        //       ? DialogInputQtyRfo(item)
+        //       : DialogInputQtyNonBatchRfo(item),
+        // );
       },
     );
   }

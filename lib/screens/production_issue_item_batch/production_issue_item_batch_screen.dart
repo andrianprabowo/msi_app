@@ -58,19 +58,20 @@ class ProductionIssueItemBatch extends StatelessWidget {
               if (itemBatchProvider.totalPicked.toStringAsFixed(4) ==
                   '0.0000') {
                 showAlertOnZero(context);
-              } else {
-                if (double.tryParse(
-                        itemBatchProvider.totalPicked.toStringAsFixed(4)) >
-                    double.tryParse(item.availableQty.toStringAsFixed(4))) {
-                  showAlertGreaterThanZero(context, avlQty);
-                } else {
+              }
+              //  else {
+              //   if (double.tryParse(
+              //           itemBatchProvider.totalPicked.toStringAsFixed(4)) >
+              //       double.tryParse(item.availableQty.toStringAsFixed(4))) {
+              //     showAlertGreaterThanZero(context, avlQty);
+              //   } else {
                   if (item.fgBatch == "Y") {
                     itemProvider.addBatchList(item, batchList);
                   }
                   Navigator.of(context).popUntil(
                       ModalRoute.withName(ProductionIssueItem.routeName));
-                }
-              }
+              //   }
+              // }
               /* itemBatchProvider.totalPicked.toStringAsFixed(2) == '0.00'
                   ? showAlertOnZero(context)
                   : double.tryParse(itemBatchProvider.totalPicked

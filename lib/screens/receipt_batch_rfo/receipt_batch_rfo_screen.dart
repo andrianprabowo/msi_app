@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_purchase_order_rfo.dart';
+import 'package:msi_app/providers/item_po_provider_rfo.dart';
 import 'package:msi_app/providers/receipt_batch_rfo_provider.dart';
 import 'package:msi_app/screens/receipt_batch_rfo/widgets/dialog_receipt_batch_rfo.dart';
 import 'package:msi_app/screens/receipt_batch_rfo/widgets/item_batch_receipt_rfo.dart';
@@ -19,18 +20,18 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
   Future<void> fetchData(
     BuildContext context,
     String itemCode,
-    String cardCode,
   ) async {
-    final provider = Provider.of<ReceiptBatchRfoProvider>(context, listen: false);
-    await provider.getBatchListByItemWarehouse(itemCode, cardCode);
+    final provider =
+        Provider.of<ReceiptBatchRfoProvider>(context, listen: false);
+    await provider.getBatchListByItemWarehouse(itemCode);
   }
 
   @override
   Widget build(BuildContext context) {
     final itemBatchProvider =
         Provider.of<ReceiptBatchRfoProvider>(context, listen: false);
-        
-        
+    final itemProvider = Provider.of<ItemPoRfoProvider>(context, listen: false);
+
     ItemPurchaseOrderRfo item = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
@@ -39,10 +40,11 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.check_box_outlined),
             onPressed: () {
-              Navigator.of(context).pushNamed(
-                ReceiptDetailRfoScreen.routeName,
-                arguments: item,
-              );
+              final batchList = itemBatchProvider.pickedItems;
+              itemProvider.addBatchList(item, batchList);
+
+              Navigator.of(context).popUntil(
+                  ModalRoute.withName(ReceiptDetailRfoScreen.routeName));
             },
           )
         ],
@@ -92,7 +94,7 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
   Widget buildItemList(BuildContext context, ItemPurchaseOrderRfo item) {
     return Expanded(
       child: FutureBuilder(
-        future: fetchData(context, item.itemCode, item.cardCode),
+        future: fetchData(context, item.itemCode),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -119,7 +121,8 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<ReceiptBatchRfoProvider>(context, listen: false);
+    final provider =
+        Provider.of<ReceiptBatchRfoProvider>(context, listen: false);
     return InputScan(
       label: 'Batch Number',
       hint: 'Input or scan Batch Number',
