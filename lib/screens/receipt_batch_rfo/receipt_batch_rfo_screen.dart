@@ -20,10 +20,11 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
   Future<void> fetchData(
     BuildContext context,
     String itemCode,
+    String cardCode,
   ) async {
     final provider =
         Provider.of<ReceiptBatchRfoProvider>(context, listen: false);
-    await provider.getBatchListByItemWarehouse(itemCode);
+    await provider.getBatchListByItemWarehouse(context, itemCode, cardCode);
   }
 
   @override
@@ -35,7 +36,7 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
     ItemPurchaseOrderRfo item = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text('----------------------'),
+        title: Text('Receipt Return From Outlet'),
         actions: [
           IconButton(
             icon: Icon(Icons.check_box_outlined),
@@ -94,7 +95,7 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
   Widget buildItemList(BuildContext context, ItemPurchaseOrderRfo item) {
     return Expanded(
       child: FutureBuilder(
-        future: fetchData(context, item.itemCode),
+        future: fetchData(context, item.itemCode, item.cardCode),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());

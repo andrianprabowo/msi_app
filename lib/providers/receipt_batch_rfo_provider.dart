@@ -2,17 +2,18 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_batch_rfo.dart';
+import 'package:msi_app/providers/purchase_order_rfo_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:msi_app/utils/prefs.dart';
+import 'package:provider/provider.dart';
 
 class ReceiptBatchRfoProvider with ChangeNotifier {
   List<ItemBatchRfo> _items = [];
   double _totalPicked = 0.0;
 
   List<ItemBatchRfo> get items {
-     _items.forEach((detail) {
-      
+    _items.forEach((detail) {
       // calculate remaining qty
       detail.remainQty = detail.availableQty - detail.putQty;
     });
@@ -26,11 +27,14 @@ class ReceiptBatchRfoProvider with ChangeNotifier {
   double get totalPicked => _totalPicked;
 
   Future<void> getBatchListByItemWarehouse(
-    String itemCode,
-  ) async {
+      BuildContext context, String itemCode, String cardCode) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
+    final header =
+        Provider.of<PurchaseOrderRfoProvider>(context, listen: false).selected;
+    final xxx = header.vendorCode;
+
     final url =
-        '$kBaseUrl/api/getRTOIDPbatchlistbyitmwhs/itemcode=$itemCode&whscode=$warehouseId';
+        '$kBaseUrl/api/getRTOIDPbatchlistbyitmwhs/itemcode=$itemCode&whscode=$xxx';
     try {
       final response = await http.get(url);
       print(response.request);

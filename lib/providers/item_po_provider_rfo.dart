@@ -28,10 +28,10 @@ class ItemPoRfoProvider with ChangeNotifier {
     return _items;
   }
 
-  Future<void> getPoDetailByDocNum(String docNum) async {
+  Future<void> getPoDetailByDocNum(String docNum, String cardCode) async {
     //GetRTODetail
     final url = '$kBaseUrl/api/GetRTODetail/docnum=$docNum';
-
+    print('isi cardcode$cardCode');
     try {
       final response = await http.get(url);
       print(response.request);

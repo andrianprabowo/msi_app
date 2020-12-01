@@ -18,10 +18,10 @@ import 'package:provider/provider.dart';
 class ReceiptDetailRfoScreen extends StatelessWidget {
   static const routeName = '/receipt_detail_rfo';
 
-  Future<void> fetchData(BuildContext context, String docNum) async {
+  Future<void> fetchData(BuildContext context, String docNum, String cardCode) async {
     final itemPoProvider =
         Provider.of<ItemPoRfoProvider>(context, listen: false);
-    await itemPoProvider.getPoDetailByDocNum(docNum);
+    await itemPoProvider.getPoDetailByDocNum(docNum,cardCode);
 
     final poProvider =
         Provider.of<PurchaseOrderRfoProvider>(context, listen: false);
@@ -95,7 +95,7 @@ class ReceiptDetailRfoScreen extends StatelessWidget {
   Widget buildItemList(BuildContext context, PurchaseOrderRfo po) {
     return Expanded(
       child: FutureBuilder(
-        future: fetchData(context, po.poNumber),
+        future: fetchData(context, po.poNumber, po.vendorCode),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
