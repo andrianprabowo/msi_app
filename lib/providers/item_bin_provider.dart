@@ -33,7 +33,7 @@ class ItemBinProvider with ChangeNotifier {
   Future<void> getItemInStagingBin(String binCode) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
     final url =
-        '$kBaseUrl/api/getiteminstgbin/bincode=$binCode&whscode=$warehouseId';
+        '$kBaseUrl/api/newgetiteminstgbin/bincode=$binCode&whscode=$warehouseId';
 
     try {
       final response = await http.get(url);

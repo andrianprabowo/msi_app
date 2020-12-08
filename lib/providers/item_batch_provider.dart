@@ -26,7 +26,7 @@ class ItemBatchProvider with ChangeNotifier {
   ) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
     final url =
-        '$kBaseUrl/api/getplbatchlistbyitmwhs/itemcode=$itemCode&whscode=$warehouseId&bincode=$binCode';
+        '$kBaseUrl/api/newgetplbatchlistbyitmwhs/itemcode=$itemCode&whscode=$warehouseId&bincode=$binCode';
     try {
       final response = await http.get(url);
       print(response.request);
