@@ -26,8 +26,8 @@ class StockCountingBinProvider with ChangeNotifier {
     _showAllBin = !_showAllBin;
     notifyListeners();
   }
-  void selectStagingBin(StockCountingBin stagingBin) {
-    _selected = stagingBin;
+  void selectStagingBin(StockCountingBin binLocation) {
+    _selected = binLocation;
     notifyListeners();
   }
 

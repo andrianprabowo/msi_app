@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
-import 'package:msi_app/screens/stock_counting_bin/stock_counting_bin_screen.dart';
+import 'package:msi_app/screens/stock_counting_check/stock_counting_check.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -87,7 +87,7 @@ class _DialogInputQtyNonBatchScState extends State<DialogInputQtyNonBatchSc> {
           // stockBinProvider.addNewItem(pickItem, itemList);
           // Navigator.of(context).pop();
           Navigator.of(context)
-              .pushNamed(StockCountingBinScreen.routeName, arguments: item);
+              .pushNamed(StockCountingCheckScreen.routeName, arguments: item);
         },
       ),
     );

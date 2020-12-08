@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/stock_counting_bin.dart';
 import 'package:msi_app/models/stock_counting_header.dart';
+import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:msi_app/utils/prefs.dart';
@@ -13,11 +13,7 @@ class StockCountingHeaderProvider with ChangeNotifier {
 
   List<StockCountingHeader> get items => _items;
   StockCountingHeader get selected => _selected;
-
-  List<StockCountingBin> get detailList {
-    return _selected.pickItemList.where((item) => item.hashCode > 0).toList();
-  }
-
+  
   Future<void> getAllPoByWarehouseId() async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
     final url = '$kBaseUrl/api/getstcbywhs/whscode=$warehouseId';
@@ -61,7 +57,7 @@ class StockCountingHeaderProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Map<String, dynamic>> createReceiptVendor() async {
+  Future<Map<String, dynamic>> createReceiptVendor(List<StockCountingItem> itemShow) async {
     var url = '$kBaseUrl/tgrpo/tgrpo/api/ListSTCK';
     final headers = {
       'Content-type': 'application/json',
@@ -72,7 +68,7 @@ class StockCountingHeaderProvider with ChangeNotifier {
 
     // _selected.storageLocation = binId;
     // _selected.plant = warehouseId;
-    _selected.pickItemList = detailList;
+    // _selected.pickItemList = itemShow;
 
     try {
       var response = await http.post(

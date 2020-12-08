@@ -4,7 +4,7 @@ import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/stock_counting_bin_provider.dart';
 import 'package:msi_app/providers/stock_counting_header_provider.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
-import 'package:msi_app/screens/stock_counting_bin/stock_counting_bin_screen.dart';
+import 'package:msi_app/screens/stock_counting_bin_exstra/stock_counting_bin_exstra_screen.dart';
 import 'package:msi_app/screens/stock_counting_check/widget/stock_counting_detail_check.dart';
 import 'package:msi_app/screens/stock_counting_header/stock_counting_header_screen.dart';
 import 'package:msi_app/screens/stock_counting_item/stock_counting_item_screen.dart';
@@ -18,7 +18,7 @@ import 'package:provider/provider.dart';
 class StockCountingCheckScreen extends StatelessWidget {
   static const routeName = '/stock_counting_check';
 
-  void postData(BuildContext context) {
+  void postData(BuildContext context, List<StockCountingItem> itemShow) {
     showDialog(
       context: context,
       child: AlertDialog(
@@ -35,7 +35,7 @@ class StockCountingCheckScreen extends StatelessWidget {
               final provider = Provider.of<StockCountingHeaderProvider>(context,
                   listen: false);
               try {
-                final response = await provider.createReceiptVendor();
+                final response = await provider.createReceiptVendor(itemShow);
                 final docId = response['id'];
                 Navigator.of(context).pop();
                 await showSuccessDialog(context, docId);
@@ -138,7 +138,7 @@ class StockCountingCheckScreen extends StatelessWidget {
                 globalKey.currentState.showSnackBar(snackBar);
                 return;
               } else {
-                postData(context);
+                postData(context, providerItem.itemShow);
               }
             },
           )
@@ -170,11 +170,8 @@ class StockCountingCheckScreen extends StatelessWidget {
               children: [
                 FlatButton.icon(
                     onPressed: () {
-                      Navigator.of(context).pushNamed(
-                          StockCountingItemScreen.routeName,
-                          arguments: item);
-                      // Navigator.of(context).popUntil(ModalRoute.withName(
-                      //     StockCountingItemScreen.routeName));
+                      Navigator.of(context).popUntil(ModalRoute.withName(
+                          StockCountingItemScreen.routeName));
                     },
                     icon: Icon(Icons.playlist_add),
                     color: Colors.blueAccent,
@@ -190,12 +187,12 @@ class StockCountingCheckScreen extends StatelessWidget {
                       //   double.parse(itemPro.quantity.toString()),
                       // );
 
-                      Navigator.of(context).popUntil(ModalRoute.withName(
-                          StockCountingBinScreen.routeName));
+                      // Navigator.of(context).popUntil(ModalRoute.withName(
+                      //     StockCountingBinScreen.routeName));
                       // Navigator.of(context).pop();
-                      // Navigator.of(context).pushNamed(
-                      //     StockCountingBinScreen.routeName,
-                      //     arguments: item);
+                      Navigator.of(context).pushNamed(
+                          StockCountingBinExstraScreen.routeName,
+                          arguments: item);
                     },
                     icon: Icon(Icons.add_circle_outline),
                     color: Colors.blueAccent,
