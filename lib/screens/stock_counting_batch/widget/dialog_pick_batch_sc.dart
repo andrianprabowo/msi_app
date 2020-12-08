@@ -32,8 +32,8 @@ class _DialogPickBatchSoState extends State<DialogPickBatchSc> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Expired Date', convertDate(widget.item.expiredDate)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('Available Quantity',
-              widget.item.availableQty.toStringAsFixed(2)),
+          // BaseTextLine('Count Quantity',
+          //     widget.item.availableQty.toStringAsFixed(2)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -51,8 +51,8 @@ class _DialogPickBatchSoState extends State<DialogPickBatchSc> {
         controller: _quantity,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelText: 'Quantity',
-          hintText: 'Input Quantity',
+          labelText: 'Count Quantity',
+          hintText: 'Input Count Quantity',
         ),
       ),
     );

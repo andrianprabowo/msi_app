@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/stock_counting_bin_provider.dart';
 import 'package:msi_app/providers/stock_counting_header_provider.dart';
+import 'package:msi_app/providers/stock_counting_item_provider.dart';
+import 'package:msi_app/screens/stock_counting_bin/stock_counting_bin_screen.dart';
 import 'package:msi_app/screens/stock_counting_check/widget/stock_counting_detail_check.dart';
 import 'package:msi_app/screens/stock_counting_header/stock_counting_header_screen.dart';
+import 'package:msi_app/screens/stock_counting_item/stock_counting_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -103,6 +107,14 @@ class StockCountingCheckScreen extends StatelessWidget {
     final provider =
         Provider.of<StockCountingHeaderProvider>(context, listen: false);
     final item = provider.selected;
+
+    // final itemProvider =
+    //     Provider.of<StockCountingItemProvider>(context, listen: false);
+    // final itemPro = itemProvider.selected;
+
+    final providerItem =
+        Provider.of<StockCountingItemProvider>(context, listen: false);
+    // final itemSelected = provider.selected;
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     return Scaffold(
@@ -113,9 +125,7 @@ class StockCountingCheckScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
-              
-
-              if (provider.detailList.isEmpty) {
+              if (providerItem.itemShow.isEmpty) {
                 final snackBar = SnackBar(
                   content: Row(
                     children: [
@@ -152,11 +162,50 @@ class StockCountingCheckScreen extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kMedium)),
             BaseTextLine('Warehouse Name', authProvider.warehouseName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            // buildInputScan(context),
+            BaseTitle('Add More Item From :'),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            buildInputScan(context),
+            SizedBox(height: getProportionateScreenHeight(kTiny)),
+            Row(
+              children: [
+                FlatButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                          StockCountingItemScreen.routeName,
+                          arguments: item);
+                      // Navigator.of(context).popUntil(ModalRoute.withName(
+                      //     StockCountingItemScreen.routeName));
+                    },
+                    icon: Icon(Icons.playlist_add),
+                    color: Colors.blueAccent,
+                    label: Text('Same Bin')),
+                SizedBox(width: getProportionateScreenWidth(kLarge)),
+                FlatButton.icon(
+                    onPressed: () {
+                      // final pickItemReceiveProvider =
+                      //     Provider.of<StockCountingItemProvider>(context,
+                      //         listen: false);
+                      // pickItemReceiveProvider.inputQty(
+                      //   itemPro,
+                      //   double.parse(itemPro.quantity.toString()),
+                      // );
+
+                      Navigator.of(context).popUntil(ModalRoute.withName(
+                          StockCountingBinScreen.routeName));
+                      // Navigator.of(context).pop();
+                      // Navigator.of(context).pushNamed(
+                      //     StockCountingBinScreen.routeName,
+                      //     arguments: item);
+                    },
+                    icon: Icon(Icons.add_circle_outline),
+                    color: Colors.blueAccent,
+                    label: Text('Another Bin'))
+              ],
+            ),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Item Details'),
             Divider(),
-            buildItemDetails(provider.detailList),
+            buildItemDetails(providerItem.itemShow),
           ],
         ),
       ),
@@ -176,15 +225,14 @@ class StockCountingCheckScreen extends StatelessWidget {
 
   Widget buildInputScan(BuildContext context) {
     final provider =
-        Provider.of<StockCountingHeaderProvider>(context, listen: false);
+        Provider.of<StockCountingBinProvider>(context, listen: false);
     return InputScan(
-      label: 'Storage Location',
-      hint: 'Input or scan Storage Location',
+      label: 'Stock Counting Bin',
+      hint: 'Input or scan Stock Counting Bin',
       scanResult: (value) {
-        provider.selected.storageLocation = value;
-        // final item = provider.findByPoNumber(value);
-        // provider.selectPo(item);
-        // Navigator.of(context).pushNamed(ReceiptDetailScreen.routeName);
+        final item = provider.findByBinLocation(value);
+        provider.selectStagingBin(item);
+        Navigator.of(context).pushNamed(StockCountingItemScreen.routeName);
       },
     );
   }

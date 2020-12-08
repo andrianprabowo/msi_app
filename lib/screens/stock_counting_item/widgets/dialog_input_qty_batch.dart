@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/stock_counting_batch.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
-import 'package:msi_app/screens/stock_counting_bin/stock_counting_bin_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_title.dart';
@@ -147,9 +146,9 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
               availableQty: double.parse(_quantity.text),
             ),
           );
-          Navigator.of(context)
-              .pushNamed(StockCountingBinScreen.routeName, arguments: item);
-          //  Navigator.of(context).pop();
+          // Navigator.of(context)
+          //     .pushNamed(StockCountingBinScreen.routeName, arguments: item);
+           Navigator.of(context).pop();
         },
       ),
     );

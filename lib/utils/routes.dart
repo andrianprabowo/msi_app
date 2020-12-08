@@ -55,6 +55,7 @@ import 'package:msi_app/screens/picker_pick/picker_pick_screen.dart';
 import 'package:msi_app/screens/picker_pick_rtv/picker_pick_rtv_screen.dart';
 import 'package:msi_app/screens/picker_pick_so/picker_pick_so_screen.dart';
 import 'package:msi_app/screens/production/production_screen.dart';
+import 'package:msi_app/screens/production_receipt_rm_bin/production_receipt_rm_bin_screen.dart';
 import 'package:msi_app/screens/put_away/put_away_screen.dart';
 import 'package:msi_app/screens/put_away_rfo/put_away_rfo_screen.dart';
 import 'package:msi_app/screens/receipt_batch_rfo/receipt_batch_rfo_screen.dart';
@@ -297,4 +298,6 @@ final Map<String, WidgetBuilder> routes = {
       ProductionReceiptRMFinalCheck(),
   ProductionReceiptRMAllTransaction.routeName: (context) =>
       ProductionReceiptRMAllTransaction(),
+  ProductionReceiptRmBinScreen.routeName: (context) =>
+      ProductionReceiptRmBinScreen(),
 };

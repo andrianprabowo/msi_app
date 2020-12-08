@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/stock_counting_item.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/stock_counting_bin_provider.dart';
 import 'package:msi_app/screens/stock_counting_bin/widgets/item_stock_counting_bin.dart';
+import 'package:msi_app/screens/stock_counting_check/stock_counting_check.dart';
 import 'package:msi_app/screens/stock_counting_item/stock_counting_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/input_scan.dart';
@@ -14,23 +16,29 @@ import 'package:provider/provider.dart';
 class StockCountingBinScreen extends StatelessWidget {
   static const routeName = '/stock_counting_bin';
 
-  Future<void> refreshData(BuildContext context, String itemCode) async {
-    final pickItemProvider =
-        Provider.of<StockCountingBinProvider>(context, listen: false);
-    await pickItemProvider.getPlBinList(itemCode);
+  
+
+  Future<void> refreshData(BuildContext context) async {
+    await Provider.of<StockCountingBinProvider>(context, listen: false).getPlBinList(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    // final pickList =
-    //     Provider.of<StockCountingHeaderProvider>(context, listen: false)
-    //         .selected;
-    StockCountingItem pickItemReceive =
-        ModalRoute.of(context).settings.arguments;
-
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    
     return Scaffold(
       appBar: AppBar(
-        title: Text('Stock Counting'),
+        title: Text('Stock Counting Bin'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.post_add),
+            onPressed: () {
+              authProvider.clearBin();
+              Navigator.of(context)
+                  .pushNamed(StockCountingCheckScreen.routeName);
+            },
+          )
+        ],
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(
@@ -40,24 +48,25 @@ class StockCountingBinScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
+            BaseTextLine('Warehouse Code', authProvider.warehouseId),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildInputScan(context, pickItemReceive),
+            BaseTextLine('Warehouse Name', authProvider.warehouseName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            
+            buildInputScan(context),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTitle('List Staging Bin'),
             Divider(),
-            BaseTitle('list Bin Location'),
-            buildItemList(context, pickItemReceive),
+            buildItemList(context),
           ],
         ),
       ),
     );
   }
 
-  Widget buildItemList(BuildContext context, StockCountingItem item) {
+  Widget buildItemList(BuildContext context) {
     return Expanded(
       child: FutureBuilder(
-        future: refreshData(context, item.itemCode),
+        future: refreshData(context),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -66,7 +75,7 @@ class StockCountingBinScreen extends StatelessWidget {
           if (snapshot.hasError) return ErrorInfo();
 
           return RefreshIndicator(
-            onRefresh: () => refreshData(context, item.itemCode),
+            onRefresh: () => refreshData(context),
             child: Consumer<StockCountingBinProvider>(
               builder: (_, provider, child) => provider.items.length == 0
                   ? NoData()
@@ -75,8 +84,7 @@ class StockCountingBinScreen extends StatelessWidget {
                       itemBuilder: (_, index) {
                         return ChangeNotifierProvider.value(
                           value: provider.items[index],
-                          child:
-                              ItemStockCountingBin(item, provider.items[index]),
+                          child: ItemStockCountingBin(provider.items[index]),
                         );
                       },
                     ),
@@ -87,18 +95,15 @@ class StockCountingBinScreen extends StatelessWidget {
     );
   }
 
-  Widget buildInputScan(
-      BuildContext context, StockCountingItem pickItemReceive) {
-    final provider =
-        Provider.of<StockCountingBinProvider>(context, listen: false);
+  Widget buildInputScan(BuildContext context) {
+    final provider = Provider.of<StockCountingBinProvider>(context, listen: false);
     return InputScan(
-      label: 'Bin Location',
-      hint: 'Scan Bin Location',
+      label: 'Stock Counting Bin',
+      hint: 'Input or scan Stock Counting Bin',
       scanResult: (value) {
         final item = provider.findByBinLocation(value);
-        pickItemReceive.itemStorageLocation = item.binLocation;
-          Navigator.of(context).popUntil(
-              ModalRoute.withName(StockCountingItemScreen.routeName));
+      provider.selectStagingBin(item);
+        Navigator.of(context).pushNamed(StockCountingItemScreen.routeName);
       },
     );
   }

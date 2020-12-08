@@ -24,7 +24,7 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
   ) async {
     final provider =
         Provider.of<ReceiptBatchRfoProvider>(context, listen: false);
-    await provider.getBatchListByItemWarehouse(context, itemCode, cardCode);
+    await provider.getBatchListByItemWarehouse(context, itemCode);
   }
 
   @override

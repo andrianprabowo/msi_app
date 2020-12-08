@@ -52,8 +52,8 @@ class ProductionReceiptRMItemList extends StatelessWidget {
                     : formatter.format(item.quantity)),
             BaseTextLine('Inventory UoM', item.unitMsr),
             BaseTextLine('Item Batch', item.fgBatch),
-            /* if (item.itemStorageLocation.isNotEmpty)
-              BaseTextLine('Bin Location', item.itemStorageLocation), */
+            if (item.itemStorageLocation.isNotEmpty)
+              BaseTextLine('Bin Location', item.itemStorageLocation), 
             // if (item.pickedQty != 0)
             BaseTextLine(
                 'Picked Qty',

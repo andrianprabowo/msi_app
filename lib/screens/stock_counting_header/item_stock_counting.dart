@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_header.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/stock_counting_header_provider.dart';
-import 'package:msi_app/screens/stock_counting_item/stock_counting_item_screen.dart';
+import 'package:msi_app/screens/stock_counting_bin/stock_counting_bin_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +20,7 @@ class ItemStockCounting extends StatelessWidget {
     return InkWell(
       onTap: () {
         poProvider.selectPo(item);
-        Navigator.of(context).pushNamed(StockCountingItemScreen.routeName);
+        Navigator.of(context).pushNamed(StockCountingBinScreen.routeName);
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),

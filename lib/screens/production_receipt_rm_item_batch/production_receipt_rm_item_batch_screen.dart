@@ -5,7 +5,7 @@ import 'package:msi_app/providers/production_receipt_rm_item_list_batch_list_pro
 import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_number_list_provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_provider.dart';
-import 'package:msi_app/screens/production_receipt_rm_item/production_receipt_rm_item_screen.dart';
+import 'package:msi_app/screens/production_receipt_rm_bin/production_receipt_rm_bin_screen.dart';
 import 'package:msi_app/screens/production_receipt_rm_item_batch/widgets/production_receipt_rm_item_batch_list.dart';
 import 'package:msi_app/screens/production_receipt_rm_item_batch/widgets/production_receipt_rm_item_batch_list_dialog.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -70,8 +70,12 @@ class ProductionReceiptRMItemBatch extends StatelessWidget {
                               .toStringAsFixed(4)) >
                           double.tryParse(pickItem.openQty.toStringAsFixed(4))
                       ? showAlertGreaterThanZero(context, openQty)
-                      : Navigator.of(context).popUntil(ModalRoute.withName(
-                          ProductionReceiptRMItem.routeName));
+                      :
+                      // Navigator.of(context).popUntil(ModalRoute.withName(
+                      //     ProductionReceiptRMItem.routeName));
+                      Navigator.of(context).pushNamed(
+                          ProductionReceiptRmBinScreen.routeName,
+                          arguments: pickItem);
             },
           )
         ],

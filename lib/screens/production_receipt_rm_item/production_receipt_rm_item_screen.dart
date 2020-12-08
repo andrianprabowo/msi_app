@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/production_receipt_rm_number_list_model.dart';
+import 'package:msi_app/providers/production_receipt_rm_bin.dart';
 import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_number_list_provider.dart';
 import 'package:msi_app/screens/production_receipt_rm_final_check/production_receipt_rm_final_check_screen.dart';
@@ -18,11 +19,15 @@ import 'package:provider/provider.dart';
 class ProductionReceiptRMItem extends StatelessWidget {
   static const routeName = '/production_receipt_rm_item';
 
-  Future<void> refreshData(BuildContext context, String docNumber) async {
+  Future<void> refreshData(BuildContext context, String docNumber, String cardCode) async {
     final inventoryItemProvider =
         Provider.of<ProductionReceiptRMItemListProvider>(context,
             listen: false);
     await inventoryItemProvider.getInventItemByPlNo(docNumber);
+   
+    final pickItemProvider =
+        Provider.of<ProductionReceiptRMBinProvider>(context, listen: false);
+    await pickItemProvider.getPlBinList(cardCode);
 
     final inventoryDispatchDetailProvider =
         Provider.of<ProductionReceiptRMNumberListProvider>(context,
@@ -108,7 +113,7 @@ class ProductionReceiptRMItem extends StatelessWidget {
       BuildContext context, ProductionReceiptRMNumberListModel item) {
     return Expanded(
       child: FutureBuilder(
-        future: refreshData(context, item.docNumber),
+        future: refreshData(context, item.docNumber, item.cardCode),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -117,7 +122,7 @@ class ProductionReceiptRMItem extends StatelessWidget {
           if (snapshot.hasError) return ErrorInfo();
 
           return RefreshIndicator(
-            onRefresh: () => refreshData(context, item.docNumber),
+            onRefresh: () => refreshData(context, item.docNumber,item.cardCode),
             child: Consumer<ProductionReceiptRMItemListProvider>(
               builder: (_, provider, child) => provider.items.length == 0
                   ? NoData()

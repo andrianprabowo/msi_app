@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_batch.dart';
 
-class StockCountingItem with ChangeNotifier {
-  String itemCode;
+class ItemAllSc with ChangeNotifier {
+  final String itemCode;
   final String description;
   double openQty;
   double quantity;
@@ -15,7 +15,7 @@ class StockCountingItem with ChangeNotifier {
   String itemStorageLocation;
   List<StockCountingBatch> batchList;
 
-  StockCountingItem({
+  ItemAllSc({
     this.itemCode,
     this.description,
     this.openQty,
@@ -42,17 +42,17 @@ class StockCountingItem with ChangeNotifier {
     };
   }
 
-  factory StockCountingItem.fromMap(Map<String, dynamic> map) {
+  factory ItemAllSc.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
-    return StockCountingItem(
+    return ItemAllSc(
       itemCode: map['itemCode'] ?? '',
-      description: map['itemDesc'] ?? '',
+      description: map['dscription'] ?? '',
       openQty: map['openQty'] ?? 0.0,
       quantity: 0.0,
       fgBatch: map['fgBatch'] ?? '',
       pickedQty: 0.0,
-      unitMsr: map['unitMsr'] ?? '',
+      unitMsr: map['unitmsr'] ?? '',
       val: map['val'] ?? 0,
       itemStorageLocation: map['itemStorageLocation'] ?? '',
       batchList: map['batchList'] ?? [],
@@ -61,11 +61,11 @@ class StockCountingItem with ChangeNotifier {
 
   String toJson() => json.encode(toMap());
 
-  factory StockCountingItem.fromJson(String source) =>
-      StockCountingItem.fromMap(json.decode(source));
+  factory ItemAllSc.fromJson(String source) =>
+      ItemAllSc.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'StockCountingItem(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, pickedQty: $pickedQty, fgBatch: $fgBatch, unitMsr: $unitMsr, val: $val, itemStorageLocation: $itemStorageLocation, batchList: $batchList)';
+    return 'ItemAllSc(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, pickedQty: $pickedQty, fgBatch: $fgBatch, unitMsr: $unitMsr, val: $val, itemStorageLocation: $itemStorageLocation, batchList: $batchList)';
   }
 }

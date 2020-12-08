@@ -13,6 +13,7 @@ class ProductionReceiptItemModel with ChangeNotifier {
   final String uom;
   final String docNum;
   final String fgBatch;
+  String itemStorageLocation;
   List<ProductionReceiptItemBatchModel> batchList;
   ProductionReceiptItemModel({
     this.itemCode,
@@ -24,6 +25,7 @@ class ProductionReceiptItemModel with ChangeNotifier {
     this.uom,
     this.docNum,
     this.fgBatch,
+    this.itemStorageLocation,
     this.batchList,
   });
 
@@ -60,6 +62,7 @@ class ProductionReceiptItemModel with ChangeNotifier {
       'grfgQuantity': quantity,
       'qrfgRejectQty': quantityReject,
       'uom': uom,
+      'itemStorageLocation': itemStorageLocation,
       'listBatches': batchList?.map((x) => x?.toMap())?.toList(),
     };
   }
@@ -77,6 +80,7 @@ class ProductionReceiptItemModel with ChangeNotifier {
       uom: map['unitMsr'] ?? '',
       docNum: map['docNum'] ?? '',
       fgBatch: map['fgBatch'] ?? '',
+      itemStorageLocation: map['binCode'] ?? '',
       batchList: map['batchList'] ?? [],
     );
   }
@@ -88,6 +92,6 @@ class ProductionReceiptItemModel with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ProductionReceiptItemModel(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, quantityReject: $quantityReject, remainingQty: $remainingQty, uom: $uom, docNum: $docNum, fgBatch: $fgBatch, batchList: $batchList)';
+    return 'ProductionReceiptItemModel(itemStorageLocation: $itemStorageLocation, itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, quantityReject: $quantityReject, remainingQty: $remainingQty, uom: $uom, docNum: $docNum, fgBatch: $fgBatch, batchList: $batchList)';
   }
 }

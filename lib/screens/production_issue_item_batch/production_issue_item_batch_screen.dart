@@ -35,9 +35,9 @@ class ProductionIssueItemBatch extends StatelessWidget {
         Provider.of<ProductionIssueItemBatchProvider>(context, listen: false);
     ProductionIssueItemModel item = ModalRoute.of(context).settings.arguments;
     final formatter = NumberFormat('#,###.0000#', 'en_US');
-    var avlQty = item.availableQty == 0.0
-        ? item.availableQty.toStringAsFixed(4)
-        : formatter.format(item.availableQty);
+    // var avlQty = item.availableQty == 0.0
+    //     ? item.availableQty.toStringAsFixed(4)
+    //     : formatter.format(item.availableQty);
     return Scaffold(
       appBar: AppBar(
         title: Text('Issue (Raw Material)'),

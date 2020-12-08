@@ -6,10 +6,12 @@ import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
-class StockCountingItemProvider with ChangeNotifier {
-  List<StockCountingItem> _item = [];
-  List<StockCountingItem> _itemShow = [];
+class StockCountingAllItemProvider with ChangeNotifier {
+  List<StockCountingItem> _item;
   StockCountingItem _selected;
+
+  StockCountingItem get selected => _selected;
+
 
   List<StockCountingItem> get item {
     _item.forEach((detail) {
@@ -30,28 +32,7 @@ class StockCountingItemProvider with ChangeNotifier {
     return _item;
   }
 
-  List<StockCountingItem> get itemShow {
-    _itemShow.forEach((detail) {
-      if (detail.fgBatch == 'Y') {
-        // calculate total batch qty
-        var totalBatch = 0.0;
-        detail.batchList.forEach((batch) {
-          totalBatch = totalBatch + batch.availableQty;
-        });
-        detail.quantity = totalBatch;
-      }
-    });
-
-    _itemShow = _item.where((item) => item.quantity > 0).toList();
-
-
-    return _itemShow;
-  }
-
-  StockCountingItem get selected => _selected;
-
   Future<void> getScDetailByDocNum() async {
-    // final url = '$kBaseUrl/api/getstcdetail/docnum=$docNum';
     final url = '$kBaseUrl/api/getallitem';
 
     try {
@@ -87,8 +68,7 @@ class StockCountingItemProvider with ChangeNotifier {
     print('Added Batch: $itemBatch');
   }
 
-  void addBatchQtyBatchDate(
-      StockCountingItem itemPo, StockCountingBatch itemBatch) {
+  void addBatchQtyBatchDate(StockCountingItem itemPo, StockCountingBatch itemBatch) {
     itemPo.batchList.add(itemBatch);
     notifyListeners();
     print('Added Batch: $itemBatch');
@@ -106,8 +86,14 @@ class StockCountingItemProvider with ChangeNotifier {
     print('Update Qty: $itemPo');
   }
 
-  void setItemCode(String stagingBin) {
-    _selected.itemCode = stagingBin;
+  
+
+
+
+
+  void selectItemCode(StockCountingItem itemSelect) {
+    _selected.itemCode = itemSelect.itemCode;
     notifyListeners();
   }
+
 }

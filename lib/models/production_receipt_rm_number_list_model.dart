@@ -7,6 +7,7 @@ import 'package:msi_app/models/production_receipt_rm_item_list_model.dart';
 
 class ProductionReceiptRMNumberListModel with ChangeNotifier {
   final String docNumber;
+  int userId;
   final DateTime docDate;
   final DateTime postingDate;
   final String cardCode;
@@ -18,6 +19,7 @@ class ProductionReceiptRMNumberListModel with ChangeNotifier {
   List<ProductionReceiptRMItemListModel> itemList;
   ProductionReceiptRMNumberListModel({
     this.docNumber,
+    this.userId,
     this.docDate,
     this.postingDate,
     this.cardCode,
@@ -31,6 +33,7 @@ class ProductionReceiptRMNumberListModel with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'doNo': docNumber,
+      'idUserInput': userId,
       'deliveryDate': docDate?.toIso8601String(),
       'postingDate': DateTime.now().toIso8601String(),
       'plant': cardCode,
@@ -63,6 +66,6 @@ class ProductionReceiptRMNumberListModel with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ProductionReceiptRMNumberListModel(docNumber: $docNumber, docDate: $docDate, postingDate: $postingDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, filename: $filename, storageLocation: $storageLocation, itemList: $itemList)';
+    return 'ProductionReceiptRMNumberListModel(docNumber: $docNumber, userId: $userId, docDate: $docDate, postingDate: $postingDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, filename: $filename, storageLocation: $storageLocation, itemList: $itemList)';
   } 
 }

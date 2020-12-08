@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
-import 'package:msi_app/screens/stock_counting_bin/stock_counting_bin_screen.dart';
+import 'package:msi_app/screens/stock_counting_check/stock_counting_check.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:provider/provider.dart';
 
-class DialogInputQtyNonBatchSc extends StatefulWidget {
+class WidgetSameBin extends StatefulWidget {
   final StockCountingItem item;
 
-  const DialogInputQtyNonBatchSc(this.item);
+  const WidgetSameBin(this.item);
 
   @override
-  _DialogInputQtyNonBatchScState createState() =>
-      _DialogInputQtyNonBatchScState();
+  _WidgetSameBinState createState() =>
+      _WidgetSameBinState();
 }
 
-class _DialogInputQtyNonBatchScState extends State<DialogInputQtyNonBatchSc> {
+class _WidgetSameBinState extends State<WidgetSameBin> {
   final _quantity = TextEditingController();
 
   StockCountingItem get item {
@@ -65,7 +65,6 @@ class _DialogInputQtyNonBatchScState extends State<DialogInputQtyNonBatchSc> {
   }
 
   Widget buildButtonSubmit(BuildContext context) {
-    // StockCountingBin pickItem = ModalRoute.of(context).settings.arguments;
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(
@@ -78,16 +77,11 @@ class _DialogInputQtyNonBatchScState extends State<DialogInputQtyNonBatchSc> {
             double.parse(_quantity.text),
           );
 
-          
-          // final stockBinProvider =
-          //     Provider.of<StockCountingBinProvider>(context, listen: false);
-          // Map map = ModalRoute.of(context).settings.arguments;
-
-          // final itemList = pickItemReceiveProvider.item;
-          // stockBinProvider.addNewItem(pickItem, itemList);
-          // Navigator.of(context).pop();
+          Navigator.of(context).pop();
           Navigator.of(context)
-              .pushNamed(StockCountingBinScreen.routeName, arguments: item);
+              .pushNamed(StockCountingCheckScreen.routeName, arguments: item);
+          // Navigator.of(context).popUntil(
+          //         ModalRoute.withName(StockCountingBinScreen.routeName));
         },
       ),
     );

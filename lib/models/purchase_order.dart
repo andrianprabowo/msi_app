@@ -5,6 +5,7 @@ import 'package:msi_app/models/item_purchase_order.dart';
 
 class PurchaseOrder with ChangeNotifier {
   final int docEntry;
+  int userId;
   final DateTime postingDate;
   final String poNumber;
   final DateTime docDate;
@@ -17,6 +18,7 @@ class PurchaseOrder with ChangeNotifier {
   List<ItemPurchaseOrder> detailList;
   PurchaseOrder({
     this.docEntry,
+    this.userId,
     this.postingDate,
     this.poNumber,
     this.docDate,
@@ -33,6 +35,7 @@ class PurchaseOrder with ChangeNotifier {
     return {
       'postingDate': DateTime.now().toIso8601String(),
       'poNo': poNumber,
+      'idUserInput': userId,
       'deliveryDate': docDate?.toIso8601String(),
       'kdVendor': vendorCode,
       'nmVendor': vendorName,
@@ -65,6 +68,6 @@ class PurchaseOrder with ChangeNotifier {
 
   @override
   String toString() {
-    return 'PurchaseOrder(docEntry: $docEntry, poNumber: $poNumber, docDate: $docDate, vendorCode: $vendorCode, vendorName: $vendorName, plant: $plant, detailList: $detailList)';
+    return 'PurchaseOrder(userId: $userId,docEntry: $docEntry, poNumber: $poNumber, docDate: $docDate, vendorCode: $vendorCode, vendorName: $vendorName, plant: $plant, detailList: $detailList)';
   }
 }

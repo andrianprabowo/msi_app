@@ -4,10 +4,10 @@ import 'package:msi_app/screens/stock_counting_batch/widget/dialog_pick_batch_sc
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 
-class ItemPickBatchSc extends StatelessWidget {
+class ItemStockCountingBatch extends StatelessWidget {
   final StockCountingBatch item;
 
-  const ItemPickBatchSc(this.item);
+  const ItemStockCountingBatch(this.item);
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +25,9 @@ class ItemPickBatchSc extends StatelessWidget {
         child: Column(
           children: [
             BaseTextLine('Batch No', item.batchNo),
-            BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(2)),
+            // BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(2)),
             BaseTextLine('Expired Date', convertDate(item.expiredDate)),
-            BaseTextLine('Picked Qty', item.pickQty.toStringAsFixed(2)),
+            BaseTextLine('Count Qty', item.pickQty.toStringAsFixed(2)),
           ],
         ),
       ),

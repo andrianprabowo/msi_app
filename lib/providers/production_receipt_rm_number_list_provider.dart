@@ -63,8 +63,10 @@ class ProductionReceiptRMNumberListProvider with ChangeNotifier {
     };
 
     final header =  Provider.of<ProductionReceiptRMProvider>(context, listen: false).selected;
+    int userId = await Prefs.getInt(Prefs.userId.toString());
 
     _selected.storageLocation = header.binCode;
+    _selected.userId = userId ;
     _selected.itemList = detailList;
 
     try {

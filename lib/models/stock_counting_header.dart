@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/stock_counting_item.dart';
+import 'package:msi_app/models/stock_counting_bin.dart';
 
 class StockCountingHeader with ChangeNotifier {
  final String pickNumber;
@@ -12,7 +12,7 @@ class StockCountingHeader with ChangeNotifier {
   final String pickRemark;
   final String filename;
   String storageLocation;
-  List<StockCountingItem> pickItemList;
+  List<StockCountingBin> pickItemList;
   StockCountingHeader({
     this.pickNumber,
     this.pickDate,

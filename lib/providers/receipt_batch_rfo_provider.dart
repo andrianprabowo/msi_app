@@ -5,7 +5,6 @@ import 'package:msi_app/models/item_batch_rfo.dart';
 import 'package:msi_app/providers/purchase_order_rfo_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
-import 'package:msi_app/utils/prefs.dart';
 import 'package:provider/provider.dart';
 
 class ReceiptBatchRfoProvider with ChangeNotifier {
@@ -27,8 +26,8 @@ class ReceiptBatchRfoProvider with ChangeNotifier {
   double get totalPicked => _totalPicked;
 
   Future<void> getBatchListByItemWarehouse(
-      BuildContext context, String itemCode, String cardCode) async {
-    final warehouseId = await Prefs.getString(Prefs.warehouseId);
+      BuildContext context, String itemCode) async {
+    // final warehouseId = await Prefs.getString(Prefs.warehouseId);
     final header =
         Provider.of<PurchaseOrderRfoProvider>(context, listen: false).selected;
     final xxx = header.vendorCode;

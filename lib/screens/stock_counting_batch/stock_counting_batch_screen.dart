@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/stock_counting_bin.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/stock_counting_batch_provider.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
-import 'package:msi_app/screens/stock_counting_batch/widget/dialog_pick_batch_sc.dart';
-import 'package:msi_app/screens/stock_counting_batch/widget/item_pick_batch_sc.dart';
+import 'package:msi_app/screens/stock_counting_batch/widget/item_stock_counting_batch_sc.dart';
 import 'package:msi_app/screens/stock_counting_item/stock_counting_item_screen.dart';
+import 'package:msi_app/screens/stock_counting_item/widgets/dialog_input_qty_batch.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -23,8 +22,9 @@ class StockCountingBatchScreen extends StatelessWidget {
     String itemCode,
     String binCode,
   ) async {
-    final provider = Provider.of<StockCountingBatchProvider>(context, listen: false);
-    await provider.getPlBatchByItemWhs(itemCode, binCode);
+    final provider =
+        Provider.of<StockCountingBatchProvider>(context, listen: false);
+    await provider.getPlBatchByItemWhs(context, itemCode);
   }
 
   @override
@@ -33,9 +33,11 @@ class StockCountingBatchScreen extends StatelessWidget {
         Provider.of<StockCountingItemProvider>(context, listen: false);
     final pickBatchProvider =
         Provider.of<StockCountingBatchProvider>(context, listen: false);
-    Map map = ModalRoute.of(context).settings.arguments;
-    StockCountingItem pickItem = map['pickItemReceive'];
-    StockCountingBin itemBin = map['pickListBin'];
+    StockCountingItem item = ModalRoute.of(context).settings.arguments;
+
+    // Map map = ModalRoute.of(context).settings.arguments;
+    // StockCountingItem pickItem = map['batchList'];
+    // StockCountingBin itemBin = map['pickListBin'];
 
     return Scaffold(
       appBar: AppBar(
@@ -44,11 +46,11 @@ class StockCountingBatchScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.check_box_outlined),
             onPressed: () {
-              // update bin location
-              pickItem.itemStorageLocation = itemBin.binLocation;
-              // add batch list
+              //update bin location
+              // pickItem.itemStorageLocation = itemBin.binLocation;
+              //add batch list
               final batchList = pickBatchProvider.pickedItems;
-              pickItemProvider.addBatch(pickItem, batchList);
+              pickItemProvider.addBatch(item, batchList);
 
               Navigator.of(context).popUntil(
                   ModalRoute.withName(StockCountingItemScreen.routeName));
@@ -57,7 +59,7 @@ class StockCountingBatchScreen extends StatelessWidget {
         ],
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(  
+        padding: const EdgeInsets.symmetric(
           vertical: kLarge,
           horizontal: kMedium,
         ),
@@ -79,33 +81,54 @@ class StockCountingBatchScreen extends StatelessWidget {
                 SizedBox(width: getProportionateScreenWidth(kLarge)),
                 FlatButton.icon(
                     onPressed: () {
-                      pickBatchProvider.clear();
+                      // pickBatchProvider.clear();
                     },
                     icon: Icon(Icons.delete),
                     color: Colors.red,
                     label: Text('CLEAR'))
               ],
             ),
-            BaseTitle(pickItem.itemCode),
-            BaseTitle(pickItem.description),
+            Row(
+              children: [
+                Consumer<StockCountingBatchProvider>(
+                    builder: (BuildContext _, provider, Widget child) {
+                  return Expanded(
+                    child: BaseTitle(
+                      'Add Batch',
+                    ),
+                  );
+                }),
+                SizedBox(width: getProportionateScreenWidth(kLarge)),
+                FlatButton.icon(
+                    onPressed: () {
+                      // Navigator.of(context).pop();
+
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (_) => DialogInputQtyBatch(item));
+                    },
+                    icon: Icon(Icons.delete),
+                    color: Colors.green,
+                    label: Text('New Batch'))
+              ],
+            ),
+            BaseTitle(item.itemCode),
+            BaseTitle(item.description),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),
             Divider(),
-            buildItemList(context, pickItem, itemBin),
+            buildItemList(context, item),
           ],
         ),
       ),
     );
   }
 
-  Widget buildItemList(
-    BuildContext context,
-    StockCountingItem pickItem,
-    StockCountingBin itemBin,
-  ) {
+  Widget buildItemList(BuildContext context, StockCountingItem pickItem) {
     return Expanded(
       child: FutureBuilder(
-        future: fetchData(context, pickItem.itemCode, itemBin.binLocation),
+        future:
+            fetchData(context, pickItem.itemCode, pickItem.itemStorageLocation),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -121,7 +144,7 @@ class StockCountingBatchScreen extends StatelessWidget {
                     itemBuilder: (_, index) {
                       return ChangeNotifierProvider.value(
                         value: provider.items[index],
-                        child: ItemPickBatchSc(provider.items[index]),
+                        child: ItemStockCountingBatch(provider.items[index]),
                       );
                     },
                   ),
@@ -132,7 +155,8 @@ class StockCountingBatchScreen extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<StockCountingBatchProvider>(context, listen: false);
+    final provider =
+        Provider.of<StockCountingBatchProvider>(context, listen: false);
     return InputScan(
       label: 'Batch Number',
       hint: 'Input or scan Item Batch Number',
@@ -140,7 +164,7 @@ class StockCountingBatchScreen extends StatelessWidget {
         final item = provider.findByBatchNo(value);
         showModalBottomSheet(
           context: context,
-          builder: (_) => DialogPickBatchSc(item),
+          builder: (_) => ItemStockCountingBatch(item),
         );
       },
     );

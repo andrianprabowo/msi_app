@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_model.dart';
 import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
+import 'package:msi_app/screens/production_receipt_rm_bin/production_receipt_rm_bin_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -91,9 +92,9 @@ class _ProductionReceiptRMItemNonBatchDialogState
             double.parse(_quantity.text),
             item.itemStorageLocation,
           );
-          /* Navigator.of(context)
-            .pushNamed(ProductionReceiptRMItemBatch.routeName, arguments: item); */
-          Navigator.of(context).pop();
+           Navigator.of(context)
+            .pushNamed(ProductionReceiptRmBinScreen.routeName, arguments: item); 
+          // Navigator.of(context).pop();
         },
       ),
     );

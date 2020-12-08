@@ -20,6 +20,15 @@ class StockCountingHeaderScreen  extends StatelessWidget {
         .getAllPoByWarehouseId();
   }
 
+  // Future<void> fetchData(BuildContext context, String docNum) async {
+  //   final itemPoProvider = Provider.of<StockCountingItemProvider>(context, listen: false);
+  //   await itemPoProvider.getScDetailByDocNum(docNum);
+
+  //   final poProvider =
+  //       Provider.of<StockCountingItemProvider>(context, listen: false);
+  //   poProvider.selected.batchList = itemPoProvider.item;
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

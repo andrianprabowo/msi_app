@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/stock_counting_bin.dart';
 import 'package:msi_app/models/stock_counting_header.dart';
-import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:msi_app/utils/prefs.dart';
@@ -14,8 +14,8 @@ class StockCountingHeaderProvider with ChangeNotifier {
   List<StockCountingHeader> get items => _items;
   StockCountingHeader get selected => _selected;
 
-  List<StockCountingItem> get detailList {
-    return _selected.pickItemList.where((item) => item.quantity > 0).toList();
+  List<StockCountingBin> get detailList {
+    return _selected.pickItemList.where((item) => item.hashCode > 0).toList();
   }
 
   Future<void> getAllPoByWarehouseId() async {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/providers/auth_provider.dart';
-import 'package:msi_app/providers/staging_bin.provider.dart';
 import 'package:msi_app/providers/staging_bin_rfo.provider.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/list_put_away_outlet/list_put_away_outlet_screen.dart';
@@ -137,7 +136,7 @@ class PutAwayRfoScreen extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<StagingBinProvider>(context, listen: false);
+    final provider = Provider.of<StagingBinRfoProvider>(context, listen: false);
     return InputScan(
       label: 'Staging Bin',
       hint: 'Input or scan Staging Bin',

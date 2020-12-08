@@ -3,9 +3,8 @@ import 'package:msi_app/models/stock_counting_header.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/stock_counting_header_provider.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
-import 'package:msi_app/screens/stock_counting_check/stock_counting_check.dart';
+import 'package:msi_app/screens/stock_counting_batch/stock_counting_batch_screen.dart';
 import 'package:msi_app/screens/stock_counting_item/widgets/dialog_input_non_batch_sc.dart';
-import 'package:msi_app/screens/stock_counting_item/widgets/dialog_input_qty_batch.dart';
 import 'package:msi_app/screens/stock_counting_item/widgets/item_detail_sc.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -13,6 +12,7 @@ import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/input_scan.dart';
+import 'package:msi_app/widgets/item_all_sc_widget.dart';
 import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
@@ -22,11 +22,11 @@ class StockCountingItemScreen extends StatelessWidget {
   Future<void> refreshData(BuildContext context, String pickNumber) async {
     final pickItemProvider =
         Provider.of<StockCountingItemProvider>(context, listen: false);
-    await pickItemProvider.getScDetailByDocNum(pickNumber);
+    await pickItemProvider.getScDetailByDocNum();
 
-    final pickWhsProvider =
-        Provider.of<StockCountingHeaderProvider>(context, listen: false);
-    pickWhsProvider.selected.pickItemList = pickItemProvider.item;
+    //   final pickWhsProvider =
+    //       Provider.of<StockCountingHeaderProvider>(context, listen: false);
+    //   pickWhsProvider.selected.pickItemList = pickItemProvider.item;
   }
 
   @override
@@ -40,14 +40,14 @@ class StockCountingItemScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Stock Counting'),
         actions: [
-          IconButton(
-            icon: Icon(Icons.post_add),
-            onPressed: () {
-              authProvider.clearBin();
-              Navigator.of(context)
-                  .pushNamed(StockCountingCheckScreen.routeName);
-            },
-          )
+          // IconButton(
+          //   icon: Icon(Icons.post_add),
+          //   onPressed: () {
+          //     authProvider.clearBin();
+          //     Navigator.of(context)
+          //         .pushNamed(StockCountingCheckScreen.routeName);
+          //   },
+          // )
         ],
       ),
       body: Container(
@@ -67,9 +67,11 @@ class StockCountingItemScreen extends StatelessWidget {
             BaseTextLine('Warehouse Name', authProvider.warehouseName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildInputScan(context),
+            ItemAllScWidget(),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Items'),
             Divider(),
+            // if(false)
             buildItemList(context, item),
           ],
         ),
@@ -91,14 +93,14 @@ class StockCountingItemScreen extends StatelessWidget {
           return RefreshIndicator(
             onRefresh: () => refreshData(context, item.pickNumber),
             child: Consumer<StockCountingItemProvider>(
-              builder: (_, provider, child) => provider.item.length == 0
+              builder: (_, provider, child) => provider.itemShow.length == 0
                   ? NoData()
                   : ListView.builder(
-                      itemCount: provider.item.length,
+                      itemCount: provider.itemShow.length,
                       itemBuilder: (_, index) {
                         return ChangeNotifierProvider.value(
-                          value: provider.item[index],
-                          child: ItemDetailSc(provider.item[index]),
+                          value: provider.itemShow[index],
+                          child: ItemDetailSc(provider.itemShow[index]),
                         );
                       },
                     ),
@@ -117,14 +119,27 @@ class StockCountingItemScreen extends StatelessWidget {
       hint: 'Scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value);
-        item.fgBatch == 'Y'
-            ? showModalBottomSheet(
-                context: context, builder: (_) => DialogInputQtyBatch(item))
-            // Navigator.of(context)
-            //     .pushNamed(StockCountingBinScreen.routeName, arguments: item)
-            : showModalBottomSheet(
-                context: context,
-                builder: (_) => DialogInputQtyNonBatchSc(item));
+
+        if (item.fgBatch == 'Y') {
+          // Navigator.of(context).pop();
+          Navigator.of(context)
+              .pushNamed(StockCountingBatchScreen.routeName, arguments: item);
+
+          // Navigator.of(context)
+          //     .pushNamed(StockCountingBatchScreen.routeName, arguments: item);
+        } else {
+          showModalBottomSheet(
+              context: context, builder: (_) => DialogInputQtyNonBatchSc(item));
+        }
+        // item.fgBatch == 'Y'
+        //     ?
+        //     // showModalBottomSheet(
+        //     //     context: context, builder: (_) => DialogInputQtyBatch(item))
+        //     Navigator.of(context)
+        //         .pushNamed(StockCountingBatchScreen.routeName, arguments: item)
+        //     : showModalBottomSheet(
+        //         context: context,
+        //         builder: (_) => DialogInputQtyNonBatchSc(item));
       },
     );
   }

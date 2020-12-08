@@ -2,28 +2,36 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_batch.dart';
+import 'package:msi_app/providers/stock_counting_bin_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:msi_app/utils/prefs.dart';
+import 'package:provider/provider.dart';
 
 class StockCountingBatchProvider with ChangeNotifier {
   List<StockCountingBatch> _items = [];
   double _totalPicked = 0.0;
 
   List<StockCountingBatch> get items {
-    return _items.where((item) => item.availableQty > item.pickQty).toList();
+    // return _items.where((item) => item.availableQty > item.pickQty).toList();
+    return _items;
+
   }
 
   List<StockCountingBatch> get pickedItems {
+    // return _items;
     return _items.where((item) => item.pickQty > 0).toList();
   }
 
   double get totalPicked => _totalPicked;
 
-  Future<void> getPlBatchByItemWhs(String itemCode, String binCode) async {
+  Future<void> getPlBatchByItemWhs(BuildContext context, String itemCode) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
+    final header =
+        Provider.of<StockCountingBinProvider>(context, listen: false).selected;
+    final binLoc = header.binLocation;
     final url =
-        '$kBaseUrl/api/getplbatchlistbyitmwhs/itemcode=$itemCode&whscode=$warehouseId&bincode=$binCode';
+        '$kBaseUrl/api/getstcbatch/itemcode=$itemCode&whscode=$warehouseId&bincode=$binLoc';
 
     try {
       final response = await http.get(url);

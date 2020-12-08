@@ -64,7 +64,9 @@ class PurchaseOrderRfoProvider with ChangeNotifier {
     };
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
     final binId = await Prefs.getString(Prefs.binId);
+    final userId = await Prefs.getInt(Prefs.userId.toString());
 
+    _selected.userId = userId;
     _selected.storageLocation = binId;
     _selected.plant = warehouseId;
     _selected.detailList = detailList;
@@ -78,6 +80,7 @@ class PurchaseOrderRfoProvider with ChangeNotifier {
       print(response.request);
       print(_selected.toJson());
 
+      print('Status: ${_selected.userId}');
       print('Status: ${response.statusCode}');
       final data = json.decode(response.body) as Map;
       print(data);

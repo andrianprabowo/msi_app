@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/screens/receipt_batch_rfo/receipt_batch_rfo_screen.dart';
+import 'package:msi_app/screens/receipt_detail_rfo/widgets/dialog_input_non_batch_rfo.dart';
 import 'package:msi_app/widgets/item_bin_rfo.dart';
 import 'package:msi_app/models/purchase_order_rfo.dart';
 import 'package:msi_app/providers/item_po_provider_rfo.dart';
@@ -122,11 +124,18 @@ class ReceiptDetailRfoScreen extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    // final provider = Provider.of<ItemPoRfoProvider>(context, listen: false);
+    final provider = Provider.of<ItemPoRfoProvider>(context, listen: false);
     return InputScan(
       label: 'Item Barcode',
       hint: 'Input or scan Item Barcode',
       scanResult: (value) {
+        final item = provider.findByItemCode(value);
+
+        item.fgBatch == 'Y'
+            ? Navigator.of(context)
+                .pushNamed(ReceiptBatchRfoScreen.routeName, arguments: item)
+            : showModalBottomSheet(
+                context: context, builder: (_) => DialogInputQtyNonBatchRfo(item));
         // final item = provider.findByItemCode(value);
         // showModalBottomSheet(
         //   context: context,
