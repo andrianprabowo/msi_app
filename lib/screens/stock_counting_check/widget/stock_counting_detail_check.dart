@@ -26,7 +26,9 @@ class StockCountingDetailCheck extends StatelessWidget {
           BaseTextLine('UoM', item.unitMsr),
           BaseTextLine('Item Batch', item.fgBatch),
           if (item.itemStorageLocation.isNotEmpty)
-            BaseTextLine('Storage Location', item.itemStorageLocation),
+            BaseTextLine('Storage Bin', ''),
+          if (item.itemStorageLocation.isNotEmpty)
+            BaseTextLine('', item.itemStorageLocation),
           Divider(),
           if (item.batchList.isNotEmpty) BaseTitle('Item Batch List'),
           buildItemBatchList(item.batchList),

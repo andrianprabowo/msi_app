@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/stock_counting_bin_provider.dart';
+import 'package:msi_app/providers/stock_counting_item_provider.dart';
 import 'package:msi_app/screens/stock_counting_bin/widgets/item_stock_counting_bin.dart';
 import 'package:msi_app/screens/stock_counting_check/stock_counting_check.dart';
 import 'package:msi_app/screens/stock_counting_item/stock_counting_item_screen.dart';
@@ -16,16 +17,19 @@ import 'package:provider/provider.dart';
 class StockCountingBinScreen extends StatelessWidget {
   static const routeName = '/stock_counting_bin';
 
-  
-
   Future<void> refreshData(BuildContext context) async {
-    await Provider.of<StockCountingBinProvider>(context, listen: false).getPlBinList(context);
+    await Provider.of<StockCountingBinProvider>(context, listen: false)
+        .getPlBinList(context);
+
+    // Reset Picked Items
+    Provider.of<StockCountingItemProvider>(context, listen: false)
+        .clearPickedItems();
   }
 
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Stock Counting Bin'),
@@ -96,13 +100,14 @@ class StockCountingBinScreen extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<StockCountingBinProvider>(context, listen: false);
+    final provider =
+        Provider.of<StockCountingBinProvider>(context, listen: false);
     return InputScan(
       label: 'Stock Counting Bin',
       hint: 'Input or scan Stock Counting Bin',
       scanResult: (value) {
         final item = provider.findByBinLocation(value);
-      provider.selectStagingBin(item);
+        provider.selectStagingBin(item);
         Navigator.of(context).pushNamed(StockCountingItemScreen.routeName);
       },
     );

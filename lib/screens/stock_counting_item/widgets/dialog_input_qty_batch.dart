@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/stock_counting_batch.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
-import 'package:msi_app/providers/stock_counting_item_provider.dart';
+import 'package:msi_app/providers/stock_counting_batch_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_title.dart';
@@ -110,7 +110,7 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
       child: TextFormField(
         keyboardType: TextInputType.number,
         controller: _quantity,
-      textInputAction: TextInputAction.done,
+        textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: 'Quantity',
@@ -127,28 +127,36 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
       child: RaisedButton(
         child: Text('Submit'),
         onPressed: () {
+          try {
+            double.parse(_quantity.text);
+          } catch (error) {
+            print('Quantity is required');
+            return;
+          }
+
           // if (double.parse(_quantity.text) > widget.item.openQty) {
 
           //   print('Tidak boleh lebih besar dari Available Qty ');
           //   return;
           // }
-          final itemPoProvider =
-              Provider.of<StockCountingItemProvider>(context, listen: false);
+
+          final provider =
+              Provider.of<StockCountingBatchProvider>(context, listen: false);
           String dateString =
               DateFormat().addPattern('dd/MM/yy').format(_selectedDate);
-          itemPoProvider.addBatchQtyBatchDate(
-            item,
-            StockCountingBatch(
+          final qty = double.parse(_quantity.text);
+
+          var itemBatch = StockCountingBatch(
               batchNo: _batchNumber.text.isEmpty
                   ? "BatchNo-$dateString"
                   : _batchNumber.text,
               expiredDate: _selectedDate,
-              availableQty: double.parse(_quantity.text),
-            ),
-          );
-          // Navigator.of(context)
-          //     .pushNamed(StockCountingBinScreen.routeName, arguments: item);
-           Navigator.of(context).pop();
+              pickQty: qty,
+              availableQty: 0.0);
+
+          provider.addItemBatch(itemBatch);
+          provider.updatePickQty(itemBatch.batchNo, qty);
+          Navigator.of(context).pop();
         },
       ),
     );

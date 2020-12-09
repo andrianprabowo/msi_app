@@ -7,7 +7,7 @@ import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:provider/provider.dart';
 
 class ItemBatchWidgetSc extends StatelessWidget {
- final StockCountingItem pickItem;
+  final StockCountingItem pickItem;
   final StockCountingBatch batch;
 
   const ItemBatchWidgetSc(this.pickItem, this.batch);

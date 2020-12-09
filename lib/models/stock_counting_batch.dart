@@ -17,7 +17,7 @@ class StockCountingBatch with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'batchNo': batchNo,
-      'batchQuantity': availableQty,
+      'batchQuantity': pickQty,
       'pickQty': pickQty,
       'expDate': expiredDate?.toIso8601String(),
     };

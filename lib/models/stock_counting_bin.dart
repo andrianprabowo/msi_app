@@ -6,17 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 
 class StockCountingBin with ChangeNotifier {
-   final String binLocation;
+  final String binLocation;
   final double capacity;
   final String warehouse;
   final double avlQty;
- List<StockCountingItem> pickItemList;
   StockCountingBin({
     this.binLocation,
     this.capacity,
     this.warehouse,
     this.avlQty,
-    this.pickItemList,
   });
 
   StockCountingBin copyWith({
@@ -31,7 +29,6 @@ class StockCountingBin with ChangeNotifier {
       capacity: capacity ?? this.capacity,
       warehouse: warehouse ?? this.warehouse,
       avlQty: avlQty ?? this.avlQty,
-      pickItemList: pickItemList ?? this.pickItemList,
     );
   }
 
@@ -41,49 +38,46 @@ class StockCountingBin with ChangeNotifier {
       'capacity': capacity,
       'warehouse': warehouse,
       'avlQty': avlQty,
-      'pickItemList': pickItemList?.map((x) => x?.toMap())?.toList(),
     };
   }
 
   factory StockCountingBin.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return StockCountingBin(
       binLocation: map['binCode'] ?? '',
       capacity: map['capacity'] ?? 0.0,
       warehouse: map['warehouse'] ?? '',
       avlQty: map['avlqty'] ?? 0.0,
-      pickItemList:  map['pickItemList'] ?? [],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory StockCountingBin.fromJson(String source) => StockCountingBin.fromMap(json.decode(source));
+  factory StockCountingBin.fromJson(String source) =>
+      StockCountingBin.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'StockCountingBin(binLocation: $binLocation, capacity: $capacity, warehouse: $warehouse, avlQty: $avlQty, pickItemList: $pickItemList)';
+    return 'StockCountingBin(binLocation: $binLocation, capacity: $capacity, warehouse: $warehouse, avlQty: $avlQty)';
   }
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
-  
+
     return o is StockCountingBin &&
-      o.binLocation == binLocation &&
-      o.capacity == capacity &&
-      o.warehouse == warehouse &&
-      o.avlQty == avlQty &&
-      listEquals(o.pickItemList, pickItemList);
+        o.binLocation == binLocation &&
+        o.capacity == capacity &&
+        o.warehouse == warehouse &&
+        o.avlQty == avlQty;
   }
 
   @override
   int get hashCode {
     return binLocation.hashCode ^
-      capacity.hashCode ^
-      warehouse.hashCode ^
-      avlQty.hashCode ^
-      pickItemList.hashCode;
+        capacity.hashCode ^
+        warehouse.hashCode ^
+        avlQty.hashCode;
   }
- }
+}

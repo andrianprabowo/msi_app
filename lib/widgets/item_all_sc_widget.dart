@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/auth_provider.dart';
-import 'package:msi_app/providers/stock_counting_all_item_provider.dart';
+import 'package:msi_app/providers/stock_counting_item_provider.dart';
 import 'package:msi_app/screens/stock_counting_batch/stock_counting_batch_screen.dart';
 import 'package:msi_app/screens/stock_counting_item/widgets/dialog_input_non_batch_sc.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:select_dialog/select_dialog.dart';
-
 
 class ItemAllScWidget extends StatelessWidget {
   @override
@@ -46,19 +45,19 @@ class ItemAllScWidget extends StatelessWidget {
 
   Widget buildChangeBin(BuildContext context) {
     final stockCountprovider =
-        Provider.of<StockCountingAllItemProvider>(context, listen: false);
+        Provider.of<StockCountingItemProvider>(context, listen: false);
     // final authProvider = Provider.of<AuthProvider>(context, listen: false);
     // final poProvider =
     //     Provider.of<StockCountingItemProvider>(context, listen: false);
     return IconButton(
       icon: Icon(Icons.search),
       onPressed: () async {
-        await stockCountprovider.getScDetailByDocNum();
+        // await stockCountprovider.getAllItems();
         SelectDialog.showModal<StockCountingItem>(
           context,
-          label: "Select New Item",
+          label: "Search Item",
           showSearchBox: true,
-          items: stockCountprovider.item,
+          items: stockCountprovider.allItems,
           // print('object dari item${item.itemCode}');
 
           itemBuilder: (context, item, _) {

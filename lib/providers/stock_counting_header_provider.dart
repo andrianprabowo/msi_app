@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_header.dart';
-import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:msi_app/utils/prefs.dart';
@@ -13,10 +12,12 @@ class StockCountingHeaderProvider with ChangeNotifier {
 
   List<StockCountingHeader> get items => _items;
   StockCountingHeader get selected => _selected;
-  
+
   Future<void> getAllPoByWarehouseId() async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
-    final url = '$kBaseUrl/api/getstcbywhs/whscode=$warehouseId';
+    final username = await Prefs.getString(Prefs.username);
+    final url =
+        '$kBaseUrl/api/getstcbywhs/whscode=$warehouseId&cardcode=$username';
 
     try {
       final response = await http.get(url);
@@ -57,7 +58,7 @@ class StockCountingHeaderProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Map<String, dynamic>> createReceiptVendor(List<StockCountingItem> itemShow) async {
+  Future<Map<String, dynamic>> createReceiptVendor() async {
     var url = '$kBaseUrl/tgrpo/tgrpo/api/ListSTCK';
     final headers = {
       'Content-type': 'application/json',

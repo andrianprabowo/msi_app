@@ -76,16 +76,17 @@ class _DialogInputQtyNonBatchScState extends State<DialogInputQtyNonBatchSc> {
           pickItemReceiveProvider.inputQty(
             item,
             double.parse(_quantity.text),
+            context,
           );
 
-          
           // final stockBinProvider =
           //     Provider.of<StockCountingBinProvider>(context, listen: false);
           // Map map = ModalRoute.of(context).settings.arguments;
 
           // final itemList = pickItemReceiveProvider.item;
           // stockBinProvider.addNewItem(pickItem, itemList);
-          // Navigator.of(context).pop();
+
+          Navigator.of(context).pop();
           Navigator.of(context)
               .pushNamed(StockCountingCheckScreen.routeName, arguments: item);
         },

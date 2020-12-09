@@ -15,7 +15,6 @@ class StockCountingBatchProvider with ChangeNotifier {
   List<StockCountingBatch> get items {
     // return _items.where((item) => item.availableQty > item.pickQty).toList();
     return _items;
-
   }
 
   List<StockCountingBatch> get pickedItems {
@@ -25,7 +24,8 @@ class StockCountingBatchProvider with ChangeNotifier {
 
   double get totalPicked => _totalPicked;
 
-  Future<void> getPlBatchByItemWhs(BuildContext context, String itemCode) async {
+  Future<void> getPlBatchByItemWhs(
+      BuildContext context, String itemCode) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
     final header =
         Provider.of<StockCountingBinProvider>(context, listen: false).selected;
@@ -60,7 +60,8 @@ class StockCountingBatchProvider with ChangeNotifier {
   }
 
   void updatePickQty(String batchNo, double pickQty) {
-    StockCountingBatch item = _items.where((item) => item.batchNo == batchNo).first;
+    StockCountingBatch item =
+        _items.where((item) => item.batchNo == batchNo).first;
     if (item != null) {
       item.pickQty = pickQty;
     }
@@ -84,5 +85,11 @@ class StockCountingBatchProvider with ChangeNotifier {
 
     _totalPicked = total;
     notifyListeners();
+  }
+
+  void addItemBatch(StockCountingBatch itemBatch) {
+    _items.add(itemBatch);
+    notifyListeners();
+    print('Added Batch: $itemBatch');
   }
 }

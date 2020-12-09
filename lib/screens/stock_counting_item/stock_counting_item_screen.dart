@@ -20,9 +20,9 @@ class StockCountingItemScreen extends StatelessWidget {
   static const routeName = '/stock_counting_item';
 
   Future<void> refreshData(BuildContext context, String pickNumber) async {
-    final pickItemProvider =
+    final scItemProvider =
         Provider.of<StockCountingItemProvider>(context, listen: false);
-    await pickItemProvider.getScDetailByDocNum();
+    await scItemProvider.getAllItems();
 
     //   final pickWhsProvider =
     //       Provider.of<StockCountingHeaderProvider>(context, listen: false);
@@ -50,62 +50,62 @@ class StockCountingItemScreen extends StatelessWidget {
           // )
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: kLarge,
-          horizontal: kMedium,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            BaseTextLine('Inventory Count No', item.pickNumber),
-            SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Counting Date', convertDate(item.pickDate)),
-            SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Counter Assign', authProvider.username),
-            SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Warehouse Name', authProvider.warehouseName),
-            SizedBox(height: getProportionateScreenHeight(kLarge)),
-            buildInputScan(context),
-            ItemAllScWidget(),
-            SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTitle('List Items'),
-            Divider(),
-            // if(false)
-            buildItemList(context, item),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildItemList(BuildContext context, StockCountingHeader item) {
-    return Expanded(
-      child: FutureBuilder(
+      body: FutureBuilder(
         future: refreshData(context, item.pickNumber),
-        builder: (_, snapshot) {
+        builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.hasError) return ErrorInfo();
 
-          return RefreshIndicator(
-            onRefresh: () => refreshData(context, item.pickNumber),
-            child: Consumer<StockCountingItemProvider>(
-              builder: (_, provider, child) => provider.itemShow.length == 0
-                  ? NoData()
-                  : ListView.builder(
-                      itemCount: provider.itemShow.length,
-                      itemBuilder: (_, index) {
-                        return ChangeNotifierProvider.value(
-                          value: provider.itemShow[index],
-                          child: ItemDetailSc(provider.itemShow[index]),
-                        );
-                      },
-                    ),
+          return Container(
+            padding: const EdgeInsets.symmetric(
+              vertical: kLarge,
+              horizontal: kMedium,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BaseTextLine('Inventory Count No', item.pickNumber),
+                SizedBox(height: getProportionateScreenHeight(kLarge)),
+                BaseTextLine('Counting Date', convertDate(item.pickDate)),
+                SizedBox(height: getProportionateScreenHeight(kLarge)),
+                BaseTextLine('Counter Assign', authProvider.username),
+                SizedBox(height: getProportionateScreenHeight(kLarge)),
+                BaseTextLine('Warehouse Name', authProvider.warehouseName),
+                SizedBox(height: getProportionateScreenHeight(kLarge)),
+                buildInputScan(context),
+                ItemAllScWidget(),
+                SizedBox(height: getProportionateScreenHeight(kLarge)),
+                BaseTitle('List Items'),
+                Divider(),
+                buildItemList(context, item),
+              ],
             ),
           );
+        },
+      ),
+    );
+  }
+
+  Widget buildItemList(BuildContext context, StockCountingHeader item) {
+    return Expanded(
+      child: Consumer<StockCountingItemProvider>(
+        builder: (_, provider, child) {
+          final list = provider.items;
+          return list.isEmpty
+              ? NoData()
+              : ListView.builder(
+                  itemCount: list.length,
+                  itemBuilder: (_, index) {
+                    final item = list[index];
+                    return ChangeNotifierProvider.value(
+                      value: item,
+                      child: ItemDetailSc(item),
+                    );
+                  },
+                );
         },
       ),
     );

@@ -3,21 +3,26 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_batch.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
+import 'package:msi_app/providers/stock_counting_bin_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class StockCountingItemProvider with ChangeNotifier {
-  List<StockCountingItem> _item = [];
-  List<StockCountingItem> _itemShow = [];
+  List<StockCountingItem> _allItems;
+  List<StockCountingItem> _items = [];
   StockCountingItem _selected;
 
-  List<StockCountingItem> get item {
-    _item.forEach((detail) {
+  List<StockCountingItem> get allItems => _allItems;
+  StockCountingItem get selected => _selected;
+
+  List<StockCountingItem> get items {
+    _items.forEach((detail) {
       if (detail.fgBatch == 'Y') {
         // calculate total batch qty
         var totalBatch = 0.0;
         detail.batchList.forEach((batch) {
-          totalBatch = totalBatch + batch.availableQty;
+          totalBatch = totalBatch + batch.pickQty;
         });
         detail.quantity = totalBatch;
       }
@@ -27,31 +32,14 @@ class StockCountingItemProvider with ChangeNotifier {
 
     // _item = _item.where((item) => item.quantity > 0).toList();
 
-    return _item;
+    return _items;
   }
 
-  List<StockCountingItem> get itemShow {
-    _itemShow.forEach((detail) {
-      if (detail.fgBatch == 'Y') {
-        // calculate total batch qty
-        var totalBatch = 0.0;
-        detail.batchList.forEach((batch) {
-          totalBatch = totalBatch + batch.availableQty;
-        });
-        detail.quantity = totalBatch;
-      }
-    });
-
-    _itemShow = _item.where((item) => item.quantity > 0).toList();
-
-
-    return _itemShow;
+  List<StockCountingItem> get itemCheck {
+    return _items.where((item) => item.quantity > 0).toList();
   }
 
-  StockCountingItem get selected => _selected;
-
-  Future<void> getScDetailByDocNum() async {
-    // final url = '$kBaseUrl/api/getstcdetail/docnum=$docNum';
+  Future<void> getAllItems() async {
     final url = '$kBaseUrl/api/getallitem';
 
     try {
@@ -66,7 +54,7 @@ class StockCountingItemProvider with ChangeNotifier {
         list.add(StockCountingItem.fromMap(map));
       });
 
-      _item = list;
+      _allItems = list;
       notifyListeners();
     } catch (error) {
       print(error);
@@ -75,7 +63,7 @@ class StockCountingItemProvider with ChangeNotifier {
   }
 
   StockCountingItem findByItemCode(String itemCode) {
-    return _item.firstWhere((element) => element.itemCode == itemCode);
+    return _allItems.firstWhere((element) => element.itemCode == itemCode);
   }
 
   void addBatch(
@@ -100,14 +88,42 @@ class StockCountingItemProvider with ChangeNotifier {
     print('Removed Batch: $itemBatch');
   }
 
-  void inputQty(StockCountingItem itemPo, double qty) {
-    itemPo.quantity = qty;
-    notifyListeners();
-    print('Update Qty: $itemPo');
+  bool contains(StockCountingItem item) {
+    for (StockCountingItem e in items) {
+      if (e == item) return true;
+    }
+    return false;
   }
 
-  void setItemCode(String stagingBin) {
-    _selected.itemCode = stagingBin;
+  void inputQty(StockCountingItem item, double qty, BuildContext context) {
+    // update qty
+    item.quantity = qty;
+
+    final contain = contains(item);
+    print(contain);
+    if (contain) {
+      final searchItem =
+          items.where((element) => element.itemCode == item.itemCode).first;
+      searchItem.quantity = qty;
+    } else {
+      // set storage location
+      final selectedBin =
+          Provider.of<StockCountingBinProvider>(context, listen: false)
+              .selected;
+      item.itemStorageLocation = selectedBin.binLocation;
+      items.add(item);
+    }
+    notifyListeners();
+    print('inputQty : $qty');
+  }
+
+  void selectItemCode(StockCountingItem itemSelect) {
+    _selected.itemCode = itemSelect.itemCode;
+    notifyListeners();
+  }
+
+  void clearPickedItems() {
+    _items = [];
     notifyListeners();
   }
 }

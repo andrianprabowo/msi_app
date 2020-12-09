@@ -18,13 +18,12 @@ class ItemDetailSc extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (item.fgBatch == 'Y') {
+          // print("BATCH");
           // Navigator.of(context).pop();
           Navigator.of(context)
               .pushNamed(StockCountingBatchScreen.routeName, arguments: item);
-
-          // Navigator.of(context)
-          //     .pushNamed(StockCountingBatchScreen.routeName, arguments: item);
         } else {
+          // print("NON-BATCH");
           showModalBottomSheet(
               context: context, builder: (_) => DialogInputQtyNonBatchSc(item));
         }
@@ -42,7 +41,9 @@ class ItemDetailSc extends StatelessWidget {
             BaseTextLine('Inventory UoM', item.unitMsr),
             BaseTextLine('Item Batch', item.fgBatch),
             if (item.itemStorageLocation.isNotEmpty)
-              BaseTextLine('Bin Location', item.itemStorageLocation),
+              BaseTextLine('Bin Location', ''),
+            if (item.itemStorageLocation.isNotEmpty)
+              BaseTextLine('', item.itemStorageLocation),
             buildItemBatchList(item.batchList),
           ],
         ),

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/stock_counting_batch_provider.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
-import 'package:msi_app/screens/stock_counting_batch/widget/item_stock_counting_batch_sc.dart';
-import 'package:msi_app/screens/stock_counting_item/stock_counting_item_screen.dart';
 import 'package:msi_app/screens/stock_counting_item/widgets/dialog_input_qty_batch.dart';
+import 'package:msi_app/screens/stock_counting_batch/widget/item_stock_counting_batch_sc.dart';
+import 'package:msi_app/screens/stock_counting_check/stock_counting_check.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -50,10 +50,18 @@ class StockCountingBatchScreen extends StatelessWidget {
               // pickItem.itemStorageLocation = itemBin.binLocation;
               //add batch list
               final batchList = pickBatchProvider.pickedItems;
-              pickItemProvider.addBatch(item, batchList);
+              final total = pickBatchProvider.totalPicked;
+              // print('item => $item');
+              // print('batchList => $batchList');
+              // print('totalPicked => $total');
 
-              Navigator.of(context).popUntil(
-                  ModalRoute.withName(StockCountingItemScreen.routeName));
+              pickItemProvider.addBatch(item, batchList);
+              pickItemProvider.inputQty(item, total, context);
+
+              // Navigator.of(context).popUntil(
+              //     ModalRoute.withName(StockCountingItemScreen.routeName));
+              Navigator.of(context)
+                  .pushNamed(StockCountingCheckScreen.routeName);
             },
           )
         ],
@@ -81,7 +89,7 @@ class StockCountingBatchScreen extends StatelessWidget {
                 SizedBox(width: getProportionateScreenWidth(kLarge)),
                 FlatButton.icon(
                     onPressed: () {
-                      // pickBatchProvider.clear();
+                      pickBatchProvider.clear();
                     },
                     icon: Icon(Icons.delete),
                     color: Colors.red,
