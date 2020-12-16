@@ -22,7 +22,7 @@ class StockCountingDetailCheck extends StatelessWidget {
           BaseTitle(item.itemCode),
           BaseTitle(item.description),
           Divider(),
-          BaseTextLine('Count Quantity', item.quantity.toStringAsFixed(2)),
+          BaseTextLine('Count Quantity', item.quantity.toStringAsFixed(4)),
           BaseTextLine('UoM', item.unitMsr),
           BaseTextLine('Item Batch', item.fgBatch),
           if (item.itemStorageLocation.isNotEmpty)

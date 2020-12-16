@@ -33,7 +33,7 @@ class _DialogInventoryDispatchBatchSoState extends State<DialogInventoryDispatch
           BaseTextLine('Expired Date', convertDate(widget.item.expiredDate)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Available Quantity',
-              widget.item.availableQty.toStringAsFixed(2)),
+              widget.item.availableQty.toStringAsFixed(4)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),

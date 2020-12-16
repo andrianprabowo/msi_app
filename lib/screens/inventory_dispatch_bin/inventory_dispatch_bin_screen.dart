@@ -46,7 +46,7 @@ class InventoryDispatchBinScreen extends StatelessWidget {
             Consumer<InventoryDispatchBinProvider>(
               builder: (_, provider, child) {
                 String binLoc = provider.recBin ?? '';
-                return BaseTextLine('Recommendation Bin', binLoc);
+                return BaseTextLine('Recommendation container bin', binLoc);
               },
             ),
             // BaseTextLine('Recommendation Bin', ''),
@@ -58,7 +58,7 @@ class InventoryDispatchBinScreen extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: BaseTitle('List Bin Location'),
+                  child: BaseTitle('List Container Bin Location'),
                 ),
                 Text('Show All Bin'),
                 Consumer<InventoryDispatchBinProvider>(
@@ -121,25 +121,25 @@ class InventoryDispatchBinScreen extends StatelessWidget {
     final provider =
         Provider.of<InventoryDispatchBinProvider>(context, listen: false);
     return InputScan(
-      label: 'Bin Location',
-      hint: 'Scan Bin Location',
+      label: 'Container Bin Location',
+      hint: 'Scan Container Bin Location',
       scanResult: (value) {
         final item = provider.findByBinLocation(value);
         if (inventoryDispatchItem.fgBatch == 'Y') {
-            Navigator.of(context).pushNamed(
-              InventoryDispatchBatchScreen.routeName, //ddasdasdsadasadasdsadsa
-              arguments: {
-                'inventoryDispatchItem': inventoryDispatchItem,
-                'inventoryDispatchBin': item,
-              },
-            );
-          } else {
-            inventoryDispatchItem.itemStorageLocation = item.binLocation;
-            print('isinya bin item $item');
+          Navigator.of(context).pushNamed(
+            InventoryDispatchBatchScreen.routeName, //ddasdasdsadasadasdsadsa
+            arguments: {
+              'inventoryDispatchItem': inventoryDispatchItem,
+              'inventoryDispatchBin': item,
+            },
+          );
+        } else {
+          inventoryDispatchItem.itemStorageLocation = item.binLocation;
+          print('isinya bin item $item');
 
-            Navigator.of(context).popUntil(
-                ModalRoute.withName(InventoryDispatchItemScreen.routeName));
-          }
+          Navigator.of(context).popUntil(
+              ModalRoute.withName(InventoryDispatchItemScreen.routeName));
+        }
       },
     );
   }

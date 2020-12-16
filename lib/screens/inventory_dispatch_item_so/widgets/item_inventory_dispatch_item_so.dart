@@ -37,14 +37,14 @@ class ItemInventoryDispatchItemSo extends StatelessWidget {
             BaseTitle(item.itemCode),
             BaseTitle(item.description),
             Divider(),
-            BaseTextLine('Total To Dispatch', item.openQty.toStringAsFixed(2)),
-            BaseTextLine('Remaining Qty', item.quantity.toStringAsFixed(2)),
+            BaseTextLine('Total To Dispatch', item.openQty.toStringAsFixed(4)),
+            BaseTextLine('Remaining Qty', item.quantity.toStringAsFixed(4)),
             BaseTextLine('Inventory UoM', item.unitMsr),
             BaseTextLine('Item Batch', item.fgBatch),
             if (item.itemStorageLocation.isNotEmpty)
               BaseTextLine('Bin Location', item.itemStorageLocation),
             // if (item.pickedQty != 0)
-            BaseTextLine('Picked Qty', item.pickedQty.toStringAsFixed(2)),
+            BaseTextLine('Picked Qty', item.pickedQty.toStringAsFixed(4)),
             buildItemBatchList(item.batchList),
           ],
         ),

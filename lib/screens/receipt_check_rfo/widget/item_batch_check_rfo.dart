@@ -18,7 +18,8 @@ class ItemBatchCheckRfo extends StatelessWidget {
         children: [
           BaseTextLine('Batch Number', item.batchNo),
           BaseTextLine('Expired Date', convertDate(item.expiredDate)),
-          BaseTextLine('Quantity', item.putQty.toStringAsFixed(2)),
+          BaseTextLine('Quantity', item.putQty.toStringAsFixed(4)),
+          BaseTextLine('Uom', item.uom),
         ],
       ),
     );

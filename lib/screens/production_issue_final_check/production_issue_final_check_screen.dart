@@ -40,7 +40,7 @@ class ProductionIssueFinalCheck extends StatelessWidget {
                       children: [
                         Icon(Icons.error_outline, color: Colors.red),
                         SizedBox(width: getProportionateScreenWidth(kLarge)),
-                        Text(error.toString()),
+                        Text(error.toStringAsFixed(4)),
                       ],
                     ),
                   ),

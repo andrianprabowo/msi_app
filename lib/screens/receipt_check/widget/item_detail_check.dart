@@ -22,10 +22,10 @@ class ItemDetailCheck extends StatelessWidget {
           BaseTitle(item.itemCode),
           BaseTitle(item.description),
           Divider(),
-          BaseTextLine('PO Quantity', item.openQty.toStringAsFixed(2)),
-          BaseTextLine('Receipt Quantity', item.quantity.toStringAsFixed(2)),
+          BaseTextLine('PO Quantity', item.openQty.toStringAsFixed(4)),
+          BaseTextLine('Receipt Quantity', item.quantity.toStringAsFixed(4)),
           BaseTextLine(
-              'Remaining Quantity', item.remainingQty.toStringAsFixed(2)),
+              'Remaining Quantity', item.remainingQty.toStringAsFixed(4)),
           BaseTextLine('UoM', item.uom),
           Divider(),
           if (item.batchList.isNotEmpty) BaseTitle('Item Batch List'),

@@ -144,7 +144,7 @@ class ReceiptCheckScreen extends StatelessWidget {
             BaseTextLine('Vendor Code', po.vendorCode),
             BaseTextLine('Vendor Name', po.vendorName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Bin', authProvider.binId ?? 'Empty'),
+            BaseTextLine('Staging Bin', authProvider.binId ?? 'Empty'),
             // BaseTextLine('Staging Bin Name', po.storageLocationName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Item Details'),

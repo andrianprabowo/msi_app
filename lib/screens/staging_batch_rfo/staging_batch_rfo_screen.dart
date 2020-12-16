@@ -61,7 +61,7 @@ class StagingBatchRfoScreen extends StatelessWidget {
                   return Expanded(
                     child: BaseTextLine(
                       'Total Picked',
-                      provider.totalPicked.toStringAsFixed(2),
+                      provider.totalPicked.toStringAsFixed(4),
                     ),
                   );
                 }),
@@ -77,6 +77,8 @@ class StagingBatchRfoScreen extends StatelessWidget {
             ),
             BaseTitle(item.itemCode),
             BaseTitle(item.itemName),
+            BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(4)),
+            BaseTextLine('Uom', item.uom),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),
             Divider(),

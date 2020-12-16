@@ -29,7 +29,7 @@ class ItemReceiptRfo extends StatelessWidget {
         decoration: kBoxDecoration,
         child: Column(
           children: [
-            BaseTextLine('PO Number', item.poNumber),
+            BaseTextLine('Doc Number', item.poNumber),
             BaseTextLine('Doc Date', convertDate(item.docDate)),
             BaseTextLine('Vendor', item.vendorName),
             BaseTextLine('Warehouse', authProvider.warehouseName)

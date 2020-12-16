@@ -32,7 +32,7 @@ class PutBatchWidgetRfo extends StatelessWidget {
               children: [
                 BaseTextLine('Batch Number', batch.batchNo),
                 BaseTextLine('Expired Date', convertDate(batch.expiredDate)),
-                BaseTextLine('Quantity', batch.putQty.toStringAsFixed(2)),
+                BaseTextLine('Quantity', batch.putQty.toStringAsFixed(4)),
               ],
             ),
           ),

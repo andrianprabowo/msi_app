@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/stock_counting_bin_provider.dart';
 import 'package:msi_app/screens/stock_counting_bin_exstra/widgets/item_stock_counting_bin_exstra.dart';

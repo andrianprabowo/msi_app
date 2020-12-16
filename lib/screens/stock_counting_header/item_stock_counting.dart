@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_header.dart';
-import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/stock_counting_header_provider.dart';
 import 'package:msi_app/screens/stock_counting_bin/stock_counting_bin_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -14,7 +13,6 @@ class ItemStockCounting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final poProvider =
         Provider.of<StockCountingHeaderProvider>(context, listen: false);
     return InkWell(
@@ -30,8 +28,8 @@ class ItemStockCounting extends StatelessWidget {
           children: [
             BaseTextLine('Inv.Counting No', item.pickNumber),
             BaseTextLine('Count Date', convertDate(item.pickDate)),
-            BaseTextLine('Counter Assign', authProvider.username),
-            BaseTextLine('Warehouse', authProvider.warehouseName)
+            BaseTextLine('Counter Assign', item.cardCode),
+            BaseTextLine('Warehouse', item.cardName)
           ],
         ),
       ),

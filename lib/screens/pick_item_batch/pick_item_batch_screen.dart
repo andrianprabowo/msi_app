@@ -51,20 +51,17 @@ class PickItemBatchScreen extends StatelessWidget {
               pickItemProvider.addBatchList(pickItem, batchList);
 
               var guider =
-                  double.tryParse(pickItem.openQty.toStringAsFixed(2)) >
-                          double.tryParse(itemBin.avlQty.toStringAsFixed(2))
-                      ? double.tryParse(itemBin.avlQty.toStringAsFixed(2))
-                      : double.tryParse(pickItem.openQty.toStringAsFixed(2));
+                  double.tryParse(pickItem.openQty.toStringAsFixed(4)) >
+                          double.tryParse(itemBin.avlQty.toStringAsFixed(4))
+                      ? double.tryParse(itemBin.avlQty.toStringAsFixed(4))
+                      : double.tryParse(pickItem.openQty.toStringAsFixed(4));
 
-              pickBatchProvider.totalPicked
-                          .toStringAsFixed(2) ==
-                      '0.00'
+              pickBatchProvider.totalPicked.toStringAsFixed(4) == '0.0000'
                   ? showAlertOnZero(context)
-                  : double.tryParse(pickBatchProvider
-                              .totalPicked
-                              .toStringAsFixed(2)) >
+                  : double.tryParse(pickBatchProvider.totalPicked
+                              .toStringAsFixed(4)) >
                           guider
-                      ? showAlertGreaterThanZero(context, guider.toString())
+                      ? showAlertGreaterThanZero(context, guider.toStringAsFixed(4))
                       : Navigator.of(context).popUntil(
                           ModalRoute.withName(PickItemReceiveScreen.routeName));
             },
@@ -87,7 +84,7 @@ class PickItemBatchScreen extends StatelessWidget {
                   return Expanded(
                     child: BaseTextLine(
                       'Total Picked',
-                      provider.totalPicked.toStringAsFixed(2),
+                      provider.totalPicked.toStringAsFixed(4),
                     ),
                   );
                 }),
@@ -104,6 +101,9 @@ class PickItemBatchScreen extends StatelessWidget {
             // BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTextLine(
+                'Total to Pick Qty', pickItem.openQty.toStringAsFixed(4)),
+            BaseTextLine('UoM', pickItem.unitMsr),
             BaseTitle('List Batch of Item'),
             Divider(),
             buildItemList(context, pickItem, itemBin),
@@ -225,5 +225,4 @@ class PickItemBatchScreen extends StatelessWidget {
       },
     );
   }
-
 }

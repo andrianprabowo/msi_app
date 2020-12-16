@@ -35,9 +35,15 @@ class _DialogInputQtyState extends State<DialogInputQty> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BaseTitle('Batch Number / Exp Date'),
+          BaseTitle(item.itemCode),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('PO Qty', item.openQty.toStringAsFixed(2)),
+          BaseTitle(item.description),
+          // SizedBox(height: getProportionateScreenHeight(kLarge)),
+          // BaseTitle('Batch Number / Exp Date'),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTextLine('PO Qty', item.openQty.toStringAsFixed(4)),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTextLine('Remaining Qty', item.remainingQty.toStringAsFixed(4)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildInput(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -45,29 +51,29 @@ class _DialogInputQtyState extends State<DialogInputQty> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildDatePicker(context),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          if (_quantity.text != '' &&
-                  (double.parse(_quantity.text) >
-                      double.tryParse(
-                          widget.item.openQty.toStringAsFixed(2))) ||
-              _quantity.text == '0')
-            buildButtonNotif(context, widget.item.openQty.toString())
-          else
-            buildButtonSubmit(context),
+          // if (_quantity.text != '' &&
+          //         (double.parse(_quantity.text) >
+          //             double.tryParse(
+          //                 widget.item.openQty.toStringAsFixed(2))) ||
+          //     _quantity.text == '0')
+          //   buildButtonNotif(context, widget.item.openQty.toString())
+          // else
+          buildButtonSubmit(context, widget.item.remainingQty.toStringAsFixed(4)),
         ],
       ),
     );
   }
 
-  Widget buildButtonNotif(BuildContext context, String avlQty) {
-    return SizedBox(
-      width: double.infinity,
-      child: RaisedButton(
-        color: Colors.red,
-        child: Text('Qty must be above 0 or equal to ' + avlQty),
-        onPressed: () {},
-      ),
-    );
-  }
+  // Widget buildButtonNotif(BuildContext context, String avlQty) {
+  //   return SizedBox(
+  //     width: double.infinity,
+  //     child: RaisedButton(
+  //       color: Colors.red,
+  //       child: Text('Qty must be above 0 or equal to ' + avlQty),
+  //       onPressed: () {},
+  //     ),
+  //   );
+  // }
 
   Widget buildInput() {
     return TextFormField(
@@ -77,7 +83,7 @@ class _DialogInputQtyState extends State<DialogInputQty> {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: 'Batch Number',
         hintText: 'Scan /Input Batch Number',
-        suffixIcon: Icon(Icons.local_see),
+        suffixIcon: Icon(Icons.assessment_outlined),
       ),
       autofocus: true,
     );
@@ -143,15 +149,43 @@ class _DialogInputQtyState extends State<DialogInputQty> {
     );
   }
 
-  Widget buildButtonSubmit(BuildContext context) {
+  Widget buildButtonSubmit(BuildContext context, String avlQty) {
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(
         child: Text('Submit'),
         onPressed: () {
-          if (double.parse(_quantity.text) > widget.item.openQty) {
-            print('Tidak boleh lebih besar dari Available Qty ');
-            // return;
+          if (double.parse(_quantity.text) > widget.item.remainingQty) {
+            return showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.notification_important,
+                          color: Colors.red, size: 50),
+                      Divider(),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('Qty must be above 0'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('or equal to  $avlQty'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
           } else {
             final itemPoProvider =
                 Provider.of<ItemPoProvider>(context, listen: false);

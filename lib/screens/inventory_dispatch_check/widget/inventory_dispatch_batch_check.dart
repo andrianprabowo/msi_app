@@ -18,7 +18,7 @@ class InventoryDispatchBatchCheck extends StatelessWidget {
         children: [
           BaseTextLine('Batch Number', item.batchNo),
           BaseTextLine('Expired Date', convertDate(item.expiredDate)),
-          BaseTextLine('Picked Qty', item.pickQty.toStringAsFixed(2)),
+          BaseTextLine('Picked Qty', item.pickQty.toStringAsFixed(4)),
         ],
       ),
     );

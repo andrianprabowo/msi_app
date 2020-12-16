@@ -37,7 +37,7 @@ class ItemDetailSc extends StatelessWidget {
             BaseTitle(item.itemCode),
             BaseTitle(item.description),
             Divider(),
-            BaseTextLine('Counted Qty', item.quantity.toStringAsFixed(2)),
+            BaseTextLine('Counted Qty', item.quantity.toStringAsFixed(4)),
             BaseTextLine('Inventory UoM', item.unitMsr),
             BaseTextLine('Item Batch', item.fgBatch),
             if (item.itemStorageLocation.isNotEmpty)

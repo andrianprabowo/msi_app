@@ -28,8 +28,8 @@ class ItemInventoryDispatchDetail extends StatelessWidget {
         decoration: kBoxDecoration,
         child: Column(
           children: [
-            BaseTextLine('Doc Number', item.docNumber),
-            BaseTextLine('Doc Date', convertDate(item.docDate)),
+            BaseTextLine('Pick Number', item.docNumber),
+            BaseTextLine('Pick Date', convertDate(item.docDate)),
             BaseTextLine('Disp Whs Code', item.cardCode),
             BaseTextLine('Disp Whs Name', item.cardName),
             BaseTextLine('Picker', authProvider.username),

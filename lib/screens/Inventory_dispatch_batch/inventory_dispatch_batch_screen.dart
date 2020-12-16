@@ -98,7 +98,7 @@ class InventoryDispatchBatchScreen extends StatelessWidget {
                   return Expanded(
                     child: BaseTextLine(
                       'Total Picked',
-                      provider.totalPicked.toStringAsFixed(2),
+                      provider.totalPicked.toStringAsFixed(4),
                     ),
                   );
                 }),
@@ -114,6 +114,9 @@ class InventoryDispatchBatchScreen extends StatelessWidget {
             ),
             BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description),
+            BaseTextLine(
+                'Total to Pick Qty', pickItem.openQty.toStringAsFixed(4)),
+            BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),
             Divider(),

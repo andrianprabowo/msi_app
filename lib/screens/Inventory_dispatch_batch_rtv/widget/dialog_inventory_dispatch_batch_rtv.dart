@@ -33,17 +33,17 @@ class _DialogInventoryDispatchBatchRtvState extends State<DialogInventoryDispatc
           BaseTextLine('Expired Date', convertDate(widget.item.expiredDate)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Available Quantity',
-              widget.item.availableQty.toStringAsFixed(2)),
+              widget.item.availableQty.toStringAsFixed(4)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           if (_quantity.text != '' &&
                   (double.tryParse(_quantity.text) >
                       double.tryParse(
-                          widget.item.availableQty.toStringAsFixed(2))) ||
+                          widget.item.availableQty.toStringAsFixed(4))) ||
               _quantity.text == '0')
             buildButtonNotif(
-                context, widget.item.availableQty.toStringAsFixed(2))
+                context, widget.item.availableQty.toStringAsFixed(4))
           else
             buildButtonSubmit(context),
         ],

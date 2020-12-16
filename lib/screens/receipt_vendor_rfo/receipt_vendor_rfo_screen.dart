@@ -135,8 +135,8 @@ class ReceiptVendorRfoScreen extends StatelessWidget {
         Provider.of<PurchaseOrderRfoProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InputScan(
-      label: 'PO Number',
-      hint: 'Input or scan PO Number',
+      label: 'Doc Number',
+      hint: 'Input or scan Doc Number',
       scanResult: (value) {
         final item = provider.findByPoNumber(value);
         provider.selectPo(item);

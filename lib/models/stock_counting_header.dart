@@ -9,6 +9,8 @@ class StockCountingHeader with ChangeNotifier {
   final DateTime postingDate;
   String cardCode;
   final String cardName;
+  String whs;
+  String user;
   final String pickRemark;
   final String filename;
   String storageLocation;
@@ -19,6 +21,8 @@ class StockCountingHeader with ChangeNotifier {
     this.postingDate,
     this.cardCode,
     this.cardName,
+    this.whs,
+    this.user,
     this.pickRemark,
     this.filename,
     this.storageLocation,
@@ -31,8 +35,8 @@ class StockCountingHeader with ChangeNotifier {
       'deliveryDate': pickDate?.toIso8601String(),
       'postingDate': DateTime.now().toIso8601String(),
       'createdDate': DateTime.now().toIso8601String(),
-      'plant': cardCode,
-      'plantName': cardName,
+      'plant': whs,
+      'plantName': user,
       'remark': pickRemark,
       'filename': 'Stock COunting',
       // 'storageLocation': storageLocation,

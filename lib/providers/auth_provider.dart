@@ -18,14 +18,12 @@ class AuthProvider with ChangeNotifier {
   String _warehouseId;
   String _warehouseName;
   String _binId;
-  int _userId;
 
   String get token => _token;
   String get username => _username;
   String get warehouseId => _warehouseId;
   String get warehouseName => _warehouseName;
   String get binId => _binId;
-  int get userId => _userId;
 
   Future<void> getData() async {
     _token = await Prefs.getString(Prefs.token);
@@ -33,7 +31,6 @@ class AuthProvider with ChangeNotifier {
     _warehouseId = await Prefs.getString(Prefs.warehouseId);
     _warehouseName = await Prefs.getString(Prefs.warehouseName);
     _binId = await Prefs.getString(Prefs.binId);
-    _userId = await Prefs.getInt(Prefs.userId.toString());
     notifyListeners();
   }
 

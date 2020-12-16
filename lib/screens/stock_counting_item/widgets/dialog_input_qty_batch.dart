@@ -6,6 +6,7 @@ import 'package:msi_app/providers/stock_counting_batch_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
 
 class DialogInputQtyBatch extends StatefulWidget {
@@ -131,7 +132,7 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
             double.parse(_quantity.text);
           } catch (error) {
             print('Quantity is required');
-            return;
+            // return;
           }
 
           // if (double.parse(_quantity.text) > widget.item.openQty) {
@@ -146,6 +147,61 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
               DateFormat().addPattern('dd/MM/yy').format(_selectedDate);
           final qty = double.parse(_quantity.text);
 
+          if (_batchNumber.text.isEmpty) {
+            return showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.notification_important,
+                          color: Colors.red, size: 50),
+                      Divider(),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('Please input batch number'),
+                      BaseTitleColor('or automatically filled with'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitle('BatchNo-$dateString'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          child: Text('Cancel'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            var itemBatch = StockCountingBatch(
+                                batchNo: _batchNumber.text.isEmpty
+                                    ? "BatchNo-$dateString"
+                                    : _batchNumber.text,
+                                expiredDate: _selectedDate,
+                                pickQty: qty,
+                                availableQty: 0.0);
+
+                            provider.addItemBatch(itemBatch);
+                            provider.updatePickQty(itemBatch.batchNo, qty);
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+            // Navigator.of(context).pop();
+
+          }
           var itemBatch = StockCountingBatch(
               batchNo: _batchNumber.text.isEmpty
                   ? "BatchNo-$dateString"
@@ -153,7 +209,6 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
               expiredDate: _selectedDate,
               pickQty: qty,
               availableQty: 0.0);
-
           provider.addItemBatch(itemBatch);
           provider.updatePickQty(itemBatch.batchNo, qty);
           Navigator.of(context).pop();

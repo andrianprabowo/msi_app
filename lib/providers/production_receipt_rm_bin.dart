@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/production_receipt_rm_bin.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:msi_app/utils/prefs.dart';
 
 class ProductionReceiptRMBinProvider with ChangeNotifier {
    List<ProductionReceiptRmBin> _items = [];
@@ -26,10 +27,10 @@ class ProductionReceiptRMBinProvider with ChangeNotifier {
   }
 
   Future<void> getPlBinList(String cardCode) async {
-    // final warehouseId = await Prefs.getString(Prefs.warehouseId);
+    final warehouseId = await Prefs.getString(Prefs.warehouseId);
     
     final url =
-        '$kBaseUrl/api/PAgetplbinlist/whscode=$cardCode';
+        '$kBaseUrl/api/PAgetplbinlist/whscode=$warehouseId';
         
 
     try {

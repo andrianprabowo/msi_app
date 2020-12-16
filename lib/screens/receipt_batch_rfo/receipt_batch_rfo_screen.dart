@@ -9,6 +9,7 @@ import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/input_scan.dart';
 import 'package:msi_app/widgets/no_data.dart';
@@ -34,6 +35,8 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
     final itemProvider = Provider.of<ItemPoRfoProvider>(context, listen: false);
 
     ItemPurchaseOrderRfo item = ModalRoute.of(context).settings.arguments;
+    final avlQty = item.openQty.toStringAsFixed(4);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Receipt Return From Outlet'),
@@ -41,8 +44,46 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.check_box_outlined),
             onPressed: () {
-              final batchList = itemBatchProvider.pickedItems;
+               final batchList = itemBatchProvider.pickedItems;
               itemProvider.addBatchList(item, batchList);
+              if (double.parse(itemBatchProvider.totalPicked.toStringAsFixed(4)) >
+                  double.parse(item.openQty.toStringAsFixed(4))) {
+                print('Tidak boleh lebih besar dari Available Qty ');
+                return showDialog<void>(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.notification_important,
+                              color: Colors.red, size: 50),
+                          Divider(),
+                          SizedBox(
+                              height: getProportionateScreenHeight(kLarge)),
+                          BaseTitleColor('Qty must be above 0'),
+                          SizedBox(
+                              height: getProportionateScreenHeight(kLarge)),
+                          BaseTitleColor('or equal to  $avlQty'),
+                          SizedBox(
+                              height: getProportionateScreenHeight(kLarge)),
+                          SizedBox(
+                            width: double.infinity,
+                            child: RaisedButton(
+                              child: Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }
+             
 
               Navigator.of(context).popUntil(
                   ModalRoute.withName(ReceiptDetailRfoScreen.routeName));
@@ -66,7 +107,7 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
                   return Expanded(
                     child: BaseTextLine(
                       'Total Picked',
-                      provider.totalPicked.toStringAsFixed(2),
+                      provider.totalPicked.toStringAsFixed(4),
                     ),
                   );
                 }),
@@ -82,6 +123,8 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
             ),
             BaseTitle(item.itemCode),
             BaseTitle(item.description),
+            BaseTextLine('Available Qty', item.openQty.toStringAsFixed(4)),
+            BaseTextLine('Uom', item.uom),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),
             Divider(),

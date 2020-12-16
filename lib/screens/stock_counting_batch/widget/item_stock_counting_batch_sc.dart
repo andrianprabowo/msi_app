@@ -25,9 +25,9 @@ class ItemStockCountingBatch extends StatelessWidget {
         child: Column(
           children: [
             BaseTextLine('Batch No', item.batchNo),
-            // BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(2)),
+            // BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(4)),
             BaseTextLine('Expired Date', convertDate(item.expiredDate)),
-            BaseTextLine('Count Qty', item.pickQty.toStringAsFixed(2)),
+            BaseTextLine('Count Qty', item.pickQty.toStringAsFixed(4)),
           ],
         ),
       ),

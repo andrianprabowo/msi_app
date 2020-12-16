@@ -18,7 +18,7 @@ class StagingBatchCheckRfo extends StatelessWidget {
         children: [
           BaseTextLine('Batch Number', item.batchNo),
           BaseTextLine('Expired Date', convertDate(item.expiredDate)),
-          BaseTextLine('Put Qty', item.putQty.toStringAsFixed(2)),
+          BaseTextLine('Put Qty', item.putQty.toStringAsFixed(4)),
         ],
       ),
     );

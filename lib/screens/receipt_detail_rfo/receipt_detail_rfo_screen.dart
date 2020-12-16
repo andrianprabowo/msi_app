@@ -77,7 +77,7 @@ class ReceiptDetailRfoScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('PO Number', po.poNumber),
+            BaseTextLine('Doc Number', po.poNumber),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Document Date', convertDate(po.docDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

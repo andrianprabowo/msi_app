@@ -133,7 +133,7 @@ class StagingCheckScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('Storage Location', item.binCode),
+            BaseTextLine('Staging Bin Location', item.binCode),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Item Details'),
             Divider(),

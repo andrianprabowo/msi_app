@@ -83,7 +83,7 @@ class InventoryDispatchBatchRtvScreen extends StatelessWidget {
                   return Expanded(
                     child: BaseTextLine(
                       'Total Picked',
-                      provider.totalPicked.toStringAsFixed(2),
+                      provider.totalPicked.toStringAsFixed(4),
                     ),
                   );
                 }),

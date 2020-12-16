@@ -41,7 +41,7 @@ class InventoryDispatchBinItem extends StatelessWidget {
           decoration: kBoxDecoration,
           child: Column(
             children: [
-              BaseTextLine('Bin Location', item.binLocation),
+              BaseTextLine('Container Bin Location', item.binLocation),
               BaseTextLine('Warehouse', authProvider.warehouseName),
               // BaseTextLine('Qty', item.avlQty.toString()),
             ],

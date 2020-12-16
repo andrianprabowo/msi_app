@@ -41,7 +41,7 @@ class ItemPickItemBinSo extends StatelessWidget {
           children: [
             BaseTextLine('Bin Location', item.binLocation),
             BaseTextLine('Warehouse', authProvider.warehouseName),
-            BaseTextLine('Qty', item.avlQty.toString()),
+            BaseTextLine('Qty', item.avlQty.toStringAsFixed(4)),
           ],
         ),
       ),

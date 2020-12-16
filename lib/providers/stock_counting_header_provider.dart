@@ -64,11 +64,12 @@ class StockCountingHeaderProvider with ChangeNotifier {
       'Content-type': 'application/json',
       'Accept': 'application/json',
     };
-    // final warehouseId = await Prefs.getString(Prefs.warehouseId);
-    // final binId = await Prefs.getString(Prefs.binId);
+    final warehouseId = await Prefs.getString(Prefs.warehouseId);
+    final username = await Prefs.getString(Prefs.username);
 
     // _selected.storageLocation = binId;
-    // _selected.plant = warehouseId;
+    _selected.user = username;
+    _selected.whs = warehouseId;
     // _selected.pickItemList = itemShow;
 
     try {

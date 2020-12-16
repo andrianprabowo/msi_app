@@ -64,11 +64,9 @@ class PurchaseOrderProvider with ChangeNotifier {
     };
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
     final binId = await Prefs.getString(Prefs.binId);
-    final userId = await Prefs.getInt(Prefs.userId.toString());
 
     _selected.storageLocation = binId;
     _selected.plant = warehouseId;
-    _selected.userId = userId;
     _selected.detailList = detailList;
 
     try {

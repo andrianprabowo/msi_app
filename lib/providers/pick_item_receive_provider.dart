@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 
 class PickItemReceiveProvider with ChangeNotifier {
   List<PickItemReceive> _items;
+  PickItemReceive _selected;
 
   List<PickItemReceive> get items {
     _items.forEach((detail) {
@@ -28,6 +29,7 @@ class PickItemReceiveProvider with ChangeNotifier {
     return _items;
   }
 
+  PickItemReceive get selected => _selected;
   Future<void> getPlActionByPlNo(String pickNumber) async {
     final url = '$kBaseUrl/api/getplitemsbyplno/docnum=$pickNumber';
 
@@ -53,6 +55,11 @@ class PickItemReceiveProvider with ChangeNotifier {
 
   PickItemReceive findByItemCode(String itemCode) {
     return _items.firstWhere((element) => element.itemCode == itemCode);
+  }
+
+  void selectPo(PickItemReceive pickItemReceive) {
+    _selected = pickItemReceive;
+    notifyListeners();
   }
 
   void addBatchList(

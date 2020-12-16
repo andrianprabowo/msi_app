@@ -6,6 +6,7 @@ import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
 
 class DialogPickListNonbatch extends StatefulWidget {
@@ -31,21 +32,16 @@ class _DialogPickListNonbatchState extends State<DialogPickListNonbatch> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BaseTitle('Input Quantity'),
+          BaseTitle(item.itemCode),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTitle(item.description),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine(
-              'Available Quantity', widget.item.openQty.toStringAsFixed(2)),
+              'Available Quantity', widget.item.openQty.toStringAsFixed(4)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          if (_quantity.text != '' &&
-                  (double.parse(_quantity.text) >
-                      double.tryParse(
-                          widget.item.openQty.toStringAsFixed(2))) ||
-              _quantity.text == '0')
-            buildButtonNotif(context, widget.item.openQty.toString())
-          else
-            buildButtonSubmit(context),
+          buildButtonSubmit(context, widget.item.openQty.toStringAsFixed(4)),
         ],
       ),
     );
@@ -78,16 +74,44 @@ class _DialogPickListNonbatchState extends State<DialogPickListNonbatch> {
     );
   }
 
-  Widget buildButtonSubmit(BuildContext context) {
+  Widget buildButtonSubmit(BuildContext context, String avlQty) {
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(
         child: Text('Submit'),
         onPressed: () {
           if (double.parse(_quantity.text) > widget.item.openQty) {
-            
             print('Tidak boleh lebih besar dari Available Qty ');
-            return;
+            return showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.notification_important,
+                          color: Colors.red, size: 50),
+                      Divider(),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('Qty must be above 0'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('or equal to  $avlQty'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
           }
           final pickItemReceiveProvider =
               Provider.of<PickItemReceiveProvider>(context, listen: false);

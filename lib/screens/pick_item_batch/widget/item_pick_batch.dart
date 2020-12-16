@@ -25,11 +25,11 @@ class ItemPickBatch extends StatelessWidget {
         child: Column(
           children: [
             BaseTextLine('Batch No', item.batchNo),
-            BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(2)),
+            BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(4)),
             BaseTextLine('Expired Date', convertDate(item.expiredDate)),
             BaseTextLine('Uom', item.uom),
-            BaseTextLine('Remaining Qty', item.remainQty.toStringAsFixed(2)),
-            BaseTextLine('Picked Qty', item.pickQty.toStringAsFixed(2)),
+            BaseTextLine('Remaining Qty', item.remainQty.toStringAsFixed(4)),
+            BaseTextLine('Picked Qty', item.pickQty.toStringAsFixed(4)),
           ],
         ),
       ),

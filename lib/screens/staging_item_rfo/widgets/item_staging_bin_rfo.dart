@@ -32,13 +32,13 @@ class ItemStagingBinRfo extends StatelessWidget {
             BaseTextLine('Item Code', item.itemCode),
             BaseTextLine('Item Name', item.itemName),
             BaseTextLine('Item Batch', item.fgBatch),
-            BaseTextLine('Uom', item.uom),
-            BaseTextLine('Put Qty', item.putQty.toStringAsFixed(2)),
+            BaseTextLine('Put Qty', item.putQty.toStringAsFixed(4)),
             if (item.binCodeDestination.isNotEmpty)
               BaseTextLine('Bin Code', item.binCodeDestination),
-            BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(2)),
+            BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(4)),
+            BaseTextLine('Uom', item.uom),
             if (item.putQty != 0)
-              BaseTextLine('Picked Qty', item.putQty.toStringAsFixed(2)),
+              BaseTextLine('Picked Qty', item.putQty.toStringAsFixed(4)),
             buildItemBatchList(item.batchList),
           ],
         ),

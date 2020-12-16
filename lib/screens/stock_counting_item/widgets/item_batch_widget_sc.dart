@@ -33,7 +33,7 @@ class ItemBatchWidgetSc extends StatelessWidget {
               children: [
                 BaseTextLine('Batch Number', batch.batchNo),
                 BaseTextLine('Expired Date', convertDate(batch.expiredDate)),
-                BaseTextLine('Quantity', batch.pickQty.toStringAsFixed(2)),
+                BaseTextLine('Quantity', batch.pickQty.toStringAsFixed(4)),
               ],
             ),
           ),

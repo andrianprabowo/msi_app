@@ -35,16 +35,16 @@ class _DialogPickListNonbatchSoState extends State<DialogPickListNonbatchSo> {
           BaseTitle('Input Quantity'),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine(
-              'Available Quantity', widget.item.openQty.toStringAsFixed(2)),
+              'Available Quantity', widget.item.openQty.toStringAsFixed(4)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           if (_quantity.text != '' &&
                   (double.parse(_quantity.text) >
                       double.tryParse(
-                          widget.item.openQty.toStringAsFixed(2))) ||
+                          widget.item.openQty.toStringAsFixed(4))) ||
               _quantity.text == '0')
-            buildButtonNotif(context, widget.item.openQty.toString())
+            buildButtonNotif(context, widget.item.openQty.toStringAsFixed(4))
           else
             buildButtonSubmit(context),
         ],

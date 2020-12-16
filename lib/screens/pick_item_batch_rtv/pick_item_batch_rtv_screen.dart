@@ -51,17 +51,17 @@ class PickItemBatchRtvScreen extends StatelessWidget {
               pickItemProvider.addBatchList(pickItem, batchList);
 
               var guider =
-                  double.tryParse(pickItem.openQty.toStringAsFixed(2)) >
-                          double.tryParse(itemBin.avlQty.toStringAsFixed(2))
-                      ? double.tryParse(itemBin.avlQty.toStringAsFixed(2))
-                      : double.tryParse(pickItem.openQty.toStringAsFixed(2));
+                  double.tryParse(pickItem.openQty.toStringAsFixed(4)) >
+                          double.tryParse(itemBin.avlQty.toStringAsFixed(4))
+                      ? double.tryParse(itemBin.avlQty.toStringAsFixed(4))
+                      : double.tryParse(pickItem.openQty.toStringAsFixed(4));
 
-              pickBatchProvider.totalPicked.toStringAsFixed(2) == '0.00'
+              pickBatchProvider.totalPicked.toStringAsFixed(4) == '0.00'
                   ? showAlertOnZero(context)
                   : double.tryParse(pickBatchProvider.totalPicked
-                              .toStringAsFixed(2)) >
+                              .toStringAsFixed(4)) >
                           guider
-                      ? showAlertGreaterThanZero(context, guider.toString())
+                      ? showAlertGreaterThanZero(context, guider.toStringAsFixed(4))
                       : Navigator.of(context).popUntil(ModalRoute.withName(
                           PickItemReceiveRtvScreen.routeName));
             },
@@ -84,7 +84,7 @@ class PickItemBatchRtvScreen extends StatelessWidget {
                   return Expanded(
                     child: BaseTextLine(
                       'Total Picked',
-                      provider.totalPicked.toStringAsFixed(2),
+                      provider.totalPicked.toStringAsFixed(4),
                     ),
                   );
                 }),

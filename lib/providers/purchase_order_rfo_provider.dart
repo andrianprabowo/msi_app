@@ -64,9 +64,7 @@ class PurchaseOrderRfoProvider with ChangeNotifier {
     };
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
     final binId = await Prefs.getString(Prefs.binId);
-    final userId = await Prefs.getInt(Prefs.userId.toString());
 
-    _selected.userId = userId;
     _selected.storageLocation = binId;
     _selected.plant = warehouseId;
     _selected.detailList = detailList;

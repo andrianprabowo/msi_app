@@ -82,7 +82,7 @@ class StockCountingBatchScreen extends StatelessWidget {
                   return Expanded(
                     child: BaseTextLine(
                       'Total Count',
-                      provider.totalPicked.toStringAsFixed(2),
+                      provider.totalPicked.toStringAsFixed(4),
                     ),
                   );
                 }),
