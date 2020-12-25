@@ -102,8 +102,8 @@ class ProductionReceipt extends StatelessWidget {
     final provider = Provider.of<ProductionReceiptProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InputScan(
-      label: 'PO Number',
-      hint: 'Input or Scan PO Number',
+      label: 'Production Number',
+      hint: 'Input or Scan Production Number',
       scanResult: (value) {
         final item = provider.findByPoNumber(value.toUpperCase());
         provider.selectPo(item);

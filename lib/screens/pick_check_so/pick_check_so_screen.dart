@@ -154,8 +154,8 @@ class PickCheckSoScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('Pick Number', item.pickNumber),
-            BaseTextLine('Pick Date', convertDate(item.pickDate)),
+            BaseTextLine('SO Number', item.pickNumber),
+            BaseTextLine('SO Date', convertDate(item.pickDate)),
             BaseTextLine('Remark', item.pickRemark),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Cust Code', item.cardCode),

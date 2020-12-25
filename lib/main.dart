@@ -17,6 +17,7 @@ import 'package:msi_app/providers/list_pick_list_so_provider.dart';
 import 'package:msi_app/providers/list_put_away_provider.dart';
 import 'package:msi_app/providers/list_put_away_rfo_provider.dart';
 import 'package:msi_app/providers/list_stck_count_provider.dart';
+import 'package:msi_app/providers/modul.provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_bin.dart';
 import 'package:msi_app/providers/receipt_batch_rfo_provider.dart';
 import 'package:msi_app/providers/staging_bin_si.provider.dart';
@@ -214,6 +215,7 @@ void main() async {
         ChangeNotifierProvider(
             create: (_) => ProductionReceiptRMAllTransactionProvider()),
         ChangeNotifierProvider(create: (_) => ProductionReceiptRMBinProvider()),
+        ChangeNotifierProvider(create: (_) => ModulProvider()),
       ],
       child: MyApp(),
     ),

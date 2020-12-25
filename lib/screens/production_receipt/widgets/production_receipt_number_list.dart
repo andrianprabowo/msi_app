@@ -29,7 +29,7 @@ class ProductionReceiptNumberList extends StatelessWidget {
         decoration: kBoxDecoration,
         child: Column(
           children: [
-            BaseTextLine('PO Number', item.poNumber),
+            BaseTextLine('Production Number', item.poNumber),
             BaseTextLine('Doc Date', convertDate(item.docDate)),
             BaseTextLine('Memo', item.vendorName),
             BaseTextLine('Whs Code', authProvider.warehouseId),

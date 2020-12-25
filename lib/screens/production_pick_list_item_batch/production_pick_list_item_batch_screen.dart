@@ -69,7 +69,7 @@ class ProductionPickListItemBatch extends StatelessWidget {
                         .totalPicked
                         .toStringAsFixed(4)) >
                     guider) {
-                  showAlertGreaterThanZero(context, guider.toString());
+                  showAlertGreaterThanZero(context, guider.toStringAsFixed(4));
                 } else {
                   pickItemProvider.addBatchList(pickItem, batchList);
                   Navigator.of(context).popUntil(

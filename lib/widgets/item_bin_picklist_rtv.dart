@@ -30,7 +30,7 @@ class ItemBinPicklistRtv extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Bin Location :',
+            'Staging Bin Location :',
             style: TextStyle(
               color: kPrimaryColor,
               fontWeight: FontWeight.bold,

@@ -13,7 +13,7 @@ class ProductionScreen extends StatelessWidget {
   final List<Map<String, Object>> menus = [
     {
       'icon':Icons.emoji_transportation,
-      'label':'Transfer to Production',
+      'label':'Transfer to Inter Sentul',
       'routeName':TransferToProductionScreen.routeName,
     },
     {

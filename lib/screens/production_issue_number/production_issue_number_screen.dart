@@ -52,8 +52,8 @@ class ProductionIssueNumber extends StatelessWidget {
   Widget buildInputScan(BuildContext context) {
     final provider = Provider.of<ProductionIssueNumberProvider>(context, listen: false);
     return InputScan(
-      label: 'Transaction Number',
-      hint: 'Input or Scan Transaction Number',
+      label: 'Production Number',
+      hint: 'Input or Scan Production Number',
       scanResult: (value) {
         final item = provider.findByPickNumber(value.toUpperCase());
         Navigator.of(context).pushNamed(

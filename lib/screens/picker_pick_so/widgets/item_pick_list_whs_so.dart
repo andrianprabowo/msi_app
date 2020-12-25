@@ -29,8 +29,8 @@ class ItemPickListWhsSo extends StatelessWidget {
         decoration: kBoxDecoration,
         child: Column(
           children: [
-            BaseTextLine('Pick Number', item.pickNumber),
-            BaseTextLine('Pick Date', convertDate(item.pickDate)),
+            BaseTextLine('SO Number', item.pickNumber),
+            BaseTextLine('SO Date', convertDate(item.pickDate)),
             BaseTextLine('Cust Code', item.cardCode),
             BaseTextLineList('Cust Name', item.cardName,255),
             BaseTextLine('Picker', authProvider.username),

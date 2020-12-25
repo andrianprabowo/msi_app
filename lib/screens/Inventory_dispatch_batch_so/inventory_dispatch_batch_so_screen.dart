@@ -97,6 +97,8 @@ class InventoryDispatchBatchSoScreen extends StatelessWidget {
             ),
             BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description),
+            BaseTextLine('Dispatch Qty',pickItem.openQty.toStringAsFixed(4)),
+            BaseTextLine('UoM',pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),
             Divider(),

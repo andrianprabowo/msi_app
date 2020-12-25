@@ -7,6 +7,7 @@ import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
 
 class ProductionReceiptItemQtyDialog extends StatefulWidget {
@@ -54,20 +55,20 @@ class _ProductionReceiptItemQtyDialogState
           buildDatePicker(context),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           //buildButtonSubmit(context),
-          if (((_quantity.text != '' || _quantityReject.text != '') ||
-                  (_quantity.text == '0' || _quantity.text == '0.0') ||
-                  (_quantityReject.text == '0' ||
-                      _quantityReject.text == '0.0')) &&
-              (((_quantity.text.isEmpty
-                          ? double.parse('0')
-                          : double.parse(_quantity.text)) +
-                      (_quantityReject.text.isEmpty
-                          ? double.parse('0')
-                          : double.parse(_quantityReject.text))) >
-                  double.tryParse(widget.item.openQty.toStringAsFixed(4))))
-            buildButtonNotif(context, openQty)
-          else
-            buildButtonSubmit(context)
+          // if (((_quantity.text != '' || _quantityReject.text != '') ||
+          //         (_quantity.text == '0' || _quantity.text == '0.0') ||
+          //         (_quantityReject.text == '0' ||
+          //             _quantityReject.text == '0.0')) &&
+          //     (((_quantity.text.isEmpty
+          //                 ? double.parse('0')
+          //                 : double.parse(_quantity.text)) +
+          //             (_quantityReject.text.isEmpty
+          //                 ? double.parse('0')
+          //                 : double.parse(_quantityReject.text))) >
+          //         double.tryParse(widget.item.openQty.toStringAsFixed(4))))
+          //   buildButtonNotif(context, openQty)
+          // else
+          buildButtonSubmit(context, openQty)
         ],
       ),
     );
@@ -162,29 +163,159 @@ class _ProductionReceiptItemQtyDialogState
     );
   }
 
-  Widget buildButtonSubmit(BuildContext context) {
+  Widget buildButtonSubmit(BuildContext context, String avlQty) {
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(
         child: Text('Submit'),
         onPressed: () {
-          final itemPoProvider = Provider.of<ProductionReceiptItemProvider>(
-              context,
-              listen: false);
-          String dateString =
-              DateFormat().addPattern('dd/MM/yy').format(_selectedDate);
-          itemPoProvider.addBatch(
-            item,
-            ProductionReceiptItemBatchModel(
-              batchNo: _batchNumber.text.isEmpty
-                  ? "BatchNo-$dateString"
-                  : _batchNumber.text,
-              expiredDate: _selectedDate,
-              availableQty: double.parse(_quantity.text),
-              rejectQty: double.parse(_quantityReject.text),
-            ),
-          );
-          Navigator.of(context).pop();
+          if (((_quantity.text != '' || _quantityReject.text != '') ||
+                  (_quantity.text == '0' || _quantity.text == '0.0') ||
+                  (_quantityReject.text == '0' ||
+                      _quantityReject.text == '0.0')) &&
+              (((_quantity.text.isEmpty
+                          ? double.parse('0')
+                          : double.parse(_quantity.text)) +
+                      (_quantityReject.text.isEmpty
+                          ? double.parse('0')
+                          : double.parse(_quantityReject.text))) >
+                  double.tryParse(widget.item.openQty.toStringAsFixed(4)))) {
+            print('Tidak boleh lebih besar darig Available Qty ');
+            return showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.notification_important,
+                          color: Colors.red, size: 50),
+                      Divider(),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('Total Qty must be above 0'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('or equal to  $avlQty'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
+          if (_quantityReject.text == '') {
+            print('Tidak boleh lebih besar darig Available Qty ');
+            return showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.notification_important,
+                          color: Colors.red, size: 50),
+                      Divider(),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('Please Input All Qty'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          } else {
+            final itemPoProvider = Provider.of<ProductionReceiptItemProvider>(
+                context,
+                listen: false);
+            String dateString =
+                DateFormat().addPattern('dd/MM/yy').format(_selectedDate);
+            if (_batchNumber.text.isEmpty) {
+              return showDialog<void>(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.notification_important,
+                            color: Colors.red, size: 50),
+                        Divider(),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        BaseTitleColor('Please input batch number'),
+                        BaseTitleColor('or automatically filled with'),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        BaseTitle('BatchNo-$dateString'),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            child: Text('Cancel'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              itemPoProvider.addBatch(
+                                item,
+                                ProductionReceiptItemBatchModel(
+                                  batchNo: _batchNumber.text.isEmpty
+                                      ? "BatchNo-$dateString"
+                                      : _batchNumber.text,
+                                  expiredDate: _selectedDate,
+                                  availableQty: double.parse(_quantity.text),
+                                  rejectQty: double.parse(_quantityReject.text),
+                                ),
+                              );
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }
+
+            itemPoProvider.addBatch(
+              item,
+              ProductionReceiptItemBatchModel(
+                batchNo: _batchNumber.text.isEmpty
+                    ? "BatchNo-$dateString"
+                    : _batchNumber.text,
+                expiredDate: _selectedDate,
+                availableQty: double.parse(_quantity.text),
+                rejectQty: double.parse(_quantityReject.text),
+              ),
+            );
+            Navigator.of(context).pop();
+          }
         },
       ),
     );

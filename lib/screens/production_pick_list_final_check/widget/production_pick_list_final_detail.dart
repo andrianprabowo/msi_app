@@ -25,7 +25,7 @@ class ProductionPickListFinalDetail extends StatelessWidget {
           BaseTitle(item.description),
           Divider(),
           BaseTextLine(
-              'Open Quantity',
+              'Total to Pick Qty',
               item.openQty == 0.0
                   ? item.openQty.toStringAsFixed(4)
                   : formatter.format(item.openQty)),

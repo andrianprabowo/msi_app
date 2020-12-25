@@ -30,7 +30,7 @@ class ItemBinProductionPickList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Bin Location :',
+            'Staging Bin Location :',
             style: TextStyle(
               color: kPrimaryColor,
               fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ class ItemBinProductionPickList extends StatelessWidget {
         await binProvider.getAllBinRtv();
         SelectDialog.showModal<BinRtv>(
           context,
-          label: "Select Bin Location",
+          label: "Select Staging Bin Location",
           showSearchBox: true,
           items: binProvider.itemsBins,
           itemBuilder: (context, item, _) {

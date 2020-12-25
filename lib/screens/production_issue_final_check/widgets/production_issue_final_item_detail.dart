@@ -25,13 +25,13 @@ class ProductionIssueFinalItemDetail extends StatelessWidget {
           BaseTitle(item.itemName),
           Divider(),
           BaseTextLine(
-              'Available Quantity',
+              'Planned Quantity',
               item.availableQty == 0.0
                   ? item.availableQty.toStringAsFixed(4)
                   : formatter.format(item.availableQty)),
           BaseTextLine('UOM', item.unitMsr),
           BaseTextLine(
-              'Put Quantity',
+              'Issue Quantity',
               item.putQty == 0.0
                   ? item.putQty.toStringAsFixed(4)
                   : formatter.format(item.putQty)),

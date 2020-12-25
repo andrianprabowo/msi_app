@@ -41,7 +41,7 @@ class ProductionReceiptRMItemList extends StatelessWidget {
             BaseTitle(item.description),
             Divider(),
             BaseTextLine(
-                'Total To Dispatch',
+                'Total To Receipt',
                 item.openQty == 0.0
                     ? item.openQty.toStringAsFixed(4)
                     : formatter.format(item.openQty)),

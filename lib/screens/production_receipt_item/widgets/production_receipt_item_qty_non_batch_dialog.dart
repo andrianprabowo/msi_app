@@ -6,6 +6,7 @@ import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
 
 class ProductionReceiptItemQtyNonBatchDialog extends StatefulWidget {
@@ -47,20 +48,20 @@ class _ProductionReceiptItemQtyNonBatchDialogState
             buildQtyRejectFormField(),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             //buildButtonSubmit(context),
-            if (((_quantity.text != '' || _quantityReject.text != '') ||
-                    (_quantity.text == '0' || _quantity.text == '0.0') ||
-                    (_quantityReject.text == '0' ||
-                        _quantityReject.text == '0.0')) &&
-                (((_quantity.text.isEmpty
-                            ? double.parse('0')
-                            : double.parse(_quantity.text)) +
-                        (_quantityReject.text.isEmpty
-                            ? double.parse('0')
-                            : double.parse(_quantityReject.text))) >
-                    double.tryParse(widget.item.openQty.toStringAsFixed(4))))
-              buildButtonNotif(context, openQty)
-            else
-              buildButtonSubmit(context),
+            // if (((_quantity.text != '' || _quantityReject.text != '') ||
+            //         (_quantity.text == '0' || _quantity.text == '0.0') ||
+            //         (_quantityReject.text == '0' ||
+            //             _quantityReject.text == '0.0')) &&
+            //     (((_quantity.text.isEmpty
+            //                 ? double.parse('0')
+            //                 : double.parse(_quantity.text)) +
+            //             (_quantityReject.text.isEmpty
+            //                 ? double.parse('0')
+            //                 : double.parse(_quantityReject.text))) >
+            //         double.tryParse(widget.item.openQty.toStringAsFixed(4))))
+            //   buildButtonNotif(context, openQty)
+            // else
+              buildButtonSubmit(context, openQty),
           ],
         ));
   }
@@ -98,12 +99,55 @@ class _ProductionReceiptItemQtyNonBatchDialogState
     );
   }
 
-  Widget buildButtonSubmit(BuildContext context) {
+  Widget buildButtonSubmit(BuildContext context, String avlQty) {
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(
           child: Text('Submit'),
           onPressed: () {
+            if (((_quantity.text != '' || _quantityReject.text != '') ||
+                    (_quantity.text == '0' || _quantity.text == '0.0') ||
+                    (_quantityReject.text == '0' ||
+                        _quantityReject.text == '0.0')) &&
+                (((_quantity.text.isEmpty
+                            ? double.parse('0')
+                            : double.parse(_quantity.text)) +
+                        (_quantityReject.text.isEmpty
+                            ? double.parse('0')
+                            : double.parse(_quantityReject.text))) >
+                    double.tryParse(widget.item.openQty.toStringAsFixed(4)))) {
+              print('Tidak boleh lebih besar dari Available Qty ');
+              return showDialog<void>(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.notification_important,
+                            color: Colors.red, size: 50),
+                        Divider(),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        BaseTitleColor('Qty must be above 0'),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        BaseTitleColor('or equal to  $avlQty'),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }
             final itemPoProvider = Provider.of<ProductionReceiptItemProvider>(
                 context,
                 listen: false);
@@ -112,6 +156,7 @@ class _ProductionReceiptItemQtyNonBatchDialogState
               double.parse(_quantity.text),
               double.parse(_quantityReject.text),
             );
+
             Navigator.of(context).pop();
           }),
     );

@@ -75,9 +75,9 @@ class ProductionIssueItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BaseTextLine(
-                'Transaction Number', transactionNumberSelected.pickNumber),
+                'Production Number', transactionNumberSelected.pickNumber),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Transaction Date',
+            BaseTextLine('Production Date',
                 convertDate(transactionNumberSelected.pickDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Remarks', transactionNumberSelected.pickRemark),

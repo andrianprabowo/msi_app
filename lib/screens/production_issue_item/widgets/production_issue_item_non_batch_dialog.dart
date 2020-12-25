@@ -39,7 +39,11 @@ class _ProductionIssueItemNonBatchDialogState
         children: [
           BaseTitle('Input Quantity'),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('Available Quantity', avlQty),
+          BaseTitle(item.itemCode),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTitle(item.itemName),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTextLine('Planneed Quantity', avlQty),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -50,7 +54,7 @@ class _ProductionIssueItemNonBatchDialogState
           //     _quantity.text == '0')
           //   buildButtonNotif(context, avlQty)
           // else
-            buildButtonSubmit(context),
+          buildButtonSubmit(context),
         ],
       ),
     );

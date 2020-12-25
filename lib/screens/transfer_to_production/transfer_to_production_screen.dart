@@ -12,12 +12,12 @@ class TransferToProductionScreen extends StatelessWidget {
   final List<Map<String, Object>> menus = [
     {
       'icon': Icons.event_note,
-      'label': 'Pick List (Raw Material)',
+      'label': 'Pick List',
       'routeName': ProductionPickList.routeName,
     },
     {
       'icon':Icons.moped,
-      'label':'Receipt (Raw Material)',
+      'label':'Receipt',
       'routeName':ProductionReceiptRM.routeName,
     }
   ];

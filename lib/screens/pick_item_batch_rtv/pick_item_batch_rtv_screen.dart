@@ -99,7 +99,10 @@ class PickItemBatchRtvScreen extends StatelessWidget {
               ],
             ),
             BaseTitle(pickItem.itemCode),
-            BaseTitle(pickItem.description),
+            BaseTitle(pickItem.description),BaseTextLine(
+              'Total To Pick Qty', pickItem.openQty.toStringAsFixed(4)),
+            BaseTextLine(
+              'UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),
             Divider(),

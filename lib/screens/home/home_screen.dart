@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/providers/modul.provider.dart';
 import 'package:msi_app/screens/dashboard/dashboard_screen.dart';
 import 'package:msi_app/screens/stock_counting_header/stock_counting_header_screen.dart';
 import 'package:msi_app/screens/stock_inquiry_header/stock_inquiry_header_screen.dart';
@@ -10,9 +11,17 @@ import 'package:msi_app/screens/outbound/outbound_screen.dart';
 import 'package:msi_app/screens/production/production_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home';
+  
+
+  Future<void> refreshData(BuildContext context) async {
+    final pickItemProvider =
+        Provider.of<ModulProvider>(context, listen: false);
+    await pickItemProvider.getModulByUsername();
+  }
 
   final List<Map<String, Object>> menus = [
     {

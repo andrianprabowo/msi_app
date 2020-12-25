@@ -22,7 +22,7 @@ class PickDetailCheck extends StatelessWidget {
           BaseTitle(item.itemCode),
           BaseTitle(item.description),
           Divider(),
-          BaseTextLine('Open Quantity', item.openQty.toStringAsFixed(4)),
+          BaseTextLine('Total To Pick Quantity', item.openQty.toStringAsFixed(4)),
           BaseTextLine('Pick Quantity', item.pickedQty.toStringAsFixed(4)),
           BaseTextLine('UoM', item.unitMsr),
           BaseTextLine('Bin Location', item.itemStorageLocation),

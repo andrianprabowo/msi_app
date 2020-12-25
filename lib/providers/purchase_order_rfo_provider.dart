@@ -78,7 +78,6 @@ class PurchaseOrderRfoProvider with ChangeNotifier {
       print(response.request);
       print(_selected.toJson());
 
-      print('Status: ${_selected.userId}');
       print('Status: ${response.statusCode}');
       final data = json.decode(response.body) as Map;
       print(data);

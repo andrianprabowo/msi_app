@@ -56,9 +56,9 @@ class PickItemReceiveSoScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('Pick Number', item.pickNumber),
+            BaseTextLine('SO Number', item.pickNumber),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Pick Date', convertDate(item.pickDate)),
+            BaseTextLine('SO Date', convertDate(item.pickDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Remarks', item.pickRemark),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

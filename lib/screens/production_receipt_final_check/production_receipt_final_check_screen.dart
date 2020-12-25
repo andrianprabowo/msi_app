@@ -137,7 +137,7 @@ class ProductionReceiptFinalCheck extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('PO Number', po.poNumber),
+            BaseTextLine('Production Number', po.poNumber),
             BaseTextLine('Delivery Date', convertDate(po.docDate)),
             BaseTextLine('Memo', po.vendorName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

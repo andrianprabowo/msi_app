@@ -36,7 +36,7 @@ class ProductionReceiptItemList extends StatelessWidget {
             BaseTitle(item.description),
             Divider(),
             BaseTextLine(
-                'PO Quantity',
+                'Production Quantity',
                 item.openQty == 0.0
                     ? item.openQty.toStringAsFixed(4)
                     : formatter.format(item.openQty)),

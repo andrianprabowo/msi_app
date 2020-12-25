@@ -25,7 +25,7 @@ class ProductionReceiptRMFinalCheckItemDetail extends StatelessWidget {
           BaseTitle(item.description),
           Divider(),
           BaseTextLine(
-              'Open Quantity',
+              'Receive Quantity',
               item.openQty == 0.0
                   ? item.openQty.toStringAsFixed(4)
                   : formatter.format(item.openQty)),

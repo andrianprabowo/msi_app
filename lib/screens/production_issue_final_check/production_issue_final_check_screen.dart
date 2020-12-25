@@ -133,8 +133,8 @@ class ProductionIssueFinalCheck extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('Transaction Number', item.pickNumber),
-            BaseTextLine('Pick Date', convertDate(item.pickDate)),
+            BaseTextLine('Production Number', item.pickNumber),
+            BaseTextLine('Production Date', convertDate(item.pickDate)),
             BaseTextLine('Remark', item.pickRemark),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Storage Location', item.binCode),

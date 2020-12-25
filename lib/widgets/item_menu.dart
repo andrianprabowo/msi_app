@@ -31,6 +31,22 @@ class ItemMenu extends StatelessWidget {
           return;
         }
 
+        //looping permName
+        // var permName = 'Stock Counting';
+        
+        // if (label == permName) {
+          // Navigator.of(context).pushNamed(routeName);
+        // } else {
+        //   Scaffold.of(context).showSnackBar(SnackBar(
+        //       content: Row(
+        //     children: [
+        //       Icon(Icons.error_outline, color: Colors.red),
+        //       SizedBox(width: getProportionateScreenWidth(kLarge)),
+        //       Text('You Need Permision on $label'),
+        //     ],
+        //   )));
+        //   return;
+        // }
         Navigator.of(context).pushNamed(routeName);
       },
       child: Container(

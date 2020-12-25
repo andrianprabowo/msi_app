@@ -36,7 +36,7 @@ class ProductionIssueItemList extends StatelessWidget {
             BaseTitle(item.itemName),
             Divider(),
             BaseTextLine('Item Batch', item.fgBatch),
-            BaseTextLine('Available Qty', item.availableQty == 0.0
+            BaseTextLine('Planned Qty', item.availableQty == 0.0
                   ? item.availableQty.toStringAsFixed(4)
                   : formatter.format(item.availableQty)),
             BaseTextLine('UOM', item.unitMsr),

@@ -154,12 +154,13 @@ class InventoryDispatchCheckSoScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('Doc Number', item.docNumber),
-            BaseTextLine('Doc Date', convertDate(item.docDate)),
+            BaseTextLine('SO Number', item.docNumber),
+            BaseTextLine('SO Date', convertDate(item.docDate)),
             BaseTextLine('Remark', item.pickRemark),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Customer Code', item.cardCode),
-            BaseTextLine('Customer Name', item.cardName),
+            BaseTextLine('Whs Code', item.cardCode),
+            BaseTextLine('Whs Name', ''),
+            BaseTextLine('', item.cardName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             // buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

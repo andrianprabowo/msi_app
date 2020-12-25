@@ -5,6 +5,7 @@ import 'package:msi_app/providers/inventory_dispatch_detail_so_provider.dart';
 import 'package:msi_app/screens/inventory_dispatch_item_so/inventory_dispatch_item_so_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_text_line_list.dart';
 import 'package:provider/provider.dart';
 
 class ItemInventoryDispatchDetailSo extends StatelessWidget {
@@ -28,10 +29,10 @@ class ItemInventoryDispatchDetailSo extends StatelessWidget {
         decoration: kBoxDecoration,
         child: Column(
           children: [
-            BaseTextLine('Doc Number', item.docNumber),
-            BaseTextLine('Doc Date', convertDate(item.docDate)),
+            BaseTextLine('SO Number', item.docNumber),
+            BaseTextLine('SO Date', convertDate(item.docDate)),
             BaseTextLine('Cust Code', item.cardCode),
-            BaseTextLine('Cust Name', item.cardName),
+            BaseTextLineList('Cust Name', item.cardName, 265),
             BaseTextLine('Picker', authProvider.username),
             BaseTextLine('Memo', item.pickRemark),
           ],

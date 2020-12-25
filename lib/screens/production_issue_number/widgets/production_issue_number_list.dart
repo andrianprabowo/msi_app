@@ -26,8 +26,8 @@ class ProductionIssueNumberList extends StatelessWidget {
         decoration: kBoxDecoration,
         child: Column(
           children: [
-            BaseTextLine('Transaction Number', item.pickNumber),
-            BaseTextLine('Transaction Date', convertDate(item.pickDate)),
+            BaseTextLine('Production Number', item.pickNumber),
+            BaseTextLine('Production Date', convertDate(item.pickDate)),
             BaseTextLine('Whs Code', item.plant),
             BaseTextLine('Whs Name', item.plantName),
             BaseTextLine('Memo', item.pickRemark),
