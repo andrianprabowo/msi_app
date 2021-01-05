@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 
 class StockCountingBin with ChangeNotifier {
-  final String binLocation;
+   int status;
+  String binLocation;
   final double capacity;
   final String warehouse;
   final double avlQty;
   StockCountingBin({
+    this.status,
     this.binLocation,
     this.capacity,
     this.warehouse,
@@ -49,6 +51,7 @@ class StockCountingBin with ChangeNotifier {
       capacity: map['capacity'] ?? 0.0,
       warehouse: map['warehouse'] ?? '',
       avlQty: map['avlqty'] ?? 0.0,
+      status: map['status'] ?? 0,
     );
   }
 

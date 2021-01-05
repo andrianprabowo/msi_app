@@ -31,6 +31,15 @@ class StockCountingBinProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateStatus(String bin) {
+    StockCountingBin item =
+        _items.where((item) => item.binLocation == bin).first;
+    if (item != null) {
+      item.status = 1;
+    }
+    notifyListeners();
+  }
+
   Future<void> getPlBinList(
     BuildContext context,
   ) async {
@@ -39,7 +48,8 @@ class StockCountingBinProvider with ChangeNotifier {
         Provider.of<StockCountingHeaderProvider>(context, listen: false)
             .selected;
     final docnum = header.pickNumber;
-    final url = '$kBaseUrl/api/getstcbin/whscode=$warehouseId&docnum=$docnum';
+    final username = await Prefs.getString(Prefs.username);
+    final url = '$kBaseUrl/api/getstcbin/whscode=$warehouseId&docnum=$docnum&cardcode=$username';
 
     try {
       final response = await http.get(url);

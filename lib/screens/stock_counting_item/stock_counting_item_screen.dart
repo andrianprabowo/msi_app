@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_header.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/stock_counting_bin_provider.dart';
 import 'package:msi_app/providers/stock_counting_header_provider.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
 import 'package:msi_app/screens/stock_counting_batch/stock_counting_batch_screen.dart';
@@ -35,6 +36,10 @@ class StockCountingItemScreen extends StatelessWidget {
         Provider.of<StockCountingHeaderProvider>(context, listen: false)
             .selected;
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    
+    final itemBin =
+        Provider.of<StockCountingBinProvider>(context, listen: false)
+            .selected;
 
     return Scaffold(
       appBar: AppBar(
@@ -42,7 +47,7 @@ class StockCountingItemScreen extends StatelessWidget {
         actions: [
           // IconButton(
           //   icon: Icon(Icons.post_add),
-          //   onPressed: () {
+          //   onPressed: () {  
           //     authProvider.clearBin();
           //     Navigator.of(context)
           //         .pushNamed(StockCountingCheckScreen.routeName);
@@ -75,6 +80,8 @@ class StockCountingItemScreen extends StatelessWidget {
                 SizedBox(height: getProportionateScreenHeight(kLarge)),
                 BaseTextLine('Warehouse Name', authProvider.warehouseName),
                 SizedBox(height: getProportionateScreenHeight(kLarge)),
+                BaseTextLine('Bin Location', itemBin.binLocation),
+                SizedBox(height: getProportionateScreenHeight(kLarge)),
                 buildInputScan(context),
                 ItemAllScWidget(),
                 SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -93,7 +100,7 @@ class StockCountingItemScreen extends StatelessWidget {
     return Expanded(
       child: Consumer<StockCountingItemProvider>(
         builder: (_, provider, child) {
-          final list = provider.items;
+          final list = provider.itemSameBin(context);
           return list.isEmpty
               ? NoData()
               : ListView.builder(

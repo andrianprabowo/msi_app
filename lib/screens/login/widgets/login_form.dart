@@ -66,15 +66,16 @@ class _LoginFormState extends State<LoginForm> {
           if (loginSuccess) {
             Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
           } else {
-            Scaffold.of(context).showSnackBar(SnackBar(
-              content: Row(
-                children: [
-                  Icon(Icons.error_outline, color: Colors.red),
-                  SizedBox(width: getProportionateScreenWidth(kLarge)),
-                  Text('Wrong username or password'),
-                ],
-              ),
-            ));
+            // Scaffold.of(context).showSnackBar(SnackBar(
+            //   content: Row(
+            //     children: [
+            //       Icon(Icons.error_outline, color: Colors.red),
+            //       SizedBox(width: getProportionateScreenWidth(kLarge)),
+            //       Text('Wrong username or password'),
+            //     ],
+            //   ),
+            // ));
+            Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
           }
         },
       ),

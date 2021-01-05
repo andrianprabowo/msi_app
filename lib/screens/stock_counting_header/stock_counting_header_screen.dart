@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/providers/stock_counting_header_provider.dart';
 import 'package:msi_app/screens/home/home_screen.dart';
 import 'package:msi_app/screens/list_stck_count/list_stck_count_screen.dart';
+import 'package:msi_app/screens/stock_counting_bin/stock_counting_bin_screen.dart';
 import 'package:msi_app/screens/stock_counting_header/item_stock_counting.dart';
-import 'package:msi_app/screens/stock_counting_item/stock_counting_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_title.dart';
@@ -146,7 +146,7 @@ class StockCountingHeaderScreen  extends StatelessWidget {
       scanResult: (value) {
         final item = provider.findByPoNumber(value);
         provider.selectPo(item);
-        Navigator.of(context).pushNamed(StockCountingItemScreen.routeName);
+        Navigator.of(context).pushNamed(StockCountingBinScreen.routeName);
       },
     );
   }

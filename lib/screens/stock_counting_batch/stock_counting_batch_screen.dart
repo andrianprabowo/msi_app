@@ -81,8 +81,8 @@ class StockCountingBatchScreen extends StatelessWidget {
                     builder: (BuildContext _, provider, Widget child) {
                   return Expanded(
                     child: BaseTextLine(
-                      'Total Count',
-                      provider.totalPicked.toStringAsFixed(4),
+                      ' ', '',
+                      // provider.totalPicked.toStringAsFixed(4),
                     ),
                   );
                 }),
@@ -115,7 +115,7 @@ class StockCountingBatchScreen extends StatelessWidget {
                           context: context,
                           builder: (_) => DialogInputQtyBatch(item));
                     },
-                    icon: Icon(Icons.delete),
+                    icon: Icon(Icons.add_circle_outline),
                     color: Colors.green,
                     label: Text('New Batch'))
               ],

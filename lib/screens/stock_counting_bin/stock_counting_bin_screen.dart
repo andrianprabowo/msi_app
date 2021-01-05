@@ -58,7 +58,7 @@ class StockCountingBinScreen extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTitle('List Staging Bin'),
+            BaseTitle('List Bin Location'),
             Divider(),
             buildItemList(context),
           ],

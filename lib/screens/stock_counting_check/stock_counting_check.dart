@@ -120,8 +120,7 @@ class StockCountingCheckScreen extends StatelessWidget {
         Provider.of<StockCountingItemProvider>(context, listen: false);
     // final itemSelected = provider.selected;
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-
-    return Scaffold(
+      return Scaffold(
       key: globalKey,
       appBar: AppBar(
         title: Text('Stock Counting Check'),
@@ -174,6 +173,21 @@ class StockCountingCheckScreen extends StatelessWidget {
               children: [
                 FlatButton.icon(
                     onPressed: () {
+                      if (providerItem.items.isEmpty ) {
+                        final snackBar = SnackBar(
+                          content: Row(
+                            children: [
+                              Icon(Icons.error_outline, color: Colors.red),
+                              SizedBox(
+                                  width: getProportionateScreenWidth(kLarge)),
+                              Text('Please Select Bin First or Click Another Bin'),
+                            ],
+                          ),
+                        );
+                        globalKey.currentState.showSnackBar(snackBar);
+                        return;
+                      }
+
                       Navigator.of(context).popUntil(ModalRoute.withName(
                           StockCountingItemScreen.routeName));
                     },

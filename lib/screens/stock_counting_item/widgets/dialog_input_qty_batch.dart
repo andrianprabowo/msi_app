@@ -56,7 +56,7 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: 'Batch Number',
         hintText: 'Scan /Input Batch Number',
-        suffixIcon: Icon(Icons.local_see),
+        suffixIcon: Icon(Icons.assessment_outlined),
       ),
       autofocus: true,
     );

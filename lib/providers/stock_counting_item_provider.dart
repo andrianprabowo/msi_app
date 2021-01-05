@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_batch.dart';
+import 'package:msi_app/models/stock_counting_bin.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/stock_counting_bin_provider.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -12,9 +13,11 @@ class StockCountingItemProvider with ChangeNotifier {
   List<StockCountingItem> _allItems;
   List<StockCountingItem> _items = [];
   StockCountingItem _selected;
+  StockCountingBin _selectedBin;
 
   List<StockCountingItem> get allItems => _allItems;
   StockCountingItem get selected => _selected;
+  StockCountingBin get selectedBin => _selectedBin;
 
   List<StockCountingItem> get items {
     _items.forEach((detail) {
@@ -28,15 +31,25 @@ class StockCountingItemProvider with ChangeNotifier {
       }
       // calculate remaining qty
       // detail.remainingQty = detail.openQty - detail.quantity;
+     
     });
 
-    // _item = _item.where((item) => item.quantity > 0).toList();
-
+    // print("... .... ... ... ... ...$em");
     return _items;
   }
 
   List<StockCountingItem> get itemCheck {
     return _items.where((item) => item.quantity > 0).toList();
+  }
+
+  List<StockCountingItem>  itemSameBin(BuildContext context) {
+
+    final selectedBin =
+          Provider.of<StockCountingBinProvider>(context, listen: false)
+              .selected;
+    return _items
+        .where((item) => item.itemStorageLocation == selectedBin.binLocation)
+        .toList();
   }
 
   Future<void> getAllItems() async {
@@ -88,11 +101,22 @@ class StockCountingItemProvider with ChangeNotifier {
     print('Removed Batch: $itemBatch');
   }
 
+  void removeItem(StockCountingItem item) {
+    _items.remove(item);
+    notifyListeners();
+    print('delete : $item');
+  }
+
   bool contains(StockCountingItem item) {
     for (StockCountingItem e in items) {
       if (e == item) return true;
     }
     return false;
+  }
+
+  void selectPo(StockCountingBin bin) {
+    _selectedBin.binLocation = bin.binLocation;
+    notifyListeners();
   }
 
   void inputQty(StockCountingItem item, double qty, BuildContext context) {
