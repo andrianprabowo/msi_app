@@ -7,12 +7,22 @@ class ProductionPickListItemBatchModel with ChangeNotifier {
   final String uom;
   double availableQty;
   double pickQty;
+//
+  double remainQty;
+  int totalRemain;
+  int show;
+  //
   final DateTime expiredDate;
   ProductionPickListItemBatchModel({
     this.batchNo,
     this.uom,
     this.availableQty,
     this.pickQty,
+    //
+    this.remainQty,
+    this.totalRemain,
+    this.show,
+    //
     this.expiredDate,
   });
 
@@ -34,6 +44,9 @@ class ProductionPickListItemBatchModel with ChangeNotifier {
       availableQty: map['avlQty'] ?? 0.0,
       pickQty: map['pickQty'] ?? 0.0,
       expiredDate: DateTime.parse(map['expDate']),
+      totalRemain: 0,
+      show: 0,
+      remainQty: map['remainQty'] ?? 0.0,
     );
   }
 
@@ -44,5 +57,5 @@ class ProductionPickListItemBatchModel with ChangeNotifier {
 
   @override
   String toString() =>
-      'ProductionPickListItemBatchModel(batchNo: $batchNo, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate, uom:$uom)';
+      'ProductionPickListItemBatchModel(show: $show, totalRemain: $totalRemain, batchNo: $batchNo, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate, uom:$uom)';
 }

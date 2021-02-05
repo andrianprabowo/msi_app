@@ -83,7 +83,7 @@ class _ProductionReceiptItemQtyDialogState
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: 'Batch Number',
         hintText: 'Input or Scan Batch Number',
-        suffixIcon: Icon(Icons.local_see),
+        suffixIcon: Icon(Icons.search),
       ),
     );
   }

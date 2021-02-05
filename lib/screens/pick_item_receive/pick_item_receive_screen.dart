@@ -113,7 +113,7 @@ class PickItemReceiveScreen extends StatelessWidget {
       hint: 'Scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value);
-       item.fgBatch == 'Y'
+        item.fgBatch == 'Y'
             ? Navigator.of(context)
                 .pushNamed(PickListBinScreen.routeName, arguments: item)
             : showModalBottomSheet(

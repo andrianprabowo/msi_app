@@ -31,7 +31,7 @@ class ItemReceiptRfo extends StatelessWidget {
           children: [
             BaseTextLine('Doc Number', item.poNumber),
             BaseTextLine('Doc Date', convertDate(item.docDate)),
-            BaseTextLine('Vendor', item.vendorName),
+            BaseTextLine('Outlet', item.vendorName),
             BaseTextLine('Warehouse', authProvider.warehouseName)
           ],
         ),

@@ -47,9 +47,9 @@ class ItemBinProductionReceipt extends StatelessWidget {
   }
 
   Widget buildChangeBin(BuildContext context) {
-    final binProvider = Provider.of<BinProductionReceiptProvider>(context, listen: false);
+    final binProvider =Provider.of<BinProductionReceiptProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    final poProvider = Provider.of<ProductionReceiptProvider>(context, listen: false);
+    final poProvider =Provider.of<ProductionReceiptProvider>(context, listen: false);
     return IconButton(
       icon: Icon(Icons.search),
       onPressed: () async {
@@ -69,7 +69,6 @@ class ItemBinProductionReceipt extends StatelessWidget {
           onChange: (BinRtv binRtv) {
             authProvider.selectBin(binRtv);
             poProvider.setStagingBin(binRtv.toString());
-
           },
         );
       },

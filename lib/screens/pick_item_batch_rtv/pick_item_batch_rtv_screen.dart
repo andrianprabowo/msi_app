@@ -61,7 +61,8 @@ class PickItemBatchRtvScreen extends StatelessWidget {
                   : double.tryParse(pickBatchProvider.totalPicked
                               .toStringAsFixed(4)) >
                           guider
-                      ? showAlertGreaterThanZero(context, guider.toStringAsFixed(4))
+                      ? showAlertGreaterThanZero(
+                          context, guider.toStringAsFixed(4))
                       : Navigator.of(context).popUntil(ModalRoute.withName(
                           PickItemReceiveRtvScreen.routeName));
             },
@@ -99,12 +100,30 @@ class PickItemBatchRtvScreen extends StatelessWidget {
               ],
             ),
             BaseTitle(pickItem.itemCode),
-            BaseTitle(pickItem.description),BaseTextLine(
-              'Total To Pick Qty', pickItem.openQty.toStringAsFixed(4)),
+            BaseTitle(pickItem.description),
             BaseTextLine(
-              'UoM', pickItem.unitMsr),
+                'Total To Pick Qty', pickItem.openQty.toStringAsFixed(4)),
+            BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTitle('List Batch of Item'),
+            // BaseTitle('List Batch of Item'),
+            Row(
+              children: [
+                Expanded(
+                  child: BaseTitle('List Batch of Item'),
+                ),
+                Text('Show All Item'),
+                Consumer<PickBatchRtvProvider>(
+                  builder: (_, provider, child) {
+                    return Switch(
+                      value: provider.showAllItem,
+                      onChanged: (value) {
+                        provider.toggleStatus();
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
             Divider(),
             buildItemList(context, pickItem, itemBin),
           ],
@@ -153,6 +172,14 @@ class PickItemBatchRtvScreen extends StatelessWidget {
       hint: 'Input or scan Item Batch Number',
       scanResult: (value) {
         final item = provider.findByBatchNo(value);
+
+        // if (provider.totalShow == item.show) {
+        //   showModalBottomSheet(
+        //     context: context,
+        //     builder: (_) => DialogPickBatchRtv(item),
+        //   );
+        // }
+
         showModalBottomSheet(
           context: context,
           builder: (_) => DialogPickBatchRtv(item),

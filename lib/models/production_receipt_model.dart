@@ -12,6 +12,7 @@ class ProductionReceiptModel with ChangeNotifier {
   String vendorName;
   String storageLocation;
   String storageLocationName;
+  String itemGl;
   //final String docnum;
   List<ProductionReceiptItemModel> detailList;
   ProductionReceiptModel({
@@ -23,6 +24,7 @@ class ProductionReceiptModel with ChangeNotifier {
     this.vendorName,
     this.storageLocation,
     this.storageLocationName,
+    this.itemGl,
     //this.docnum,
     this.detailList,
   });
@@ -33,6 +35,7 @@ class ProductionReceiptModel with ChangeNotifier {
       'doNo': poNumber,
       'deliveryDate': docDate?.toIso8601String(),
       'plant': vendorCode,
+      'itemGroupCode': itemGl,
       'plantName': vendorName,
       'storageLocation': storageLocation ?? '',
       'storageLocationName': storageLocationName ?? '',
@@ -62,6 +65,6 @@ class ProductionReceiptModel with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ProductionReceiptModel(docEntry: $docEntry, poNumber: $poNumber, docDate: $docDate, vendorCode: $vendorCode, vendorName: $vendorName, detailList: $detailList)';
+    return 'ProductionReceiptModel(itemGl: $itemGl, docEntry: $docEntry, poNumber: $poNumber, docDate: $docDate, vendorCode: $vendorCode, vendorName: $vendorName, detailList: $detailList)';
   }
 }

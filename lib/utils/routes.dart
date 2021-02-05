@@ -164,6 +164,8 @@ final Map<String, WidgetBuilder> routes = {
   PickItemBatchScreen.routeName: (context) => PickItemBatchScreen(),
   PickCheckScreen.routeName: (context) => PickCheckScreen(),
 
+  //test
+
   // Picker Pick List So
   PickerPickSoScreen.routeName: (context) => PickerPickSoScreen(),
   PickItemReceiveSoScreen.routeName: (context) => PickItemReceiveSoScreen(),
@@ -230,7 +232,8 @@ final Map<String, WidgetBuilder> routes = {
   StockCountingItemScreen.routeName: (context) => StockCountingItemScreen(),
   StockCountingBatchScreen.routeName: (context) => StockCountingBatchScreen(),
   StockCountingCheckScreen.routeName: (context) => StockCountingCheckScreen(),
-  StockCountingBinExstraScreen.routeName: (context) => StockCountingBinExstraScreen(),
+  StockCountingBinExstraScreen.routeName: (context) =>
+      StockCountingBinExstraScreen(),
 
 // Stock Inquiry
   StockInquiryHeaderScreen.routeName: (context) => StockInquiryHeaderScreen(),

@@ -20,8 +20,9 @@ class StagingBinRfoProvider with ChangeNotifier {
 
   Future<void> getBinLoc() async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
-    final url = '$kBaseUrl/api/getbinloc/$warehouseId';
-
+    //final url = '$kBaseUrl/api/getbinloc/$warehouseId';
+    final url = '$kBaseUrl/api/getbinlocretur/whscode=$warehouseId';
+    
     try {
       final response = await http.get(url);
       print(response.request);

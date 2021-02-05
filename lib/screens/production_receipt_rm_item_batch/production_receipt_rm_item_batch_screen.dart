@@ -56,7 +56,7 @@ class ProductionReceiptRMItemBatch extends StatelessWidget {
         : formatter.format(pickItem.openQty);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Receipt (Raw Material)'),
+        title: Text('Receipt'),
         actions: [
           IconButton(
             icon: Icon(Icons.check_box_outlined),

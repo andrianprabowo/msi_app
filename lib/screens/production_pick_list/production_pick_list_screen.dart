@@ -24,12 +24,13 @@ class ProductionPickList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick List (Raw Material)'),
+        title: Text('Pick List'),
         actions: [
           IconButton(
             icon: Icon(Icons.list_alt),
             onPressed: () {
-              Navigator.of(context).pushNamed(ProductionPickListAllTransaction.routeName);
+              Navigator.of(context)
+                  .pushNamed(ProductionPickListAllTransaction.routeName);
             },
           ),
           IconButton(
@@ -87,7 +88,7 @@ class ProductionPickList extends StatelessWidget {
           children: [
             buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTitle('List Pick List (Raw Material)'),
+            BaseTitle('List Pick List'),
             Divider(),
             buildItemList(context),
           ],
@@ -97,7 +98,8 @@ class ProductionPickList extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<ProductionPickListProvider>(context, listen: false);
+    final provider =
+        Provider.of<ProductionPickListProvider>(context, listen: false);
     return InputScan(
       label: 'Pick Number',
       hint: 'Input or Scan Pick Number',
@@ -131,7 +133,8 @@ class ProductionPickList extends StatelessWidget {
                             itemBuilder: (_, index) {
                               return ChangeNotifierProvider.value(
                                 value: provider.items[index],
-                                child: ProductionPickListPicker(provider.items[index]),
+                                child: ProductionPickListPicker(
+                                    provider.items[index]),
                               );
                             }),
                   ),

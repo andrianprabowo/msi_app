@@ -9,6 +9,9 @@ import 'package:msi_app/utils/prefs.dart';
 
 class ItemBinProvider with ChangeNotifier {
   List<ItemBin> _items;
+    ItemBin _selected;
+
+  ItemBin get selected => _selected;
 
   List<ItemBin> get items {
     _items.forEach((detail) {

@@ -17,7 +17,7 @@ class ProductionReceiptRMFinalCheck extends StatelessWidget {
     showDialog(
       context: context,
       child: AlertDialog(
-        title: Text('Post Receipt (Raw Material)'),
+        title: Text('Post Receipt'),
         content: Text('Are you sure want to process?'),
         actions: [
           FlatButton(
@@ -68,7 +68,7 @@ class ProductionReceiptRMFinalCheck extends StatelessWidget {
               Icon(Icons.info_outline, color: Colors.green, size: 50),
               Divider(),
               SizedBox(height: getProportionateScreenHeight(kLarge)),
-              Text('Success create Receipt (Raw Material)'),
+              Text('Success create Receipt'),
               SizedBox(height: getProportionateScreenHeight(kLarge)),
               Text(
                 docId.toString(),
@@ -105,7 +105,7 @@ class ProductionReceiptRMFinalCheck extends StatelessWidget {
     return Scaffold(
       key: globalKey,
       appBar: AppBar(
-        title: Text('Receipt (Raw Material)'),
+        title: Text('Receipt'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),

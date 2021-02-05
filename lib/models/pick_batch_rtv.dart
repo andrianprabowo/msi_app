@@ -8,6 +8,10 @@ class PickBatchRtv with ChangeNotifier {
   double availableQty;
   double remainQty;
   double pickQty;
+
+  int totalRemain;
+  int show;
+
   final DateTime expiredDate;
   PickBatchRtv({
     this.batchNo,
@@ -15,6 +19,8 @@ class PickBatchRtv with ChangeNotifier {
     this.availableQty,
     this.remainQty,
     this.pickQty,
+    this.totalRemain,
+    this.show,
     this.expiredDate,
   });
 
@@ -22,7 +28,6 @@ class PickBatchRtv with ChangeNotifier {
     return {
       'batchNo': batchNo,
       'batchQuantity': pickQty,
-    //  'pickQty': pickQty,
       'expDate': expiredDate?.toIso8601String(),
     };
   }
@@ -36,6 +41,8 @@ class PickBatchRtv with ChangeNotifier {
       availableQty: map['avlQty'] ?? 0.0,
       remainQty: map['remainQty'] ?? 0.0,
       pickQty: 0.0,
+      totalRemain: 0,
+      show: 0,
       expiredDate: DateTime.parse(map['expDate']),
     );
   }
@@ -47,5 +54,5 @@ class PickBatchRtv with ChangeNotifier {
 
   @override
   String toString() =>
-      'PickBatchRtv(batchNo: $batchNo, uom: $uom, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate, remainQty: $remainQty)';
+      'PickBatchRtv(show: $show, totalRemain: $totalRemain, batchNo: $batchNo, uom: $uom, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate, remainQty: $remainQty)';
 }

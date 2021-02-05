@@ -61,7 +61,8 @@ class PickItemBatchScreen extends StatelessWidget {
                   : double.tryParse(pickBatchProvider.totalPicked
                               .toStringAsFixed(4)) >
                           guider
-                      ? showAlertGreaterThanZero(context, guider.toStringAsFixed(4))
+                      ? showAlertGreaterThanZero(
+                          context, guider.toStringAsFixed(4))
                       : Navigator.of(context).popUntil(
                           ModalRoute.withName(PickItemReceiveScreen.routeName));
             },
@@ -104,7 +105,25 @@ class PickItemBatchScreen extends StatelessWidget {
             BaseTextLine(
                 'Total to Pick Qty', pickItem.openQty.toStringAsFixed(4)),
             BaseTextLine('UoM', pickItem.unitMsr),
-            BaseTitle('List Batch of Item'),
+            Row(
+              children: [
+                Expanded(
+                  child: BaseTitle('List Batch of Item'),
+                ),
+                Text('Show All Item'),
+                Consumer<PickBatchProvider>(
+                  builder: (_, provider, child) {
+                    return Switch(
+                      value: provider.showAllItem,
+                      onChanged: (value) {
+                        provider.toggleStatus();
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+            // BaseTitle('List Batch of Item'),
             Divider(),
             buildItemList(context, pickItem, itemBin),
           ],
@@ -153,10 +172,13 @@ class PickItemBatchScreen extends StatelessWidget {
       hint: 'Input or scan Item Batch Number',
       scanResult: (value) {
         final item = provider.findByBatchNo(value);
+
+        // if (provider.totalShow == item.show) {
         showModalBottomSheet(
           context: context,
           builder: (_) => DialogPickBatch(item),
         );
+        // }
       },
     );
   }

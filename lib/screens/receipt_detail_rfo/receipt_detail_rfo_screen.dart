@@ -20,10 +20,11 @@ import 'package:provider/provider.dart';
 class ReceiptDetailRfoScreen extends StatelessWidget {
   static const routeName = '/receipt_detail_rfo';
 
-  Future<void> fetchData(BuildContext context, String docNum, String cardCode) async {
+  Future<void> fetchData(
+      BuildContext context, String docNum, String cardCode) async {
     final itemPoProvider =
         Provider.of<ItemPoRfoProvider>(context, listen: false);
-    await itemPoProvider.getPoDetailByDocNum(docNum,cardCode);
+    await itemPoProvider.getPoDetailByDocNum(docNum, cardCode);
 
     final poProvider =
         Provider.of<PurchaseOrderRfoProvider>(context, listen: false);
@@ -65,7 +66,8 @@ class ReceiptDetailRfoScreen extends StatelessWidget {
                   globalKey.currentState.showSnackBar(snackBar);
                   return;
                 }
-                Navigator.of(context).pushNamed(ReceiptCheckRfoScreen.routeName);
+                Navigator.of(context)
+                    .pushNamed(ReceiptCheckRfoScreen.routeName);
               })
         ],
       ),
@@ -135,7 +137,8 @@ class ReceiptDetailRfoScreen extends StatelessWidget {
             ? Navigator.of(context)
                 .pushNamed(ReceiptBatchRfoScreen.routeName, arguments: item)
             : showModalBottomSheet(
-                context: context, builder: (_) => DialogInputQtyNonBatchRfo(item));
+                context: context,
+                builder: (_) => DialogInputQtyNonBatchRfo(item));
         // final item = provider.findByItemCode(value);
         // showModalBottomSheet(
         //   context: context,

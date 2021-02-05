@@ -56,6 +56,11 @@ class ProductionReceiptProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setGlItem(String gl) {
+    _selected.itemGl = gl;
+    notifyListeners();
+  }
+
   Future<Map<String, dynamic>> createProductionReceipt() async {
     var url = '$kBaseUrl/tgrpo/tgrpo/api/ListGRPOFG';
     final headers = {
@@ -63,6 +68,7 @@ class ProductionReceiptProvider with ChangeNotifier {
       'Accept': 'application/json',
     };
     final binId = await Prefs.getString(Prefs.binId);
+    final binGl = await Prefs.getString(Prefs.binGl);
     final whsCode = await Prefs.getString(Prefs.warehouseId);
     final whsName = await Prefs.getString(Prefs.warehouseName);
 
@@ -70,6 +76,7 @@ class ProductionReceiptProvider with ChangeNotifier {
     _selected.vendorCode = whsCode;
     _selected.vendorName = whsName;
     _selected.detailList = detailList;
+    _selected.itemGl = binGl;
 
     try {
       var response = await http.post(

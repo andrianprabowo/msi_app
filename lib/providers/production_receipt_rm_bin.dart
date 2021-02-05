@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:msi_app/utils/prefs.dart';
 
 class ProductionReceiptRMBinProvider with ChangeNotifier {
-   List<ProductionReceiptRmBin> _items = [];
+  List<ProductionReceiptRmBin> _items = [];
   ProductionReceiptRmBin _selected;
   String _recBin;
   var _showAllBin = false;
@@ -26,32 +26,61 @@ class ProductionReceiptRMBinProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getPlBinList(String cardCode) async {
+  Future<void> getPlBinList(String itemCode) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
-    
-    final url =
-        '$kBaseUrl/api/PAgetplbinlist/whscode=$warehouseId';
-        
 
-    try {
-      final response = await http.get(url);
-      print(response.request);
-      final data = json.decode(response.body) as List;
-      print(data);
-      if (data == null) return;
+    //di production ini url yang lama
+    // final url = '$kBaseUrl/api/PAgetplbinlist/whscode=$warehouseId';
+    //di menu yang lain ini url yang lamanya
+    // final url = '$kBaseUrl/api/getbinlocnonstg/$warehouseId';
 
-      final List<ProductionReceiptRmBin> list = [];
-      data.forEach((map) {
-        list.add(ProductionReceiptRmBin.fromMap(map));
-      });
+    print('test');
+    print(itemCode);
+    final itemcode = itemCode;
+    // if (itemcode == 'SISTRM-B') {
+    //   final url = '$kBaseUrl/api/getbinlocnonstg/$warehouseId';
+    //   try {
+    //     final response = await http.get(url);
+    //     print(response.request);
+    //     final data = json.decode(response.body) as List;
+    //     print(data);
+    //     if (data == null) return;
 
-      _items = list;
-      _recBin = _items.first.binLocation;
-      notifyListeners();
-    } catch (error) {
-      print(error);
-      throw error;
-    }
+    //     final List<ProductionReceiptRmBin> list = [];
+    //     data.forEach((map) {
+    //       list.add(ProductionReceiptRmBin.fromMap(map));
+    //     });
+
+    //     _items = list;
+    //     _recBin = _items.first.binLocation;
+    //     notifyListeners();
+    //   } catch (error) {
+    //     print(error);
+    //     throw error;
+    //   }
+    // } else {
+      final url2 =
+          '$kBaseUrl/api/newGetbinlocnonstg/whscode=$warehouseId&itemcode=$itemcode';
+      try {
+        final response = await http.get(url2);
+        print(response.request);
+        final data = json.decode(response.body) as List;
+        print(data);
+        if (data == null) return;
+
+        final List<ProductionReceiptRmBin> list = [];
+        data.forEach((map) {
+          list.add(ProductionReceiptRmBin.fromMap(map));
+        });
+
+        _items = list;
+        _recBin = _items.first.binLocation;
+        notifyListeners();
+      } catch (error) {
+        // print(error);
+        // throw error;
+      }
+    // }
   }
 
   ProductionReceiptRmBin findByBinLocation(String binLocation) {

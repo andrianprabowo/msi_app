@@ -39,7 +39,7 @@ class ProductionPickListItem extends StatelessWidget {
     var status = 0; */
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick List (Raw Material)'),
+        title: Text('Pick List'),
         actions: [
           IconButton(
               icon: Icon(Icons.post_add),

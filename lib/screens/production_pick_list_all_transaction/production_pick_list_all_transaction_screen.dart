@@ -20,7 +20,7 @@ class ProductionPickListAllTransaction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('List Pick List (Raw Material) Submitted'),
+        title: Text('List Pick List Submitted'),
       ),
       body: Container(
         width: double.infinity,
@@ -29,7 +29,7 @@ class ProductionPickListAllTransaction extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTitle('List Pick List (Raw Material)'),
+            BaseTitle('List Pick List'),
             Divider(),
             buildItemList(context),
           ],

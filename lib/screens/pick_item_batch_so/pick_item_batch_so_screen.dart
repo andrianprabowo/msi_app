@@ -61,7 +61,8 @@ class PickItemBatchSoScreen extends StatelessWidget {
                   : double.tryParse(pickBatchProvider.totalPicked
                               .toStringAsFixed(4)) >
                           guider
-                      ? showAlertGreaterThanZero(context, guider.toStringAsFixed(4))
+                      ? showAlertGreaterThanZero(
+                          context, guider.toStringAsFixed(4))
                       : Navigator.of(context).popUntil(ModalRoute.withName(
                           PickItemReceiveSoScreen.routeName));
             },
@@ -100,12 +101,28 @@ class PickItemBatchSoScreen extends StatelessWidget {
             ),
             BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description),
-            BaseTextLine(
-              'SO Quantity', pickItem.openQty.toStringAsFixed(4)),
-            BaseTextLine(
-              'UoM', pickItem.unitMsr),
+            BaseTextLine('SO Quantity', pickItem.openQty.toStringAsFixed(4)),
+            BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTitle('List Batch of Item'),
+            // BaseTitle('List Batch of Item'),
+            Row(
+              children: [
+                Expanded(
+                  child: BaseTitle('List Batch of Item'),
+                ),
+                Text('Show All Item'),
+                Consumer<PickBatchSoProvider>(
+                  builder: (_, provider, child) {
+                    return Switch(
+                      value: provider.showAllItem,
+                      onChanged: (value) {
+                        provider.toggleStatus();
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
             Divider(),
             buildItemList(context, pickItem, itemBin),
           ],
@@ -154,14 +171,17 @@ class PickItemBatchSoScreen extends StatelessWidget {
       hint: 'Input or scan Item Batch Number',
       scanResult: (value) {
         final item = provider.findByBatchNo(value);
+        // if (provider.totalShow == item.show) {
         showModalBottomSheet(
           context: context,
           builder: (_) => DialogPickBatchSo(item),
         );
+        // }
       },
     );
   }
-Future<void> showAlertOnZero(BuildContext context) async {
+
+  Future<void> showAlertOnZero(BuildContext context) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -225,6 +245,4 @@ Future<void> showAlertOnZero(BuildContext context) async {
       },
     );
   }
-
 }
-

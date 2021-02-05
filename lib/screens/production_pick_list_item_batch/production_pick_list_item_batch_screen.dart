@@ -44,7 +44,7 @@ class ProductionPickListItemBatch extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick List (Raw Material)'),
+        title: Text('Pick List'),
         actions: [
           IconButton(
             icon: Icon(Icons.check_box_outlined),
@@ -132,7 +132,25 @@ class ProductionPickListItemBatch extends StatelessWidget {
                 ? 'Avl Qty Bin Loc : ' + itemBin.avlQty.toStringAsFixed(4)
                 : 'Avl Qty Bin Loc : ' + formatter.format(itemBin.avlQty)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTitle('List Batch of Item'),
+            // BaseTitle('List Batch of Item'),
+            Row(
+              children: [
+                Expanded(
+                  child: BaseTitle('List Batch of Item'),
+                ),
+                Text('Show All Item'),
+                Consumer<ProductionPickListItemBatchProvider>(
+                  builder: (_, provider, child) {
+                    return Switch(
+                      value: provider.showAllItem,
+                      onChanged: (value) {
+                        provider.toggleStatus();
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
             Divider(),
             buildItemList(context, pickItem, itemBin),
           ],
@@ -149,6 +167,12 @@ class ProductionPickListItemBatch extends StatelessWidget {
       hint: 'Input or scan Item Batch Number',
       scanResult: (value) {
         final item = provider.findByBatchNo(value);
+        // if (provider.totalShow == item.show) {
+        //   showModalBottomSheet(
+        //     context: context,
+        //     builder: (_) => ProductionPickListItemBatchDialog(item),
+        //   );
+        // }
         showModalBottomSheet(
           context: context,
           builder: (_) => ProductionPickListItemBatchDialog(item),

@@ -46,7 +46,7 @@ class ProductionReceiptRMItem extends StatelessWidget {
     var status = 0; */
     return Scaffold(
       appBar: AppBar(
-        title: Text('Receipt (Raw Material)'),
+        title: Text('Receipt'),
         actions: [
           IconButton(
             icon: Icon(Icons.post_add),

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+// import 'package:msi_app/providers/batch_number_provider.dart';
 import 'package:msi_app/providers/barcode_grpo_provider.dart';
 import 'package:msi_app/providers/bin_rtv_provider.dart';
+// import 'package:msi_app/providers/bin_rtvo_provider.dart';
 import 'package:msi_app/providers/dashboard_provider.dart';
 import 'package:msi_app/providers/item_batch_si_provider.dart';
 import 'package:msi_app/providers/item_bin_si_provider.dart';
+import 'package:msi_app/providers/item_gl_provider.dart';
 import 'package:msi_app/providers/list_grpo_outlet_provider.dart';
 import 'package:msi_app/providers/list_grpo_provider.dart';
 import 'package:msi_app/providers/list_inv_dispatch_provider.dart';
@@ -90,6 +93,7 @@ import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart'
 import 'package:msi_app/providers/production_receipt_rm_item_list_batch_list_provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_all_transaction_provider.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -152,6 +156,7 @@ void main() async {
         ChangeNotifierProvider(
             create: (_) => InventoryDispathBatchRtvProvider()),
         ChangeNotifierProvider(create: (_) => BinRtvProvider()),
+        // ChangeNotifierProvider(create: (_) => BinRtvoProvider()),
         ChangeNotifierProvider(create: (_) => BinnyaPicListProvider()),
 
         ChangeNotifierProvider(create: (_) => StockCountingHeaderProvider()),
@@ -216,6 +221,8 @@ void main() async {
             create: (_) => ProductionReceiptRMAllTransactionProvider()),
         ChangeNotifierProvider(create: (_) => ProductionReceiptRMBinProvider()),
         ChangeNotifierProvider(create: (_) => ModulProvider()),
+        ChangeNotifierProvider(create: (_) => ItemGlProvider()),
+        // ChangeNotifierProvider(create: (_) => BatchNumberProvider()),
       ],
       child: MyApp(),
     ),

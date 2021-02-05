@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/bin.rfv.dart';
+import 'package:msi_app/models/enter_gl.dart';
 import 'package:msi_app/providers/auth_provider.dart';
-import 'package:msi_app/providers/bin_rtv_provider.dart';
-import 'package:msi_app/providers/purchase_order_rfo_provider.dart';
+import 'package:msi_app/providers/item_gl_provider.dart';
+import 'package:msi_app/providers/production_receipt_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:select_dialog/select_dialog.dart';
 
-class ItemBinRfo extends StatelessWidget {
+class ItemEnterGl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
@@ -30,16 +30,16 @@ class ItemBinRfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Staging Bin Location :',
+            'GI Sequence No :',
             style: TextStyle(
               color: kPrimaryColor,
               fontWeight: FontWeight.bold,
             ),
           ),
-          authProvider.binId == null
-              ? Text('No selected Bin')
+          authProvider.binGl == null
+              ? Text('Please input GI Sequence no')
               : Text(
-                  '${authProvider.binId} ',
+                  '${authProvider.binGl} ',
                 ),
         ],
       ),
@@ -47,29 +47,29 @@ class ItemBinRfo extends StatelessWidget {
   }
 
   Widget buildChangeBin(BuildContext context) {
-    final binProvidero = Provider.of<BinRtvProvider>(context, listen: false);
+    final itemGlProvider = Provider.of<ItemGlProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    final poProvider =
-        Provider.of<PurchaseOrderRfoProvider>(context, listen: false);
+    final poProvider = Provider.of<ProductionReceiptProvider>(context, listen: false);
+    var header = poProvider.selected;
     return IconButton(
       icon: Icon(Icons.search),
       onPressed: () async {
-        await binProvidero.getAllBinRtvo();
-        SelectDialog.showModal<BinRtv>(
+        await itemGlProvider.getEnterGl(header.poNumber);
+        SelectDialog.showModal<EnterGl>(
           context,
           label: "Select Bin Location",
           showSearchBox: true,
-          items: binProvidero.itemsBins,
+          items: itemGlProvider.itemsGl,
           itemBuilder: (context, item, _) {
             return ListTile(
-              title: Text(item.binCode),
-              subtitle: Text('ID: ${item.binCode}'),
+              title: Text(item.enterGl),
+              subtitle: Text('ID: ${item.enterGl}'),
             );
           },
           searchBoxDecoration: InputDecoration(hintText: 'Search by name'),
-          onChange: (BinRtv binRtv) {
-            authProvider.selectBin(binRtv);
-            poProvider.setStagingBin(binRtv.toString());
+          onChange: (EnterGl binGl) {
+            authProvider.selectItemGl(binGl);
+            poProvider.setGlItem(binGl.toString());
           },
         );
       },

@@ -17,8 +17,8 @@ class ProductionReceiptRMNumber extends StatelessWidget {
   Future<void> refreshData(BuildContext context) async {
     final headerProvider =
         Provider.of<ProductionReceiptRMProvider>(context, listen: false);
-    final provider =
-        Provider.of<ProductionReceiptRMNumberListProvider>(context, listen: false);
+    final provider = Provider.of<ProductionReceiptRMNumberListProvider>(context,
+        listen: false);
     final item = headerProvider.selected;
     print(item);
     // provider.getPlByWarehouse('WMSISTPR-SYSTEM-BIN-LOCATION');
@@ -29,9 +29,7 @@ class ProductionReceiptRMNumber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Receipt (Raw Material)')
-      ),
+      appBar: AppBar(title: Text('Receipt')),
       body: Container(
         padding: const EdgeInsets.symmetric(
           vertical: kLarge,
@@ -52,11 +50,11 @@ class ProductionReceiptRMNumber extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider =
-        Provider.of<ProductionReceiptRMNumberListProvider>(context, listen: false);
+    final provider = Provider.of<ProductionReceiptRMNumberListProvider>(context,
+        listen: false);
     return InputScan(
-      label: 'Receipt (Raw Material)',
-      hint: 'Input or scan Receipt (Raw Material)',
+      label: 'Receipt',
+      hint: 'Input or scan Receipt',
       scanResult: (value) {
         final item = provider.findByDocNumber(value.toUpperCase());
         provider.selectPickList(item);

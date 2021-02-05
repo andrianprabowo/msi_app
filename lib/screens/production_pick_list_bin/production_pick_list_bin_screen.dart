@@ -178,7 +178,7 @@ class ProductionPickListBin extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pick List (Raw Material)'),
+        title: Text('Pick List'),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(
@@ -246,11 +246,11 @@ class ProductionPickListBin extends StatelessWidget {
           );
         } else {
           pickItemListProvider.updateQtyNBinNonBatch(
-            productionPickListItemModel,
-            double.parse(productionPickListItemModel.pickedQty.toString()),
-            item.binLocation);
-          Navigator.of(context).popUntil(
-                ModalRoute.withName(ProductionPickListItem.routeName));
+              productionPickListItemModel,
+              double.parse(productionPickListItemModel.pickedQty.toString()),
+              item.binLocation);
+          Navigator.of(context)
+              .popUntil(ModalRoute.withName(ProductionPickListItem.routeName));
         }
       },
     );

@@ -11,7 +11,7 @@ class ProductionIssueAllTransactionList extends StatelessWidget {
   const ProductionIssueAllTransactionList(this.item);
 
   Widget get status {
-    switch (item.status.toStringAsFixed(4)) {
+    switch (item.status.toString()) {
       case "0":
         return Icon(Icons.close, color: Colors.red, size: 48);
         break;

@@ -24,10 +24,11 @@ class StorageBinItemProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getBinLocList() async {
+  Future<void> getBinLocList(String itemCode) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
-    final url = '$kBaseUrl/api/getbinlocnonstg/$warehouseId';
-
+     final url =
+        '$kBaseUrl/api/newGetbinlocnonstg/whscode=$warehouseId&itemcode=$itemCode';
+    print('itemcode adalah $itemCode');
     try {
       final response = await http.get(url);
       print(response.request);

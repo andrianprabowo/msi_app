@@ -17,10 +17,10 @@ import 'package:provider/provider.dart';
 class StorageBinItemScreen extends StatelessWidget {
   static const routeName = '/storage_bin_item';
 
-  Future<void> refreshData(BuildContext context) async {
+  Future<void> refreshData(BuildContext context, String itemCode) async {
     final provider =
         Provider.of<StorageBinItemProvider>(context, listen: false);
-    await provider.getBinLocList();
+    await provider.getBinLocList(itemCode);
   }
 
   @override
@@ -39,7 +39,7 @@ class StorageBinItemScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Consumer<StorageBinItemProvider>(
+            Consumer<StorageBinItemProvider>(
               builder: (_, provider, child) {
                 String binLoc = provider.recBin ?? '';
                 return BaseTextLine('Recommendation Bin', binLoc);
@@ -78,7 +78,7 @@ class StorageBinItemScreen extends StatelessWidget {
   Widget buildItemList(BuildContext context, ItemBin itemBin) {
     return Expanded(
       child: FutureBuilder(
-        future: refreshData(context),
+        future: refreshData(context, itemBin.itemCode),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -87,7 +87,7 @@ class StorageBinItemScreen extends StatelessWidget {
           if (snapshot.hasError) return ErrorInfo();
 
           return RefreshIndicator(
-            onRefresh: () => refreshData(context),
+            onRefresh: () => refreshData(context, itemBin.itemCode),
             child: Consumer<StorageBinItemProvider>(
               builder: (_, provider, child) => provider.items.length == 0
                   ? NoData()

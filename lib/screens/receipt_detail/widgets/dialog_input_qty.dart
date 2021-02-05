@@ -58,7 +58,8 @@ class _DialogInputQtyState extends State<DialogInputQty> {
           //     _quantity.text == '0')
           //   buildButtonNotif(context, widget.item.openQty.toString())
           // else
-          buildButtonSubmit(context, widget.item.remainingQty.toStringAsFixed(4)),
+          buildButtonSubmit(
+              context, widget.item.remainingQty.toStringAsFixed(4)),
         ],
       ),
     );

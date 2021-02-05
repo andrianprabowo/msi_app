@@ -38,8 +38,8 @@ class StagingItemRfoScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.post_add),
-            onPressed: () =>
-                Navigator.of(context).pushNamed(StagingCheckRfoScreen.routeName),
+            onPressed: () => Navigator.of(context)
+                .pushNamed(StagingCheckRfoScreen.routeName),
           )
         ],
       ),
@@ -109,7 +109,8 @@ class StagingItemRfoScreen extends StatelessWidget {
             ? Navigator.of(context)
                 .pushNamed(StagingBatchRfoScreen.routeName, arguments: item)
             : showModalBottomSheet(
-                context: context, builder: (_) => DialogPutAwayNonbatchRfo(item));
+                context: context,
+                builder: (_) => DialogPutAwayNonbatchRfo(item));
       },
     );
   }

@@ -43,7 +43,7 @@ class _ProductionIssueItemNonBatchDialogState
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(item.itemName),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('Planneed Quantity', avlQty),
+          BaseTextLine('Planned Quantity', avlQty),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),

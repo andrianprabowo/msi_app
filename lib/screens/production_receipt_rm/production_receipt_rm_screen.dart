@@ -18,7 +18,8 @@ class ProductionReceiptRM extends StatelessWidget {
   static const routeName = '/production_receipt_rm';
 
   Future<void> refreshData(BuildContext context) async {
-    await Provider.of<ProductionReceiptRMProvider>(context, listen: false).getBinLoc();
+    await Provider.of<ProductionReceiptRMProvider>(context, listen: false)
+        .getBinLoc();
   }
 
   @override
@@ -26,7 +27,7 @@ class ProductionReceiptRM extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Receipt (Raw Material)'),
+        title: Text('Receipt'),
         actions: [
           IconButton(
             icon: Icon(Icons.list_alt),
@@ -104,7 +105,8 @@ class ProductionReceiptRM extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<ProductionReceiptRMProvider>(context, listen: false);
+    final provider =
+        Provider.of<ProductionReceiptRMProvider>(context, listen: false);
     return InputScan(
       label: 'Staging Bin',
       hint: 'Input or scan Staging Bin',
@@ -137,7 +139,8 @@ class ProductionReceiptRM extends StatelessWidget {
                       itemBuilder: (_, index) {
                         return ChangeNotifierProvider.value(
                           value: provider.items[index],
-                          child: ProductionReceiptRMBinList(provider.items[index]),
+                          child:
+                              ProductionReceiptRMBinList(provider.items[index]),
                         );
                       },
                     ),

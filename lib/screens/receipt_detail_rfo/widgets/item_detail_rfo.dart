@@ -27,7 +27,8 @@ class ItemDetailRfo extends StatelessWidget {
             ? Navigator.of(context)
                 .pushNamed(ReceiptBatchRfoScreen.routeName, arguments: item)
             : showModalBottomSheet(
-                context: context, builder: (_) => DialogInputQtyNonBatchRfo(item));
+                context: context,
+                builder: (_) => DialogInputQtyNonBatchRfo(item));
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),

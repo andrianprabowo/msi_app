@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/bin.rfv.dart';
+import 'package:msi_app/models/enter_gl.dart';
 import 'package:msi_app/models/warehouse.dart';
 import 'package:msi_app/screens/dashboard/dashboard_screen.dart';
 import 'package:msi_app/screens/login/login_screen.dart';
@@ -18,12 +19,14 @@ class AuthProvider with ChangeNotifier {
   String _warehouseId;
   String _warehouseName;
   String _binId;
+  String _binGl;
 
   String get token => _token;
   String get username => _username;
   String get warehouseId => _warehouseId;
   String get warehouseName => _warehouseName;
   String get binId => _binId;
+  String get binGl => _binGl;
 
   Future<void> getData() async {
     _token = await Prefs.getString(Prefs.token);
@@ -31,6 +34,7 @@ class AuthProvider with ChangeNotifier {
     _warehouseId = await Prefs.getString(Prefs.warehouseId);
     _warehouseName = await Prefs.getString(Prefs.warehouseName);
     _binId = await Prefs.getString(Prefs.binId);
+    _binGl = await Prefs.getString(Prefs.binGl);
     notifyListeners();
   }
 
@@ -73,6 +77,12 @@ class AuthProvider with ChangeNotifier {
     // prefs.replaceAll(Prefs.binId, 'select bin');
   }
 
+  void clearGl() async {
+    // final prefs =  Prefs.binId;
+    await Prefs.setString(Prefs.binGl, 'Please input GI Sequence no');
+    // prefs.replaceAll(Prefs.binId, 'select bin');
+  }
+
   void selectWarehouse(BuildContext context, Warehouse warehouse) async {
     await Prefs.setString(Prefs.warehouseId, warehouse.whsCode);
     await Prefs.setString(Prefs.warehouseName, warehouse.whsName);
@@ -87,6 +97,14 @@ class AuthProvider with ChangeNotifier {
   void selectBin(BinRtv binRtv) async {
     await Prefs.setString(Prefs.binId, binRtv.binCode);
     _binId = binRtv.binCode;
+
+    notifyListeners();
+  }
+
+
+  void selectItemGl(EnterGl enterGl) async {
+    await Prefs.setString(Prefs.binGl, enterGl.enterGl);
+    _binGl = enterGl.enterGl;
 
     notifyListeners();
   }

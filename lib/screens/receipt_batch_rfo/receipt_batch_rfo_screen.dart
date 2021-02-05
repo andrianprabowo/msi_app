@@ -44,9 +44,10 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.check_box_outlined),
             onPressed: () {
-               final batchList = itemBatchProvider.pickedItems;
+              final batchList = itemBatchProvider.pickedItems;
               itemProvider.addBatchList(item, batchList);
-              if (double.parse(itemBatchProvider.totalPicked.toStringAsFixed(4)) >
+              if (double.parse(
+                      itemBatchProvider.totalPicked.toStringAsFixed(4)) >
                   double.parse(item.openQty.toStringAsFixed(4))) {
                 print('Tidak boleh lebih besar dari Available Qty ');
                 return showDialog<void>(
@@ -83,7 +84,6 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
                   },
                 );
               }
-             
 
               Navigator.of(context).popUntil(
                   ModalRoute.withName(ReceiptDetailRfoScreen.routeName));

@@ -17,10 +17,10 @@ import 'package:provider/provider.dart';
 class StorageBinItemRfoScreen extends StatelessWidget {
   static const routeName = '/storage_bin_item_rfo';
 
-  Future<void> refreshData(BuildContext context) async {
+  Future<void> refreshData(BuildContext context, String itemCode) async {
     final provider =
         Provider.of<StorageBinItemRfoProvider>(context, listen: false);
-    await provider.getBinLocList();
+    await provider.getBinLocList(itemCode);
   }
 
   @override
@@ -78,7 +78,7 @@ class StorageBinItemRfoScreen extends StatelessWidget {
   Widget buildItemList(BuildContext context, ItemBinRfo itemBin) {
     return Expanded(
       child: FutureBuilder(
-        future: refreshData(context),
+        future: refreshData(context, itemBin.itemCode),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -87,7 +87,7 @@ class StorageBinItemRfoScreen extends StatelessWidget {
           if (snapshot.hasError) return ErrorInfo();
 
           return RefreshIndicator(
-            onRefresh: () => refreshData(context),
+            onRefresh: () => refreshData(context, itemBin.itemCode),
             child: Consumer<StorageBinItemRfoProvider>(
               builder: (_, provider, child) => provider.items.length == 0
                   ? NoData()

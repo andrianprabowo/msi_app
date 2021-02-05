@@ -10,14 +10,46 @@ class PickBatchRtvProvider with ChangeNotifier {
   List<PickBatchRtv> _items = [];
   double _totalPicked = 0.0;
 
+  var _showAllItem = false;
+
+  bool get showAllItem => _showAllItem;
+
+  void toggleStatus() {
+    _showAllItem = !_showAllItem;
+    notifyListeners();
+  }
+
+  int _show = 1;
+
   List<PickBatchRtv> get items {
+    var show = 1;
+    var totalRemain = 1;
+
+    _items.forEach((item) {
+      if (item.remainQty == 0) {
+        item.totalRemain = totalRemain;
+        item.show = show;
+        totalRemain = totalRemain + 1;
+        show = show + 1;
+      }
+    });
+    _show = show;
     _items.forEach((detail) {
-      
       // calculate remaining qty
       detail.remainQty = detail.availableQty - detail.pickQty;
     });
 
-    return _items.where((item) => item.availableQty > item.pickQty).toList();
+    // return _items.take(show).toList();
+    return _showAllItem
+        ? _items.where((item) => item.availableQty > item.pickQty).toList()
+        : _items.take(show).toList();
+    // _items.forEach((detail) {
+
+    //   // calculate remaining qty
+    //   detail.remainQty = detail.availableQty - detail.pickQty;
+    // });
+
+    // return _items.where((item) => item.availableQty > item.pickQty).toList();
   }
 
   List<PickBatchRtv> get pickedItems {
@@ -25,6 +57,7 @@ class PickBatchRtvProvider with ChangeNotifier {
   }
 
   double get totalPicked => _totalPicked;
+  int get totalShow => _show;
 
   Future<void> getPlBatchByItemWhs(String itemCode, String binCode) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);

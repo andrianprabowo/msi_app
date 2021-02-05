@@ -48,7 +48,7 @@ class _DialogInputQtyNonBatchRfoState extends State<DialogInputQtyNonBatchRfo> {
             //     _quantity.text == '0')
             //   buildButtonNotif(context, widget.item.openQty.toString())
             // else
-              buildButtonSubmit(context, widget.item.openQty.toStringAsFixed(4)),
+            buildButtonSubmit(context, widget.item.openQty.toStringAsFixed(4)),
           ],
         ));
   }
@@ -81,7 +81,7 @@ class _DialogInputQtyNonBatchRfoState extends State<DialogInputQtyNonBatchRfo> {
     );
   }
 
-  Widget buildButtonSubmit(BuildContext context,  String avlQty) {
+  Widget buildButtonSubmit(BuildContext context, String avlQty) {
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(

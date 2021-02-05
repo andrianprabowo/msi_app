@@ -56,7 +56,7 @@ class _ProductionReceiptRMItemNonBatchDialogState
           //     _quantity.text == '0')
           //   buildButtonNotif(context, openQty)
           // else
-            buildButtonSubmit(context, openQty),
+          buildButtonSubmit(context, openQty),
         ],
       ),
     );

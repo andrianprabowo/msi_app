@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 class PickItemReceiveProvider with ChangeNotifier {
   List<PickItemReceive> _items;
   PickItemReceive _selected;
+  // List items2 = [];
 
   List<PickItemReceive> get items {
     _items.forEach((detail) {
@@ -67,6 +68,9 @@ class PickItemReceiveProvider with ChangeNotifier {
     List<PickBatch> batchList,
   ) {
     pickItemReceive.batchList = batchList;
+    // items2.add(batchList);
+    // print('test');
+    // print(items2);
     notifyListeners();
     print('Added Batch List: $batchList');
   }
@@ -81,6 +85,7 @@ class PickItemReceiveProvider with ChangeNotifier {
   }
 
   void inputQtyNonBatch(PickItemReceive pickItemReceive, double qty) {
+    print(pickItemReceive);
     pickItemReceive.pickedQty = qty;
     notifyListeners();
     print('Update Qty Non batch: $pickItemReceive');

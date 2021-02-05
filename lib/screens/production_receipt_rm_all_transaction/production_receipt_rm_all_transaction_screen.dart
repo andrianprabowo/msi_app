@@ -20,7 +20,7 @@ class ProductionReceiptRMAllTransaction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('List Receipt (Raw Material) Submitted'),
+        title: Text('List Receipt Submitted'),
       ),
       body: Container(
         width: double.infinity,
@@ -29,7 +29,7 @@ class ProductionReceiptRMAllTransaction extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTitle('List Receipt (Raw Material)'),
+            BaseTitle('List Receipt'),
             Divider(),
             buildItemList(context),
           ],

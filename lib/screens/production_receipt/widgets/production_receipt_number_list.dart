@@ -21,6 +21,7 @@ class ProductionReceiptNumberList extends StatelessWidget {
       onTap: () {
         poProvider.selectPo(item);
         authProvider.clearBin();
+        authProvider.clearGl();
         Navigator.of(context).pushNamed(ProductionReceiptItem.routeName);
       },
       child: Container(

@@ -8,6 +8,10 @@ class PickBatch with ChangeNotifier {
   double availableQty;
   double remainQty;
   double pickQty;
+
+  int totalRemain;
+  int show;
+
   final DateTime expiredDate;
   PickBatch({
     this.batchNo,
@@ -16,13 +20,15 @@ class PickBatch with ChangeNotifier {
     this.remainQty,
     this.pickQty,
     this.expiredDate,
+    this.totalRemain,
+    this.show,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'batchNo': batchNo,
       'batchQuantity': pickQty,
-     // 'pickQty': pickQty,
+      // 'pickQty': pickQty,
       'expDate': expiredDate?.toIso8601String(),
     };
   }
@@ -37,6 +43,8 @@ class PickBatch with ChangeNotifier {
       pickQty: 0.0,
       remainQty: map['remainQty'] ?? 0.0,
       expiredDate: DateTime.parse(map['expDate']),
+      totalRemain: 0,
+      show: 0,
     );
   }
 
@@ -47,5 +55,5 @@ class PickBatch with ChangeNotifier {
 
   @override
   String toString() =>
-      'PickBatch(batchNo: $batchNo, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate, uom: $uom , remainQty: $remainQty)';
+      'PickBatch(show: $show, totalRemain: $totalRemain, batchNo: $batchNo, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate, uom: $uom , remainQty: $remainQty)';
 }

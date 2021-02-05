@@ -25,7 +25,7 @@ class ProductionPickListFinalCheck extends StatelessWidget {
     return Scaffold(
       key: globalKey,
       appBar: AppBar(
-        title: Text('Pick List (Raw Material)'),
+        title: Text('Pick List'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
@@ -104,7 +104,7 @@ class ProductionPickListFinalCheck extends StatelessWidget {
     showDialog(
       context: context,
       child: AlertDialog(
-        title: Text('Post Pick List (Raw Material)'),
+        title: Text('Post Pick List'),
         content: Text('Are you sure want to process?'),
         actions: [
           FlatButton(
@@ -153,7 +153,7 @@ class ProductionPickListFinalCheck extends StatelessWidget {
               Icon(Icons.info_outline, color: Colors.green, size: 50),
               Divider(),
               SizedBox(height: getProportionateScreenHeight(kLarge)),
-              Text('Success create Pick List (Raw Material)'),
+              Text('Success create Pick List'),
               SizedBox(height: getProportionateScreenHeight(kLarge)),
               Text(
                 docId.toString(),

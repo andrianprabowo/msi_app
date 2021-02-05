@@ -18,7 +18,8 @@ class PutAwayRfoScreen extends StatelessWidget {
   static const routeName = '/put_away_rfo';
 
   Future<void> refreshData(BuildContext context) async {
-    await Provider.of<StagingBinRfoProvider>(context, listen: false).getBinLoc();
+    await Provider.of<StagingBinRfoProvider>(context, listen: false)
+        .getBinLoc();
   }
 
   @override

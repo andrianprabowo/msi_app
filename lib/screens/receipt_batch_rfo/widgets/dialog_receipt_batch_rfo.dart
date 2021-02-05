@@ -45,7 +45,8 @@ class _DialogReceiptBatchRfoState extends State<DialogReceiptBatchRfo> {
           //     _quantity.text == '0')
           //   buildButtonNotif(context, widget.item.availableQty.toString())
           // else
-            buildButtonSubmit(context,  widget.item.availableQty.toStringAsFixed(4)),
+          buildButtonSubmit(
+              context, widget.item.availableQty.toStringAsFixed(4)),
         ],
       ),
     );

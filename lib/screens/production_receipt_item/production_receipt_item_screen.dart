@@ -14,6 +14,7 @@ import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/input_scan.dart';
 import 'package:msi_app/widgets/item_bin_production_receipt.dart';
+import 'package:msi_app/widgets/item_enter_gl.dart';
 import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
@@ -71,8 +72,22 @@ class ProductionReceiptItem extends StatelessWidget {
                   return;
                 }
 
+                if (authProvider.binGl == "Please input GI Sequence no") {
+                  final snackBar = SnackBar(
+                    content: Row(
+                      children: [
+                        Icon(Icons.error_outline, color: Colors.red),
+                        SizedBox(width: getProportionateScreenWidth(kLarge)),
+                        Text('Please Select GI Sequence no First'),
+                      ],
+                    ),
+                  );
+                  globalKey.currentState.showSnackBar(snackBar);
+                  return;
+                }
+
                 Navigator.of(context)
-                      .pushNamed(ProductionReceiptFinalCheck.routeName);
+                    .pushNamed(ProductionReceiptFinalCheck.routeName);
                 /* if (authProvider.binId == "Please Select Bin") {
                   msg.add("Bin is Required");
                 }
@@ -105,6 +120,7 @@ class ProductionReceiptItem extends StatelessWidget {
             BaseTextLine('Document Date', convertDate(po.docDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             ItemBinProductionReceipt(),
+            ItemEnterGl(),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

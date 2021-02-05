@@ -31,8 +31,7 @@ class PutAwayScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.list_alt),
             onPressed: () {
-              Navigator.of(context)
-                  .pushNamed(ListPutAwayScreen.routeName);
+              Navigator.of(context).pushNamed(ListPutAwayScreen.routeName);
             },
           ),
           IconButton(

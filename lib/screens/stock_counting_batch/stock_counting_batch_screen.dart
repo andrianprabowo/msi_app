@@ -14,6 +14,8 @@ import 'package:msi_app/widgets/input_scan.dart';
 import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
+import 'widget/dialog_pick_batch_sc.dart';
+
 class StockCountingBatchScreen extends StatelessWidget {
   static const routeName = '/stock_counting_batch';
 
@@ -172,7 +174,8 @@ class StockCountingBatchScreen extends StatelessWidget {
         final item = provider.findByBatchNo(value);
         showModalBottomSheet(
           context: context,
-          builder: (_) => ItemStockCountingBatch(item),
+          // builder: (_) => ItemStockCountingBatch(item),
+          builder: (_) => DialogPickBatchSc(item),
         );
       },
     );

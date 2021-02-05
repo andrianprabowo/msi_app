@@ -16,15 +16,14 @@ import 'package:provider/provider.dart';
 class ProductionReceiptRmBinScreen extends StatelessWidget {
   static const routeName = '/production_receipt_rm_bin';
 
-
-  Future<void> refreshData(BuildContext context, String cardCode) async {
-    final header = Provider.of<ProductionReceiptRMNumberListProvider>(context,
-            listen: false)
-        .selected;
-    final card = header.cardCode;
+  Future<void> refreshData(BuildContext context, String itemCode) async {
+    // final header = Provider.of<ProductionReceiptRMNumberListProvider>(context,
+    // listen: false)
+    // .selected;
+    // final card = header.cardCode;
     final pickItemProvider =
         Provider.of<ProductionReceiptRMBinProvider>(context, listen: false);
-    await pickItemProvider.getPlBinList(card);
+    await pickItemProvider.getPlBinList(itemCode);
   }
 
   @override
@@ -37,7 +36,7 @@ class ProductionReceiptRmBinScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Receipt (Raw Material)'),
+        title: Text('Receipt'),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(
@@ -120,7 +119,8 @@ class ProductionReceiptRmBinScreen extends StatelessWidget {
 
   Widget buildInputScan(
       BuildContext context, ProductionReceiptRMItemListModel pickItemReceive) {
-    final provider = Provider.of<ProductionReceiptRMBinProvider>(context, listen: false);
+    final provider =
+        Provider.of<ProductionReceiptRMBinProvider>(context, listen: false);
     return InputScan(
       label: 'Bin Location',
       hint: 'Scan Bin Location',
@@ -146,11 +146,10 @@ class ProductionReceiptRmBinScreen extends StatelessWidget {
         //   pickItemReceive.itemStorageLocation = item.binLocation;
         //   Navigator.of(context)
         //       .popUntil(ModalRoute.withName(PickItemReceiveScreen.routeName));
-        
 
         pickItemReceive.itemStorageLocation = item.binLocation;
-          Navigator.of(context)
-              .popUntil(ModalRoute.withName(ProductionReceiptRMItem.routeName));
+        Navigator.of(context)
+            .popUntil(ModalRoute.withName(ProductionReceiptRMItem.routeName));
         // }
       },
     );

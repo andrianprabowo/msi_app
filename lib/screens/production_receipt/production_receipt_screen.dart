@@ -99,7 +99,8 @@ class ProductionReceipt extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider = Provider.of<ProductionReceiptProvider>(context, listen: false);
+    final provider =
+        Provider.of<ProductionReceiptProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InputScan(
       label: 'Production Number',
@@ -108,6 +109,7 @@ class ProductionReceipt extends StatelessWidget {
         final item = provider.findByPoNumber(value.toUpperCase());
         provider.selectPo(item);
         authProvider.clearBin();
+        authProvider.clearGl();
         Navigator.of(context).pushNamed(ProductionReceiptItem.routeName);
       },
     );
@@ -134,7 +136,8 @@ class ProductionReceipt extends StatelessWidget {
                       itemBuilder: (_, index) {
                         return ChangeNotifierProvider.value(
                           value: provider.items[index],
-                          child: ProductionReceiptNumberList(provider.items[index]),
+                          child: ProductionReceiptNumberList(
+                              provider.items[index]),
                         );
                       },
                     ),

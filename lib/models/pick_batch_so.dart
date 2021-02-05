@@ -8,6 +8,10 @@ class PickBatchSo with ChangeNotifier {
   double availableQty;
   double remainQty;
   double pickQty;
+
+  int totalRemain;
+  int show;
+
   final DateTime expiredDate;
   PickBatchSo({
     this.batchNo,
@@ -15,6 +19,8 @@ class PickBatchSo with ChangeNotifier {
     this.availableQty,
     this.remainQty,
     this.pickQty,
+    this.totalRemain,
+    this.show,
     this.expiredDate,
   });
 
@@ -36,6 +42,8 @@ class PickBatchSo with ChangeNotifier {
       availableQty: map['avlQty'] ?? 0.0,
       remainQty: map['remainQty'] ?? 0.0,
       pickQty: 0.0,
+      totalRemain: 0,
+      show: 0,
       expiredDate: DateTime.parse(map['expDate']),
     );
   }
@@ -47,5 +55,5 @@ class PickBatchSo with ChangeNotifier {
 
   @override
   String toString() =>
-      'PickBatchSo(batchNo: $batchNo, uom: $uom, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate, remainQty: $remainQty)';
+      'PickBatchSo(show: $show, totalRemain: $totalRemain, batchNo: $batchNo, uom: $uom, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate, remainQty: $remainQty)';
 }
