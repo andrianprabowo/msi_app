@@ -31,7 +31,8 @@ class PickItemReceiveRtvProvider with ChangeNotifier {
 
   Future<void> getPlActionByPlNo(String pickNumber) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
-    final url = '$kBaseUrl/api/getplitemsbyrvno/docnum=$pickNumber&whscode=$warehouseId';
+    final url =
+        '$kBaseUrl/api/getplitemsbyrvno/docnum=$pickNumber&whscode=$warehouseId';
 
     try {
       final response = await http.get(url);
@@ -61,9 +62,18 @@ class PickItemReceiveRtvProvider with ChangeNotifier {
     PickItemReceiveRtv pickItemReceive,
     List<PickBatchRtv> batchList,
   ) {
-    pickItemReceive.batchList = batchList;
+    pickItemReceive.batchList.addAll(batchList);
     notifyListeners();
     print('Added Batch List: $batchList');
+  }
+
+   void addBin(
+    PickItemReceiveRtv pickItemReceive,
+    PickBatchRtv batchList,
+  ) {
+    pickItemReceive.batchList.add(batchList);
+    notifyListeners();
+    print('Added Bin List: $batchList');
   }
 
   void removeBatchItem(

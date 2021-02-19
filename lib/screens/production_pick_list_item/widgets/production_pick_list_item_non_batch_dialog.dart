@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:msi_app/models/production_pick_list_item_batch_model.dart';
 import 'package:msi_app/models/production_pick_list_item_model.dart';
 import 'package:msi_app/providers/production_pick_list_item_provider.dart';
-import 'package:msi_app/screens/production_pick_list_bin/production_pick_list_bin_screen.dart';
+import 'package:msi_app/screens/production_pick_list_item/production_pick_list_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
-import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
@@ -45,8 +45,8 @@ class _ProductionPickListItemNonBatchDialogState
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(widget.item.description),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('Available Quantity', openQty),
-          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          // BaseTextLine('Available Quantity', openQty),
+          // SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           // if (_quantity.text != '' &&
@@ -88,7 +88,7 @@ class _ProductionPickListItemNonBatchDialogState
               Provider.of<ProductionPickListItemProvider>(context,
                   listen: false);
           pickItemReceiveProvider.updateQtyNBinNonBatch(
-              item, double.parse(_quantity.text), '');
+              item, double.parse(_quantity.text));
           if (double.parse(_quantity.text) > widget.item.openQty) {
             print('Tidak boleh lebih besar dari Available Qty ');
             return showDialog<void>(
@@ -122,9 +122,24 @@ class _ProductionPickListItemNonBatchDialogState
               },
             );
           }
-          Navigator.of(context)
-              .pushNamed(ProductionPickListBin.routeName, arguments: item);
-          //  Navigator.of(context).pop();
+          // Navigator.of(context)
+          //     .pushNamed(ProductionPickListBin.routeName, arguments: item);
+          // //  Navigator.of(context).pop();
+          final prodItemReceiveProvider =
+              Provider.of<ProductionPickListItemProvider>(context, listen: false);
+          prodItemReceiveProvider.updateQtyNBinNonBatch(
+            item,
+            double.parse(_quantity.text),
+          );
+          final batchList = ProductionPickListItemBatchModel(
+              pickQty: item.pickedQty, bin: item.itemStorageLocation);
+
+          print('test isinya 4 $batchList');
+
+          pickItemReceiveProvider.addBin(item, batchList);
+
+          Navigator.of(context).popUntil(
+              ModalRoute.withName(ProductionPickListItem.routeName));
         },
       ),
     );

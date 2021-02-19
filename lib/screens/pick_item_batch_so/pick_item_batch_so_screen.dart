@@ -46,8 +46,15 @@ class PickItemBatchSoScreen extends StatelessWidget {
             onPressed: () {
               // update bin location
               pickItem.itemStorageLocation = itemBin.binLocation;
+
               // add batch list
               final batchList = pickBatchProvider.pickedItems;
+
+              batchList.forEach((detail) {
+                // calculate bin
+                detail.bin = pickItem.itemStorageLocation;
+              });
+              // batchList. = itemBin.binLocation;
               pickItemProvider.addBatchList(pickItem, batchList);
 
               var guider =
@@ -101,10 +108,10 @@ class PickItemBatchSoScreen extends StatelessWidget {
             ),
             BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description),
+            BaseTitle(pickItem.itemStorageLocation),
             BaseTextLine('SO Quantity', pickItem.openQty.toStringAsFixed(4)),
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            // BaseTitle('List Batch of Item'),
             Row(
               children: [
                 Expanded(
@@ -154,7 +161,7 @@ class PickItemBatchSoScreen extends StatelessWidget {
                     itemBuilder: (_, index) {
                       return ChangeNotifierProvider.value(
                         value: provider.items[index],
-                        child: ItemPickBatchSo(provider.items[index]),
+                        child: ItemPickBatchSo(provider.items[index], pickItem),
                       );
                     },
                   ),

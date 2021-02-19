@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_pick_list_item_batch_model.dart';
 import 'package:msi_app/models/production_pick_list_item_model.dart';
 import 'package:msi_app/screens/production_pick_list_final_check/widget/production_pick_list_final_detail_batch.dart';
+import 'package:msi_app/screens/production_pick_list_final_check/widget/production_widget_bin_check.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
@@ -29,16 +30,18 @@ class ProductionPickListFinalDetail extends StatelessWidget {
               item.openQty == 0.0
                   ? item.openQty.toStringAsFixed(4)
                   : formatter.format(item.openQty)),
-          BaseTextLine(
-              'Pick Quantity',
-              item.pickedQty == 0.0
-                  ? item.pickedQty.toStringAsFixed(4)
-                  : formatter.format(item.pickedQty)),
+          // BaseTextLine(
+          //     'Pick Quantity',
+          //     item.pickedQty == 0.0
+          //         ? item.pickedQty.toStringAsFixed(4)
+          //         : formatter.format(item.pickedQty)),
           BaseTextLine('UOM', item.unitMsr),
           BaseTextLine('Bin Location', item.itemStorageLocation),
           Divider(),
-          if (item.batchList.isNotEmpty) BaseTitle('Item Batch List'),
-          buildItemBatchList(item.batchList),
+          // if (item.batchList.isNotEmpty) BaseTitle('Item Batch List'),
+          // buildItemBatchList(item.batchList),
+          if (item.fgBatch == 'Y') buildItemBatchList(item.batchList),
+          if (item.fgBatch == 'N') buildItemBin(item.batchList),
         ],
       ),
     );
@@ -51,6 +54,17 @@ class ProductionPickListFinalDetail extends StatelessWidget {
       itemCount: list.length,
       itemBuilder: (_, index) {
         return ProductionPickListFinalDetailBatch(list[index]);
+      },
+    );
+  }
+
+  Widget buildItemBin(List<ProductionPickListItemBatchModel> list) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: list.length,
+      itemBuilder: (_, index) {
+        return ProductionWidgetBinCheck(item, list[index]);
       },
     );
   }

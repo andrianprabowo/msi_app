@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/pick_batch.dart';
 import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/screens/pick_check/widget/pick_batch_check.dart';
+import 'package:msi_app/screens/pick_check/widget/pick_bin_check.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
@@ -22,13 +23,13 @@ class PickDetailCheck extends StatelessWidget {
           BaseTitle(item.itemCode),
           BaseTitle(item.description),
           Divider(),
-          BaseTextLine('Total To Pick Quantity', item.openQty.toStringAsFixed(4)),
-          BaseTextLine('Pick Quantity', item.pickedQty.toStringAsFixed(4)),
+          BaseTextLine(
+              'Total To Pick Quantity', item.openQty.toStringAsFixed(4)),
+          // BaseTextLine('Pick Quantity', item.pickedQty.toStringAsFixed(4)),
           BaseTextLine('UoM', item.unitMsr),
-          BaseTextLine('Bin Location', item.itemStorageLocation),
           Divider(),
-          if (item.batchList.isNotEmpty) BaseTitle('Item Batch List'),
-          buildItemBatchList(item.batchList),
+          if (item.fgBatch == 'Y') buildItemBatchList(item.batchList),
+          if (item.fgBatch == 'N') buildItemBin(item.batchList),
         ],
       ),
     );
@@ -41,6 +42,17 @@ class PickDetailCheck extends StatelessWidget {
       itemCount: list.length,
       itemBuilder: (_, index) {
         return PickBatchCheck(list[index]);
+      },
+    );
+  }
+
+   Widget buildItemBin(List<PickBatch> list) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: list.length,
+      itemBuilder: (_, index) {
+        return PickBinCheck(item, list[index]);
       },
     );
   }

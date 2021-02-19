@@ -4,7 +4,7 @@ import 'package:msi_app/providers/pick_list_bin_so_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_so_provider.dart';
 import 'package:msi_app/screens/pick_item_batch_so/pick_item_batch_so_screen.dart';
 import 'package:msi_app/screens/pick_item_bin_so/widget/item_pick_item_bin_so.dart';
-import 'package:msi_app/screens/pick_item_receive_so/pick_item_receive_so_screen.dart';
+import 'package:msi_app/screens/pick_item_receive_so/widgets/dialog_pick_list_nonbatch_so.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -27,7 +27,8 @@ class PickListBinSoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final pickList =
         Provider.of<PickListWhsSoProvider>(context, listen: false).selected;
-    PickItemReceiveSo pickItemReceive = ModalRoute.of(context).settings.arguments;
+    PickItemReceiveSo pickItemReceive =
+        ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
@@ -44,7 +45,7 @@ class PickListBinSoScreen extends StatelessWidget {
             Consumer<PickListBinSoProvider>(
               builder: (_, provider, child) {
                 String binLoc = provider.recBin ?? '';
-                return BaseTextLine('Recommendation Bin', binLoc);
+                return BaseTextLine('Recom Bin', binLoc);
               },
             ),
             // BaseTextLine('Recommendation Bin', ''),
@@ -111,7 +112,8 @@ class PickListBinSoScreen extends StatelessWidget {
     );
   }
 
-  Widget buildInputScan(BuildContext context, PickItemReceiveSo pickItemReceive) {
+  Widget buildInputScan(
+      BuildContext context, PickItemReceiveSo pickItemReceive) {
     final provider = Provider.of<PickListBinSoProvider>(context, listen: false);
     return InputScan(
       label: 'Bin Location',
@@ -119,6 +121,7 @@ class PickListBinSoScreen extends StatelessWidget {
       scanResult: (value) {
         final item = provider.findByBinLocation(value);
         if (pickItemReceive.fgBatch == 'Y') {
+          pickItemReceive.itemStorageLocation = item.binLocation;
           Navigator.of(context).pushNamed(
             PickItemBatchSoScreen.routeName,
             arguments: {
@@ -127,9 +130,11 @@ class PickListBinSoScreen extends StatelessWidget {
             },
           );
         } else {
+           // update bin location
           pickItemReceive.itemStorageLocation = item.binLocation;
-          Navigator.of(context)
-              .popUntil(ModalRoute.withName(PickItemReceiveSoScreen.routeName));
+          showModalBottomSheet(
+              context: context,
+              builder: (_) => DialogPickListNonbatchSo(pickItemReceive));
         }
       },
     );

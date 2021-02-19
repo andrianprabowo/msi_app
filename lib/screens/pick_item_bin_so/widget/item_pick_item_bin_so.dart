@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:msi_app/models/pick_item_receive_so.dart';
 import 'package:msi_app/models/pick_list_bin_so.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/pick_item_batch_so/pick_item_batch_so_screen.dart';
-import 'package:msi_app/screens/pick_item_receive_so/pick_item_receive_so_screen.dart';
+import 'package:msi_app/screens/pick_item_receive_so/widgets/dialog_pick_list_nonbatch_so.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +20,7 @@ class ItemPickItemBinSo extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (pickItemReceive.fgBatch == 'Y') {
+          pickItemReceive.itemStorageLocation = item.binLocation;
           Navigator.of(context).pushNamed(
             PickItemBatchSoScreen.routeName,
             arguments: {
@@ -29,9 +30,9 @@ class ItemPickItemBinSo extends StatelessWidget {
           );
         } else {
           pickItemReceive.itemStorageLocation = item.binLocation;
-          Navigator.of(context)
-              .popUntil(ModalRoute.withName(PickItemReceiveSoScreen.routeName));
-        }
+             showModalBottomSheet(
+                context: context, builder: (_) => DialogPickListNonbatchSo(pickItemReceive));
+          }
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),

@@ -4,6 +4,7 @@ import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/providers/pick_item_receive_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
 import 'package:provider/provider.dart';
 
 class PickBatchWidget extends StatelessWidget {
@@ -31,6 +32,7 @@ class PickBatchWidget extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
+                BaseTitle(batch.bin),
                 BaseTextLine('Batch Number', batch.batchNo),
                 BaseTextLine('Expired Date', convertDate(batch.expiredDate)),
                 BaseTextLine('Quantity', batch.pickQty.toStringAsFixed(4)),

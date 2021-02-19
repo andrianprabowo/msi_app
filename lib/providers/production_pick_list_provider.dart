@@ -57,7 +57,7 @@ class ProductionPickListProvider with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> createProductionPickList() async {
-    var url = '$kBaseUrl/tgrpo/tgrpo/api/listplrm';
+    var url = '$kBaseUrl/tgrpo/tgrpo/api/multilistplrm';
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',

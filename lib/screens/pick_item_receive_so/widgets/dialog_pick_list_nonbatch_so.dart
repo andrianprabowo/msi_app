@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/pick_batch_so.dart';
 import 'package:msi_app/models/pick_item_receive_so.dart';
 import 'package:msi_app/providers/pick_item_receive_so_provider.dart';
-import 'package:msi_app/screens/pick_item_bin_so/pick_list_bin_so_screen.dart';
+import 'package:msi_app/screens/pick_item_receive_so/pick_item_receive_so_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
-import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
@@ -39,19 +39,12 @@ class _DialogPickListNonbatchSoState extends State<DialogPickListNonbatchSo> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(widget.item.description),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine(
-              'Available Quantity', widget.item.openQty.toStringAsFixed(4)),
+          // BaseTextLine(
+          //     'Available Quantity', widget.item.openQty.toStringAsFixed(4)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          // if (_quantity.text != '' &&
-          //         (double.parse(_quantity.text) >
-          //             double.tryParse(
-          //                 widget.item.openQty.toStringAsFixed(4))) ||
-          //     _quantity.text == '0')
-          //   buildButtonNotif(context, widget.item.openQty.toStringAsFixed(4))
-          // else
-            buildButtonSubmit(context, widget.item.openQty.toStringAsFixed(4)),
+          buildButtonSubmit(context, widget.item.openQty.toStringAsFixed(4)),
         ],
       ),
     );
@@ -91,37 +84,37 @@ class _DialogPickListNonbatchSoState extends State<DialogPickListNonbatchSo> {
         child: Text('Submit'),
         onPressed: () {
           if (double.parse(_quantity.text) > widget.item.openQty) {
-             print('Tidak boleh lebih besar dari Available Qty ');
-              return showDialog<void>(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.notification_important,
-                            color: Colors.red, size: 50),
-                        Divider(),
-                        SizedBox(height: getProportionateScreenHeight(kLarge)),
-                        BaseTitleColor('Qty must be above 0'),
-                        SizedBox(height: getProportionateScreenHeight(kLarge)),
-                        BaseTitleColor('or equal to  $avlQty'),
-                        SizedBox(height: getProportionateScreenHeight(kLarge)),
-                        SizedBox(
-                          width: double.infinity,
-                          child: RaisedButton(
-                            child: Text('OK'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
+            print('Tidak boleh lebih besar dari Available Qty ');
+            return showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.notification_important,
+                          color: Colors.red, size: 50),
+                      Divider(),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('Qty must be above 0'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('or equal to  $avlQty'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                         ),
-                      ],
-                    ),
-                  );
-                },
-              );
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
           }
           final pickItemReceiveProvider =
               Provider.of<PickItemReceiveSoProvider>(context, listen: false);
@@ -129,9 +122,15 @@ class _DialogPickListNonbatchSoState extends State<DialogPickListNonbatchSo> {
             item,
             double.parse(_quantity.text),
           );
-          Navigator.of(context)
-              .pushNamed(PickListBinSoScreen.routeName, arguments: item);
-          //  Navigator.of(context).pop();
+          final batchList = PickBatchSo(
+              pickQty: item.pickedQty, bin: item.itemStorageLocation);
+
+          print('test isinya 4 $batchList');
+
+          pickItemReceiveProvider.addBin(item, batchList);
+
+          Navigator.of(context).popUntil(
+              ModalRoute.withName(PickItemReceiveSoScreen.routeName));
         },
       ),
     );

@@ -4,7 +4,7 @@ import 'package:msi_app/providers/pick_list_bin_rtv_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_rtv_provider.dart';
 import 'package:msi_app/screens/pick_item_batch_rtv/pick_item_batch_rtv_screen.dart';
 import 'package:msi_app/screens/pick_item_bin_rtv/widget/item_pick_item_bin_rtv.dart';
-import 'package:msi_app/screens/pick_item_receive_rtv/pick_item_receive_rtv_screen.dart';
+import 'package:msi_app/screens/pick_item_receive_rtv/widgets/dialog_pick_list_nonbatch_rtv.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -27,7 +27,8 @@ class PickListBinRtvScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final pickList =
         Provider.of<PickListWhsRtvProvider>(context, listen: false).selected;
-    PickItemReceiveRtv pickItemReceive = ModalRoute.of(context).settings.arguments;
+    PickItemReceiveRtv pickItemReceive =
+        ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
@@ -41,10 +42,10 @@ class PickListBinRtvScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             Consumer<PickListBinRtvProvider>(
+            Consumer<PickListBinRtvProvider>(
               builder: (_, provider, child) {
                 String binLoc = provider.recBin ?? '';
-                return BaseTextLine('Recommendation Bin', binLoc);
+                return BaseTextLine('Recom Bin', binLoc);
               },
             ),
             // BaseTextLine('Recommendation Bin', ''),
@@ -100,7 +101,8 @@ class PickListBinRtvScreen extends StatelessWidget {
                       itemBuilder: (_, index) {
                         return ChangeNotifierProvider.value(
                           value: provider.items[index],
-                          child: ItemPickItemBinRtv(item, provider.items[index]),
+                          child:
+                              ItemPickItemBinRtv(item, provider.items[index]),
                         );
                       },
                     ),
@@ -111,14 +113,17 @@ class PickListBinRtvScreen extends StatelessWidget {
     );
   }
 
-  Widget buildInputScan(BuildContext context, PickItemReceiveRtv pickItemReceive) {
-    final provider = Provider.of<PickListBinRtvProvider>(context, listen: false);
+  Widget buildInputScan(
+      BuildContext context, PickItemReceiveRtv pickItemReceive) {
+    final provider =
+        Provider.of<PickListBinRtvProvider>(context, listen: false);
     return InputScan(
       label: 'Bin Location',
       hint: 'Scan Bin Location',
       scanResult: (value) {
         final item = provider.findByBinLocation(value);
         if (pickItemReceive.fgBatch == 'Y') {
+          pickItemReceive.itemStorageLocation = item.binLocation;
           Navigator.of(context).pushNamed(
             PickItemBatchRtvScreen.routeName,
             arguments: {
@@ -129,8 +134,10 @@ class PickListBinRtvScreen extends StatelessWidget {
         } else {
           // update bin location
           pickItemReceive.itemStorageLocation = item.binLocation;
-          Navigator.of(context).popUntil(
-              ModalRoute.withName(PickItemReceiveRtvScreen.routeName));
+          pickItemReceive.itemStorageLocation = item.binLocation;
+          showModalBottomSheet(
+              context: context,
+              builder: (_) => DialogPickListNonbatchRtv(pickItemReceive));
         }
       },
     );

@@ -5,7 +5,6 @@ import 'package:msi_app/providers/pick_item_receive_rtv_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_rtv_provider.dart';
 import 'package:msi_app/screens/pick_check_rtv/pick_check_rtv_screen.dart';
 import 'package:msi_app/screens/pick_item_bin_rtv/pick_list_bin_rtv_screen.dart';
-import 'package:msi_app/screens/pick_item_receive_rtv/widgets/dialog_pick_list_nonbatch_rtv.dart';
 import 'package:msi_app/screens/pick_item_receive_rtv/widgets/item_pick_receive_rtv.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -116,8 +115,8 @@ class PickItemReceiveRtvScreen extends StatelessWidget {
         item.fgBatch == 'Y'
             ? Navigator.of(context)
                 .pushNamed(PickListBinRtvScreen.routeName, arguments: item)
-            : showModalBottomSheet(
-                context: context, builder: (_) => DialogPickListNonbatchRtv(item));
+            : Navigator.of(context)
+                .pushNamed(PickListBinRtvScreen.routeName, arguments: item);
       },
     );
   }

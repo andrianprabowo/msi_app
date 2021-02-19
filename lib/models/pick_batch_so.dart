@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class PickBatchSo with ChangeNotifier {
   final String batchNo;
   final String uom;
+  String bin;
   double availableQty;
   double remainQty;
   double pickQty;
@@ -16,6 +17,7 @@ class PickBatchSo with ChangeNotifier {
   PickBatchSo({
     this.batchNo,
     this.uom,
+    this.bin,
     this.availableQty,
     this.remainQty,
     this.pickQty,
@@ -26,9 +28,9 @@ class PickBatchSo with ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     return {
+      'itemStorageLocation': bin,
       'batchNo': batchNo,
       'batchQuantity': pickQty,
-      // 'pickQty': pickQty,
       'expDate': expiredDate?.toIso8601String(),
     };
   }
@@ -39,6 +41,7 @@ class PickBatchSo with ChangeNotifier {
     return PickBatchSo(
       batchNo: map['batchNo'] ?? '',
       uom: map['uom'] ?? '',
+      bin: map['itemStorageLocation'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
       remainQty: map['remainQty'] ?? 0.0,
       pickQty: 0.0,
@@ -55,5 +58,5 @@ class PickBatchSo with ChangeNotifier {
 
   @override
   String toString() =>
-      'PickBatchSo(show: $show, totalRemain: $totalRemain, batchNo: $batchNo, uom: $uom, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate, remainQty: $remainQty)';
+      'PickBatchSo(show: $show, totalRemain: $totalRemain, batchNo: $batchNo, uom: $uom, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate, remainQty: $remainQty, bin: $bin )';
 }

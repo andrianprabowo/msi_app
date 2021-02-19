@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class PickBatchRtv with ChangeNotifier {
   final String batchNo;
   final String uom;
+  String bin;
   double availableQty;
   double remainQty;
   double pickQty;
@@ -16,6 +17,7 @@ class PickBatchRtv with ChangeNotifier {
   PickBatchRtv({
     this.batchNo,
     this.uom,
+    this.bin,
     this.availableQty,
     this.remainQty,
     this.pickQty,
@@ -26,6 +28,7 @@ class PickBatchRtv with ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     return {
+      'itemStorageLocation': bin,
       'batchNo': batchNo,
       'batchQuantity': pickQty,
       'expDate': expiredDate?.toIso8601String(),
@@ -38,6 +41,7 @@ class PickBatchRtv with ChangeNotifier {
     return PickBatchRtv(
       batchNo: map['batchNo'] ?? '',
       uom: map['uom'] ?? '',
+      bin: map['itemStorageLocation'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
       remainQty: map['remainQty'] ?? 0.0,
       pickQty: 0.0,
@@ -54,5 +58,5 @@ class PickBatchRtv with ChangeNotifier {
 
   @override
   String toString() =>
-      'PickBatchRtv(show: $show, totalRemain: $totalRemain, batchNo: $batchNo, uom: $uom, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate, remainQty: $remainQty)';
+      'PickBatchRtv(show: $show, totalRemain: $totalRemain, batchNo: $batchNo, uom: $uom, availableQty: $availableQty, pickQty: $pickQty,  expiredDate: $expiredDate, remainQty: $remainQty, bin: $bin)';
 }

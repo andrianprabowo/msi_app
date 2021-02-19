@@ -4,6 +4,7 @@ import 'package:msi_app/providers/pick_batch_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
 
@@ -21,17 +22,14 @@ class _DialogPickBatchState extends State<DialogPickBatch> {
 
   @override
   Widget build(BuildContext context) {
-    // final provider =
-    //     Provider.of<PickItemReceiveProvider>(context, listen: false);
-    //     final itemPl = provider.selected;
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // BaseTitle(itemPl.itemCode),
-          // SizedBox(height: getProportionateScreenHeight(kLarge)),
-          // BaseTitle(itemPl.description),
+          BaseTitle('Input Batch Quantity'),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTextLine('', widget.item.bin),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Batch Number', widget.item.batchNo),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -42,13 +40,6 @@ class _DialogPickBatchState extends State<DialogPickBatch> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          // if (_quantity.text != '' &&
-          //         (double.parse(_quantity.text) >
-          //             double.tryParse(
-          //                 widget.item.availableQty.toStringAsFixed(2))) ||
-          //     _quantity.text == '0')
-          //   buildButtonNotif(context, widget.item.availableQty.toString())
-          // else
           buildButtonSubmit(
               context, widget.item.availableQty.toStringAsFixed(4)),
         ],

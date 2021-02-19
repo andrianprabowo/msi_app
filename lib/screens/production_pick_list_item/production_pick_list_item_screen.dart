@@ -6,7 +6,6 @@ import 'package:msi_app/providers/production_pick_list_provider.dart';
 import 'package:msi_app/screens/production_pick_list_bin/production_pick_list_bin_screen.dart';
 import 'package:msi_app/screens/production_pick_list_final_check/production_pick_list_final_check_screen.dart';
 import 'package:msi_app/screens/production_pick_list_item/widgets/production_pick_list_item_list.dart';
-import 'package:msi_app/screens/production_pick_list_item/widgets/production_pick_list_item_non_batch_dialog.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -97,9 +96,11 @@ class ProductionPickListItem extends StatelessWidget {
         item.fgBatch == "Y"
             ? Navigator.of(context)
                 .pushNamed(ProductionPickListBin.routeName, arguments: item)
-            : showModalBottomSheet(
-                context: context,
-                builder: (_) => ProductionPickListItemNonBatchDialog(item));
+            // : showModalBottomSheet(
+            //     context: context,
+            //     builder: (_) => ProductionPickListItemNonBatchDialog(item));
+            : Navigator.of(context)
+                .pushNamed(ProductionPickListBin.routeName, arguments: item);
       },
     );
   }

@@ -8,9 +8,7 @@ import 'package:http/http.dart' as http;
 
 class PickItemReceiveProvider with ChangeNotifier {
   List<PickItemReceive> _items;
-  PickItemReceive _selected;
-  // List items2 = [];
-
+  
   List<PickItemReceive> get items {
     _items.forEach((detail) {
       if (detail.fgBatch == "Y") {
@@ -30,7 +28,6 @@ class PickItemReceiveProvider with ChangeNotifier {
     return _items;
   }
 
-  PickItemReceive get selected => _selected;
   Future<void> getPlActionByPlNo(String pickNumber) async {
     final url = '$kBaseUrl/api/getplitemsbyplno/docnum=$pickNumber';
 
@@ -58,21 +55,22 @@ class PickItemReceiveProvider with ChangeNotifier {
     return _items.firstWhere((element) => element.itemCode == itemCode);
   }
 
-  void selectPo(PickItemReceive pickItemReceive) {
-    _selected = pickItemReceive;
-    notifyListeners();
-  }
-
   void addBatchList(
     PickItemReceive pickItemReceive,
     List<PickBatch> batchList,
   ) {
-    pickItemReceive.batchList = batchList;
-    // items2.add(batchList);
-    // print('test');
-    // print(items2);
+    pickItemReceive.batchList.addAll(batchList);
     notifyListeners();
     print('Added Batch List: $batchList');
+  }
+
+void addBin(
+    PickItemReceive pickItemReceive,
+    PickBatch batchList,
+  ) {
+    pickItemReceive.batchList.add(batchList);
+    notifyListeners();
+    print('Added Bin List: $batchList');
   }
 
   void removeBatchItem(
@@ -83,7 +81,6 @@ class PickItemReceiveProvider with ChangeNotifier {
     notifyListeners();
     print('Removed Item Batch: $itemBatch');
   }
-
   void inputQtyNonBatch(PickItemReceive pickItemReceive, double qty) {
     print(pickItemReceive);
     pickItemReceive.pickedQty = qty;

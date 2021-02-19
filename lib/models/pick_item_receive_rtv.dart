@@ -35,9 +35,10 @@ class PickItemReceiveRtv with ChangeNotifier {
       'openQty': openQty,
       'quantity': quantity,
       'grQuantity': pickedQty,
+      'fgBatch': fgBatch,
       'uom': unitMsr,
       'val': val,
-      'itemStorageLocation': itemStorageLocation,
+      // 'itemStorageLocation': itemStorageLocation,
       'listBatches': batchList?.map((x) => x?.toMap())?.toList(),
     };
   }

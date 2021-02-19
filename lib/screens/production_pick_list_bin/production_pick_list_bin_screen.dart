@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/production_pick_list_item_model.dart';
 import 'package:msi_app/providers/production_pick_list_bin_provider.dart';
-import 'package:msi_app/providers/production_pick_list_item_provider.dart';
 import 'package:msi_app/providers/production_pick_list_provider.dart';
 import 'package:msi_app/screens/production_pick_list_bin/widget/production_pick_list_bin_list.dart';
-import 'package:msi_app/screens/production_pick_list_item/production_pick_list_item_screen.dart';
+import 'package:msi_app/screens/production_pick_list_item/widgets/production_pick_list_item_non_batch_dialog.dart';
 import 'package:msi_app/screens/production_pick_list_item_batch/production_pick_list_item_batch_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -191,7 +190,7 @@ class ProductionPickListBin extends StatelessWidget {
             Consumer<ProductionPickListBinProvider>(
               builder: (_, provider, child) {
                 String binLoc = provider.recBin ?? '';
-                return BaseTextLine('Recommendation Bin', binLoc);
+                return BaseTextLine('Recom Bin', binLoc);
               },
             ),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -229,14 +228,15 @@ class ProductionPickListBin extends StatelessWidget {
       ProductionPickListItemModel productionPickListItemModel) {
     final provider =
         Provider.of<ProductionPickListBinProvider>(context, listen: false);
-    final pickItemListProvider =
-        Provider.of<ProductionPickListItemProvider>(context, listen: false);
+    // final pickItemListProvider =
+    //     Provider.of<ProductionPickListItemProvider>(context, listen: false);
     return InputScan(
       label: 'Bin Location',
       hint: 'Scan Bin Location',
       scanResult: (value) {
         final item = provider.findByBinLocation(value.toUpperCase());
         if (productionPickListItemModel.fgBatch == "Y") {
+          productionPickListItemModel.itemStorageLocation = item.binLocation;
           Navigator.of(context).pushNamed(
             ProductionPickListItemBatch.routeName,
             arguments: {
@@ -245,12 +245,18 @@ class ProductionPickListBin extends StatelessWidget {
             },
           );
         } else {
-          pickItemListProvider.updateQtyNBinNonBatch(
-              productionPickListItemModel,
-              double.parse(productionPickListItemModel.pickedQty.toString()),
-              item.binLocation);
-          Navigator.of(context)
-              .popUntil(ModalRoute.withName(ProductionPickListItem.routeName));
+          // pickItemListProvider.updateQtyNBinNonBatch(
+          //     productionPickListItemModel,
+          //     double.parse(productionPickListItemModel.pickedQty.toString()),
+          //     item.binLocation);
+          // Navigator.of(context)
+          //     .popUntil(ModalRoute.withName(ProductionPickListItem.routeName));
+        
+          // update bin location
+          productionPickListItemModel.itemStorageLocation = item.binLocation;
+          showModalBottomSheet(
+              context: context,
+              builder: (_) => ProductionPickListItemNonBatchDialog(productionPickListItemModel));
         }
       },
     );

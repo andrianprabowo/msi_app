@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/pick_batch_rtv.dart';
+import 'package:msi_app/models/pick_item_receive_rtv.dart';
 import 'package:msi_app/screens/pick_item_batch_rtv/widget/dialog_pick_batch_rtv.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
 
 class ItemPickBatchRtv extends StatelessWidget {
   final PickBatchRtv item;
+  final PickItemReceiveRtv itemRec;
 
-  const ItemPickBatchRtv(this.item);
+  const ItemPickBatchRtv(this.item, this.itemRec);
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +27,7 @@ class ItemPickBatchRtv extends StatelessWidget {
         decoration: kBoxDecoration,
         child: Column(
           children: [
+            BaseTitle(itemRec.itemStorageLocation),
             BaseTextLine('Batch No', item.batchNo),
             BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(4)),
             BaseTextLine('Expired Date', convertDate(item.expiredDate)),

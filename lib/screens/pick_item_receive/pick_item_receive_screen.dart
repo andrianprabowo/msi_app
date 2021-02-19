@@ -5,7 +5,6 @@ import 'package:msi_app/providers/pick_item_receive_provider.dart';
 import 'package:msi_app/providers/pick_list_whs_provider.dart';
 import 'package:msi_app/screens/pick_check/pick_check_screen.dart';
 import 'package:msi_app/screens/pick_item_bin/pick_list_bin_screen.dart';
-import 'package:msi_app/screens/pick_item_receive/widgets/dialog_pick_list_nonbatch.dart';
 import 'package:msi_app/screens/pick_item_receive/widgets/item_pick_receive.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -67,6 +66,7 @@ class PickItemReceiveScreen extends StatelessWidget {
             BaseTitle('List Items'),
             Divider(),
             buildItemList(context, item),
+            BaseTitle('List Items'),
           ],
         ),
       ),
@@ -116,9 +116,9 @@ class PickItemReceiveScreen extends StatelessWidget {
         item.fgBatch == 'Y'
             ? Navigator.of(context)
                 .pushNamed(PickListBinScreen.routeName, arguments: item)
-            : showModalBottomSheet(
-                context: context, builder: (_) => DialogPickListNonbatch(item));
-      },
+            :  Navigator.of(context)
+                .pushNamed(PickListBinScreen.routeName, arguments: item);
+     },
     );
   }
 }

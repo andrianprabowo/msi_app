@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/pick_batch.dart';
 import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/providers/pick_item_receive_provider.dart';
-import 'package:msi_app/screens/pick_item_bin/pick_list_bin_screen.dart';
+import 'package:msi_app/screens/pick_item_receive/pick_item_receive_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
-import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
@@ -32,12 +32,14 @@ class _DialogPickListNonbatchState extends State<DialogPickListNonbatch> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          BaseTitle('Input Quantity'),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(item.itemCode),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(item.description),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine(
-              'Available Quantity', widget.item.openQty.toStringAsFixed(4)),
+          // BaseTextLine(
+          // 'Available Quantity', widget.item.openQty.toStringAsFixed(4)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -119,9 +121,15 @@ class _DialogPickListNonbatchState extends State<DialogPickListNonbatch> {
             item,
             double.parse(_quantity.text),
           );
-          Navigator.of(context)
-              .pushNamed(PickListBinScreen.routeName, arguments: item);
-          //  Navigator.of(context).pop();
+            final batchList = PickBatch(
+              pickQty: item.pickedQty, bin: item.itemStorageLocation);
+
+          print('test isinya 4 $batchList');
+
+          pickItemReceiveProvider.addBin(item, batchList);
+
+          Navigator.of(context).popUntil(
+              ModalRoute.withName(PickItemReceiveScreen.routeName));
         },
       ),
     );

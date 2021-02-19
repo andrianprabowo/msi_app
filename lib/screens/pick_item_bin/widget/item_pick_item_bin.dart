@@ -3,12 +3,13 @@ import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/models/pick_list_bin.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/pick_item_batch/pick_item_batch_screen.dart';
-import 'package:msi_app/screens/pick_item_receive/pick_item_receive_screen.dart';
+import 'package:msi_app/screens/pick_item_receive/widgets/dialog_pick_list_nonbatch.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:provider/provider.dart';
 
 class ItemPickItemBin extends StatelessWidget {
+  
   final PickItemReceive pickItemReceive;
   final PickListBin item;
 
@@ -19,7 +20,8 @@ class ItemPickItemBin extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InkWell(
       onTap: () {
-        if (pickItemReceive.fgBatch == 'Y')
+        if (pickItemReceive.fgBatch == 'Y'){
+          pickItemReceive.itemStorageLocation = item.binLocation;
           Navigator.of(context).pushNamed(
             PickItemBatchScreen.routeName,
             arguments: {
@@ -27,10 +29,19 @@ class ItemPickItemBin extends StatelessWidget {
               'pickListBin': item,
             },
           );
-        else {
+        }else {
+        //   final pickBatchProvider =
+        // Provider.of<PickListBinProvider>(context, listen: false);
           pickItemReceive.itemStorageLocation = item.binLocation;
-          Navigator.of(context)
-              .popUntil(ModalRoute.withName(PickItemReceiveScreen.routeName));
+            //  final binList = pickBatchProvider.itemsSelect;
+
+              // pickItemProvider.addBinList(pickItemReceive, binList);
+
+
+             showModalBottomSheet(
+                context: context, builder: (_) => DialogPickListNonbatch(pickItemReceive));
+          // Navigator.of(context)
+          //     .popUntil(ModalRoute.withName(PickItemReceiveScreen.routeName));
         }
       },
       child: Container(

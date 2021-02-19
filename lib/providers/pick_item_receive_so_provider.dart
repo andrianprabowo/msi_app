@@ -31,7 +31,8 @@ class PickItemReceiveSoProvider with ChangeNotifier {
 
   Future<void> getPlActionByPlNo(String pickNumber) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
-    final url = '$kBaseUrl/api/getplitemsbysono/docnum=$pickNumber&whscode=$warehouseId';
+    final url =
+        '$kBaseUrl/api/getplitemsbysono/docnum=$pickNumber&whscode=$warehouseId';
 
     try {
       final response = await http.get(url);
@@ -61,9 +62,18 @@ class PickItemReceiveSoProvider with ChangeNotifier {
     PickItemReceiveSo pickItemReceive,
     List<PickBatchSo> batchList,
   ) {
-    pickItemReceive.batchList = batchList;
+    pickItemReceive.batchList.addAll(batchList);
     notifyListeners();
     print('Added Batch List: $batchList');
+  }
+
+   void addBin(
+    PickItemReceiveSo pickItemReceive,
+    PickBatchSo batchList,
+  ) {
+    pickItemReceive.batchList.add(batchList);
+    notifyListeners();
+    print('Added Bin List: $batchList');
   }
 
   void removeBatchItem(
@@ -75,16 +85,8 @@ class PickItemReceiveSoProvider with ChangeNotifier {
     print('Removed Item Batch: $itemBatch');
   }
 
-  // void updateQtyNBinNonBatch(ProductionPickListItemModel productionPickListItemModel, double qty, String bin) {
-  //   productionPickListItemModel.pickedQty = qty;
-  //   productionPickListItemModel.itemStorageLocation = bin;
-  //   notifyListeners();
-  //   print('Update Qty & Bin Loc Non batch: $productionPickListItemModel');
-  // }
-
   void inputQtyNonBatch(PickItemReceiveSo pickItemReceive, double qty) {
     pickItemReceive.pickedQty = qty;
-    // pickItemReceive.itemStorageLocation = bin;
     notifyListeners();
     print('Update Qty Non batch: $pickItemReceive');
   }

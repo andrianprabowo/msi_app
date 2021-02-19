@@ -58,7 +58,8 @@ class PickListWhsRtvProvider with ChangeNotifier {
 
 
   Future<Map<String, dynamic>> createPickList() async {
-    var url = '$kBaseUrl/tgrpo/tgrpo/api/listrvpl';
+    var url = '$kBaseUrl/tgrpo/tgrpo/api/MultiListRvpls';
+    // var url = '$kBaseUrl/tgrpo/tgrpo/api/listrvpl';
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',

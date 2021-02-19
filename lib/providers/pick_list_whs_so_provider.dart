@@ -75,7 +75,7 @@ class PickListWhsSoProvider with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> createPickList() async {
-    var url = '$kBaseUrl/tgrpo/tgrpo/api/listpickso';
+    var url = '$kBaseUrl/tgrpo/tgrpo/api/MultiListPickSo';
 
     final headers = {
       'Content-type': 'application/json',

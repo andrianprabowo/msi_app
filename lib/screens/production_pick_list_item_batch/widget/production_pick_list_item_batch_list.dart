@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_pick_list_item_batch_model.dart';
+import 'package:msi_app/models/production_pick_list_item_model.dart';
 import 'package:msi_app/screens/production_pick_list_item_batch/widget/production_pick_list_item_batch_dialog.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
 
 class ProductionPickListItemBatchList extends StatelessWidget {
   final ProductionPickListItemBatchModel item;
+  final ProductionPickListItemModel itemRec;
 
-  const ProductionPickListItemBatchList(this.item);
+  const ProductionPickListItemBatchList(this.item, this.itemRec);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +29,7 @@ class ProductionPickListItemBatchList extends StatelessWidget {
         decoration: kBoxDecoration,
         child: Column(
           children: [
+            BaseTitle(itemRec.itemStorageLocation),
             BaseTextLine('Batch No', item.batchNo),
             BaseTextLine(
                 'Available Qty',

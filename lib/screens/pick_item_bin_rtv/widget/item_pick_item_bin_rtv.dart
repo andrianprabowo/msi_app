@@ -3,7 +3,7 @@ import 'package:msi_app/models/pick_item_receive_rtv.dart';
 import 'package:msi_app/models/pick_list_bin_rtv.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/pick_item_batch_rtv/pick_item_batch_rtv_screen.dart';
-import 'package:msi_app/screens/pick_item_receive_rtv/pick_item_receive_rtv_screen.dart';
+import 'package:msi_app/screens/pick_item_receive_rtv/widgets/dialog_pick_list_nonbatch_rtv.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +20,7 @@ class ItemPickItemBinRtv extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (pickItemReceive.fgBatch == 'Y') {
+          pickItemReceive.itemStorageLocation = item.binLocation;
           Navigator.of(context).pushNamed(
             PickItemBatchRtvScreen.routeName,
             arguments: {
@@ -30,8 +31,13 @@ class ItemPickItemBinRtv extends StatelessWidget {
         } else {
           // update bin location
           pickItemReceive.itemStorageLocation = item.binLocation;
-          Navigator.of(context).popUntil(
-              ModalRoute.withName(PickItemReceiveRtvScreen.routeName));
+          // Navigator.of(context).popUntil(
+          //     ModalRoute.withName(PickItemReceiveRtvScreen.routeName));
+
+             pickItemReceive.itemStorageLocation = item.binLocation;
+             showModalBottomSheet(
+                context: context, builder: (_) => DialogPickListNonbatchRtv(pickItemReceive));
+        
         }
       },
       child: Container(

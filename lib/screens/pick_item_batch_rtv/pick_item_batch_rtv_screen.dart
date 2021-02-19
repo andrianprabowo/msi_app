@@ -36,6 +36,7 @@ class PickItemBatchRtvScreen extends StatelessWidget {
     Map map = ModalRoute.of(context).settings.arguments;
     PickItemReceiveRtv pickItem = map['pickItemReceive'];
     PickListBinRtv itemBin = map['pickListBin'];
+    // PickBatchRtv itemBatch = map['batchList'];
 
     return Scaffold(
       appBar: AppBar(
@@ -46,8 +47,15 @@ class PickItemBatchRtvScreen extends StatelessWidget {
             onPressed: () {
               // update bin location
               pickItem.itemStorageLocation = itemBin.binLocation;
+
               // add batch list
               final batchList = pickBatchProvider.pickedItems;
+
+              batchList.forEach((detail) {
+                // calculate bin
+                detail.bin = pickItem.itemStorageLocation;
+              });
+              // batchList. = itemBin.binLocation;
               pickItemProvider.addBatchList(pickItem, batchList);
 
               var guider =
@@ -101,11 +109,11 @@ class PickItemBatchRtvScreen extends StatelessWidget {
             ),
             BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description),
+            BaseTitle(pickItem.itemStorageLocation),
             BaseTextLine(
                 'Total To Pick Qty', pickItem.openQty.toStringAsFixed(4)),
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            // BaseTitle('List Batch of Item'),
             Row(
               children: [
                 Expanded(
@@ -155,7 +163,8 @@ class PickItemBatchRtvScreen extends StatelessWidget {
                     itemBuilder: (_, index) {
                       return ChangeNotifierProvider.value(
                         value: provider.items[index],
-                        child: ItemPickBatchRtv(provider.items[index]),
+                        child:
+                            ItemPickBatchRtv(provider.items[index], pickItem),
                       );
                     },
                   ),
@@ -172,13 +181,6 @@ class PickItemBatchRtvScreen extends StatelessWidget {
       hint: 'Input or scan Item Batch Number',
       scanResult: (value) {
         final item = provider.findByBatchNo(value);
-
-        // if (provider.totalShow == item.show) {
-        //   showModalBottomSheet(
-        //     context: context,
-        //     builder: (_) => DialogPickBatchRtv(item),
-        //   );
-        // }
 
         showModalBottomSheet(
           context: context,

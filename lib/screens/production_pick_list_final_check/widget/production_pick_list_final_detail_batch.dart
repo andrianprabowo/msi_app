@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_pick_list_item_batch_model.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
 
 class ProductionPickListFinalDetailBatch extends StatelessWidget {
   final ProductionPickListItemBatchModel item;
@@ -18,6 +19,7 @@ class ProductionPickListFinalDetailBatch extends StatelessWidget {
       decoration: kBoxDecoration,
       child: Column(
         children: [
+          BaseTitle(item.bin),
           BaseTextLine('Batch Number', item.batchNo),
           BaseTextLine('Expired Date', convertDate(item.expiredDate)),
           BaseTextLine('UOM', item.uom),

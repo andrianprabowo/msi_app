@@ -5,6 +5,7 @@ import 'package:msi_app/models/production_pick_list_item_model.dart';
 import 'package:msi_app/providers/production_pick_list_item_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
 import 'package:provider/provider.dart';
 
 class ProductionPickListItemBatchBox extends StatelessWidget {
@@ -33,6 +34,7 @@ class ProductionPickListItemBatchBox extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
+                BaseTitle( batch.bin),
                 BaseTextLine('Batch Number', batch.batchNo),
                 BaseTextLine('Expired Date', convertDate(batch.expiredDate)),
                 BaseTextLine('UOM', batch.uom),

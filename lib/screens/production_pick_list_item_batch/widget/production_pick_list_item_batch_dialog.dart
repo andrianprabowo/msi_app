@@ -36,6 +36,8 @@ class _ProductionPickListItemBatchDialogState
         children: [
           BaseTitle('Input Batch Quantity'),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTextLine('', widget.item.bin),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Batch Number', widget.item.batchNo),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Expired Date', convertDate(widget.item.expiredDate)),

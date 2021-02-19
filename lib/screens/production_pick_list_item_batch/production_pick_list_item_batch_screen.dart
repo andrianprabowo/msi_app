@@ -54,6 +54,12 @@ class ProductionPickListItemBatch extends StatelessWidget {
               // add batch list
               final batchList = productionPickListItemBatchProvider.pickedItems;
               //pickItemProvider.addBatchList(pickItem, batchList);
+              batchList.forEach((detail) {
+                // calculate bin
+                detail.bin = pickItem.itemStorageLocation;
+              });
+              // batchList. = itemBin.binLocation;
+              // pickItemProvider.addBatchList(pickItem, batchList);
 
               var guider =
                   double.tryParse(pickItem.openQty.toStringAsFixed(4)) >
@@ -124,6 +130,7 @@ class ProductionPickListItemBatch extends StatelessWidget {
             ),
             BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description + ' / ' + pickItem.unitMsr),
+            BaseTitle(pickItem.itemStorageLocation),
             BaseTitle(pickItem.openQty == 0.0
                 ? 'Open Quantity : ' + pickItem.openQty.toStringAsFixed(4)
                 : 'Open Quantity : ' + formatter.format(pickItem.openQty)),
@@ -205,7 +212,7 @@ class ProductionPickListItemBatch extends StatelessWidget {
                       return ChangeNotifierProvider.value(
                         value: provider.items[index],
                         child: ProductionPickListItemBatchList(
-                            provider.items[index]),
+                            provider.items[index], pickItem),
                       );
                     },
                   ),

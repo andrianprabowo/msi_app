@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class PickListBin with ChangeNotifier {
-  final String binLocation;
+  String binLocation;
   final double capacity;
   final String warehouse;
   final double avlQty;

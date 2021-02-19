@@ -29,13 +29,14 @@ class PickItemBatchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pickItemProvider =
+    final pickItemReceiveProvider =
         Provider.of<PickItemReceiveProvider>(context, listen: false);
     final pickBatchProvider =
         Provider.of<PickBatchProvider>(context, listen: false);
     Map map = ModalRoute.of(context).settings.arguments;
     PickItemReceive pickItem = map['pickItemReceive'];
     PickListBin itemBin = map['pickListBin'];
+    // PickBatch itemBatch = map['batchList'];
 
     return Scaffold(
       appBar: AppBar(
@@ -46,9 +47,16 @@ class PickItemBatchScreen extends StatelessWidget {
             onPressed: () {
               // update bin location
               pickItem.itemStorageLocation = itemBin.binLocation;
+
               // add batch list
               final batchList = pickBatchProvider.pickedItems;
-              pickItemProvider.addBatchList(pickItem, batchList);
+
+              batchList.forEach((detail) {
+                // calculate bin
+                detail.bin = pickItem.itemStorageLocation;
+              });
+              // batchList. = itemBin.binLocation;
+              pickItemReceiveProvider.addBatchList(pickItem, batchList);
 
               var guider =
                   double.tryParse(pickItem.openQty.toStringAsFixed(4)) >
@@ -99,12 +107,13 @@ class PickItemBatchScreen extends StatelessWidget {
                     label: Text('CLEAR'))
               ],
             ),
-            // BaseTitle(pickItem.itemCode),
+            BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description),
-            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTitle(pickItem.itemStorageLocation),
             BaseTextLine(
                 'Total to Pick Qty', pickItem.openQty.toStringAsFixed(4)),
             BaseTextLine('UoM', pickItem.unitMsr),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
             Row(
               children: [
                 Expanded(
@@ -123,7 +132,6 @@ class PickItemBatchScreen extends StatelessWidget {
                 ),
               ],
             ),
-            // BaseTitle('List Batch of Item'),
             Divider(),
             buildItemList(context, pickItem, itemBin),
           ],
@@ -155,7 +163,7 @@ class PickItemBatchScreen extends StatelessWidget {
                     itemBuilder: (_, index) {
                       return ChangeNotifierProvider.value(
                         value: provider.items[index],
-                        child: ItemPickBatch(provider.items[index]),
+                        child: ItemPickBatch(provider.items[index], pickItem),
                       );
                     },
                   ),
@@ -173,12 +181,10 @@ class PickItemBatchScreen extends StatelessWidget {
       scanResult: (value) {
         final item = provider.findByBatchNo(value);
 
-        // if (provider.totalShow == item.show) {
         showModalBottomSheet(
           context: context,
           builder: (_) => DialogPickBatch(item),
         );
-        // }
       },
     );
   }

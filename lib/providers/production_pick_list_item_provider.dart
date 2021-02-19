@@ -19,7 +19,6 @@ class ProductionPickListItemProvider with ChangeNotifier {
         });
         detail.pickedQty = totalBatch;
       }
-
       // calculate remaining qty
       detail.quantity = detail.openQty - detail.pickedQty;
     });
@@ -60,9 +59,18 @@ class ProductionPickListItemProvider with ChangeNotifier {
     ProductionPickListItemModel productionPickListItemModel,
     List<ProductionPickListItemBatchModel> batchList,
   ) {
-    productionPickListItemModel.batchList = batchList;
+    productionPickListItemModel.batchList.addAll(batchList);
     notifyListeners();
     print('Added Batch List: $batchList');
+  }
+
+  void addBin(
+    ProductionPickListItemModel productionPickListItemModel,
+    ProductionPickListItemBatchModel batchList,
+  ) {
+    productionPickListItemModel.batchList.add(batchList);
+    notifyListeners();
+    print('Added Bin List: $batchList');
   }
 
   void removeBatchItem(
@@ -74,9 +82,11 @@ class ProductionPickListItemProvider with ChangeNotifier {
     print('Removed Item Batch: $itemBatch');
   }
 
-  void updateQtyNBinNonBatch(ProductionPickListItemModel productionPickListItemModel, double qty, String bin) {
+  void updateQtyNBinNonBatch(
+      ProductionPickListItemModel productionPickListItemModel,
+      double qty) {
     productionPickListItemModel.pickedQty = qty;
-    productionPickListItemModel.itemStorageLocation = bin;
+    // productionPickListItemModel.itemStorageLocation = bin;
     notifyListeners();
     print('Update Qty & Bin Loc Non batch: $productionPickListItemModel');
   }
