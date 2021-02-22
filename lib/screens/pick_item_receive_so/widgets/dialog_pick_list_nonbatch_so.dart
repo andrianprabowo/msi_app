@@ -83,7 +83,7 @@ class _DialogPickListNonbatchSoState extends State<DialogPickListNonbatchSo> {
       child: RaisedButton(
         child: Text('Submit'),
         onPressed: () {
-          if (double.parse(_quantity.text) > widget.item.openQty) {
+          if (double.parse(_quantity.text) > widget.item.quantity) {
             print('Tidak boleh lebih besar dari Available Qty ');
             return showDialog<void>(
               context: context,
@@ -99,7 +99,7 @@ class _DialogPickListNonbatchSoState extends State<DialogPickListNonbatchSo> {
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
                       BaseTitleColor('Qty must be above 0'),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      BaseTitleColor('or equal to  $avlQty'),
+                      BaseTitleColor('or equal to  ${widget.item.quantity}'),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
                       SizedBox(
                         width: double.infinity,
@@ -129,8 +129,8 @@ class _DialogPickListNonbatchSoState extends State<DialogPickListNonbatchSo> {
 
           pickItemReceiveProvider.addBin(item, batchList);
 
-          Navigator.of(context).popUntil(
-              ModalRoute.withName(PickItemReceiveSoScreen.routeName));
+          Navigator.of(context)
+              .popUntil(ModalRoute.withName(PickItemReceiveSoScreen.routeName));
         },
       ),
     );

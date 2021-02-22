@@ -9,7 +9,6 @@ import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
 
-
 class DialogPickListNonbatchRtv extends StatefulWidget {
   final PickItemReceiveRtv item;
 
@@ -84,7 +83,7 @@ class _DialogPickListNonbatchRtvState extends State<DialogPickListNonbatchRtv> {
       child: RaisedButton(
         child: Text('Submit'),
         onPressed: () {
-          if (double.parse(_quantity.text) > widget.item.openQty) {
+          if (double.parse(_quantity.text) > widget.item.quantity) {
             print('Tidak boleh lebih besar dari Available Qty ');
             return showDialog<void>(
               context: context,
@@ -100,7 +99,7 @@ class _DialogPickListNonbatchRtvState extends State<DialogPickListNonbatchRtv> {
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
                       BaseTitleColor('Qty must be above 0'),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      BaseTitleColor('or equal to  $avlQty'),
+                      BaseTitleColor('or equal to  ${widget.item.quantity}'),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
                       SizedBox(
                         width: double.infinity,

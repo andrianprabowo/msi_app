@@ -89,7 +89,7 @@ class _ProductionPickListItemNonBatchDialogState
                   listen: false);
           pickItemReceiveProvider.updateQtyNBinNonBatch(
               item, double.parse(_quantity.text));
-          if (double.parse(_quantity.text) > widget.item.openQty) {
+          if (double.parse(_quantity.text) > widget.item.quantity) {
             print('Tidak boleh lebih besar dari Available Qty ');
             return showDialog<void>(
               context: context,
@@ -105,7 +105,7 @@ class _ProductionPickListItemNonBatchDialogState
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
                       BaseTitleColor('Qty must be above 0'),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      BaseTitleColor('or equal to  $avlQty'),
+                      BaseTitleColor('or equal to  ${widget.item.quantity}'),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
                       SizedBox(
                         width: double.infinity,

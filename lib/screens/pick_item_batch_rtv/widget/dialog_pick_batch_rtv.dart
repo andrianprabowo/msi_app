@@ -113,6 +113,39 @@ class _DialogPickBatchRtvState extends State<DialogPickBatchRtv> {
               },
             );
           }
+          if (double.parse(_quantity.text) > widget.item.remainQty) {
+            print('Tidak boleh ');
+            return showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.notification_important,
+                          color: Colors.red, size: 50),
+                      Divider(),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('Qty must be above 0'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('or equal to  ${widget.item.remainQty}'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
           double qty;
           try {
             qty = double.parse(_quantity.text);

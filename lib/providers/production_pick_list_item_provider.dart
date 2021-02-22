@@ -18,9 +18,16 @@ class ProductionPickListItemProvider with ChangeNotifier {
           totalBatch = totalBatch + batch.pickQty;
         });
         detail.pickedQty = totalBatch;
+        detail.quantity = detail.openQty - detail.pickedQty;
+      } else {
+        // calculate remaining qty
+        var totalBatch = 0.0;
+        detail.batchList.forEach((batch) {
+          totalBatch = totalBatch + batch.pickQty;
+        });
+        detail.pickedQty = totalBatch;
+        detail.quantity = detail.openQty - detail.pickedQty;
       }
-      // calculate remaining qty
-      detail.quantity = detail.openQty - detail.pickedQty;
     });
 
     // _items = _items.where((item) => item.quantity > 0).toList();
@@ -83,8 +90,7 @@ class ProductionPickListItemProvider with ChangeNotifier {
   }
 
   void updateQtyNBinNonBatch(
-      ProductionPickListItemModel productionPickListItemModel,
-      double qty) {
+      ProductionPickListItemModel productionPickListItemModel, double qty) {
     productionPickListItemModel.pickedQty = qty;
     // productionPickListItemModel.itemStorageLocation = bin;
     notifyListeners();

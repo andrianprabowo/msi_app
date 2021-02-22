@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 class PickItemReceiveProvider with ChangeNotifier {
   List<PickItemReceive> _items;
-  
+
   List<PickItemReceive> get items {
     _items.forEach((detail) {
       if (detail.fgBatch == "Y") {
@@ -18,9 +18,16 @@ class PickItemReceiveProvider with ChangeNotifier {
           totalBatch = totalBatch + batch.pickQty;
         });
         detail.pickedQty = totalBatch;
+        detail.quantity = detail.openQty - detail.pickedQty;
+      } else {
+        // calculate remaining qty
+        var totalBatch = 0.0;
+        detail.batchList.forEach((batch) {
+          totalBatch = totalBatch + batch.pickQty;
+        });
+        detail.pickedQty = totalBatch;
+        detail.quantity = detail.openQty - detail.pickedQty;
       }
-      // calculate remaining qty
-      detail.quantity = detail.openQty - detail.pickedQty;
     });
 
     // _items = _items.where((item) => item.quantity > 0).toList();
@@ -64,7 +71,7 @@ class PickItemReceiveProvider with ChangeNotifier {
     print('Added Batch List: $batchList');
   }
 
-void addBin(
+  void addBin(
     PickItemReceive pickItemReceive,
     PickBatch batchList,
   ) {
@@ -81,6 +88,7 @@ void addBin(
     notifyListeners();
     print('Removed Item Batch: $itemBatch');
   }
+
   void inputQtyNonBatch(PickItemReceive pickItemReceive, double qty) {
     print(pickItemReceive);
     pickItemReceive.pickedQty = qty;

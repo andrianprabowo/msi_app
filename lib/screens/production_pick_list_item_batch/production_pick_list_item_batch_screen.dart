@@ -49,6 +49,10 @@ class ProductionPickListItemBatch extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.check_box_outlined),
             onPressed: () {
+               if (productionPickListItemBatchProvider.totalPicked > pickItem.quantity) {
+                showAlertGreaterThanZero(
+                    context, pickItem.quantity.toStringAsFixed(4));
+              } else {
               // update bin location
               pickItem.itemStorageLocation = itemBin.binLocation;
               // add batch list
@@ -60,28 +64,32 @@ class ProductionPickListItemBatch extends StatelessWidget {
               });
               // batchList. = itemBin.binLocation;
               // pickItemProvider.addBatchList(pickItem, batchList);
-
-              var guider =
-                  double.tryParse(pickItem.openQty.toStringAsFixed(4)) >
-                          double.tryParse(itemBin.avlQty.toStringAsFixed(4))
-                      ? double.tryParse(itemBin.avlQty.toStringAsFixed(4))
-                      : double.tryParse(pickItem.openQty.toStringAsFixed(4));
-              if (productionPickListItemBatchProvider.totalPicked
-                      .toStringAsFixed(4) ==
-                  '0.0000') {
-                showAlertOnZero(context);
-              } else {
-                if (double.tryParse(productionPickListItemBatchProvider
-                        .totalPicked
-                        .toStringAsFixed(4)) >
-                    guider) {
-                  showAlertGreaterThanZero(context, guider.toStringAsFixed(4));
-                } else {
-                  pickItemProvider.addBatchList(pickItem, batchList);
+              pickItemProvider.addBatchList(pickItem, batchList);
                   Navigator.of(context).popUntil(
                       ModalRoute.withName(ProductionPickListItem.routeName));
-                }
-              }
+             }
+             
+              // var guider =
+              //     double.tryParse(pickItem.openQty.toStringAsFixed(4)) >
+              //             double.tryParse(itemBin.avlQty.toStringAsFixed(4))
+              //         ? double.tryParse(itemBin.avlQty.toStringAsFixed(4))
+              //         : double.tryParse(pickItem.openQty.toStringAsFixed(4));
+              // if (productionPickListItemBatchProvider.totalPicked
+              //         .toStringAsFixed(4) ==
+              //     '0.0000') {
+              //   showAlertOnZero(context);
+              // } else {
+              //   if (double.tryParse(productionPickListItemBatchProvider
+              //           .totalPicked
+              //           .toStringAsFixed(4)) >
+              //       guider) {
+              //     showAlertGreaterThanZero(context, guider.toStringAsFixed(4));
+              //   } else {
+              //     pickItemProvider.addBatchList(pickItem, batchList);
+              //     Navigator.of(context).popUntil(
+              //         ModalRoute.withName(ProductionPickListItem.routeName));
+              //   }
+              // }
 
               /* productionPickListItemBatchProvider.totalPicked
                           .toStringAsFixed(2) ==
@@ -132,7 +140,7 @@ class ProductionPickListItemBatch extends StatelessWidget {
             BaseTitle(pickItem.description + ' / ' + pickItem.unitMsr),
             BaseTitle(pickItem.itemStorageLocation),
             BaseTitle(pickItem.openQty == 0.0
-                ? 'Open Quantity : ' + pickItem.openQty.toStringAsFixed(4)
+                ? 'Open Quantity : ' + pickItem.quantity.toStringAsFixed(4)
                 : 'Open Quantity : ' + formatter.format(pickItem.openQty)),
             SizedBox(height: getProportionateScreenHeight(kMedium)),
             BaseTitle(itemBin.avlQty == 0.0

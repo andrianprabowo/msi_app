@@ -33,13 +33,12 @@ class ItemPickReceiveRtv extends StatelessWidget {
             BaseTitle(item.description),
             Divider(),
             BaseTextLine('Total To Pick', item.openQty.toStringAsFixed(4)),
-            // BaseTextLine('Remaining Qty', item.quantity.toStringAsFixed(4)),
+            BaseTextLine('Picked Qty', item.pickedQty.toStringAsFixed(4)),
+            BaseTextLine('Remaining Qty', item.quantity.toStringAsFixed(4)),
             BaseTextLine('Inventory UoM', item.unitMsr),
             BaseTextLine('Item Batch', item.fgBatch),
-            if (item.fgBatch == 'Y' )
-            buildItemBatchList(item.batchList),
-            if (item.fgBatch == 'N' )
-            buildItemBin(item.batchList),
+            if (item.fgBatch == 'Y') buildItemBatchList(item.batchList),
+            if (item.fgBatch == 'N') buildItemBin(item.batchList),
           ],
         ),
       ),

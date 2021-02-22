@@ -38,7 +38,8 @@ class ProductionPickListItemList extends StatelessWidget {
             BaseTitle(item.description),
             Divider(),
             BaseTextLine('Total To Pick', formatter.format(item.openQty)),
-            // BaseTextLine('Remaining Qty', formatter.format(item.quantity)),
+            BaseTextLine('Picked Qty', item.pickedQty.toStringAsFixed(4)),
+            BaseTextLine('Remaining Qty', formatter.format(item.quantity)),
             BaseTextLine('UOM', item.unitMsr),
             BaseTextLine('Item Batch', item.fgBatch),
             // if (item.itemStorageLocation.isNotEmpty)

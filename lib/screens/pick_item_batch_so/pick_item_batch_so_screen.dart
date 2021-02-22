@@ -44,34 +44,40 @@ class PickItemBatchSoScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.check_box_outlined),
             onPressed: () {
-              // update bin location
-              pickItem.itemStorageLocation = itemBin.binLocation;
+              if (pickBatchProvider.totalPicked > pickItem.quantity) {
+                showAlertGreaterThanZero(
+                    context, pickItem.quantity.toStringAsFixed(4));
+              } else {
+                // update bin location
+                pickItem.itemStorageLocation = itemBin.binLocation;
 
-              // add batch list
-              final batchList = pickBatchProvider.pickedItems;
+                // add batch list
+                final batchList = pickBatchProvider.pickedItems;
 
-              batchList.forEach((detail) {
-                // calculate bin
-                detail.bin = pickItem.itemStorageLocation;
-              });
-              // batchList. = itemBin.binLocation;
-              pickItemProvider.addBatchList(pickItem, batchList);
+                batchList.forEach((detail) {
+                  // calculate bin
+                  detail.bin = pickItem.itemStorageLocation;
+                });
+                // batchList. = itemBin.binLocation;
+                pickItemProvider.addBatchList(pickItem, batchList);
+                Navigator.of(context).popUntil(
+                    ModalRoute.withName(PickItemReceiveSoScreen.routeName));
+              }
+              // var guider =
+              //     double.tryParse(pickItem.openQty.toStringAsFixed(4)) >
+              //             double.tryParse(itemBin.avlQty.toStringAsFixed(4))
+              //         ? double.tryParse(itemBin.avlQty.toStringAsFixed(4))
+              //         : double.tryParse(pickItem.openQty.toStringAsFixed(4));
 
-              var guider =
-                  double.tryParse(pickItem.openQty.toStringAsFixed(4)) >
-                          double.tryParse(itemBin.avlQty.toStringAsFixed(4))
-                      ? double.tryParse(itemBin.avlQty.toStringAsFixed(4))
-                      : double.tryParse(pickItem.openQty.toStringAsFixed(4));
-
-              pickBatchProvider.totalPicked.toStringAsFixed(4) == '0.00'
-                  ? showAlertOnZero(context)
-                  : double.tryParse(pickBatchProvider.totalPicked
-                              .toStringAsFixed(4)) >
-                          guider
-                      ? showAlertGreaterThanZero(
-                          context, guider.toStringAsFixed(4))
-                      : Navigator.of(context).popUntil(ModalRoute.withName(
-                          PickItemReceiveSoScreen.routeName));
+              // pickBatchProvider.totalPicked.toStringAsFixed(4) == '0.00'
+              //     ? showAlertOnZero(context)
+              //     : double.tryParse(pickBatchProvider.totalPicked
+              //                 .toStringAsFixed(4)) >
+              //             guider
+              //         ? showAlertGreaterThanZero(
+              //             context, guider.toStringAsFixed(4))
+              //         : Navigator.of(context).popUntil(ModalRoute.withName(
+              //             PickItemReceiveSoScreen.routeName));
             },
           )
         ],
@@ -109,7 +115,7 @@ class PickItemBatchSoScreen extends StatelessWidget {
             BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description),
             BaseTitle(pickItem.itemStorageLocation),
-            BaseTextLine('SO Quantity', pickItem.openQty.toStringAsFixed(4)),
+            BaseTextLine('SO Quantity', pickItem.quantity.toStringAsFixed(4)),
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             Row(

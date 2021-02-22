@@ -66,7 +66,6 @@ class PickItemReceiveScreen extends StatelessWidget {
             BaseTitle('List Items'),
             Divider(),
             buildItemList(context, item),
-            BaseTitle('List Items'),
           ],
         ),
       ),

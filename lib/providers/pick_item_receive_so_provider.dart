@@ -19,9 +19,16 @@ class PickItemReceiveSoProvider with ChangeNotifier {
           totalBatch = totalBatch + batch.pickQty;
         });
         detail.pickedQty = totalBatch;
-      }
+        detail.quantity = detail.openQty - detail.pickedQty;
+      }else{
       // calculate remaining qty
-      detail.quantity = detail.openQty - detail.pickedQty;
+         var totalBatch = 0.0;
+        detail.batchList.forEach((batch) {
+          totalBatch = totalBatch + batch.pickQty;
+        });
+        detail.pickedQty = totalBatch;
+         detail.quantity = detail.openQty - detail.pickedQty;
+      }
     });
 
     // _items = _items.where((item) => item.quantity > 0).toList();
