@@ -25,7 +25,9 @@ class PickDetailCheck extends StatelessWidget {
           Divider(),
           BaseTextLine(
               'Total To Pick Quantity', item.openQty.toStringAsFixed(4)),
-          // BaseTextLine('Pick Quantity', item.pickedQty.toStringAsFixed(4)),
+          BaseTextLine('Pick Quantity', item.pickedQty.toStringAsFixed(4)),
+          BaseTextLine('Remaining Quantity', item.quantity.toStringAsFixed(4)),
+          BaseTextLine('Item Batch', item.fgBatch),
           BaseTextLine('UoM', item.unitMsr),
           Divider(),
           if (item.fgBatch == 'Y') buildItemBatchList(item.batchList),

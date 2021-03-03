@@ -40,7 +40,7 @@ class ProductionIssueNumber extends StatelessWidget {
           children: [
             buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTitle('List Transaction'),
+            BaseTitle('List Production Order'),
             Divider(),
             buildItemList(context, productionIssueNumberSelected),
           ],

@@ -73,9 +73,9 @@ class ProductionReceiptRMItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BaseTextLine('Doc Number', item.docNumber),
+            BaseTextLine('Pick Number', item.docNumber),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Doc Date', convertDate(item.docDate)),
+            BaseTextLine('Pick Date', convertDate(item.docDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Remarks', item.pickRemark),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

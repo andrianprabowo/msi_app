@@ -139,9 +139,12 @@ class ProductionPickListItemBatch extends StatelessWidget {
             BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description + ' / ' + pickItem.unitMsr),
             BaseTitle(pickItem.itemStorageLocation),
-            BaseTitle(pickItem.openQty == 0.0
-                ? 'Open Quantity : ' + pickItem.quantity.toStringAsFixed(4)
-                : 'Open Quantity : ' + formatter.format(pickItem.openQty)),
+            // BaseTitle(pickItem.openQty == 0.0
+            //     ? 'Total to Pick ' + pickItem.quantity.toStringAsFixed(4)
+            //     : 'Total to Pick ' + formatter.format(pickItem.openQty)),
+            BaseTextLine('Total to Pick', pickItem.quantity.toStringAsFixed(4)),
+            SizedBox(height: getProportionateScreenHeight(kMedium)),
+            BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kMedium)),
             BaseTitle(itemBin.avlQty == 0.0
                 ? 'Avl Qty Bin Loc : ' + itemBin.avlQty.toStringAsFixed(4)

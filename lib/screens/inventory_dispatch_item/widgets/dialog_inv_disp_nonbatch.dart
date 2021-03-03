@@ -37,7 +37,7 @@ class _DialogInvDispNonbatchState extends State<DialogInvDispNonbatch> {
           BaseTitle(item.description),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine(
-              'Available Quantity', widget.item.openQty.toStringAsFixed(4)),
+              'Total to Dispatch', widget.item.openQty.toStringAsFixed(4)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),

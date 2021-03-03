@@ -57,7 +57,7 @@ class ItemEnterGl extends StatelessWidget {
         await itemGlProvider.getEnterGl(header.poNumber);
         SelectDialog.showModal<EnterGl>(
           context,
-          label: "Select Bin Location",
+          label: "Select GI Sequences",
           showSearchBox: true,
           items: itemGlProvider.itemsGl,
           itemBuilder: (context, item, _) {

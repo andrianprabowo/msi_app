@@ -4,7 +4,7 @@ import 'package:msi_app/models/production_receipt_rm_item_list_model.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/production_receipt_rm_item/production_receipt_rm_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
-import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:provider/provider.dart';
 
 class ItemProdRmBin extends StatelessWidget {
@@ -39,8 +39,9 @@ class ItemProdRmBin extends StatelessWidget {
         decoration: kBoxDecoration,
         child: Column(
           children: [
-            BaseTitle(item.binLocation),
-            BaseTitle(authProvider.warehouseName),
+            BaseTextLine('Bin Location',item.binLocation),
+            BaseTextLine('Warehouse',authProvider.warehouseName),
+            // BaseTextLine('Qty','0.0000'),
           ],
         ),
       ),

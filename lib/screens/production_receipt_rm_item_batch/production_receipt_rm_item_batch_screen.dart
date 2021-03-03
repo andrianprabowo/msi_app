@@ -114,10 +114,8 @@ class ProductionReceiptRMItemBatch extends StatelessWidget {
             ),
             BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description + ' / ' + pickItem.unitMsr),
-            BaseTitle(pickItem.openQty == 0.0
-                ? 'Total to Receipt : ' + pickItem.openQty.toStringAsFixed(4)
-                : 'Total to Receipt : ' + formatter.format(pickItem.openQty)),
-            BaseTitle('UoM' + ' : ' + pickItem.unitMsr),
+            BaseTextLine('Total to Pick', pickItem.quantity.toStringAsFixed(4)),
+            BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kMedium)),
             BaseTitle('List Batch of Item'),
             Divider(),

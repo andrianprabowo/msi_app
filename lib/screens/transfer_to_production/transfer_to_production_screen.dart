@@ -26,7 +26,7 @@ class TransferToProductionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Transfer to Production'),
+        title: Text('Transfer Inter Sentul'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(kMedium),

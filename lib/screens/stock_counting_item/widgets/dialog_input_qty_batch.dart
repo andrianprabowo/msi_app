@@ -143,8 +143,9 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
 
           final provider =
               Provider.of<StockCountingBatchProvider>(context, listen: false);
+          final date = new DateTime.now();
           String dateString =
-              DateFormat().addPattern('dd/MM/yy').format(_selectedDate);
+              DateFormat().addPattern('yyyy/MM/dd').format(date);
           final qty = double.parse(_quantity.text);
 
           if (_batchNumber.text.isEmpty) {

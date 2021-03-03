@@ -56,7 +56,7 @@ class ItemBinPicklist extends StatelessWidget {
         await binProvider.getAllBinRtv();
         SelectDialog.showModal<BinRtv>(
           context,
-          label: "Select Bin Location",
+          label: "Select Staging Bin Location",
           showSearchBox: true,
           items: binProvider.itemsBins,
           itemBuilder: (context, item, _) {

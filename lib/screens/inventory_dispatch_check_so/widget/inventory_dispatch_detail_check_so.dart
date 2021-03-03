@@ -24,6 +24,7 @@ class InventoryDispatchDetailCheckSo extends StatelessWidget {
           Divider(),
           BaseTextLine('Dispatch Quantity', item.openQty.toStringAsFixed(4)),
           BaseTextLine('Pick Quantity', item.pickedQty.toStringAsFixed(4)),
+          BaseTextLine('Remaining Quantity ', item.quantity.toStringAsFixed(4)),
           BaseTextLine('UoM', item.unitMsr),
           Divider(),
           if (item.batchList.isNotEmpty) BaseTitle('Item Batch List'),

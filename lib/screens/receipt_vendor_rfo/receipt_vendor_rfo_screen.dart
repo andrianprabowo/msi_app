@@ -89,7 +89,7 @@ class ReceiptVendorRfoScreen extends StatelessWidget {
           children: [
             buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTitle('List Purchase Order'),
+            BaseTitle('List Return from Outlet'),
             Divider(),
             buildItemList(context),
           ],

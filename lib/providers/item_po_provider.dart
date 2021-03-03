@@ -24,7 +24,7 @@ class ItemPoProvider with ChangeNotifier {
       detail.remainingQty = detail.openQty - detail.quantity;
     });
 
-    _items = _items.where((item) => item.remainingQty > 0).toList();
+    // _items = _items.where((item) => item.remainingQty > 0).toList();
 
     return _items;
   }

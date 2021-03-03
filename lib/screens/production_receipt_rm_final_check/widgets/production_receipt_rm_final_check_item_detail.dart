@@ -34,6 +34,12 @@ class ProductionReceiptRMFinalCheckItemDetail extends StatelessWidget {
               item.pickedQty == 0.0
                   ? item.pickedQty.toStringAsFixed(4)
                   : formatter.format(item.pickedQty)),
+          BaseTextLine(
+              'Remaining Quantity',
+              item.quantity == 0.0
+                  ? item.quantity.toStringAsFixed(4)
+                  : formatter.format(item.quantity)),
+          BaseTextLine('Item Batch', item.fgBatch),
           BaseTextLine('UOM', item.unitMsr),
           BaseTextLine('Bin Location', item.itemStorageLocation),
           Divider(),

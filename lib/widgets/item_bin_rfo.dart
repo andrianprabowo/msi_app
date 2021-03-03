@@ -57,7 +57,7 @@ class ItemBinRfo extends StatelessWidget {
         await binProvidero.getAllBinRtvo();
         SelectDialog.showModal<BinRtv>(
           context,
-          label: "Select Bin Location",
+          label: "Select Staging Bin Location",
           showSearchBox: true,
           items: binProvidero.itemsBins,
           itemBuilder: (context, item, _) {

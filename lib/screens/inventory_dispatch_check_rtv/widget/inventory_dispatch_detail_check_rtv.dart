@@ -23,8 +23,10 @@ class InventoryDispatchDetailCheckRtv extends StatelessWidget {
           BaseTitle(item.itemCode),
           BaseTitle(item.description),
           Divider(),
-          BaseTextLine('Total to Dispatch Quantity', item.openQty.toStringAsFixed(4)),
+          BaseTextLine(
+              'Total to Dispatch Quantity', item.openQty.toStringAsFixed(4)),
           BaseTextLine('Pick Quantity', item.pickedQty.toStringAsFixed(4)),
+          BaseTextLine('Remaining Quantity ', item.quantity.toStringAsFixed(4)),
           BaseTextLine('UoM', item.unitMsr),
           Divider(),
           if (item.batchList.isNotEmpty) BaseTitle('Item Batch List'),

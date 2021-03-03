@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/screens/login/widgets/login_form.dart';
+import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:msi_app/widgets/base_title.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = '/login';
@@ -22,6 +24,8 @@ class LoginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 LoginForm(),
+                SizedBox(height: getProportionateScreenHeight(kLarge)),
+                BaseTitle("Ver 1.0")
               ],
             ),
           ),

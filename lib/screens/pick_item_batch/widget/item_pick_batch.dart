@@ -16,10 +16,18 @@ class ItemPickBatch extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (_) => DialogPickBatch(item),
-        );
+        // final date = '2021-02-24';
+        final date = new DateTime.now();
+
+        if (item.expiredDate.isAfter(date)) {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => DialogPickBatch(item),
+          );
+        } else {
+          print('expired ' + item.expiredDate.toString());
+          print(date);
+        }
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),

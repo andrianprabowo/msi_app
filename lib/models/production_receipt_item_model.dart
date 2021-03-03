@@ -10,6 +10,7 @@ class ProductionReceiptItemModel with ChangeNotifier {
   double quantity;
   double quantityReject;
   double remainingQty;
+  int defDayExpired;
   final String uom;
   final String docNum;
   final String fgBatch;
@@ -21,6 +22,7 @@ class ProductionReceiptItemModel with ChangeNotifier {
     this.openQty,
     this.quantity,
     this.quantityReject,
+    this.defDayExpired,
     this.remainingQty,
     this.uom,
     this.docNum,
@@ -61,6 +63,7 @@ class ProductionReceiptItemModel with ChangeNotifier {
       'materialDesc': description,
       'grfgQuantity': quantity,
       'qrfgRejectQty': quantityReject,
+      'defDayExpired': defDayExpired,
       'uom': uom,
       'itemStorageLocation': itemStorageLocation,
       'listBatches': batchList?.map((x) => x?.toMap())?.toList(),
@@ -77,6 +80,7 @@ class ProductionReceiptItemModel with ChangeNotifier {
       quantity: 0.0,
       quantityReject: 0.0,
       remainingQty: map['remainingQty'] ?? 0.0,
+      defDayExpired: map['defDayExpired'] ?? 0.0,
       uom: map['unitMsr'] ?? '',
       docNum: map['docNum'] ?? '',
       fgBatch: map['fgBatch'] ?? '',
@@ -92,6 +96,6 @@ class ProductionReceiptItemModel with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ProductionReceiptItemModel(itemStorageLocation: $itemStorageLocation, itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, quantityReject: $quantityReject, remainingQty: $remainingQty, uom: $uom, docNum: $docNum, fgBatch: $fgBatch, batchList: $batchList)';
+    return 'ProductionReceiptItemModel(itemStorageLocation: $itemStorageLocation, itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, quantityReject: $quantityReject, remainingQty: $remainingQty, uom: $uom, docNum: $docNum, fgBatch: $fgBatch, batchList: $batchList, defDayExpired: $defDayExpired)';
   }
 }

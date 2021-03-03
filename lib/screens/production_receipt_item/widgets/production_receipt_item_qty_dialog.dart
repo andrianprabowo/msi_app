@@ -89,6 +89,8 @@ class _ProductionReceiptItemQtyDialogState
   }
 
   Widget buildDatePicker(context) {
+    final initial =
+        DateTime.now().add(new Duration(days: widget.item.defDayExpired));
     return Row(
       children: [
         Expanded(
@@ -106,16 +108,19 @@ class _ProductionReceiptItemQtyDialogState
                 ),
               ),
             ),
-            child: Text(convertDate(_selectedDate)),
+            child: Text(convertDate(initial)),
           ),
         ),
         IconButton(
           icon: Icon(Icons.event),
           onPressed: () async {
             final maxYear = DateTime.now().year + 5;
+            print('initital $initial');
+            print('hari ${widget.item.defDayExpired}');
             final pickedDate = await showDatePicker(
               context: context,
-              initialDate: DateTime.now(),
+              // initialDate: DateTime.now(),
+              initialDate: initial,
               firstDate: DateTime.now(),
               lastDate: DateTime(maxYear),
             );
@@ -246,8 +251,9 @@ class _ProductionReceiptItemQtyDialogState
             final itemPoProvider = Provider.of<ProductionReceiptItemProvider>(
                 context,
                 listen: false);
+            final date = new DateTime.now();
             String dateString =
-                DateFormat().addPattern('dd/MM/yy').format(_selectedDate);
+                DateFormat().addPattern('yyyy/MM/dd').format(date);
             if (_batchNumber.text.isEmpty) {
               return showDialog<void>(
                 context: context,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/item_bin_rfo.dart';
 import 'package:msi_app/models/storage_bin_item_rfo.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/item_batch_rfo_provider.dart';
 import 'package:msi_app/providers/item_bin_rfo_provider.dart';
 import 'package:msi_app/screens/staging_item_rfo/staging_item_rfo_screen.dart';
@@ -16,6 +17,7 @@ class ItemStorageBinItemRfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InkWell(
       onTap: () {
         final itemBinProvider =
@@ -40,7 +42,7 @@ class ItemStorageBinItemRfo extends StatelessWidget {
         child: Column(
           children: [
             BaseTextLine('Bin Location', storageBinItem.binCode),
-            BaseTextLine('Warehouse', storageBinItem.whsCode),
+            BaseTextLine('Warehouse', authProvider.warehouseName),
           ],
         ),
       ),

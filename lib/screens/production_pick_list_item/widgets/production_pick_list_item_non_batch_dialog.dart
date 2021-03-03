@@ -6,6 +6,7 @@ import 'package:msi_app/providers/production_pick_list_item_provider.dart';
 import 'package:msi_app/screens/production_pick_list_item/production_pick_list_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
@@ -41,12 +42,15 @@ class _ProductionPickListItemNonBatchDialogState
         children: [
           BaseTitle('Input Quantity'),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTitle(item.itemStorageLocation),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(widget.item.itemCode),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(widget.item.description),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          // BaseTextLine('Available Quantity', openQty),
-          // SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTextLine(
+              'Total to Pick Qty', widget.item.quantity.toStringAsFixed(4)),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           // if (_quantity.text != '' &&
@@ -126,7 +130,8 @@ class _ProductionPickListItemNonBatchDialogState
           //     .pushNamed(ProductionPickListBin.routeName, arguments: item);
           // //  Navigator.of(context).pop();
           final prodItemReceiveProvider =
-              Provider.of<ProductionPickListItemProvider>(context, listen: false);
+              Provider.of<ProductionPickListItemProvider>(context,
+                  listen: false);
           prodItemReceiveProvider.updateQtyNBinNonBatch(
             item,
             double.parse(_quantity.text),
@@ -138,8 +143,8 @@ class _ProductionPickListItemNonBatchDialogState
 
           pickItemReceiveProvider.addBin(item, batchList);
 
-          Navigator.of(context).popUntil(
-              ModalRoute.withName(ProductionPickListItem.routeName));
+          Navigator.of(context)
+              .popUntil(ModalRoute.withName(ProductionPickListItem.routeName));
         },
       ),
     );

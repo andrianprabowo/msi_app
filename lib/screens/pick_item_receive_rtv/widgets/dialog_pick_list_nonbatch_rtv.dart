@@ -5,6 +5,7 @@ import 'package:msi_app/providers/pick_item_receive_rtv_provider.dart';
 import 'package:msi_app/screens/pick_item_receive_rtv/pick_item_receive_rtv_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
@@ -35,12 +36,14 @@ class _DialogPickListNonbatchRtvState extends State<DialogPickListNonbatchRtv> {
         children: [
           BaseTitle('Input Quantity'),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTitle(item.itemStorageLocation),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(item.itemCode),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(item.description),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          // BaseTextLine(
-          //     'Available Quantity', widget.item.openQty.toStringAsFixed(4)),
+          BaseTextLine(
+              'Total to Pick Qty', widget.item.quantity.toStringAsFixed(4)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),

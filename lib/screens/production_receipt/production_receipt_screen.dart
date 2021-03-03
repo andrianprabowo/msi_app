@@ -89,7 +89,7 @@ class ProductionReceipt extends StatelessWidget {
           children: [
             buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTitle('List Purchase Order'),
+            BaseTitle('List Production Order'),
             Divider(),
             buildItemList(context),
           ],

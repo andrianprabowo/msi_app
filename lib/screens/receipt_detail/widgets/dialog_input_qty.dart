@@ -190,8 +190,9 @@ class _DialogInputQtyState extends State<DialogInputQty> {
           } else {
             final itemPoProvider =
                 Provider.of<ItemPoProvider>(context, listen: false);
+            final date = new DateTime.now();
             String dateString =
-                DateFormat().addPattern('dd/MM/yy').format(_selectedDate);
+                DateFormat().addPattern('yyyy/MM/dd').format(date);
             if (_batchNumber.text.isEmpty) {
               return showDialog<void>(
                 context: context,
