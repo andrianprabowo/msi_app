@@ -16,7 +16,8 @@ class BinProductionReceiptProvider extends ChangeNotifier {
   Future<void> getAllBinRtv() async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
 
-    final url = '$kBaseUrl/api/getbinstaging/whscode=$warehouseId';
+    final url = '$kBaseUrl/api/getbinstagingFG/whscode=$warehouseId';
+    // final url = '$kBaseUrl/api/getbinstaging/whscode=$warehouseId';
 
     try {
       final response = await http.get(url);

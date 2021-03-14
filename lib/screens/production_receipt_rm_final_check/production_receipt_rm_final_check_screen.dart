@@ -14,6 +14,7 @@ class ProductionReceiptRMFinalCheck extends StatelessWidget {
   static const routeName = '/production_receipt_rm_final_check';
 
   void postData(BuildContext context) {
+    int a = 1;
     showDialog(
       context: context,
       child: AlertDialog(
@@ -27,27 +28,33 @@ class ProductionReceiptRMFinalCheck extends StatelessWidget {
           FlatButton(
             child: Text('OK'),
             onPressed: () async {
-              final provider = Provider.of<ProductionReceiptRMNumberListProvider>(
-                  context,
-                  listen: false);
-              try {
-                final response =
-                    await provider.createInventoryDispatch(context);
-                final docId = response['id'];
-                Navigator.of(context).pop();
-                await showSuccessDialog(context, docId);
-              } catch (error) {
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Row(
-                      children: [
-                        Icon(Icons.error_outline, color: Colors.red),
-                        SizedBox(width: getProportionateScreenWidth(kLarge)),
-                        Text(error.toString()),
-                      ],
+              if (a == 1) {
+                a = 2;
+                print("object");
+                final provider =
+                    Provider.of<ProductionReceiptRMNumberListProvider>(context,
+                        listen: false);
+                try {
+                  final response =
+                      await provider.createInventoryDispatch(context);
+                  final docId = response['id'];
+                  Navigator.of(context).pop();
+                  await showSuccessDialog(context, docId);
+                } catch (error) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          Icon(Icons.error_outline, color: Colors.red),
+                          SizedBox(width: getProportionateScreenWidth(kLarge)),
+                          Text(error.toString()),
+                        ],
+                      ),
                     ),
-                  ),
-                );
+                  );
+                }
+              } else {
+                print("xxx");
               }
             },
           ),
@@ -99,8 +106,8 @@ class ProductionReceiptRMFinalCheck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider =
-        Provider.of<ProductionReceiptRMNumberListProvider>(context, listen: false);
+    final provider = Provider.of<ProductionReceiptRMNumberListProvider>(context,
+        listen: false);
     final item = provider.selected;
     return Scaffold(
       key: globalKey,
@@ -156,8 +163,8 @@ class ProductionReceiptRMFinalCheck extends StatelessWidget {
   }
 
   Widget buildInputScan(BuildContext context) {
-    final provider =
-        Provider.of<ProductionReceiptRMNumberListProvider>(context, listen: false);
+    final provider = Provider.of<ProductionReceiptRMNumberListProvider>(context,
+        listen: false);
     return InputScan(
       label: 'Storage Location',
       hint: 'Input or scan Storage Location',

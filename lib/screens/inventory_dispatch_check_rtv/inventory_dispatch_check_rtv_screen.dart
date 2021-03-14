@@ -14,6 +14,7 @@ class InventoryDispatchCheckRtvScreen extends StatelessWidget {
   static const routeName = '/inventory_dispatch_check_rtv';
 
   void postData(BuildContext context) {
+    int a = 1;
     showDialog(
       context: context,
       child: AlertDialog(
@@ -27,27 +28,33 @@ class InventoryDispatchCheckRtvScreen extends StatelessWidget {
           FlatButton(
             child: Text('OK'),
             onPressed: () async {
-              final provider = Provider.of<InventoryDispatchDetailRtvProvider>(
-                  context,
-                  listen: false);
-              try {
-                final response =
-                    await provider.createInventoryDispatch(context);
-                final docId = response['id'];
-                Navigator.of(context).pop();
-                await showSuccessDialog(context, docId);
-              } catch (error) {
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Row(
-                      children: [
-                        Icon(Icons.error_outline, color: Colors.red),
-                        SizedBox(width: getProportionateScreenWidth(kLarge)),
-                        Text(error.toString()),
-                      ],
+              if (a == 1) {
+                a = 2;
+                print("object");
+                final provider =
+                    Provider.of<InventoryDispatchDetailRtvProvider>(context,
+                        listen: false);
+                try {
+                  final response =
+                      await provider.createInventoryDispatch(context);
+                  final docId = response['id'];
+                  Navigator.of(context).pop();
+                  await showSuccessDialog(context, docId);
+                } catch (error) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          Icon(Icons.error_outline, color: Colors.red),
+                          SizedBox(width: getProportionateScreenWidth(kLarge)),
+                          Text(error.toString()),
+                        ],
+                      ),
                     ),
-                  ),
-                );
+                  );
+                }
+              } else {
+                print("xxx");
               }
             },
           ),
@@ -86,7 +93,8 @@ class InventoryDispatchCheckRtvScreen extends StatelessWidget {
                   child: Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                        InventoryDispatchHeaderRtvScreen.routeName, (route) => false);
+                        InventoryDispatchHeaderRtvScreen.routeName,
+                        (route) => false);
                   },
                 ),
               ),

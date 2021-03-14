@@ -13,6 +13,7 @@ class ProductionIssueFinalCheck extends StatelessWidget {
   static const routeName = '/production_issue_final_check';
 
   void postData(BuildContext context) {
+    int a = 1;
     showDialog(
       context: context,
       child: AlertDialog(
@@ -26,25 +27,31 @@ class ProductionIssueFinalCheck extends StatelessWidget {
           FlatButton(
             child: Text('OK'),
             onPressed: () async {
-              final provider =
-                  Provider.of<ProductionIssueProvider>(context, listen: false);
-              try {
-                final response = await provider.createProductionIssue();
-                final docId = response['id'];
-                Navigator.of(context).pop();
-                await showSuccessDialog(context, docId);
-              } catch (error) {
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Row(
-                      children: [
-                        Icon(Icons.error_outline, color: Colors.red),
-                        SizedBox(width: getProportionateScreenWidth(kLarge)),
-                        Text(error.toStringAsFixed(4)),
-                      ],
+              if (a == 1) {
+                a = 2;
+                print("object");
+                final provider = Provider.of<ProductionIssueProvider>(context,
+                    listen: false);
+                try {
+                  final response = await provider.createProductionIssue();
+                  final docId = response['id'];
+                  Navigator.of(context).pop();
+                  await showSuccessDialog(context, docId);
+                } catch (error) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          Icon(Icons.error_outline, color: Colors.red),
+                          SizedBox(width: getProportionateScreenWidth(kLarge)),
+                          Text(error.toStringAsFixed(4)),
+                        ],
+                      ),
                     ),
-                  ),
-                );
+                  );
+                }
+              } else {
+                print("xxx");
               }
             },
           ),
@@ -96,7 +103,8 @@ class ProductionIssueFinalCheck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProductionIssueProvider>(context, listen: false);
+    final provider =
+        Provider.of<ProductionIssueProvider>(context, listen: false);
     final item = provider.selected;
     return Scaffold(
       key: globalKey,

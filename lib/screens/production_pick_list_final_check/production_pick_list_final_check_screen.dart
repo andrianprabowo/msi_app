@@ -101,6 +101,7 @@ class ProductionPickListFinalCheck extends StatelessWidget {
   }
 
   void postData(BuildContext context) {
+    int a = 1;
     showDialog(
       context: context,
       child: AlertDialog(
@@ -114,25 +115,32 @@ class ProductionPickListFinalCheck extends StatelessWidget {
           FlatButton(
             child: Text('OK'),
             onPressed: () async {
-              final provider = Provider.of<ProductionPickListProvider>(context,
-                  listen: false);
-              try {
-                final response = await provider.createProductionPickList();
-                final docId = response['id'];
-                Navigator.of(context).pop();
-                await showSuccessDialog(context, docId);
-              } catch (error) {
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Row(
-                      children: [
-                        Icon(Icons.error_outline, color: Colors.red),
-                        SizedBox(width: getProportionateScreenWidth(kLarge)),
-                        Text(error.toString()),
-                      ],
+              if (a == 1) {
+                a = 2;
+                print("object");
+                final provider = Provider.of<ProductionPickListProvider>(
+                    context,
+                    listen: false);
+                try {
+                  final response = await provider.createProductionPickList();
+                  final docId = response['id'];
+                  Navigator.of(context).pop();
+                  await showSuccessDialog(context, docId);
+                } catch (error) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          Icon(Icons.error_outline, color: Colors.red),
+                          SizedBox(width: getProportionateScreenWidth(kLarge)),
+                          Text(error.toString()),
+                        ],
+                      ),
                     ),
-                  ),
-                );
+                  );
+                }
+              } else {
+                print("xxx");
               }
             },
           ),
