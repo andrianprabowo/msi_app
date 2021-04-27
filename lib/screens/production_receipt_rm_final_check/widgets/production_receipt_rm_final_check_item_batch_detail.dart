@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_batch_list_model.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
 
 class ProductionReceiptRMFinalCheckItemBatchDetail extends StatelessWidget {
   final ProductionReceiptRMItemListBatchListModel item;
@@ -18,6 +19,8 @@ class ProductionReceiptRMFinalCheckItemBatchDetail extends StatelessWidget {
       decoration: kBoxDecoration,
       child: Column(
         children: [
+          
+          BaseTitle(item.bin),
           BaseTextLine('Batch Number', item.batchNo),
           BaseTextLine('Expired Date', convertDate(item.expiredDate)),
           BaseTextLine('UOM', item.uom),

@@ -5,6 +5,7 @@ import 'package:msi_app/models/production_receipt_rm_item_list_model.dart';
 import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title.dart';
 import 'package:provider/provider.dart';
 
 class ProductionReceiptRMItemBatchBox extends StatelessWidget {
@@ -33,6 +34,7 @@ class ProductionReceiptRMItemBatchBox extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
+                BaseTitle(batch.bin),
                 BaseTextLine('Batch Number', batch.batchNo),
                 BaseTextLine('Expired Date', convertDate(batch.expiredDate)),
                 BaseTextLine('UOM', batch.uom),

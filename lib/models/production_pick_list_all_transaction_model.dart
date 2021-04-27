@@ -7,12 +7,14 @@ class ProductionPickListAllTransactionModel with ChangeNotifier {
   final String srno;
   final String logMessage;
   final int status;
+  final int picklistSapnumber;
   final DateTime docDate;
   ProductionPickListAllTransactionModel({
-    this.pickListNo, 
-    this.srno, 
-    this.status, 
-    this.logMessage, 
+    this.pickListNo,
+    this.srno,
+    this.status,
+    this.picklistSapnumber,
+    this.logMessage,
     this.docDate,
   });
 
@@ -42,7 +44,8 @@ class ProductionPickListAllTransactionModel with ChangeNotifier {
     };
   }
 
-  factory ProductionPickListAllTransactionModel.fromMap(Map<String, dynamic> map) {
+  factory ProductionPickListAllTransactionModel.fromMap(
+      Map<String, dynamic> map) {
     if (map == null) return null;
 
     return ProductionPickListAllTransactionModel(
@@ -50,6 +53,7 @@ class ProductionPickListAllTransactionModel with ChangeNotifier {
       srno: map['srno'] ?? '',
       docDate: DateTime.parse(map['docDate']),
       status: map['status'] ?? '3',
+      picklistSapnumber: map['picklistSapnumber'] ?? 0,
       logMessage: map['logMessage'] ?? '',
     );
   }

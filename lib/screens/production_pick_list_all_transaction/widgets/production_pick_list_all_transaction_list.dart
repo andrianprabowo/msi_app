@@ -43,6 +43,7 @@ class ProductionPickListAllTransactionList extends StatelessWidget {
               child: Column(
                 children: [
                   BaseTextLine('Pick List No', item.pickListNo),
+                  BaseTextLine('Pick List Sap No ', item.picklistSapnumber.toString()),
                   BaseTextLine('SR No', item.srno),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
                   BaseTitle(item.logMessage),

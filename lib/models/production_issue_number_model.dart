@@ -7,12 +7,20 @@ class ProductionIssueNumberModel with ChangeNotifier {
   final DateTime pickDate;
   final String pickRemark;
   final String plant;
+  final String productCode;
+  final String productName;
+  final String uom;
+  final double quantity;
   final String plantName;
   ProductionIssueNumberModel({
     this.pickNumber,
     this.pickDate,
     this.pickRemark,
     this.plant,
+    this.productCode,
+    this.productName,
+    this.uom,
+    this.quantity,
     this.plantName,
   });
 
@@ -34,6 +42,10 @@ class ProductionIssueNumberModel with ChangeNotifier {
       pickDate: DateTime.parse(map['docDate']),
       pickRemark: map['pickRemark'] ?? '',
       plant: map['cardCode'] ?? '',
+      productCode: map['itemFgCode'] ?? '',
+      productName: map['itemFgName'] ?? '',
+      uom: map['uom'] ?? '',
+      quantity: map['quantity'] ?? '',
       plantName: map['cardName'] ?? '',
     );
   }
@@ -45,6 +57,6 @@ class ProductionIssueNumberModel with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ProductionIssueNumberModel(pickNumber: $pickNumber, docDate: $pickDate, pickRemark: $pickRemark, plant: $plant, plantName: $plantName)';
+    return 'ProductionIssueNumberModel(productCode: $productCode,productName: $productName,uom: $uom,quantity: $quantity,pickNumber: $pickNumber, docDate: $pickDate, pickRemark: $pickRemark, plant: $plant, plantName: $plantName)';
   }
 }

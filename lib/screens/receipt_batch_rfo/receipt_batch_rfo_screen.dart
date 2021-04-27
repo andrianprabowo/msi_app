@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_purchase_order_rfo.dart';
 import 'package:msi_app/providers/item_po_provider_rfo.dart';
 import 'package:msi_app/providers/receipt_batch_rfo_provider.dart';
 import 'package:msi_app/screens/receipt_batch_rfo/widgets/dialog_receipt_batch_rfo.dart';
+import 'package:msi_app/screens/receipt_batch_rfo/widgets/expired_dialog.dart';
 import 'package:msi_app/screens/receipt_batch_rfo/widgets/item_batch_receipt_rfo.dart';
 import 'package:msi_app/screens/receipt_detail_rfo/receipt_detail_rfo_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -30,12 +32,13 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final itemBatchProvider =
         Provider.of<ReceiptBatchRfoProvider>(context, listen: false);
     final itemProvider = Provider.of<ItemPoRfoProvider>(context, listen: false);
 
     ItemPurchaseOrderRfo item = ModalRoute.of(context).settings.arguments;
-    final avlQty = item.openQty.toStringAsFixed(4);
+    final avlQty = formatter.format(item.openQty);
 
     return Scaffold(
       appBar: AppBar(
@@ -107,7 +110,7 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
                   return Expanded(
                     child: BaseTextLine(
                       'Total Picked',
-                      provider.totalPicked.toStringAsFixed(4),
+                      formatter.format(provider.totalPicked),
                     ),
                   );
                 }),
@@ -123,7 +126,10 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
             ),
             BaseTitle(item.itemCode),
             BaseTitle(item.description),
-            BaseTextLine('Available Qty', item.openQty.toStringAsFixed(4)),
+            BaseTextLine('Available Qty', 
+                      item.openQty == 0.0
+                          ? item.openQty.toStringAsFixed(4)
+                          : formatter.format(item.openQty)),
             BaseTextLine('Uom', item.uom),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),
@@ -172,10 +178,23 @@ class ReceiptBatchRfoScreen extends StatelessWidget {
       hint: 'Input or scan Batch Number',
       scanResult: (value) {
         final item = provider.findByBatchNo(value);
-        showModalBottomSheet(
-          context: context,
-          builder: (_) => DialogReceiptBatchRfo(item),
-        );
+        final date = new DateTime.now();
+
+        if (item.expiredDate.isAfter(date)) {
+          print("sssss${item.expiredDate}.");
+          print("zzz$date.");
+
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => DialogReceiptBatchRfo(item),
+          );
+        } else {
+          print("object${item.expiredDate}.");
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => ExpiredDialogReceipt(item),
+          );
+        }
       },
     );
   }

@@ -6,11 +6,13 @@ class PutBatchRfo with ChangeNotifier {
   final String batchNo;
   final double availableQty;
   final String uom;
+  String bin;
   double putQty;
   final DateTime expiredDate;
   PutBatchRfo({
     this.batchNo,
     this.availableQty,
+    this.bin,
     this.uom,
     this.putQty,
     this.expiredDate,
@@ -18,6 +20,7 @@ class PutBatchRfo with ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     return {
+      'itemStorageLocation': bin,
       'batchNo': batchNo,
       'batchQuantity': putQty,
       'expDate': expiredDate?.toIso8601String(),
@@ -30,6 +33,7 @@ class PutBatchRfo with ChangeNotifier {
     return PutBatchRfo(
       batchNo: map['batchNo'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
+      bin: map['itemStorageLocation'] ?? '',
       uom: map['uom'] ?? '',
       putQty: map['putqty'] ?? 0.0,
       expiredDate: DateTime.parse(map['expDate']),
@@ -43,5 +47,5 @@ class PutBatchRfo with ChangeNotifier {
 
   @override
   String toString() =>
-      'PutBatchRfo(batchNo: $batchNo, availableQty: $availableQty,putQty: $putQty,uom: $uom, expiredDate: $expiredDate)';
+      'PutBatchRfo(batchNo: $batchNo,bin: $bin, availableQty: $availableQty,putQty: $putQty,uom: $uom, expiredDate: $expiredDate)';
 }

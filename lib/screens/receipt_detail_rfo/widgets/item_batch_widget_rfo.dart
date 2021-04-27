@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_batch_rfo.dart';
 import 'package:msi_app/models/item_purchase_order_rfo.dart';
 import 'package:msi_app/providers/item_po_provider_rfo.dart';
@@ -14,6 +15,7 @@ class ItemBatchWidgetRfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final provider = Provider.of<ItemPoRfoProvider>(context, listen: false);
     return Container(
       margin: const EdgeInsets.all(kTiny),
@@ -32,9 +34,12 @@ class ItemBatchWidgetRfo extends StatelessWidget {
               children: [
                 BaseTextLine('Batch Number', item.batchNo),
                 BaseTextLine('Expired Date', convertDate(item.expiredDate)),
-                BaseTextLine('Quantity', item.putQty.toStringAsFixed(4)),
+                BaseTextLine(
+                    'Quantity',
+                    item.putQty == 0.0
+                        ? item.putQty.toStringAsFixed(4)
+                        : formatter.format(item.putQty)),
                 BaseTextLine('Uom', item.uom),
-
               ],
             ),
           ),

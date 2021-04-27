@@ -30,6 +30,7 @@ class ItemBinRfo with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'materialNo': itemCode,
+      'fgBatch': fgBatch,
       'materialDesc': itemName,
       'itemStorageLocation': binCodeDestination,
       'grQuantity': putQty,

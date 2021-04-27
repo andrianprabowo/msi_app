@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin.dart';
+import 'package:msi_app/models/put_batch.dart';
 import 'package:msi_app/providers/item_bin_provider.dart';
-import 'package:msi_app/screens/storage_bin_item/storage_bin_item_screen.dart';
+import 'package:msi_app/screens/staging_item/staging_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -27,17 +29,25 @@ class _DialogPutAwayNonbatchState extends State<DialogPutAwayNonbatch> {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return Container(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          BaseTitle('Input Quantity'),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTitle(item.binCodeDestination),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(item.itemCode),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(item.itemName),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('Available Quantity',
-              widget.item.availableQty.toStringAsFixed(4)),
+          BaseTextLine(
+              'Available Quantity',
+              widget.item.remainingQty == 0.0
+                  ? widget.item.remainingQty.toStringAsFixed(4)
+                  : formatter.format(widget.item.remainingQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -48,7 +58,8 @@ class _DialogPutAwayNonbatchState extends State<DialogPutAwayNonbatch> {
           //     _quantity.text == '0')
           //   buildButtonNotif(context, widget.item.availableQty.toString())
           // else
-            buildButtonSubmit(context, widget.item.availableQty.toStringAsFixed(4)),
+          buildButtonSubmit(
+              context, widget.item.availableQty.toStringAsFixed(4)),
         ],
       ),
     );
@@ -89,36 +100,36 @@ class _DialogPutAwayNonbatchState extends State<DialogPutAwayNonbatch> {
         onPressed: () {
           if (double.parse(_quantity.text) > widget.item.availableQty) {
             print('Tidak boleh lebih besar dari Available Qty ');
-           return showDialog<void>(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.notification_important,
-                            color: Colors.red, size: 50),
-                        Divider(),
-                        SizedBox(height: getProportionateScreenHeight(kLarge)),
-                        BaseTitleColor('Qty must be above 0'),
-                        SizedBox(height: getProportionateScreenHeight(kLarge)),
-                        BaseTitleColor('or equal to  $avlQty'),
-                        SizedBox(height: getProportionateScreenHeight(kLarge)),
-                        SizedBox(
-                          width: double.infinity,
-                          child: RaisedButton(
-                            child: Text('OK'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
+            return showDialog<void>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.notification_important,
+                          color: Colors.red, size: 50),
+                      Divider(),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('Qty must be above 0'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('or equal to  $avlQty'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                         ),
-                      ],
-                    ),
-                  );
-                },
-              );
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
           }
           final itemBinProvider =
               Provider.of<ItemBinProvider>(context, listen: false);
@@ -126,10 +137,15 @@ class _DialogPutAwayNonbatchState extends State<DialogPutAwayNonbatch> {
             item,
             double.parse(_quantity.text),
           );
-          Navigator.of(context).pushNamed(
-            StorageBinItemScreen.routeName,
-            arguments: item,
-          );
+          // Navigator.of(context).pushNamed(Modal
+          //   StorageBinItemScreen.routeName,
+          //   arguments: item,
+          // );
+          final batchList =
+              PutBatch(putQty: item.putQty, bin: item.binCodeDestination);
+          itemBinProvider.addBin(item, batchList);
+          Navigator.of(context)
+              .popUntil(ModalRoute.withName(StagingItemScreen.routeName));
         },
       ),
     );

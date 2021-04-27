@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin_rfo.dart';
+import 'package:msi_app/models/put_batch_rfo.dart';
 import 'package:msi_app/providers/item_bin_rfo_provider.dart';
-import 'package:msi_app/screens/storage_bin_item_rfo/storage_bin_item_rfo_screen.dart';
+import 'package:msi_app/screens/staging_item_rfo/staging_item_rfo_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -28,17 +30,24 @@ class _DialogPutAwayNonbatchRfoState extends State<DialogPutAwayNonbatchRfo> {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return Container(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          BaseTitle('Input Quantity'),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTitle(item.binCodeDestination),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(item.itemCode),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(item.itemName),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Available Quantity',
-              widget.item.availableQty.toStringAsFixed(4)),
+                    widget.item.remainingQty == 0.0
+                        ? widget.item.remainingQty.toStringAsFixed(4)
+                        : formatter.format(widget.item.remainingQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -127,10 +136,15 @@ class _DialogPutAwayNonbatchRfoState extends State<DialogPutAwayNonbatchRfo> {
             item,
             double.parse(_quantity.text),
           );
-          Navigator.of(context).pushNamed(
-            StorageBinItemRfoScreen.routeName,
-            arguments: item,
-          );
+          // Navigator.of(context).pushNamed(
+          //   StorageBinItemRfoScreen.routeName,
+          //   arguments: item,
+          // );
+          final batchList =
+              PutBatchRfo(putQty: item.putQty, bin: item.binCodeDestination);
+          itemBinProvider.addBin(item, batchList);
+          Navigator.of(context)
+              .popUntil(ModalRoute.withName(StagingItemRfoScreen.routeName));
         },
       ),
     );

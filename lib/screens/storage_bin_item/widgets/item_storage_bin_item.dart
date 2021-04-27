@@ -5,6 +5,7 @@ import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/item_batch_provider.dart';
 import 'package:msi_app/providers/item_bin_provider.dart';
 import 'package:msi_app/screens/staging_item/staging_item_screen.dart';
+import 'package:msi_app/screens/staging_item/widgets/dialog_put_away_nonbatch.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:provider/provider.dart';
@@ -29,11 +30,27 @@ class ItemStorageBinItem extends StatelessWidget {
         // add batch list
         if (itemBin.fgBatch == "Y") {
           final batchList = itemBatchProvider.pickedItems;
+          batchList.forEach((detail) {
+            // calculate bin
+            detail.bin = storageBinItem.binCode;
+          });
           itemBinProvider.addBatchList(itemBin, batchList);
-        }
+          Navigator.of(context)
+              .popUntil(ModalRoute.withName(StagingItemScreen.routeName));
+        } else {
+          // final select = itemBatchProvider.pickedItems;
 
-        Navigator.of(context)
-            .popUntil(ModalRoute.withName(StagingItemScreen.routeName));
+          // final batchListq = itemBatchProvider.pickedItems;
+          // itemBinProvider.inputQtyNonBatch(itemBin, itemBin.putQty);
+          // final batchList =
+          //     PutBatch(putQty: itemBin.putQty, bin: itemBin.binCodeDestination);
+          // itemBinProvider.addBin(itemBin, batchList);
+
+          showModalBottomSheet(
+              context: context, builder: (_) => DialogPutAwayNonbatch(itemBin));
+          // print("inininin ${itemBin.putQty}");
+          // print("inininin2222rrr ${batchListq.first.putQty}");
+        }
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),

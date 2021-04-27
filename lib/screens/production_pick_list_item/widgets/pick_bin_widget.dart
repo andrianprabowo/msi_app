@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_pick_list_item_batch_model.dart';
 import 'package:msi_app/models/production_pick_list_item_model.dart';
 import 'package:msi_app/providers/production_pick_list_item_provider.dart';
@@ -15,6 +16,7 @@ class PickBinWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final provider =
         Provider.of<ProductionPickListItemProvider>(context, listen: false);
     return Container(
@@ -32,8 +34,12 @@ class PickBinWidget extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                BaseTitle( batch.bin),
-                BaseTextLine('Quantity', batch.pickQty.toStringAsFixed(4)),
+                BaseTitle(batch.bin),
+                BaseTextLine(
+                    'Quantity',
+                    batch.pickQty == 0.0
+                        ? batch.pickQty.toStringAsFixed(4)
+                        : formatter.format(batch.pickQty)),
               ],
             ),
           ),

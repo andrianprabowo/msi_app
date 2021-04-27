@@ -9,23 +9,31 @@ import 'package:msi_app/utils/prefs.dart';
 
 class ItemBinProvider with ChangeNotifier {
   List<ItemBin> _items;
-    ItemBin _selected;
+  ItemBin _selected;
 
   ItemBin get selected => _selected;
 
   List<ItemBin> get items {
     _items.forEach((detail) {
-      if (detail.fgBatch == "Y") {
+      // if (detail.fgBatch == "Y") {
         // calculate total batch qty
         var totalBatch = 0.0;
         detail.batchList.forEach((batch) {
           totalBatch = totalBatch + batch.putQty;
         });
         detail.putQty = totalBatch;
-      }
-
-      // calculate remaining qty
-      detail.remainingQty = detail.availableQty - detail.putQty;
+        detail.remainingQty = detail.availableQty - detail.putQty;
+      // } else {
+        // calculate remaining qty
+        // var totalBatch = 0.0;
+        // detail.batchList.forEach((batch) {
+        //   totalBatch = totalBatch + batch.putQty;
+        // });
+        // detail.putQty = totalBatch;
+        // detail.remainingQty = detail.availableQty - detail.putQty;
+        // print('sekarang ${detail.putQty}');
+        // print('sekarang isi $totalBatch');
+      // }
     });
 
     // _items = _items.where((item) => item.remainingQty > 0).toList();
@@ -62,13 +70,31 @@ class ItemBinProvider with ChangeNotifier {
     return _items.firstWhere((element) => element.itemCode == itemCode);
   }
 
+// void addBatchList(
+//     PickItemReceive pickItemReceive,
+//     List<PickBatch> batchList,
+//   ) {
+//     pickItemReceive.batchList.addAll(batchList);
+//     notifyListeners();
+//     print('Added Batch List: $batchList');
+//   }
+
   void addBatchList(
     ItemBin itemBin,
     List<PutBatch> batchList,
   ) {
-    itemBin.batchList = batchList;
+    itemBin.batchList.addAll(batchList);
     notifyListeners();
     print('Added Batch List: $batchList');
+  }
+
+  void addBin(
+    ItemBin item,
+    PutBatch batchList,
+  ) {
+    item.batchList.add(batchList);
+    notifyListeners();
+    print('N Added Bin List: $batchList');
   }
 
   void removeBatchItem(

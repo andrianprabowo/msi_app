@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/put_batch_rfo.dart';
 import 'package:msi_app/screens/staging_batch_rfo/widgets/dialog_put_away_rfo.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -11,6 +12,7 @@ class ItemBatchStagingRfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return InkWell(
       onTap: () {
         showModalBottomSheet(
@@ -25,10 +27,18 @@ class ItemBatchStagingRfo extends StatelessWidget {
         child: Column(
           children: [
             BaseTextLine('Batch Number', item.batchNo),
-            BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(4)),
+            BaseTextLine(
+                'Available Qty',
+                item.availableQty == 0.0
+                    ? item.availableQty.toStringAsFixed(4)
+                    : formatter.format(item.availableQty)),
             BaseTextLine('Expired Date', convertDate(item.expiredDate)),
             BaseTextLine('Uom', item.uom),
-            BaseTextLine('Put Qty', item.putQty.toStringAsFixed(4)),
+            BaseTextLine(
+                'Put Qty',
+                item.putQty == 0.0
+                    ? item.putQty.toStringAsFixed(4)
+                    : formatter.format(item.putQty)),
           ],
         ),
       ),

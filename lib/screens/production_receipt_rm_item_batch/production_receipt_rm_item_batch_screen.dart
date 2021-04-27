@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_model.dart';
 import 'package:msi_app/providers/production_receipt_rm_item_list_batch_list_provider.dart';
-import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
+// import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_number_list_provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_provider.dart';
 import 'package:msi_app/screens/production_receipt_rm_bin/production_receipt_rm_bin_screen.dart';
@@ -42,9 +42,9 @@ class ProductionReceiptRMItemBatch extends StatelessWidget {
   Widget build(BuildContext context) {
     /* final provider =
         Provider.of<ProductionReceiptRMProvider>(context, listen: false); */
-    final pickItemProvider = Provider.of<ProductionReceiptRMItemListProvider>(
-        context,
-        listen: false);
+    // final pickItemProvider = Provider.of<ProductionReceiptRMItemListProvider>(
+    //     context,
+    //     listen: false);
     final pickBatchProvider =
         Provider.of<ProductionReceiptRMItemListBatchListProvider>(context,
             listen: false);
@@ -54,6 +54,9 @@ class ProductionReceiptRMItemBatch extends StatelessWidget {
     var openQty = pickItem.openQty == 0.0
         ? pickItem.openQty.toStringAsFixed(4)
         : formatter.format(pickItem.openQty);
+        var totalPic = pickItem.quantity == 0.0
+        ? pickItem.quantity.toStringAsFixed(4)
+        : formatter.format(pickItem.quantity);
     return Scaffold(
       appBar: AppBar(
         title: Text('Receipt'),
@@ -62,8 +65,8 @@ class ProductionReceiptRMItemBatch extends StatelessWidget {
             icon: Icon(Icons.check_box_outlined),
             onPressed: () {
               // add batch list
-              final batchList = pickBatchProvider.pickedItems;
-              pickItemProvider.addBatchList(pickItem, batchList);
+              // final batchList = pickBatchProvider.pickedItems;
+              // pickItemProvider.addBatchList(pickItem, batchList);
               pickBatchProvider.totalPicked.toStringAsFixed(4) == '0.0000'
                   ? showAlertOnZero(context)
                   : double.tryParse(pickBatchProvider.totalPicked
@@ -114,7 +117,7 @@ class ProductionReceiptRMItemBatch extends StatelessWidget {
             ),
             BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description + ' / ' + pickItem.unitMsr),
-            BaseTextLine('Total to Pick', pickItem.quantity.toStringAsFixed(4)),
+            BaseTextLine('Total to Pick',totalPic) ,
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kMedium)),
             BaseTitle('List Batch of Item'),

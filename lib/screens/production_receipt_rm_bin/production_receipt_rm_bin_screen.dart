@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_model.dart';
 import 'package:msi_app/providers/production_receipt_rm_bin.dart';
+import 'package:msi_app/providers/production_receipt_rm_item_list_batch_list_provider.dart';
+import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_number_list_provider.dart';
 import 'package:msi_app/screens/production_receipt_rm_bin/widget/item_prod_rm_bin.dart';
 import 'package:msi_app/screens/production_receipt_rm_item/production_receipt_rm_item_screen.dart';
+import 'package:msi_app/screens/production_receipt_rm_item/widgets/production_receipt_rm_item_non_batch_dialog.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -134,22 +137,32 @@ class ProductionReceiptRmBinScreen extends StatelessWidget {
         //   },
         // );
 
-        // if (pickItemReceive.fgBatch == 'Y')
-        //   Navigator.of(context).pushNamed(
-        //     PickItemBatchScreen.routeName,
-        //     arguments: {
-        //       'pickItemReceive': pickItemReceive,
-        //       'pickListBin': item,
-        //     },
-        //   );
-        // else {
-        //   pickItemReceive.itemStorageLocation = item.binLocation;
-        //   Navigator.of(context)
-        //       .popUntil(ModalRoute.withName(PickItemReceiveScreen.routeName));
-
+       final itemBinProvider =
+            Provider.of<ProductionReceiptRMItemListProvider>(context, listen: false);
+        final itemBatchProvider =
+            Provider.of<ProductionReceiptRMItemListBatchListProvider>(context,
+                listen: false);
+        // update bin location
         pickItemReceive.itemStorageLocation = item.binLocation;
-        Navigator.of(context)
-            .popUntil(ModalRoute.withName(ProductionReceiptRMItem.routeName));
+        // add batch list
+        if (pickItemReceive.fgBatch == 'Y') {
+          final batchList = itemBatchProvider.items;
+          batchList.forEach((detail) {
+            // calculate bin
+            detail.bin = item.binLocation;
+          });
+          itemBinProvider.addBatchList(pickItemReceive, batchList);
+
+          Navigator.of(context)
+              .popUntil(ModalRoute.withName(ProductionReceiptRMItem.routeName));
+        } else {
+          showModalBottomSheet(
+              context: context, builder: (_) => ProductionReceiptRMItemNonBatchDialog(pickItemReceive));
+         
+        }
+        // pickItemReceive.itemStorageLocation = item.binLocation;
+        // Navigator.of(context)
+        //     .popUntil(ModalRoute.withName(ProductionReceiptRMItem.routeName));
         // }
       },
     );

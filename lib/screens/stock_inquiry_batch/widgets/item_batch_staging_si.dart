@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/put_batch_si.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -10,6 +11,7 @@ class ItemBatchStagingSi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return InkWell(
       // onTap: () {
       //   showModalBottomSheet(
@@ -24,7 +26,11 @@ class ItemBatchStagingSi extends StatelessWidget {
         child: Column(
           children: [
             BaseTextLine('Batch Number', item.batchNo),
-            BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(4)),
+            BaseTextLine(
+                'Available Qty',
+                item.availableQty == 0.0
+                    ? item.availableQty.toStringAsFixed(4)
+                    : formatter.format(item.availableQty)),
             BaseTextLine('Expired Date', convertDate(item.expiredDate)),
             // BaseTextLine('Put Qty', item.putQty.toStringAsFixed(4)),
           ],

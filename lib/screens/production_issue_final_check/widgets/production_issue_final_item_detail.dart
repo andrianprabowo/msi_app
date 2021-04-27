@@ -30,7 +30,10 @@ class ProductionIssueFinalItemDetail extends StatelessWidget {
                   ? item.availableQty.toStringAsFixed(4)
                   : formatter.format(item.availableQty)),
           BaseTextLine('UOM', item.unitMsr),
-          BaseTextLine('Remaining Quantity', item.remainingQty.toStringAsFixed(4)),
+          BaseTextLine('Remaining Quantity', 
+              item.remainingQty == 0.0
+                  ? item.remainingQty.toStringAsFixed(4)
+                  : formatter.format(item.remainingQty)),
           BaseTextLine(
               'Issue Quantity',
               item.putQty == 0.0

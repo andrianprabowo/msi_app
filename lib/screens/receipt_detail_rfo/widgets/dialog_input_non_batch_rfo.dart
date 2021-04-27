@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_purchase_order_rfo.dart';
 import 'package:msi_app/providers/item_po_provider_rfo.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -27,6 +28,8 @@ class _DialogInputQtyNonBatchRfoState extends State<DialogInputQtyNonBatchRfo> {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
+
     return Container(
         padding: const EdgeInsets.all(kLarge),
         child: Column(
@@ -37,7 +40,10 @@ class _DialogInputQtyNonBatchRfoState extends State<DialogInputQtyNonBatchRfo> {
             BaseTitle(item.description),
             // SizedBox(height: getProportionateScreenHeight(kLarge)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('PO Qty', item.openQty.toStringAsFixed(4)),
+            BaseTextLine('PO Qty', 
+              item.openQty == 0.0
+                  ? item.openQty.toStringAsFixed(4)
+                  : formatter.format(item.openQty)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildQtyFormField(),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -48,7 +54,7 @@ class _DialogInputQtyNonBatchRfoState extends State<DialogInputQtyNonBatchRfo> {
             //     _quantity.text == '0')
             //   buildButtonNotif(context, widget.item.openQty.toString())
             // else
-            buildButtonSubmit(context, widget.item.openQty.toStringAsFixed(4)),
+            buildButtonSubmit(context, formatter.format(widget.item.openQty)),
           ],
         ));
   }

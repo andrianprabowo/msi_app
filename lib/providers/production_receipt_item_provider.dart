@@ -8,6 +8,10 @@ import 'package:http/http.dart' as http;
 
 class ProductionReceiptItemProvider with ChangeNotifier {
   List<ProductionReceiptItemModel> _items;
+  ProductionReceiptItemModel _selected;
+
+  ProductionReceiptItemModel get selected => _selected;
+
 
   List<ProductionReceiptItemModel> get items {
     _items.forEach((detail) {
@@ -23,10 +27,11 @@ class ProductionReceiptItemProvider with ChangeNotifier {
         detail.quantityReject = totalBatchReject;
       }
       // calculate remaining qty
-      detail.remainingQty = detail.openQty - (detail.quantity + detail.quantityReject);
+      detail.remainingQty =
+          detail.openQty - (detail.quantity + detail.quantityReject);
     });
 
-    _items = _items.where((item) => item.remainingQty > 0).toList();
+    // _items = _items.where((item) => item.remainingQty > 0).toList();
 
     return _items;
   }
@@ -58,19 +63,22 @@ class ProductionReceiptItemProvider with ChangeNotifier {
     return _items.firstWhere((element) => element.itemCode == itemCode);
   }
 
-  void addBatch(ProductionReceiptItemModel itemPo, ProductionReceiptItemBatchModel itemBatch) {
+  void addBatch(ProductionReceiptItemModel itemPo,
+      ProductionReceiptItemBatchModel itemBatch) {
     itemPo.batchList.add(itemBatch);
     notifyListeners();
     print('Added Batch: $itemBatch');
   }
 
-  void removeBatch(ProductionReceiptItemModel itemPo, ProductionReceiptItemBatchModel itemBatch) {
+  void removeBatch(ProductionReceiptItemModel itemPo,
+      ProductionReceiptItemBatchModel itemBatch) {
     itemPo.batchList.remove(itemBatch);
     notifyListeners();
     print('Removed Batch: $itemBatch');
   }
 
-  void inputQty(ProductionReceiptItemModel itemPo, double qty, double qtyReject) {
+  void inputQty(
+      ProductionReceiptItemModel itemPo, double qty, double qtyReject) {
     itemPo.quantity = qty;
     itemPo.quantityReject = qtyReject;
     notifyListeners();

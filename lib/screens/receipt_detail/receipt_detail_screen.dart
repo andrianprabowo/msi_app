@@ -54,7 +54,7 @@ class ReceiptDetailScreen extends StatelessWidget {
                 if (authProvider.binId == 'Please Select Bin') {
                   final snackBar = SnackBar(
                     content: Row(
-                      children: [
+                      children: [ 
                         Icon(Icons.error_outline, color: Colors.red),
                         SizedBox(width: getProportionateScreenWidth(kLarge)),
                         Text('Please Select Bin First'),

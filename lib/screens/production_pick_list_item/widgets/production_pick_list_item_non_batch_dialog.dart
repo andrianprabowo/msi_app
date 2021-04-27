@@ -49,7 +49,10 @@ class _ProductionPickListItemNonBatchDialogState
           BaseTitle(widget.item.description),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine(
-              'Total to Pick Qty', widget.item.quantity.toStringAsFixed(4)),
+              'Total to Pick Qty',
+              widget.item.quantity == 0.0
+                  ? widget.item.quantity.toStringAsFixed(4)
+                  : formatter.format(widget.item.quantity)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),

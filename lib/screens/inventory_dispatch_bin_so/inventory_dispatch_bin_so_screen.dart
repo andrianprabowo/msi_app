@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_item_so.dart';
 import 'package:msi_app/providers/inventory_dispatch_bin_so_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_so_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_item_so_provider.dart';
 import 'package:msi_app/screens/Inventory_dispatch_batch_so/inventory_dispatch_batch_so_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_bin_so/widget/inventory_dispatch_bin_item_so.dart';
 import 'package:msi_app/screens/inventory_dispatch_item_so/inventory_dispatch_item_so_screen.dart';
@@ -128,7 +129,14 @@ class InventoryDispatchBinSoScreen extends StatelessWidget {
             },
           );
         } else {
+          
           inventoryDispatchItem.itemStorageLocation = item.binLocation;
+
+          final inventoryDispItem =
+                Provider.of<InventoryDispatchItemSoProvider>(context,
+                    listen: false);
+            inventoryDispItem.inputBinNonBatch(inventoryDispatchItem,
+                inventoryDispatchItem.itemStorageLocation);
           Navigator.of(context).popUntil(
               ModalRoute.withName(InventoryDispatchItemSoScreen.routeName));
         }

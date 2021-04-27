@@ -22,8 +22,8 @@ class ProductionReceiptRMNumber extends StatelessWidget {
     final item = headerProvider.selected;
     print(item);
     // provider.getPlByWarehouse('WMSISTPR-SYSTEM-BIN-LOCATION');
-    provider.getPlByWarehouse(item.binCode);
-    print('object$item');
+   await provider.getPlByWarehouse(item.binCode);
+    // print('object$item');
   }
 
   @override

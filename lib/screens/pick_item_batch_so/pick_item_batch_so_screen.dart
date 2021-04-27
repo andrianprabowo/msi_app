@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_item_receive_so.dart';
 import 'package:msi_app/models/pick_list_bin_so.dart';
 import 'package:msi_app/providers/pick_batch_so_provider.dart';
@@ -29,6 +30,7 @@ class PickItemBatchSoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final pickItemProvider =
         Provider.of<PickItemReceiveSoProvider>(context, listen: false);
     final pickBatchProvider =
@@ -46,7 +48,7 @@ class PickItemBatchSoScreen extends StatelessWidget {
             onPressed: () {
               if (pickBatchProvider.totalPicked > pickItem.quantity) {
                 showAlertGreaterThanZero(
-                    context, pickItem.quantity.toStringAsFixed(4));
+                    context, formatter.format(pickItem.quantity));
               } else {
                 // update bin location
                 pickItem.itemStorageLocation = itemBin.binLocation;
@@ -97,8 +99,10 @@ class PickItemBatchSoScreen extends StatelessWidget {
                     builder: (BuildContext _, provider, Widget child) {
                   return Expanded(
                     child: BaseTextLine(
-                      'Total Picked',
-                      provider.totalPicked.toStringAsFixed(4),
+                      'Total Picked',  
+                      provider.totalPicked == 0.0
+                          ? provider.totalPicked.toStringAsFixed(4)
+                          : formatter.format(provider.totalPicked),
                     ),
                   );
                 }),
@@ -115,7 +119,10 @@ class PickItemBatchSoScreen extends StatelessWidget {
             BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description),
             BaseTitle(pickItem.itemStorageLocation),
-            BaseTextLine('SO Quantity', pickItem.quantity.toStringAsFixed(4)),
+            BaseTextLine('SO Quantity',  
+                      pickItem.quantity == 0.0
+                          ? pickItem.quantity.toStringAsFixed(4)
+                          : formatter.format(pickItem.quantity)),
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             Row(
@@ -123,7 +130,7 @@ class PickItemBatchSoScreen extends StatelessWidget {
                 Expanded(
                   child: BaseTitle('List Batch of Item'),
                 ),
-                Text('Show All Item'),
+                Text('Show All Batches'),
                 Consumer<PickBatchSoProvider>(
                   builder: (_, provider, child) {
                     return Switch(

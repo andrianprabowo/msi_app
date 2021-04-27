@@ -9,17 +9,20 @@ import 'package:msi_app/utils/prefs.dart';
 
 class ItemBinRfoProvider with ChangeNotifier {
   List<ItemBinRfo> _items;
+  ItemBinRfo _selected;
+
+  ItemBinRfo get selected => _selected;
 
   List<ItemBinRfo> get items {
     _items.forEach((detail) {
-      if (detail.fgBatch == "Y") {
+      // if (detail.fgBatch == "Y") {
         // calculate total batch qty
         var totalBatch = 0.0;
         detail.batchList.forEach((batch) {
           totalBatch = totalBatch + batch.putQty;
         });
         detail.putQty = totalBatch;
-      }
+      // }
 
       // calculate remaining qty
       detail.remainingQty = detail.availableQty - detail.putQty;
@@ -63,10 +66,20 @@ class ItemBinRfoProvider with ChangeNotifier {
     ItemBinRfo itemBin,
     List<PutBatchRfo> batchList,
   ) {
-    itemBin.batchList = batchList;
+    itemBin.batchList.addAll(batchList);
     notifyListeners();
     print('Added Batch List: $batchList');
   }
+
+  void addBin(
+    ItemBinRfo item,
+    PutBatchRfo batchList,
+  ) {
+    item.batchList.add(batchList);
+    notifyListeners();
+    print('N Added Bin List: $batchList');
+  }
+
 
   void removeBatchItem(
     ItemBinRfo itemBin,

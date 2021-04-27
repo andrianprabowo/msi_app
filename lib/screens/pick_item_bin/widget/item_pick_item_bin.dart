@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/models/pick_list_bin.dart';
 import 'package:msi_app/providers/auth_provider.dart';
@@ -9,7 +10,6 @@ import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:provider/provider.dart';
 
 class ItemPickItemBin extends StatelessWidget {
-  
   final PickItemReceive pickItemReceive;
   final PickListBin item;
 
@@ -17,10 +17,11 @@ class ItemPickItemBin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InkWell(
       onTap: () {
-        if (pickItemReceive.fgBatch == 'Y'){
+        if (pickItemReceive.fgBatch == 'Y') {
           pickItemReceive.itemStorageLocation = item.binLocation;
           Navigator.of(context).pushNamed(
             PickItemBatchScreen.routeName,
@@ -29,17 +30,17 @@ class ItemPickItemBin extends StatelessWidget {
               'pickListBin': item,
             },
           );
-        }else {
-        //   final pickBatchProvider =
-        // Provider.of<PickListBinProvider>(context, listen: false);
+        } else {
+          //   final pickBatchProvider =
+          // Provider.of<PickListBinProvider>(context, listen: false);
           pickItemReceive.itemStorageLocation = item.binLocation;
-            //  final binList = pickBatchProvider.itemsSelect;
+          //  final binList = pickBatchProvider.itemsSelect;
 
-              // pickItemProvider.addBinList(pickItemReceive, binList);
+          // pickItemProvider.addBinList(pickItemReceive, binList);
 
-
-             showModalBottomSheet(
-                context: context, builder: (_) => DialogPickListNonbatch(pickItemReceive));
+          showModalBottomSheet(
+              context: context,
+              builder: (_) => DialogPickListNonbatch(pickItemReceive));
           // Navigator.of(context)
           //     .popUntil(ModalRoute.withName(PickItemReceiveScreen.routeName));
         }
@@ -52,7 +53,11 @@ class ItemPickItemBin extends StatelessWidget {
           children: [
             BaseTextLine('Bin Location', item.binLocation),
             BaseTextLine('Warehouse', authProvider.warehouseName),
-            BaseTextLine('Qty', item.avlQty.toStringAsFixed(4)),
+            BaseTextLine(
+                'Qty',
+                item.avlQty == 0.0
+                    ? item.avlQty.toStringAsFixed(4)
+                    : formatter.format(item.avlQty)),
           ],
         ),
       ),

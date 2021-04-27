@@ -30,6 +30,7 @@ class ProductionReceiptRMItemListModel with ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     return {
+      'fgBatch': fgBatch,
       'materialNo': itemCode,
       'materialDesc': description,
       'openQty': openQty,

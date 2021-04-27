@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/inventory_dispatch_item_so.dart';
 import 'package:msi_app/providers/inventory_dispatch_batch_so_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_so_provider.dart';
@@ -37,6 +38,8 @@ class InventoryDispatchBatchSoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
+
     final pickItemProvider =
         Provider.of<InventoryDispatchItemSoProvider>(context, listen: false);
     final pickBatchProvider =
@@ -81,7 +84,9 @@ class InventoryDispatchBatchSoScreen extends StatelessWidget {
                   return Expanded(
                     child: BaseTextLine(
                       'Total Picked',
-                      provider.totalPicked.toStringAsFixed(4),
+                      provider.totalPicked == 0.0
+                          ? provider.totalPicked.toStringAsFixed(4)
+                          : formatter.format(provider.totalPicked),
                     ),
                   );
                 }),
@@ -97,8 +102,12 @@ class InventoryDispatchBatchSoScreen extends StatelessWidget {
             ),
             BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description),
-            BaseTextLine('Dispatch Qty',pickItem.openQty.toStringAsFixed(4)),
-            BaseTextLine('UoM',pickItem.unitMsr),
+            BaseTextLine(
+                'Dispatch Qty',
+                pickItem.openQty == 0.0
+                    ? pickItem.openQty.toStringAsFixed(4)
+                    : formatter.format(pickItem.openQty)),
+            BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),
             Divider(),

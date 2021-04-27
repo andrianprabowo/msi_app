@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/inventory_dispatch_item_rtv.dart';
 import 'package:msi_app/providers/inventory_dispatch_batch_rtv_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_rtv_provider.dart';
@@ -37,6 +38,7 @@ class InventoryDispatchBatchRtvScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final pickItemProvider =
         Provider.of<InventoryDispatchItemRtvProvider>(context, listen: false);
     final pickBatchProvider =
@@ -82,9 +84,10 @@ class InventoryDispatchBatchRtvScreen extends StatelessWidget {
                     builder: (BuildContext _, provider, Widget child) {
                   return Expanded(
                     child: BaseTextLine(
-                      'Total Picked',
-                      provider.totalPicked.toStringAsFixed(4),
-                    ),
+                        'Total Picked',
+                        provider.totalPicked == 0.0
+                            ? provider.totalPicked.toStringAsFixed(4)
+                            : formatter.format(provider.totalPicked)),
                   );
                 }),
                 SizedBox(width: getProportionateScreenWidth(kLarge)),
@@ -99,7 +102,11 @@ class InventoryDispatchBatchRtvScreen extends StatelessWidget {
             ),
             BaseTitle(pickItem.itemCode),
             BaseTitle(pickItem.description),
-            BaseTextLine('Total To DIspatch', pickItem.openQty.toStringAsFixed(4)),
+            BaseTextLine(
+                'Total To DIspatch',
+                pickItem.openQty == 0.0
+                    ? pickItem.openQty.toStringAsFixed(4)
+                    : formatter.format(pickItem.openQty)),
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),

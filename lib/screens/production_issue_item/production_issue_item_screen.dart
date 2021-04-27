@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_issue_number_model.dart';
 import 'package:msi_app/providers/production_issue_item_provider.dart';
 import 'package:msi_app/providers/production_issue_number_provider.dart';
@@ -31,6 +32,7 @@ class ProductionIssueItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final transactionNumberSelected =
         Provider.of<ProductionIssueNumberProvider>(context, listen: false)
             .selected;
@@ -79,6 +81,17 @@ class ProductionIssueItem extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Production Date',
                 convertDate(transactionNumberSelected.pickDate)),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTextLine('Product Code',transactionNumberSelected.productCode),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTextLine('Product Name',transactionNumberSelected.productName),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTextLine('Planned Qty', 
+              transactionNumberSelected.quantity == 0.0
+                  ? transactionNumberSelected.quantity.toStringAsFixed(4)
+                  : formatter.format(transactionNumberSelected.quantity)),
+            SizedBox(height: getProportionateScreenHeight(kLarge)),
+            BaseTextLine('Uom',transactionNumberSelected.uom),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Remarks', transactionNumberSelected.pickRemark),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

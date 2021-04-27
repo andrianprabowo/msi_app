@@ -3,9 +3,9 @@ import 'package:msi_app/models/production_receipt_rm_number_list_model.dart';
 import 'package:msi_app/providers/production_receipt_rm_bin.dart';
 import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_number_list_provider.dart';
+import 'package:msi_app/screens/production_receipt_rm_bin/production_receipt_rm_bin_screen.dart';
 import 'package:msi_app/screens/production_receipt_rm_final_check/production_receipt_rm_final_check_screen.dart';
 import 'package:msi_app/screens/production_receipt_rm_item/widgets/production_receipt_rm_item_list.dart';
-import 'package:msi_app/screens/production_receipt_rm_item/widgets/production_receipt_rm_item_non_batch_dialog.dart';
 import 'package:msi_app/screens/production_receipt_rm_item_batch/production_receipt_rm_item_batch_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -19,12 +19,13 @@ import 'package:provider/provider.dart';
 class ProductionReceiptRMItem extends StatelessWidget {
   static const routeName = '/production_receipt_rm_item';
 
-  Future<void> refreshData(BuildContext context, String docNumber, String cardCode) async {
+  Future<void> refreshData(
+      BuildContext context, String docNumber, String cardCode) async {
     final inventoryItemProvider =
         Provider.of<ProductionReceiptRMItemListProvider>(context,
             listen: false);
     await inventoryItemProvider.getInventItemByPlNo(docNumber);
-   
+
     final pickItemProvider =
         Provider.of<ProductionReceiptRMBinProvider>(context, listen: false);
     await pickItemProvider.getPlBinList(cardCode);
@@ -51,7 +52,8 @@ class ProductionReceiptRMItem extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.post_add),
             onPressed: () {
-              Navigator.of(context).pushNamed(ProductionReceiptRMFinalCheck.routeName);
+              Navigator.of(context)
+                  .pushNamed(ProductionReceiptRMFinalCheck.routeName);
               /* for (var i = 0; i < provider.items.length; i++) {
                 if (provider.items[i].pickedQty.toStringAsFixed(2) != '0.00') 
                   status = 1;
@@ -102,9 +104,12 @@ class ProductionReceiptRMItem extends StatelessWidget {
             ? Navigator.of(context).pushNamed(
                 ProductionReceiptRMItemBatch.routeName,
                 arguments: item)
-            : showModalBottomSheet(
-                context: context,
-                builder: (_) => ProductionReceiptRMItemNonBatchDialog(item));
+            : Navigator.of(context).pushNamed(
+                ProductionReceiptRmBinScreen.routeName,
+                arguments: item);
+        // showModalBottomSheet(
+        //     context: context,
+        //     builder: (_) => ProductionReceiptRMItemNonBatchDialog(item));
       },
     );
   }
@@ -122,7 +127,8 @@ class ProductionReceiptRMItem extends StatelessWidget {
           if (snapshot.hasError) return ErrorInfo();
 
           return RefreshIndicator(
-            onRefresh: () => refreshData(context, item.docNumber,item.cardCode),
+            onRefresh: () =>
+                refreshData(context, item.docNumber, item.cardCode),
             child: Consumer<ProductionReceiptRMItemListProvider>(
               builder: (_, provider, child) => provider.items.length == 0
                   ? NoData()

@@ -10,8 +10,14 @@ class PickBatchProvider with ChangeNotifier {
   List<PickBatch> _items = [];
   double _totalPicked = 0.0;
   var _showAllItem = false;
+  final fieldText = TextEditingController();
+
 
   bool get showAllItem => _showAllItem;
+
+   void clearText() {
+    fieldText.clear();
+  }
 
   void toggleStatus() {
     _showAllItem = !_showAllItem;
@@ -87,13 +93,14 @@ class PickBatchProvider with ChangeNotifier {
     PickBatch item = _items.where((item) => item.batchNo == batchNo).first;
     if (item != null) {
       item.pickQty = pickQty;
+      item.pickQty = pickQty;
     }
 
     countTotal();
     notifyListeners();
   }
 
-  void clear() {
+  void    clear() {
     _items.forEach((item) => item.pickQty = 0.0);
 
     countTotal();
@@ -109,4 +116,16 @@ class PickBatchProvider with ChangeNotifier {
     _totalPicked = total;
     notifyListeners();
   }
+
+  // void countRemain() {
+  //   var total = 0.0;
+  //   _items.forEach((item) {
+  //     total = total + item.pickQty;
+  //   });
+
+  //   _totalPicked = total;
+  //   notifyListeners();
+  // }
+
+  
 }

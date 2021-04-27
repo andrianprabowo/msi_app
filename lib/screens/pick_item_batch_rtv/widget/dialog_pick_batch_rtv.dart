@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_batch_rtv.dart';
 import 'package:msi_app/providers/pick_batch_rtv_provider.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -22,6 +23,7 @@ class _DialogPickBatchRtvState extends State<DialogPickBatchRtv> {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
@@ -35,13 +37,15 @@ class _DialogPickBatchRtvState extends State<DialogPickBatchRtv> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Expired Date', convertDate(widget.item.expiredDate)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('Available Quantity',
-              widget.item.availableQty.toStringAsFixed(4)),
+          BaseTextLine('Available Quantity', 
+                      widget.item.availableQty == 0.0
+                          ? widget.item.availableQty.toStringAsFixed(4)
+                          : formatter.format(widget.item.availableQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildButtonSubmit(
-              context, widget.item.availableQty.toStringAsFixed(4)),
+              context, formatter.format(widget.item.availableQty)),
         ],
       ),
     );

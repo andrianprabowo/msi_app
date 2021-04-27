@@ -8,6 +8,7 @@ class ListPickListSo with ChangeNotifier {
   final DateTime docDate;
   final String vendor;
   final int status;
+  final int picklistSapnumber;
   final String logMessage;
   ListPickListSo({
     this.grpono,
@@ -15,6 +16,7 @@ class ListPickListSo with ChangeNotifier {
     this.docDate,
     this.vendor,
     this.status,
+    this.picklistSapnumber,
     this.logMessage,
   });
 
@@ -54,6 +56,7 @@ class ListPickListSo with ChangeNotifier {
       docDate: DateTime.parse(map['docDate']),
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
+      picklistSapnumber: map['picklistSapnumber'] ?? 0,
       logMessage: map['logMessage'] ?? '',
     );
   }
@@ -65,7 +68,7 @@ class ListPickListSo with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ListPickListSo(grpono: $grpono, poNo: $poNo, docDate: $docDate, vendor: $vendor, status: $status, logMessage: $logMessage)';
+    return 'ListPickListSo(picklistSapnumber: $picklistSapnumber,grpono: $grpono, poNo: $poNo, docDate: $docDate, vendor: $vendor, status: $status, logMessage: $logMessage)';
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin.dart';
 import 'package:msi_app/providers/item_batch_provider.dart';
 import 'package:msi_app/screens/staging_batch/widgets/dialog_put_away.dart';
@@ -28,6 +29,7 @@ class StagingBatchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final itemBatchProvider =
         Provider.of<ItemBatchProvider>(context, listen: false);
     ItemBin item = ModalRoute.of(context).settings.arguments;
@@ -40,7 +42,8 @@ class StagingBatchScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.check_box_outlined),
             onPressed: () {
-              if (double.parse(itemBatchProvider.totalPicked.toStringAsFixed(4)) >
+              if (double.parse(
+                      itemBatchProvider.totalPicked.toStringAsFixed(4)) >
                   double.parse(item.availableQty.toStringAsFixed(4))) {
                 print('Tidak boleh lebih besar dari Available Qty ');
                 return showDialog<void>(
@@ -101,7 +104,9 @@ class StagingBatchScreen extends StatelessWidget {
                   return Expanded(
                     child: BaseTextLine(
                       'Total Picked',
-                      provider.totalPicked.toStringAsFixed(4),
+                      provider.totalPicked == 0.0
+                          ? provider.totalPicked.toStringAsFixed(4)
+                          : formatter.format(provider.totalPicked),
                     ),
                   );
                 }),
@@ -117,7 +122,11 @@ class StagingBatchScreen extends StatelessWidget {
             ),
             BaseTitle(item.itemCode),
             BaseTitle(item.itemName),
-            BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(4)),
+            BaseTextLine(
+                'Available Qty',
+                item.availableQty == 0.0
+                    ? item.availableQty.toStringAsFixed(4)
+                    : formatter.format(item.availableQty)),
             BaseTextLine('Uom', item.uom),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),

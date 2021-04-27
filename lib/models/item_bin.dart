@@ -9,6 +9,8 @@ class ItemBin with ChangeNotifier {
   final String binCode;
   final String fgBatch;
   final String uom;
+  final String unitMsr;
+  double numInBuy;
   String binCodeDestination;
   final double availableQty;
   double remainingQty;
@@ -19,7 +21,9 @@ class ItemBin with ChangeNotifier {
     this.itemName,
     this.binCode,
     this.fgBatch,
+    this.unitMsr,
     this.uom,
+    this.numInBuy,
     this.binCodeDestination,
     this.availableQty,
     this.remainingQty,
@@ -30,6 +34,7 @@ class ItemBin with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'materialNo': itemCode,
+      'fgBatch': fgBatch,
       'materialDesc': itemName,
       'itemStorageLocation': binCodeDestination,
       'grQuantity': putQty,
@@ -46,6 +51,8 @@ class ItemBin with ChangeNotifier {
       binCode: map['binCode'] ?? '',
       fgBatch: map['fgBatch'] ?? '',
       uom: map['uom'] ?? '',
+      unitMsr: map['unitMsr'] ?? '',
+      numInBuy: map['numInBuy'] ?? 0.0,
       binCodeDestination: map['binCodeDestination'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
       putQty: 0.0,
@@ -60,6 +67,6 @@ class ItemBin with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ItemBin(itemCode: $itemCode, itemName: $itemName, binCode: $binCode, fgBatch: $fgBatch, binCodeDestination: $binCodeDestination, availableQty: $availableQty, remainingQty: $remainingQty, putQty: $putQty, batchList: $batchList,uom: $uom)';
+    return 'ItemBin(itemCode: $itemCode,numInBuy: $numInBuy, itemName: $itemName, binCode: $binCode, fgBatch: $fgBatch, binCodeDestination: $binCodeDestination, availableQty: $availableQty, remainingQty: $remainingQty, putQty: $putQty, batchList: $batchList,uom: $uom)';
   }
 }

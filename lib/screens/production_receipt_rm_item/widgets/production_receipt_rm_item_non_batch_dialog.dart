@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:msi_app/models/production_receipt_rm_item_list_batch_list_model.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_model.dart';
 import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
-import 'package:msi_app/screens/production_receipt_rm_bin/production_receipt_rm_bin_screen.dart';
+import 'package:msi_app/screens/production_receipt_rm_item/production_receipt_rm_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -41,11 +42,14 @@ class _ProductionReceiptRMItemNonBatchDialogState
         children: [
           BaseTitle('Input Quantity'),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
+          BaseTitle(widget.item.itemStorageLocation),
+          SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(widget.item.itemCode),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTitle(widget.item.description),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('Total to Receipt', openQty),
+          BaseTextLine('Total to Receipt', formatter.format(widget.item.quantity)),
+          // BaseTextLine('Total to Receipt', openQty),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -125,9 +129,14 @@ class _ProductionReceiptRMItemNonBatchDialogState
             double.parse(_quantity.text),
             item.itemStorageLocation,
           );
-          Navigator.of(context).pushNamed(
-              ProductionReceiptRmBinScreen.routeName,
-              arguments: item);
+          final batchList =
+              ProductionReceiptRMItemListBatchListModel(pickQty: item.pickedQty, bin: item.itemStorageLocation, uom: item.unitMsr);
+          inventoryDispatchItem.addBin(item, batchList);
+          Navigator.of(context)
+              .popUntil(ModalRoute.withName(ProductionReceiptRMItem.routeName));
+          // Navigator.of(context).pushNamed(
+          //     ProductionReceiptRmBinScreen.routeName,
+          //     arguments: item);
           // Navigator.of(context).pop();
         },
       ),

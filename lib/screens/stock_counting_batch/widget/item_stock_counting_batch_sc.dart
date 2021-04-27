@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/stock_counting_batch.dart';
 import 'package:msi_app/screens/stock_counting_batch/widget/dialog_pick_batch_sc.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -11,6 +12,7 @@ class ItemStockCountingBatch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return InkWell(
       onTap: () {
         showModalBottomSheet(
@@ -27,7 +29,10 @@ class ItemStockCountingBatch extends StatelessWidget {
             BaseTextLine('Batch No', item.batchNo),
             // BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(4)),
             BaseTextLine('Expired Date', convertDate(item.expiredDate)),
-            BaseTextLine('Count Qty', item.pickQty.toStringAsFixed(4)),
+            BaseTextLine('Count Qty', 
+                    item.pickQty == 0.0
+                        ? item.pickQty.toStringAsFixed(4)
+                        : formatter.format(item.pickQty)),
           ],
         ),
       ),

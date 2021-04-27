@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_item_receive_rtv.dart';
 import 'package:msi_app/models/pick_list_bin_rtv.dart';
 import 'package:msi_app/providers/auth_provider.dart';
@@ -16,6 +17,7 @@ class ItemPickItemBinRtv extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InkWell(
       onTap: () {
@@ -34,10 +36,10 @@ class ItemPickItemBinRtv extends StatelessWidget {
           // Navigator.of(context).popUntil(
           //     ModalRoute.withName(PickItemReceiveRtvScreen.routeName));
 
-             pickItemReceive.itemStorageLocation = item.binLocation;
-             showModalBottomSheet(
-                context: context, builder: (_) => DialogPickListNonbatchRtv(pickItemReceive));
-        
+          pickItemReceive.itemStorageLocation = item.binLocation;
+          showModalBottomSheet(
+              context: context,
+              builder: (_) => DialogPickListNonbatchRtv(pickItemReceive));
         }
       },
       child: Container(
@@ -48,7 +50,11 @@ class ItemPickItemBinRtv extends StatelessWidget {
           children: [
             BaseTextLine('Bin Location', item.binLocation),
             BaseTextLine('Warehouse', authProvider.warehouseName),
-            BaseTextLine('Qty', item.avlQty.toStringAsFixed(4)),
+            BaseTextLine(
+                'Qty',
+                item.avlQty == 0.0
+                    ? item.avlQty.toStringAsFixed(4)
+                    : formatter.format(item.avlQty)),
           ],
         ),
       ),

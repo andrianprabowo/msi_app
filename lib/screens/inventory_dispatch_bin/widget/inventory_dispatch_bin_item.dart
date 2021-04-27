@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_bin.dart';
 import 'package:msi_app/models/inventory_dispatch_item.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_item_provider.dart';
 import 'package:msi_app/screens/Inventory_dispatch_batch/inventory_dispatch_batch_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_item/inventory_dispatch_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -29,6 +30,13 @@ class InventoryDispatchBinItem extends StatelessWidget {
             );
           } else {
             inventoryDispatchItem.itemStorageLocation = item.binLocation;
+
+            final inventoryDispItem =
+                Provider.of<InventoryDispatchItemProvider>(context,
+                    listen: false);
+            inventoryDispItem.inputBinNonBatch(inventoryDispatchItem,
+                inventoryDispatchItem.itemStorageLocation);
+
             print('isinya bin item $item');
 
             Navigator.of(context).popUntil(

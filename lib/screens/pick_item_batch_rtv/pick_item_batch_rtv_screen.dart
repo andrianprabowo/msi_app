@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_item_receive_rtv.dart';
 import 'package:msi_app/models/pick_list_bin_rtv.dart';
 import 'package:msi_app/providers/pick_batch_rtv_provider.dart';
 import 'package:msi_app/providers/pick_item_receive_rtv_provider.dart';
+import 'package:msi_app/screens/pick_item_batch_rtv/widget/dialog_expired_rtv.dart';
 import 'package:msi_app/screens/pick_item_batch_rtv/widget/dialog_pick_batch_rtv.dart';
 import 'package:msi_app/screens/pick_item_batch_rtv/widget/item_pick_batch_rtv.dart';
 import 'package:msi_app/screens/pick_item_receive_rtv/pick_item_receive_rtv_screen.dart';
@@ -29,6 +31,7 @@ class PickItemBatchRtvScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final pickItemProvider =
         Provider.of<PickItemReceiveRtvProvider>(context, listen: false);
     final pickBatchProvider =
@@ -47,7 +50,7 @@ class PickItemBatchRtvScreen extends StatelessWidget {
             onPressed: () {
               if (pickBatchProvider.totalPicked > pickItem.quantity) {
                 showAlertGreaterThanZero(
-                    context, pickItem.quantity.toStringAsFixed(4));
+                    context, formatter.format(pickItem.quantity));
               } else {
                 // update bin location
                 pickItem.itemStorageLocation = itemBin.binLocation;
@@ -98,8 +101,7 @@ class PickItemBatchRtvScreen extends StatelessWidget {
                     builder: (BuildContext _, provider, Widget child) {
                   return Expanded(
                     child: BaseTextLine(
-                      'Total Picked',
-                      provider.totalPicked.toStringAsFixed(4),
+                      'Total Picked',formatter.format(provider.totalPicked),
                     ),
                   );
                 }),
@@ -117,7 +119,10 @@ class PickItemBatchRtvScreen extends StatelessWidget {
             BaseTitle(pickItem.description),
             BaseTitle(pickItem.itemStorageLocation),
             BaseTextLine(
-                'Total To Pick Qty', pickItem.quantity.toStringAsFixed(4)),
+                'Total To Pick Qty',  
+                      pickItem.quantity == 0.0
+                          ? pickItem.quantity.toStringAsFixed(4)
+                          : formatter.format(pickItem.quantity)),
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             Row(
@@ -125,7 +130,7 @@ class PickItemBatchRtvScreen extends StatelessWidget {
                 Expanded(
                   child: BaseTitle('List Batch of Item'),
                 ),
-                Text('Show All Item'),
+                Text('Show All Batches'),
                 Consumer<PickBatchRtvProvider>(
                   builder: (_, provider, child) {
                     return Switch(
@@ -188,10 +193,23 @@ class PickItemBatchRtvScreen extends StatelessWidget {
       scanResult: (value) {
         final item = provider.findByBatchNo(value);
 
-        showModalBottomSheet(
-          context: context,
-          builder: (_) => DialogPickBatchRtv(item),
-        );
+        final date = new DateTime.now();
+        
+
+        if (item.expiredDate.isAfter(date)) {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => DialogPickBatchRtv(item),
+          );
+        } else {
+
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => DialogExpiredRtv(item),
+          );
+          print('expired ' + item.expiredDate.toString());
+          print(date);
+        }
       },
     );
   }

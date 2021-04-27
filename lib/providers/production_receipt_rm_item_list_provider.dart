@@ -8,17 +8,19 @@ import 'package:http/http.dart' as http;
 
 class ProductionReceiptRMItemListProvider with ChangeNotifier {
   List<ProductionReceiptRMItemListModel> _items;
+  ProductionReceiptRMItemListModel _selected;
+  ProductionReceiptRMItemListModel get selected => _selected;
 
   List<ProductionReceiptRMItemListModel> get items {
     _items.forEach((detail) {
-      if (detail.fgBatch == "Y") {
-        // calculate total batch qty
-        var totalBatch = 0.0;
-        detail.batchList.forEach((batch) {
-          totalBatch = totalBatch + batch.pickQty;
-        });
-        detail.pickedQty = totalBatch;
-      }
+      // if (detail.fgBatch == "Y") {
+      // calculate total batch qty
+      var totalBatch = 0.0;
+      detail.batchList.forEach((batch) {
+        totalBatch = totalBatch + batch.pickQty;
+      });
+      detail.pickedQty = totalBatch;
+      // }
       // calculate remaining qty
       detail.quantity = detail.openQty - detail.pickedQty;
     });
@@ -29,8 +31,8 @@ class ProductionReceiptRMItemListProvider with ChangeNotifier {
   }
 
   Future<void> getInventItemByPlNo(String docNumber) async {
-
-    final url = '$kBaseUrl/api/getplitemsbyPAPRMno/docnum=$docNumber'; ////getplitemsbyPAPRMno
+    final url =
+        '$kBaseUrl/api/getplitemsbyPAPRMno/docnum=$docNumber'; ////getplitemsbyPAPRMno
 
     try {
       final response = await http.get(url);
@@ -60,7 +62,16 @@ class ProductionReceiptRMItemListProvider with ChangeNotifier {
     ProductionReceiptRMItemListModel inventoryDispatchItem,
     List<ProductionReceiptRMItemListBatchListModel> batchList,
   ) {
-    inventoryDispatchItem.batchList = batchList;
+    inventoryDispatchItem.batchList.addAll(batchList);
+    notifyListeners();
+    print('Added Batch List: $batchList');
+  }
+
+  void addBin(
+    ProductionReceiptRMItemListModel inventoryDispatchItem,
+    ProductionReceiptRMItemListBatchListModel batchList,
+  ) {
+    inventoryDispatchItem.batchList.add(batchList);
     notifyListeners();
     print('Added Batch List: $batchList');
   }
@@ -74,7 +85,8 @@ class ProductionReceiptRMItemListProvider with ChangeNotifier {
     print('Removed Item Batch: $itemBatch');
   }
 
-  void inputQtyNonBatch(ProductionReceiptRMItemListModel inventoryDispatchItem, double qty ,String itemStorageLocation) {
+  void inputQtyNonBatch(ProductionReceiptRMItemListModel inventoryDispatchItem,
+      double qty, String itemStorageLocation) {
     inventoryDispatchItem.pickedQty = qty;
     inventoryDispatchItem.itemStorageLocation = itemStorageLocation;
     notifyListeners();

@@ -25,6 +25,7 @@ class _ProductionReceiptItemQtyDialogState
   final _batchNumber = TextEditingController();
   final _quantity = TextEditingController();
   final _quantityReject = TextEditingController();
+  var itemxx = 1;
   DateTime _selectedDate = DateTime.now();
 
   ProductionReceiptItemModel get item {
@@ -89,47 +90,69 @@ class _ProductionReceiptItemQtyDialogState
   }
 
   Widget buildDatePicker(context) {
-    final initial =
+    var initial =
         DateTime.now().add(new Duration(days: widget.item.defDayExpired));
     return Row(
       children: [
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.all(kLarge),
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  width: kTiny,
-                  style: BorderStyle.solid,
-                  color: kPrimaryColor,
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(kMedium),
-                ),
-              ),
-            ),
-            child: Text(convertDate(initial)),
-          ),
-        ),
+        // Expanded(
+        //   child: Container(
+        //     padding: const EdgeInsets.all(kLarge),
+        //     decoration: ShapeDecoration(
+        //       shape: RoundedRectangleBorder(
+        //         side: BorderSide(
+        //           width: kTiny,
+        //           style: BorderStyle.solid,
+        //           color: kPrimaryColor,
+        //         ),
+        //         borderRadius: BorderRadius.all(
+        //           Radius.circular(kMedium),
+        //         ),
+        //       ),
+        //     ),
+        //     // child: Text(convertDate(initial)),
+
+        //     child: Text( DateFormat().addPattern('dd/MM/yyyy').format(initial)),
+
+        //     // child: Text(convertDate(_selectedDate)),
+        //   ),
+        // ),
         IconButton(
           icon: Icon(Icons.event),
           onPressed: () async {
-            final maxYear = DateTime.now().year + 5;
-            print('initital $initial');
-            print('hari ${widget.item.defDayExpired}');
+            // final maxYear = DateTime.now().year + 5;
+            // print('initital $initial');
+            // print('hari ${widget.item.defDayExpired}');
+            // final pickedDate = await showDatePicker(
+            //   context: context,
+            //   // initialDate: DateTime.now(),
+            //   initialDate: initial,
+            //   firstDate: DateTime.now(),
+            //   lastDate: DateTime(maxYear),
+            itemxx = 2;
+            final init = DateTime.now()
+                .add(new Duration(days: widget.item.defDayExpired));
+
+                print(" ini xxx  $itemxx");
+
+            print(" date initial $initial");
+            
+            final maxYear = init.year + 5;
             final pickedDate = await showDatePicker(
               context: context,
-              // initialDate: DateTime.now(),
-              initialDate: initial,
+              initialDate: init,
               firstDate: DateTime.now(),
               lastDate: DateTime(maxYear),
             );
 
-            if (pickedDate == null) return;
-
+            print(" 2 date picked $pickedDate");
+            if (pickedDate == null) {
+              return;
+            }
             setState(() {
               _selectedDate = pickedDate;
-            });
+              initial = _selectedDate;
+            });print("3 date select ${item.xxxx.toString()}");
+            print("3 date initial $initial");
           },
         ),
       ],
@@ -255,6 +278,12 @@ class _ProductionReceiptItemQtyDialogState
             String dateString =
                 DateFormat().addPattern('yyyy/MM/dd').format(date);
             if (_batchNumber.text.isEmpty) {
+              if (itemxx == 1) {
+                _selectedDate = DateTime.now()
+                    .add(new Duration(days: widget.item.defDayExpired));
+                print("ini number null xxx $_selectedDate");
+              }
+              
               return showDialog<void>(
                 context: context,
                 barrierDismissible: false,
@@ -309,6 +338,12 @@ class _ProductionReceiptItemQtyDialogState
               );
             }
 
+            if (itemxx == 1) {
+              _selectedDate = DateTime.now()
+                  .add(new Duration(days: widget.item.defDayExpired));
+
+              print("ini xxx $_selectedDate");
+            }
             itemPoProvider.addBatch(
               item,
               ProductionReceiptItemBatchModel(

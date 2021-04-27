@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_batch.dart';
 import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -12,6 +13,7 @@ class PickBinCheck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     // final provider =
     //     Provider.of<PickItemReceiveProvider>(context, listen: false);
     return Container(
@@ -27,7 +29,7 @@ class PickBinCheck extends StatelessWidget {
                 BaseTitle( batch.bin),
                 // BaseTextLine('Batch Number', batch.batchNo),
                 // BaseTextLine('Expired Date', convertDate(batch.expiredDate)),
-                BaseTextLine('Quantity', batch.pickQty.toStringAsFixed(4)),
+                BaseTextLine('Quantity', formatter.format(batch.pickQty)),
               ],
             ),
           ),

@@ -74,10 +74,17 @@ class InventoryDispatchItemRtvProvider with ChangeNotifier {
     print('Removed Item Batch: $itemBatch');
   }
 
-  void inputQtyNonBatch(InventoryDispatchItemRtv inventoryDispatchItem, double qty ,String itemStorageLocation) {
+  void inputQtyNonBatch(InventoryDispatchItemRtv inventoryDispatchItem, double qty ) {
     inventoryDispatchItem.pickedQty = qty;
-    inventoryDispatchItem.itemStorageLocation = itemStorageLocation;
+    // inventoryDispatchItem.itemStorageLocation = itemStorageLocation;
     notifyListeners();
     print('Update Qty Non batch: $inventoryDispatchItem');
+  }
+
+  void inputBinNonBatch(InventoryDispatchItemRtv inventoryDispatchItem, String itemStorageLocation) {
+    // inventoryDispatchItem.pickedQty = qty;
+    inventoryDispatchItem.itemStorageLocation = itemStorageLocation;
+    notifyListeners();
+    print('Update Bin Non batch: $inventoryDispatchItem');
   }
 }

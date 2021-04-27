@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_batch_rfo.dart';
 import 'package:msi_app/providers/receipt_batch_rfo_provider.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -22,6 +23,7 @@ class _DialogReceiptBatchRfoState extends State<DialogReceiptBatchRfo> {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
@@ -33,8 +35,7 @@ class _DialogReceiptBatchRfoState extends State<DialogReceiptBatchRfo> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Expired Date', convertDate(widget.item.expiredDate)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('Available Quantity',
-              widget.item.availableQty.toStringAsFixed(4)),
+          BaseTextLine('Available Quantity', formatter.format(widget.item.availableQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -46,7 +47,7 @@ class _DialogReceiptBatchRfoState extends State<DialogReceiptBatchRfo> {
           //   buildButtonNotif(context, widget.item.availableQty.toString())
           // else
           buildButtonSubmit(
-              context, widget.item.availableQty.toStringAsFixed(4)),
+              context, formatter.format(widget.item.availableQty)),
         ],
       ),
     );
@@ -135,4 +136,5 @@ class _DialogReceiptBatchRfoState extends State<DialogReceiptBatchRfo> {
       ),
     );
   }
+
 }

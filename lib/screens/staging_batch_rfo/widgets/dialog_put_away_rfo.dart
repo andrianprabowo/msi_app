@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/put_batch_rfo.dart';
 import 'package:msi_app/providers/item_batch_rfo_provider.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -22,6 +23,7 @@ class _DialogPutAwayRfoState extends State<DialogPutAwayRfo> {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
@@ -33,8 +35,11 @@ class _DialogPutAwayRfoState extends State<DialogPutAwayRfo> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Expired Date', convertDate(widget.item.expiredDate)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('Available Quantity',
-              widget.item.availableQty.toStringAsFixed(4)),
+          BaseTextLine(
+              'Available Quantity',
+              widget.item.availableQty == 0.0
+                  ? widget.item.availableQty.toStringAsFixed(4)
+                  : formatter.format(widget.item.availableQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -45,7 +50,8 @@ class _DialogPutAwayRfoState extends State<DialogPutAwayRfo> {
           //     _quantity.text == '0')
           //   buildButtonNotif(context, widget.item.availableQty.toString())
           // else
-            buildButtonSubmit(context, widget.item.availableQty.toStringAsFixed(4)),
+          buildButtonSubmit(
+              context, formatter.format(widget.item.availableQty)),
         ],
       ),
     );
@@ -89,35 +95,35 @@ class _DialogPutAwayRfoState extends State<DialogPutAwayRfo> {
           if (double.parse(_quantity.text) > widget.item.availableQty) {
             print('Tidak boleh lebih besar dari Available Qty ');
             return showDialog<void>(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.notification_important,
-                            color: Colors.red, size: 50),
-                        Divider(),
-                        SizedBox(height: getProportionateScreenHeight(kLarge)),
-                        BaseTitleColor('Qty must be above 0'),
-                        SizedBox(height: getProportionateScreenHeight(kLarge)),
-                        BaseTitleColor('or equal to  $avlQty'),
-                        SizedBox(height: getProportionateScreenHeight(kLarge)),
-                        SizedBox(
-                          width: double.infinity,
-                          child: RaisedButton(
-                            child: Text('OK'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.notification_important,
+                          color: Colors.red, size: 50),
+                      Divider(),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('Qty must be above 0'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      BaseTitleColor('or equal to  $avlQty'),
+                      SizedBox(height: getProportionateScreenHeight(kLarge)),
+                      SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                         ),
-                      ],
-                    ),
-                  );
-                },
-              );
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
           }
           double qty;
           try {

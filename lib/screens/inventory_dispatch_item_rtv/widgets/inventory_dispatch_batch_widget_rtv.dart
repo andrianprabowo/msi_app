@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/inventory_dispatch_batch_rtv.dart';
 import 'package:msi_app/models/inventory_dispatch_item_rtv.dart';
 import 'package:msi_app/providers/inventory_dispatch_item_rtv_provider.dart';
@@ -14,6 +15,7 @@ class InventoryDispatchBatchWidgetRtv extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final provider =
         Provider.of<InventoryDispatchItemRtvProvider>(context, listen: false);
     return Container(
@@ -33,7 +35,9 @@ class InventoryDispatchBatchWidgetRtv extends StatelessWidget {
               children: [
                 BaseTextLine('Batch Number', batch.batchNo),
                 BaseTextLine('Expired Date', convertDate(batch.expiredDate)),
-                BaseTextLine('Quantity', batch.pickQty.toStringAsFixed(4)),
+                BaseTextLine('Quantity', batch.pickQty == 0.0
+                  ? batch.pickQty.toStringAsFixed(4)
+                  :formatter.format(batch.pickQty)),
               ],
             ),
           ),

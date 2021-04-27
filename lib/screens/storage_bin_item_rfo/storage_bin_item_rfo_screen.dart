@@ -4,6 +4,7 @@ import 'package:msi_app/providers/item_batch_rfo_provider.dart';
 import 'package:msi_app/providers/item_bin_rfo_provider.dart';
 import 'package:msi_app/providers/storage_bin_item_rfo_provider.dart';
 import 'package:msi_app/screens/staging_item_rfo/staging_item_rfo_screen.dart';
+import 'package:msi_app/screens/staging_item_rfo/widgets/dialog_put_away_nonbatch_rfo.dart';
 import 'package:msi_app/screens/storage_bin_item_rfo/widgets/item_storage_bin_item_rfo.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -127,11 +128,17 @@ class StorageBinItemRfoScreen extends StatelessWidget {
         itemBin.binCodeDestination = item.binCode;
         if (itemBin.fgBatch == "Y") {
           final batchList = itemBatchProvider.pickedItems;
+          batchList.forEach((detail) {
+            // calculate bin
+            detail.bin = itemBin.binCodeDestination;
+          });
           itemBinProvider.addBatchList(itemBin, batchList);
+          Navigator.of(context)
+              .popUntil(ModalRoute.withName(StagingItemRfoScreen.routeName));
+        } else {
+              showModalBottomSheet(
+                context: context, builder: (_) => DialogPutAwayNonbatchRfo(itemBin));
         }
-
-        Navigator.of(context)
-            .popUntil(ModalRoute.withName(StagingItemRfoScreen.routeName));
       },
     );
   }

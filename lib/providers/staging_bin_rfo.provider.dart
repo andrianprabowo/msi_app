@@ -51,9 +51,9 @@ class StagingBinRfoProvider with ChangeNotifier {
     _selected = stagingBin;
     notifyListeners();
   }
-
   Future<Map<String, dynamic>> createPutAway() async {
-    var url = '$kBaseUrl/tgrpo/tgrpo/api/listputawayrfo';
+    // var url = '$kBaseUrl/tgrpo/tgrpo/api/listputawayrfo';
+    var url = '$kBaseUrl/tgrpo/tgrpo/api/MultiListPutAwayRfo';
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',

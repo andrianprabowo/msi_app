@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 
 class ProductionReceiptItemBatchModel with ChangeNotifier {
   final String batchNo;
+  String bin;
   final double availableQty;
   final double rejectQty;
   final DateTime expiredDate;
   ProductionReceiptItemBatchModel({
     this.batchNo,
+    this.bin,
     this.availableQty,
     this.rejectQty,
     this.expiredDate,
@@ -31,6 +33,7 @@ class ProductionReceiptItemBatchModel with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'batchNo': batchNo,
+      'itemStorageLocation': bin,
       'batchQuantity': availableQty,
       'batchRejectQty': rejectQty,
       'expDate': expiredDate?.toIso8601String(),
@@ -43,6 +46,7 @@ class ProductionReceiptItemBatchModel with ChangeNotifier {
     return ProductionReceiptItemBatchModel(
       batchNo: map['batchNo'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
+      bin: map['itemStorageLocation'] ?? '',
       rejectQty: 0.0,
       expiredDate: DateTime.parse(map['expDate']),
     );
@@ -55,7 +59,7 @@ class ProductionReceiptItemBatchModel with ChangeNotifier {
 
   @override
   String toString() =>
-      'ProductionReceiptItemBatchModel(batchNo: $batchNo, availableQty: $availableQty, rejectQty: $rejectQty, expiredDate: $expiredDate)';
+      'ProductionReceiptItemBatchModel(batchNo: $batchNo,bin: $bin, availableQty: $availableQty, rejectQty: $rejectQty, expiredDate: $expiredDate)';
 
   @override
   bool operator ==(Object o) {

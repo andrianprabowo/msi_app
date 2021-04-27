@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/stock_counting_batch.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
@@ -17,9 +18,10 @@ class ItemDetailSc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final provider =
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final provider =
         Provider.of<StockCountingItemProvider>(context, listen: false);
- 
+
     return InkWell(
       onTap: () {
         if (item.fgBatch == 'Y') {
@@ -61,27 +63,32 @@ class ItemDetailSc extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-            icon: Icon(Icons.delete, color: Colors.red),
-            onPressed: () {
-              provider.removeItem(item);
-            },
-          ), Expanded(
-            child: Column(
-              children: [
-            BaseTitle(item.itemCode),
-            BaseTitle(item.description),
-            Divider(),
-            BaseTextLine('Counted Qty', item.quantity.toStringAsFixed(4)),
-            BaseTextLine('Inventory UoM', item.unitMsr),
-            BaseTextLine('Item Batch', item.fgBatch),
-            if (item.itemStorageLocation.isNotEmpty)
-              BaseTextLine('Bin Location', ''),
-            if (item.itemStorageLocation.isNotEmpty)
-              BaseTextLine('', item.itemStorageLocation),
-            buildItemBatchList(item.batchList),
-              ],
+              icon: Icon(Icons.delete, color: Colors.red),
+              onPressed: () {
+                provider.removeItem(item);
+              },
             ),
-          ),
+            Expanded(
+              child: Column(
+                children: [
+                  BaseTitle(item.itemCode),
+                  BaseTitle(item.description),
+                  Divider(),
+                  BaseTextLine(
+                      'Counted Qty',
+                      item.quantity == 0.0
+                          ? item.quantity.toStringAsFixed(4)
+                          : formatter.format(item.quantity)),
+                  BaseTextLine('Inventory UoM', item.unitMsr),
+                  BaseTextLine('Item Batch', item.fgBatch),
+                  if (item.itemStorageLocation.isNotEmpty)
+                    BaseTextLine('Bin Location', ''),
+                  if (item.itemStorageLocation.isNotEmpty)
+                    BaseTextLine('', item.itemStorageLocation),
+                  buildItemBatchList(item.batchList),
+                ],
+              ),
+            ),
           ],
         ),
       ),

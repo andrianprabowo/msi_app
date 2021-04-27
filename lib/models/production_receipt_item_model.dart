@@ -11,6 +11,7 @@ class ProductionReceiptItemModel with ChangeNotifier {
   double quantityReject;
   double remainingQty;
   int defDayExpired;
+  int xxxx;
   final String uom;
   final String docNum;
   final String fgBatch;
@@ -23,6 +24,7 @@ class ProductionReceiptItemModel with ChangeNotifier {
     this.quantity,
     this.quantityReject,
     this.defDayExpired,
+    this.xxxx,
     this.remainingQty,
     this.uom,
     this.docNum,
@@ -60,6 +62,7 @@ class ProductionReceiptItemModel with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'materialNo': itemCode,
+      'fgBatch': fgBatch,
       'materialDesc': description,
       'grfgQuantity': quantity,
       'qrfgRejectQty': quantityReject,

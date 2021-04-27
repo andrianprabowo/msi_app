@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/stock_counting_batch.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/screens/stock_counting_check/widget/stock_counting_batch_check.dart';
@@ -13,6 +14,7 @@ class StockCountingDetailCheck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return Container(
       margin: const EdgeInsets.all(kTiny),
       padding: const EdgeInsets.all(kSmall),
@@ -22,7 +24,11 @@ class StockCountingDetailCheck extends StatelessWidget {
           BaseTitle(item.itemCode),
           BaseTitle(item.description),
           Divider(),
-          BaseTextLine('Count Quantity', item.quantity.toStringAsFixed(4)),
+          BaseTextLine(
+              'Count Quantity',
+              item.quantity == 0.0
+                  ? item.quantity.toStringAsFixed(4)
+                  : formatter.format(item.quantity)),
           BaseTextLine('UoM', item.unitMsr),
           BaseTextLine('Item Batch', item.fgBatch),
           if (item.itemStorageLocation.isNotEmpty)

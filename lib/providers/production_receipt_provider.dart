@@ -62,7 +62,8 @@ class ProductionReceiptProvider with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> createProductionReceipt() async {
-    var url = '$kBaseUrl/tgrpo/tgrpo/api/ListGRPOFG';
+    // var url = '$kBaseUrl/tgrpo/tgrpo/api/ListGRPOFG';
+    var url = '$kBaseUrl/tgrpo/tgrpo/api/MultiPutAwayFromOutlet';
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',

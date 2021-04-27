@@ -35,8 +35,16 @@ class ProductionPickListFinalDetail extends StatelessWidget {
           //     item.pickedQty == 0.0
           //         ? item.pickedQty.toStringAsFixed(4)
           //         : formatter.format(item.pickedQty)),
-          BaseTextLine('Pick Quantity', item.pickedQty.toStringAsFixed(4)),
-          BaseTextLine('Remaining Quantity', item.quantity.toStringAsFixed(4)),
+          BaseTextLine(
+              'Pick Quantity',
+              item.pickedQty == 0.0
+                  ? item.pickedQty.toStringAsFixed(4)
+                  : formatter.format(item.pickedQty)),
+          BaseTextLine(
+              'Remaining Quantity',
+              item.quantity == 0.0
+                  ? item.quantity.toStringAsFixed(4)
+                  : formatter.format(item.quantity)),
           BaseTextLine('Item Batch', item.fgBatch),
           BaseTextLine('UoM', item.unitMsr),
           BaseTextLine('Bin Location', item.itemStorageLocation),

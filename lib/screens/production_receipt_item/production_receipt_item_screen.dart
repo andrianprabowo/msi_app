@@ -13,7 +13,7 @@ import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/input_scan.dart';
-import 'package:msi_app/widgets/item_bin_production_receipt.dart';
+// import 'package:msi_app/widgets/item_bin_production_receipt.dart';
 import 'package:msi_app/widgets/item_enter_gl.dart';
 import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
@@ -58,19 +58,19 @@ class ProductionReceiptItem extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.post_add),
               onPressed: () {
-                if (authProvider.binId == "Please Select Bin") {
-                  final snackBar = SnackBar(
-                    content: Row(
-                      children: [
-                        Icon(Icons.error_outline, color: Colors.red),
-                        SizedBox(width: getProportionateScreenWidth(kLarge)),
-                        Text('Please Select Bin First'),
-                      ],
-                    ),
-                  );
-                  globalKey.currentState.showSnackBar(snackBar);
-                  return;
-                }
+                // if (authProvider.binId == "Please Select Bin") {
+                //   final snackBar = SnackBar(
+                //     content: Row(
+                //       children: [
+                //         Icon(Icons.error_outline, color: Colors.red),
+                //         SizedBox(width: getProportionateScreenWidth(kLarge)),
+                //         Text('Please Select Bin First'),
+                //       ],
+                //     ),
+                //   );
+                //   globalKey.currentState.showSnackBar(snackBar);
+                //   return;
+                // }
 
                 if (authProvider.binGl == "Please input GI Sequence no") {
                   final snackBar = SnackBar(
@@ -119,7 +119,7 @@ class ProductionReceiptItem extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('Document Date', convertDate(po.docDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            ItemBinProductionReceipt(),
+            // ItemBinProductionReceipt(),
             ItemEnterGl(),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildInputScan(context),

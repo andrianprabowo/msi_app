@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_batch_so.dart';
 import 'package:msi_app/models/pick_item_receive_so.dart';
 import 'package:msi_app/providers/pick_item_receive_so_provider.dart';
@@ -29,6 +30,7 @@ class _DialogPickListNonbatchSoState extends State<DialogPickListNonbatchSo> {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
@@ -43,11 +45,14 @@ class _DialogPickListNonbatchSoState extends State<DialogPickListNonbatchSo> {
           BaseTitle(widget.item.description),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine(
-              'Total To Pick Qty', widget.item.quantity.toStringAsFixed(4)),
+              'Total To Pick Qty',
+              item.quantity == 0.0
+                  ? item.quantity.toStringAsFixed(4)
+                  : formatter.format(widget.item.quantity)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          buildButtonSubmit(context, widget.item.openQty.toStringAsFixed(4)),
+          buildButtonSubmit(context, formatter.format(widget.item.openQty)),
         ],
       ),
     );

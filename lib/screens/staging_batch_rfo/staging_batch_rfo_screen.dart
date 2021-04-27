@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin_rfo.dart';
 import 'package:msi_app/providers/item_batch_rfo_provider.dart';
 import 'package:msi_app/screens/staging_batch_rfo/widgets/dialog_put_away_rfo.dart';
@@ -27,6 +28,7 @@ class StagingBatchRfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final itemBatchProvider =
         Provider.of<ItemBatchRfoProvider>(context, listen: false);
     ItemBinRfo item = ModalRoute.of(context).settings.arguments;
@@ -60,9 +62,10 @@ class StagingBatchRfoScreen extends StatelessWidget {
                     builder: (BuildContext _, provider, Widget child) {
                   return Expanded(
                     child: BaseTextLine(
-                      'Total Picked',
-                      provider.totalPicked.toStringAsFixed(4),
-                    ),
+                        'Total Picked',
+                        provider.totalPicked == 0.0
+                            ? provider.totalPicked.toStringAsFixed(4)
+                            : formatter.format(provider.totalPicked)),
                   );
                 }),
                 SizedBox(width: getProportionateScreenWidth(kLarge)),
@@ -77,7 +80,11 @@ class StagingBatchRfoScreen extends StatelessWidget {
             ),
             BaseTitle(item.itemCode),
             BaseTitle(item.itemName),
-            BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(4)),
+            BaseTextLine(
+                'Available Qty',
+                item.availableQty == 0.0
+                    ? item.availableQty.toStringAsFixed(4)
+                    : formatter.format(item.availableQty)),
             BaseTextLine('Uom', item.uom),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),

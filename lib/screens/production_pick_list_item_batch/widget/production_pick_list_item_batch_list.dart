@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_pick_list_item_batch_model.dart';
 import 'package:msi_app/models/production_pick_list_item_model.dart';
 import 'package:msi_app/screens/production_pick_list_item_batch/widget/production_pick_list_item_batch_dialog.dart';
+import 'package:msi_app/screens/production_pick_list_item_batch/widget/production_pick_list_item_expired_dialog.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
@@ -18,10 +19,19 @@ class ProductionPickListItemBatchList extends StatelessWidget {
     final formatter = NumberFormat('#,###.0000#', 'en_US');
     return InkWell(
       onTap: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (_) => ProductionPickListItemBatchDialog(item),
-        );
+        final date = new DateTime.now();
+
+        if (item.expiredDate.isAfter(date)) {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => ProductionPickListItemBatchDialog(item),
+          );
+        } else {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => ProductionPickListItemExpired(item),
+          );
+        }
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),

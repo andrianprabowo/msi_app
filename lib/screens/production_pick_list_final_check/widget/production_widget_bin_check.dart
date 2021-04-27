@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_pick_list_item_batch_model.dart';
 import 'package:msi_app/models/production_pick_list_item_model.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+
 class ProductionWidgetBinCheck extends StatelessWidget {
   final ProductionPickListItemModel pickItem;
   final ProductionPickListItemBatchModel batch;
@@ -12,6 +14,7 @@ class ProductionWidgetBinCheck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     // final provider =
     //     Provider.of<PickItemReceiveProvider>(context, listen: false);
     return Container(
@@ -20,14 +23,17 @@ class ProductionWidgetBinCheck extends StatelessWidget {
       decoration: kBoxDecoration,
       child: Row(
         children: [
-         
           Expanded(
             child: Column(
               children: [
-                BaseTitle( batch.bin),
+                BaseTitle(batch.bin),
                 // BaseTextLine('Batch Number', batch.batchNo),
                 // BaseTextLine('Expired Date', convertDate(batch.expiredDate)),
-                BaseTextLine('Quantity', batch.pickQty.toStringAsFixed(4)),
+                BaseTextLine(
+                    'Quantity',
+                    batch.pickQty == 0.0
+                        ? batch.pickQty.toStringAsFixed(4)
+                        : formatter.format(batch.pickQty)),
               ],
             ),
           ),

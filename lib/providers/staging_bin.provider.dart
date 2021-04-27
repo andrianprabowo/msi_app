@@ -52,7 +52,8 @@ class StagingBinProvider with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> createPutAway() async {
-    var url = '$kBaseUrl/tgrpo/tgrpo/api/listgrpodlvs';
+    var url = '$kBaseUrl/tgrpo/tgrpo/api/MultiPutAwayFromVendor';
+    // var url = '$kBaseUrl/tgrpo/tgrpo/api/listgrpodlvs';
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',

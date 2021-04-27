@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_batch.dart';
 import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/providers/pick_item_receive_provider.dart';
@@ -15,6 +16,7 @@ class PickBinWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final provider =
         Provider.of<PickItemReceiveProvider>(context, listen: false);
     return Container(
@@ -33,7 +35,11 @@ class PickBinWidget extends StatelessWidget {
             child: Column(
               children: [
                 BaseTitle(batch.bin),
-                BaseTextLine('Quantity', batch.pickQty.toStringAsFixed(4)),
+                BaseTextLine(
+                    'Quantity',
+                    batch.pickQty == 0.0
+                        ? batch.pickQty.toStringAsFixed(4)
+                        : formatter.format(batch.pickQty)),
               ],
             ),
           ),

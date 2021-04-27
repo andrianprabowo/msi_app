@@ -152,7 +152,7 @@ class ProductionReceiptFinalCheck extends StatelessWidget {
             BaseTextLine('Whs Code', po.vendorCode),
             BaseTextLine('Whs Name', binSelected.warehouseName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Bin', binSelected.binId ?? 'Empty'),
+            // BaseTextLine('Bin', binSelected.binId ?? 'Empty'),
             // BaseTextLine('Staging Bin Name', po.storageLocationName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Item Details'),

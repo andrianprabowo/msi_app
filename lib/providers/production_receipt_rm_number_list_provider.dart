@@ -56,7 +56,8 @@ class ProductionReceiptRMNumberListProvider with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> createInventoryDispatch(BuildContext context) async {
-    var url = '$kBaseUrl/tgrpo/tgrpo/api/listputawyprod';
+    var url = '$kBaseUrl/tgrpo/tgrpo/api/MultyProdReceiptRM';
+    // var url = '$kBaseUrl/tgrpo/tgrpo/api/listputawyprod';
     final headers = {
       'Content-type': 'application/json',
       'Accept': 'application/json',

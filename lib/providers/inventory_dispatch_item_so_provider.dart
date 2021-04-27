@@ -75,10 +75,18 @@ class InventoryDispatchItemSoProvider with ChangeNotifier {
     print('Removed Item Batch: $itemBatch');
   }
 
-  void inputQtyNonBatch(InventoryDispatchItemSo inventoryDispatchItem, double qty ,String itemStorageLocation) {
+  void inputQtyNonBatch(InventoryDispatchItemSo inventoryDispatchItem, double qty ) {
     inventoryDispatchItem.pickedQty = qty;
-    inventoryDispatchItem.itemStorageLocation = itemStorageLocation;
+    // inventoryDispatchItem.itemStorageLocation = itemStorageLocation;
     notifyListeners();
     print('Update Qty Non batch: $inventoryDispatchItem');
+  }
+
+  
+  void inputBinNonBatch(InventoryDispatchItemSo inventoryDispatchItem, String itemStorageLocation) {
+    // inventoryDispatchItem.pickedQty = qty;
+    inventoryDispatchItem.itemStorageLocation = itemStorageLocation;
+    notifyListeners();
+    print('Update Bin Non batch: $inventoryDispatchItem');
   }
 }

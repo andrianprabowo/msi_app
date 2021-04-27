@@ -11,7 +11,8 @@ class ProductionReceiptRMItemListBatchListProvider with ChangeNotifier {
   double _totalPicked = 0.0;
 
   List<ProductionReceiptRMItemListBatchListModel> get items {
-    return _items.where((item) => item.availableQty > item.pickQty).toList();
+    return _items;
+    // return _items.where((item) => item.availableQty > item.pickQty).toList();
   }
 
   List<ProductionReceiptRMItemListBatchListModel> get pickedItems {

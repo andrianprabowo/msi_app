@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_batch.dart';
 import 'package:msi_app/models/item_purchase_order.dart';
 import 'package:msi_app/providers/item_po_provider.dart';
@@ -14,6 +15,7 @@ class ItemBatchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final itemPoProvider = Provider.of<ItemPoProvider>(context, listen: false);
     return Container(
       margin: const EdgeInsets.all(kTiny),
@@ -32,7 +34,10 @@ class ItemBatchWidget extends StatelessWidget {
               children: [
                 BaseTextLine('Batch Number', item.batchNo),
                 BaseTextLine('Expired Date', convertDate(item.expiredDate)),
-                BaseTextLine('Quantity', item.availableQty.toStringAsFixed(4)),
+                BaseTextLine('Quantity', 
+              item.availableQty == 0.0
+                  ? item.availableQty.toStringAsFixed(4)
+                  : formatter.format(item.availableQty)),
               ],
             ),
           ),

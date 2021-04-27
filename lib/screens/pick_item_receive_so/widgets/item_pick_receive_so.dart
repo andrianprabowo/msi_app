@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_batch_so.dart';
 import 'package:msi_app/models/pick_item_receive_so.dart';
 import 'package:msi_app/screens/pick_item_bin_so/pick_list_bin_so_screen.dart';
@@ -15,6 +16,7 @@ class ItemPickReceiveSo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return InkWell(
       onTap: () {
         item.fgBatch == 'Y'
@@ -32,9 +34,21 @@ class ItemPickReceiveSo extends StatelessWidget {
             BaseTitle(item.itemCode),
             BaseTitle(item.description),
             Divider(),
-            BaseTextLine('Total To Pick', item.openQty.toStringAsFixed(4)),
-            BaseTextLine('Picked Qty', item.pickedQty.toStringAsFixed(4)),
-            BaseTextLine('Remaining Qty', item.quantity.toStringAsFixed(4)),
+            BaseTextLine(
+                'Total To Pick',
+                item.openQty == 0.0
+                    ? item.openQty.toStringAsFixed(4)
+                    : formatter.format(item.openQty)),
+            BaseTextLine(
+                'Picked Qty',
+                item.pickedQty == 0.0
+                    ? item.pickedQty.toStringAsFixed(4)
+                    : formatter.format(item.pickedQty)),
+            BaseTextLine(
+                'Remaining Qty',
+                item.quantity == 0.0
+                    ? item.quantity.toStringAsFixed(4)
+                    : formatter.format(item.quantity)),
             BaseTextLine('Inventory UoM', item.unitMsr),
             BaseTextLine('Item Batch', item.fgBatch),
             if (item.fgBatch == 'Y') buildItemBatchList(item.batchList),

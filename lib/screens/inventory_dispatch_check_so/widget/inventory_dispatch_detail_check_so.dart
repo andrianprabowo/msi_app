@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/inventory_dispatch_batch_so.dart';
 import 'package:msi_app/models/inventory_dispatch_item_so.dart';
 import 'package:msi_app/screens/inventory_dispatch_check_so/widget/inventory_dispatch_batch_check_so.dart';
@@ -13,6 +14,7 @@ class InventoryDispatchDetailCheckSo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return Container(
       margin: const EdgeInsets.all(kTiny),
       padding: const EdgeInsets.all(kSmall),
@@ -22,9 +24,21 @@ class InventoryDispatchDetailCheckSo extends StatelessWidget {
           BaseTitle(item.itemCode),
           BaseTitle(item.description),
           Divider(),
-          BaseTextLine('Dispatch Quantity', item.openQty.toStringAsFixed(4)),
-          BaseTextLine('Pick Quantity', item.pickedQty.toStringAsFixed(4)),
-          BaseTextLine('Remaining Quantity ', item.quantity.toStringAsFixed(4)),
+          BaseTextLine(
+              'Dispatch Quantity',
+              item.openQty == 0.0
+                  ? item.openQty.toStringAsFixed(4)
+                  : formatter.format(item.openQty)),
+          BaseTextLine(
+              'Pick Quantity',
+              item.pickedQty == 0.0
+                  ? item.pickedQty.toStringAsFixed(4)
+                  : formatter.format(item.pickedQty)),
+          BaseTextLine(
+              'Remaining Quantity ',
+              item.quantity == 0.0
+                  ? item.quantity.toStringAsFixed(4)
+                  : formatter.format(item.quantity)),
           BaseTextLine('UoM', item.unitMsr),
           Divider(),
           if (item.batchList.isNotEmpty) BaseTitle('Item Batch List'),

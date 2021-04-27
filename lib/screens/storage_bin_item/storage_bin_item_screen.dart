@@ -4,6 +4,7 @@ import 'package:msi_app/providers/item_batch_provider.dart';
 import 'package:msi_app/providers/item_bin_provider.dart';
 import 'package:msi_app/providers/storage_bin_item_provider.dart';
 import 'package:msi_app/screens/staging_item/staging_item_screen.dart';
+import 'package:msi_app/screens/staging_item/widgets/dialog_put_away_nonbatch.dart';
 import 'package:msi_app/screens/storage_bin_item/widgets/item_storage_bin_item.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -127,11 +128,21 @@ class StorageBinItemScreen extends StatelessWidget {
         itemBin.binCodeDestination = item.binCode;
         if (itemBin.fgBatch == "Y") {
           final batchList = itemBatchProvider.pickedItems;
+          // batchList.bin = storageBinItem.binCode;
+          batchList.forEach((detail) {
+            // calculate bin
+            detail.bin = itemBin.binCodeDestination;
+          });
           itemBinProvider.addBatchList(itemBin, batchList);
+          Navigator.of(context)
+            .popUntil(ModalRoute.withName(StagingItemScreen.routeName));
+        } else {
+          
+          showModalBottomSheet(
+                context: context, builder: (_) => DialogPutAwayNonbatch(itemBin));
         }
 
-        Navigator.of(context)
-            .popUntil(ModalRoute.withName(StagingItemScreen.routeName));
+        
       },
     );
   }

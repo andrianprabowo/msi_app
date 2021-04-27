@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/inventory_dispatch_item_rtv.dart';
 import 'package:msi_app/providers/inventory_dispatch_item_rtv_provider.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -27,6 +28,7 @@ class _DialogInvDispNonbatchRtvState extends State<DialogInvDispNonbatchRtv> {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
@@ -38,7 +40,10 @@ class _DialogInvDispNonbatchRtvState extends State<DialogInvDispNonbatchRtv> {
           BaseTitle(widget.item.description),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine(
-              'Available Quantity', widget.item.openQty.toStringAsFixed(4)),
+              'Available Quantity',
+              widget.item.openQty == 0.0
+                  ? widget.item.openQty.toStringAsFixed(4)
+                  : formatter.format(widget.item.openQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -49,7 +54,7 @@ class _DialogInvDispNonbatchRtvState extends State<DialogInvDispNonbatchRtv> {
           //     _quantity.text == '0')
           //   buildButtonNotif(context, widget.item.openQty.toString())
           // else
-          buildButtonSubmit(context, widget.item.openQty.toStringAsFixed(4)),
+          buildButtonSubmit(context, formatter.format(widget.item.openQty)),
         ],
       ),
     );
@@ -125,10 +130,7 @@ class _DialogInvDispNonbatchRtvState extends State<DialogInvDispNonbatchRtv> {
               Provider.of<InventoryDispatchItemRtvProvider>(context,
                   listen: false);
           inventoryDispatchItem.inputQtyNonBatch(
-            item,
-            double.parse(_quantity.text),
-            item.itemStorageLocation,
-          );
+              item, double.parse(_quantity.text));
           //  Navigator.of(context)
           //   .pushNamed(InventoryDispatchBinRtvScreen.routeName, arguments: item);
           Navigator.of(context).pop();

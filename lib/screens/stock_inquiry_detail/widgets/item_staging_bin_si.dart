@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin_si.dart';
 import 'package:msi_app/screens/stock_inquiry_batch/stock_inquiry_batch_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -11,6 +12,7 @@ class ItemStagingBinSi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return InkWell(
       onTap: () {
         if (item.fgBatch == 'Y')
@@ -30,9 +32,15 @@ class ItemStagingBinSi extends StatelessWidget {
             // BaseTextLine('Put Qty', item.putQty.toStringAsFixed(4)),
             if (item.binCodeDestination.isNotEmpty)
               BaseTextLine('Bin Code', item.binCodeDestination),
-            BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(4)),
+            BaseTextLine('Available Qty', 
+                item.availableQty == 0.0
+                    ? item.availableQty.toStringAsFixed(4)
+                    : formatter.format(item.availableQty)),
             if (item.putQty != 0)
-              BaseTextLine('Picked Qty', item.putQty.toStringAsFixed(4)),
+              BaseTextLine('Picked Qty', 
+                item.putQty == 0.0
+                    ? item.putQty.toStringAsFixed(4)
+                    : formatter.format(item.putQty)),
             // buildItemBatchList(item.batchList),
           ],
         ),

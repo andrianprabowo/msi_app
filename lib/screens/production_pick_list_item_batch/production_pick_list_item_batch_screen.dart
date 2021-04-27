@@ -7,6 +7,7 @@ import 'package:msi_app/providers/production_pick_list_item_provider.dart';
 import 'package:msi_app/screens/production_pick_list_item/production_pick_list_item_screen.dart';
 import 'package:msi_app/screens/production_pick_list_item_batch/widget/production_pick_list_item_batch_dialog.dart';
 import 'package:msi_app/screens/production_pick_list_item_batch/widget/production_pick_list_item_batch_list.dart';
+import 'package:msi_app/screens/production_pick_list_item_batch/widget/production_pick_list_item_expired_dialog.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -49,26 +50,28 @@ class ProductionPickListItemBatch extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.check_box_outlined),
             onPressed: () {
-               if (productionPickListItemBatchProvider.totalPicked > pickItem.quantity) {
+              if (productionPickListItemBatchProvider.totalPicked >
+                  pickItem.quantity) {
                 showAlertGreaterThanZero(
-                    context, pickItem.quantity.toStringAsFixed(4));
+                    context, formatter.format(pickItem.quantity));
               } else {
-              // update bin location
-              pickItem.itemStorageLocation = itemBin.binLocation;
-              // add batch list
-              final batchList = productionPickListItemBatchProvider.pickedItems;
-              //pickItemProvider.addBatchList(pickItem, batchList);
-              batchList.forEach((detail) {
-                // calculate bin
-                detail.bin = pickItem.itemStorageLocation;
-              });
-              // batchList. = itemBin.binLocation;
-              // pickItemProvider.addBatchList(pickItem, batchList);
-              pickItemProvider.addBatchList(pickItem, batchList);
-                  Navigator.of(context).popUntil(
-                      ModalRoute.withName(ProductionPickListItem.routeName));
-             }
-             
+                // update bin location
+                pickItem.itemStorageLocation = itemBin.binLocation;
+                // add batch list
+                final batchList =
+                    productionPickListItemBatchProvider.pickedItems;
+                //pickItemProvider.addBatchList(pickItem, batchList);
+                batchList.forEach((detail) {
+                  // calculate bin
+                  detail.bin = pickItem.itemStorageLocation;
+                });
+                // batchList. = itemBin.binLocation;
+                // pickItemProvider.addBatchList(pickItem, batchList);
+                pickItemProvider.addBatchList(pickItem, batchList);
+                Navigator.of(context).popUntil(
+                    ModalRoute.withName(ProductionPickListItem.routeName));
+              }
+
               // var guider =
               //     double.tryParse(pickItem.openQty.toStringAsFixed(4)) >
               //             double.tryParse(itemBin.avlQty.toStringAsFixed(4))
@@ -122,7 +125,9 @@ class ProductionPickListItemBatch extends StatelessWidget {
                   return Expanded(
                     child: BaseTextLine(
                       'Total Picked',
-                      provider.totalPicked.toStringAsFixed(4),
+                      provider.totalPicked == 0.0
+                          ? provider.totalPicked.toStringAsFixed(4)
+                          : formatter.format(provider.totalPicked),
                     ),
                   );
                 }),
@@ -142,7 +147,11 @@ class ProductionPickListItemBatch extends StatelessWidget {
             // BaseTitle(pickItem.openQty == 0.0
             //     ? 'Total to Pick ' + pickItem.quantity.toStringAsFixed(4)
             //     : 'Total to Pick ' + formatter.format(pickItem.openQty)),
-            BaseTextLine('Total to Pick', pickItem.quantity.toStringAsFixed(4)),
+            BaseTextLine(
+                'Total to Pick',
+                pickItem.quantity == 0.0
+                    ? pickItem.quantity.toStringAsFixed(4)
+                    : formatter.format(pickItem.quantity)),
             SizedBox(height: getProportionateScreenHeight(kMedium)),
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kMedium)),
@@ -156,7 +165,7 @@ class ProductionPickListItemBatch extends StatelessWidget {
                 Expanded(
                   child: BaseTitle('List Batch of Item'),
                 ),
-                Text('Show All Item'),
+                Text('Show All Batches'),
                 Consumer<ProductionPickListItemBatchProvider>(
                   builder: (_, provider, child) {
                     return Switch(
@@ -185,16 +194,19 @@ class ProductionPickListItemBatch extends StatelessWidget {
       hint: 'Input or scan Item Batch Number',
       scanResult: (value) {
         final item = provider.findByBatchNo(value);
-        // if (provider.totalShow == item.show) {
-        //   showModalBottomSheet(
-        //     context: context,
-        //     builder: (_) => ProductionPickListItemBatchDialog(item),
-        //   );
-        // }
-        showModalBottomSheet(
-          context: context,
-          builder: (_) => ProductionPickListItemBatchDialog(item),
-        );
+          final date = new DateTime.now();
+
+        if (item.expiredDate.isAfter(date)) {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => ProductionPickListItemBatchDialog(item),
+          );
+        } else {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => ProductionPickListItemExpired(item),
+          );
+        }
       },
     );
   }

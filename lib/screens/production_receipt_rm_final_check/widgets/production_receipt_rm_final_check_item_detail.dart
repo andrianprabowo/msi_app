@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_batch_list_model.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_model.dart';
 import 'package:msi_app/screens/production_receipt_rm_final_check/widgets/production_receipt_rm_final_check_item_batch_detail.dart';
+import 'package:msi_app/screens/production_receipt_rm_final_check/widgets/production_receipt_rm_final_check_item_bin_detail.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
@@ -41,10 +42,10 @@ class ProductionReceiptRMFinalCheckItemDetail extends StatelessWidget {
                   : formatter.format(item.quantity)),
           BaseTextLine('Item Batch', item.fgBatch),
           BaseTextLine('UOM', item.unitMsr),
-          BaseTextLine('Bin Location', item.itemStorageLocation),
+          // BaseTextLine('Bin Location', item.itemStorageLocation),
           Divider(),
-          if (item.batchList.isNotEmpty) BaseTitle('Item Batch List'),
-          buildItemBatchList(item.batchList),
+          if (item.fgBatch == 'Y') buildItemBatchList(item.batchList),
+          if (item.fgBatch == 'N') buildItemBin(item.batchList),
         ],
       ),
     );
@@ -58,6 +59,18 @@ class ProductionReceiptRMFinalCheckItemDetail extends StatelessWidget {
       itemCount: list.length,
       itemBuilder: (_, index) {
         return ProductionReceiptRMFinalCheckItemBatchDetail(list[index]);
+      },
+    );
+  }
+
+  Widget buildItemBin(
+      List<ProductionReceiptRMItemListBatchListModel> list) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: list.length,
+      itemBuilder: (_, index) {
+        return ProductionReceiptRMFinalCheckItemBinDetail(list[index]);
       },
     );
   }

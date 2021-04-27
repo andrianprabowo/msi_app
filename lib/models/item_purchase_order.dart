@@ -9,7 +9,11 @@ class ItemPurchaseOrder with ChangeNotifier {
   double openQty;
   double quantity;
   double remainingQty;
+  double numInBuy;
+  int defDayExpired;
+  int xxxx;
   final String uom;
+  final String unitMsr;
   final String filename;
   final String docNum;
   final String fgBatch;
@@ -19,7 +23,11 @@ class ItemPurchaseOrder with ChangeNotifier {
     this.description,
     this.openQty,
     this.quantity,
+    this.unitMsr,
     this.remainingQty,
+    this.defDayExpired,
+    this.xxxx,
+    this.numInBuy,
     this.uom,
     this.filename,
     this.docNum,
@@ -74,6 +82,9 @@ class ItemPurchaseOrder with ChangeNotifier {
       quantity: 0.0,
       remainingQty: map['remainingQty'] ?? 0.0,
       uom: map['unitMsr'] ?? '',
+      unitMsr: map['uom'] ?? '',
+      numInBuy: map['numInBuy'] ?? 0.0,
+      defDayExpired: map['defDayExpired'] ?? 0.0,
       filename: 'Receipt Vendor',
       docNum: map['docNum'] ?? '',
       fgBatch: map['fgBatch'] ?? '',
@@ -88,6 +99,6 @@ class ItemPurchaseOrder with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ItemPurchaseOrder(itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, remainingQty: $remainingQty, uom: $uom, filename: $filename, docNum: $docNum, fgBatch: $fgBatch, batchList: $batchList)';
+    return 'ItemPurchaseOrder(unitMsr: $unitMsr,defDayExpired: $defDayExpired, numInBuy: $numInBuy, itemCode: $itemCode, description: $description, openQty: $openQty, quantity: $quantity, remainingQty: $remainingQty, uom: $uom, filename: $filename, docNum: $docNum, fgBatch: $fgBatch, batchList: $batchList)';
   }
 }

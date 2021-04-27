@@ -22,6 +22,8 @@ class DialogInputQty extends StatefulWidget {
 class _DialogInputQtyState extends State<DialogInputQty> {
   final _batchNumber = TextEditingController();
   final _quantity = TextEditingController();
+  var itemxx = 1;
+
   DateTime _selectedDate = DateTime.now();
 
   ItemPurchaseOrder get item {
@@ -30,6 +32,8 @@ class _DialogInputQtyState extends State<DialogInputQty> {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
@@ -41,9 +45,17 @@ class _DialogInputQtyState extends State<DialogInputQty> {
           // SizedBox(height: getProportionateScreenHeight(kLarge)),
           // BaseTitle('Batch Number / Exp Date'),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('PO Qty', item.openQty.toStringAsFixed(4)),
+          BaseTextLine(
+              'PO Qty',
+              item.openQty == 0.0
+                  ? item.openQty.toStringAsFixed(4)
+                  : formatter.format(item.openQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          BaseTextLine('Remaining Qty', item.remainingQty.toStringAsFixed(4)),
+          BaseTextLine(
+              'Remaining Qty',
+              item.remainingQty == 0.0
+                  ? item.remainingQty.toStringAsFixed(4)
+                  : formatter.format(item.remainingQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildInput(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -51,7 +63,7 @@ class _DialogInputQtyState extends State<DialogInputQty> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildDatePicker(context),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
-          // if (_quantity.text != '' &&
+          // if (_quantity .text != '' &&
           //         (double.parse(_quantity.text) >
           //             double.tryParse(
           //                 widget.item.openQty.toStringAsFixed(2))) ||
@@ -59,7 +71,7 @@ class _DialogInputQtyState extends State<DialogInputQty> {
           //   buildButtonNotif(context, widget.item.openQty.toString())
           // else
           buildButtonSubmit(
-              context, widget.item.remainingQty.toStringAsFixed(4)),
+              context, formatter.format(widget.item.remainingQty)),
         ],
       ),
     );
@@ -91,42 +103,67 @@ class _DialogInputQtyState extends State<DialogInputQty> {
   }
 
   Widget buildDatePicker(context) {
+    var initial =
+        DateTime.now().add(new Duration(days: widget.item.defDayExpired));
     return Row(
       children: [
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.all(kLarge),
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  width: kTiny,
-                  style: BorderStyle.solid,
-                  color: kPrimaryColor,
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(kMedium),
-                ),
-              ),
-            ),
-            child: Text(convertDate(_selectedDate)),
-          ),
-        ),
+        // Expanded(
+        //   child: Container(
+        //     padding: const EdgeInsets.all(kLarge),
+        //     decoration: ShapeDecoration(
+        //       shape: RoundedRectangleBorder(
+        //         side: BorderSide(
+        //           width: kTiny,
+        //           style: BorderStyle.solid,
+        //           color: kPrimaryColor,
+        //         ),
+        //         borderRadius: BorderRadius.all(
+        //           Radius.circular(kMedium),
+        //         ),
+        //       ),
+        //     ),
+        //     // if (pickedDate == null) {
+
+        //     // }
+
+        //     child: Text(DateFormat().addPattern('dd/MM/yyyy').format(initial)),
+        //   ),
+        // ),
         IconButton(
           icon: Icon(Icons.event),
           onPressed: () async {
-            final maxYear = DateTime.now().year + 5;
+            // final maxYear = DateTime.now().year + 5;
+            // final pickedDate = await showDatePicker(
+            //   context: context,
+            //   initialDate: DateTime.now(),
+            //   firstDate: DateTime.now(),
+            //   lastDate: DateTime(maxYear),
+            // );
+            itemxx = 2;
+
+            final init = DateTime.now()
+                .add(new Duration(days: widget.item.defDayExpired));
+            print(" ini xxx  $itemxx");
+
+            print(" date initial $initial");
+
+            final maxYear = init.year + 5;
             final pickedDate = await showDatePicker(
               context: context,
-              initialDate: DateTime.now(),
+              initialDate: init,
               firstDate: DateTime.now(),
               lastDate: DateTime(maxYear),
             );
-
-            if (pickedDate == null) return;
-
+            print(" 2 date picked $pickedDate");
+            if (pickedDate == null) {
+              return;
+            }
             setState(() {
               _selectedDate = pickedDate;
+              initial = _selectedDate;
             });
+            print("3 date select ${item.xxxx.toString()}");
+            print("3 date initial $initial");
           },
         ),
       ],
@@ -194,6 +231,11 @@ class _DialogInputQtyState extends State<DialogInputQty> {
             String dateString =
                 DateFormat().addPattern('yyyy/MM/dd').format(date);
             if (_batchNumber.text.isEmpty) {
+              if (itemxx == 1) {
+                _selectedDate = DateTime.now()
+                    .add(new Duration(days: widget.item.defDayExpired));
+                print("ini number null xxx $_selectedDate");
+              }
               return showDialog<void>(
                 context: context,
                 barrierDismissible: false,
@@ -247,6 +289,12 @@ class _DialogInputQtyState extends State<DialogInputQty> {
               );
             }
 
+            if (itemxx == 1) {
+              _selectedDate = DateTime.now()
+                  .add(new Duration(days: widget.item.defDayExpired));
+
+              print("ini xxx $_selectedDate");
+            }
             itemPoProvider.addBatch(
               item,
               ItemBatch(
@@ -257,6 +305,9 @@ class _DialogInputQtyState extends State<DialogInputQty> {
                 availableQty: double.parse(_quantity.text),
               ),
             );
+
+            print("xxxxxxxxxxxxxxxxxxxx $itemxx");
+
             Navigator.of(context).pop();
           }
         },

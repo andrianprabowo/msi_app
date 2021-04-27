@@ -1,4 +1,5 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_item_receive_so.dart';
 import 'package:msi_app/models/pick_list_bin_so.dart';
 import 'package:msi_app/providers/auth_provider.dart';
@@ -16,6 +17,7 @@ class ItemPickItemBinSo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     return InkWell(
       onTap: () {
@@ -30,9 +32,10 @@ class ItemPickItemBinSo extends StatelessWidget {
           );
         } else {
           pickItemReceive.itemStorageLocation = item.binLocation;
-             showModalBottomSheet(
-                context: context, builder: (_) => DialogPickListNonbatchSo(pickItemReceive));
-          }
+          showModalBottomSheet(
+              context: context,
+              builder: (_) => DialogPickListNonbatchSo(pickItemReceive));
+        }
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),
@@ -42,7 +45,11 @@ class ItemPickItemBinSo extends StatelessWidget {
           children: [
             BaseTextLine('Bin Location', item.binLocation),
             BaseTextLine('Warehouse', authProvider.warehouseName),
-            BaseTextLine('Qty', item.avlQty.toStringAsFixed(4)),
+            BaseTextLine(
+                'Qty',
+                item.avlQty == 0.0
+                    ? item.avlQty.toStringAsFixed(4)
+                    : formatter.format(item.avlQty)),
           ],
         ),
       ),

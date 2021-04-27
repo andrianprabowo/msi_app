@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_purchase_order.dart';
 import 'package:msi_app/providers/item_po_provider.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -26,6 +27,7 @@ class _DialogInputQtyNonBatchState extends State<DialogInputQtyNonBatch> {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     return SingleChildScrollView(
         padding: const EdgeInsets.all(kLarge),
         child: Column(
@@ -37,7 +39,11 @@ class _DialogInputQtyNonBatchState extends State<DialogInputQtyNonBatch> {
             // SizedBox(height: getProportionateScreenHeight(kLarge)),
             // BaseTitle('Batch Number / Exp Date'),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('PO Qty', item.openQty.toStringAsFixed(4)),
+            BaseTextLine(
+                'PO Qty',
+                item.openQty == 0.0
+                    ? item.openQty.toStringAsFixed(4)
+                    : formatter.format(item.openQty)),
             // SizedBox(height: getProportionateScreenHeight(kLarge)),
             // BaseTextLine('Remaining Qty', item.remainingQty.toStringAsFixed(2)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
@@ -51,7 +57,7 @@ class _DialogInputQtyNonBatchState extends State<DialogInputQtyNonBatch> {
             //     _quantity.text == '0')
             //   buildButtonNotif(context, widget.item.openQty.toString())
             // else
-            buildButtonSubmit(context, widget.item.openQty.toStringAsFixed(4)),
+            buildButtonSubmit(context, formatter.format(widget.item.openQty)),
           ],
         ));
   }
@@ -84,7 +90,7 @@ class _DialogInputQtyNonBatchState extends State<DialogInputQtyNonBatch> {
     );
   }
 
-  Widget buildButtonSubmit(BuildContext context,  String avlQty) {
+  Widget buildButtonSubmit(BuildContext context, String avlQty) {
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(

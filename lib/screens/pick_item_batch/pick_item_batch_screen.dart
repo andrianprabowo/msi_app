@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/models/pick_list_bin.dart';
 import 'package:msi_app/providers/pick_batch_provider.dart';
 import 'package:msi_app/providers/pick_item_receive_provider.dart';
+import 'package:msi_app/screens/pick_item_batch/widget/dialog_expired.dart';
 import 'package:msi_app/screens/pick_item_batch/widget/dialog_pick_batch.dart';
 import 'package:msi_app/screens/pick_item_batch/widget/item_pick_batch.dart';
 import 'package:msi_app/screens/pick_item_receive/pick_item_receive_screen.dart';
@@ -29,6 +31,7 @@ class PickItemBatchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
     final pickItemReceiveProvider =
         Provider.of<PickItemReceiveProvider>(context, listen: false);
     final pickBatchProvider =
@@ -37,7 +40,8 @@ class PickItemBatchScreen extends StatelessWidget {
     PickItemReceive pickItem = map['pickItemReceive'];
     PickListBin itemBin = map['pickListBin'];
     // PickBatch itemBatch = map['batchList'];
-
+    // final remains = pickBatchProvider.totalPicked ;
+    // final remains = pickItem.openQty - pickBatchProvider.totalPicked ;
     return Scaffold(
       appBar: AppBar(
         title: Text('Picker Pick List'),
@@ -47,9 +51,12 @@ class PickItemBatchScreen extends StatelessWidget {
             onPressed: () {
               if (pickBatchProvider.totalPicked > pickItem.quantity) {
                 showAlertGreaterThanZero(
-                    context, pickItem.quantity.toStringAsFixed(4));
+                    context,
+                    pickItem.quantity == 0.0
+                        ? pickItem.quantity.toStringAsFixed(4)
+                        : formatter.format(pickItem.quantity));
               } else {
-              // update bin location
+                // update bin location
                 pickItem.itemStorageLocation = itemBin.binLocation;
 
                 // add batch list
@@ -101,7 +108,9 @@ class PickItemBatchScreen extends StatelessWidget {
                   return Expanded(
                     child: BaseTextLine(
                       'Total Picked',
-                      provider.totalPicked.toStringAsFixed(4),
+                      provider.totalPicked == 0.0
+                          ? provider.totalPicked.toStringAsFixed(4)
+                          : formatter.format(provider.totalPicked),
                     ),
                   );
                 }),
@@ -119,15 +128,20 @@ class PickItemBatchScreen extends StatelessWidget {
             BaseTitle(pickItem.description),
             BaseTitle(pickItem.itemStorageLocation),
             BaseTextLine(
-                'Total to Pick Qty', pickItem.quantity.toStringAsFixed(4)),
+                'Total to Pick Qty',
+                pickItem.quantity == 0.0
+                    ? pickItem.quantity.toStringAsFixed(4)
+                    : formatter.format(pickItem.quantity)),
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
+            // BaseTextLine('Remaining', pickItem.quantity .toString()),
+            // SizedBox(height: getProportionateScreenHeight(kLarge)),
             Row(
               children: [
                 Expanded(
                   child: BaseTitle('List Batch of Item'),
                 ),
-                Text('Show All Item'),
+                Text('Show All Batches'),
                 Consumer<PickBatchProvider>(
                   builder: (_, provider, child) {
                     return Switch(
@@ -188,11 +202,21 @@ class PickItemBatchScreen extends StatelessWidget {
       hint: 'Input or scan Item Batch Number',
       scanResult: (value) {
         final item = provider.findByBatchNo(value);
+        final date = new DateTime.now();
 
-        showModalBottomSheet(
-          context: context,
-          builder: (_) => DialogPickBatch(item),
-        );
+        if (item.expiredDate.isAfter(date)) {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => DialogPickBatch(item),
+          );
+        } else {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => DialogExpired(item),
+          );
+          print('expired ' + item.expiredDate.toString());
+          print(date);
+        }
       },
     );
   }

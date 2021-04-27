@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_batch_rfo.dart';
 import 'package:msi_app/models/item_purchase_order_rfo.dart';
 import 'package:msi_app/screens/receipt_batch_rfo/receipt_batch_rfo_screen.dart';
@@ -15,6 +16,8 @@ class ItemDetailRfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatter = NumberFormat('#,###.0000#', 'en_US');
+
     return InkWell(
       onTap: () {
         // showModalBottomSheet(
@@ -39,10 +42,21 @@ class ItemDetailRfo extends StatelessWidget {
             BaseTitle(item.itemCode),
             BaseTitle(item.description),
             Divider(),
-            BaseTextLine('Return Quantity', item.openQty.toStringAsFixed(4)),
-            BaseTextLine('Receipt Quantity', item.quantity.toStringAsFixed(4)),
             BaseTextLine(
-                'Remaining Quantity', item.remainingQty.toStringAsFixed(4)),
+                'Return Quantity',
+                item.openQty == 0.0
+                    ? item.openQty.toStringAsFixed(4)
+                    : formatter.format(item.openQty)),
+            BaseTextLine(
+                'Receipt Quantity',
+                item.quantity == 0.0
+                    ? item.quantity.toStringAsFixed(4)
+                    : formatter.format(item.quantity)),
+            BaseTextLine(
+                'Remaining Quantity',
+                item.remainingQty == 0.0
+                    ? item.remainingQty.toStringAsFixed(4)
+                    : formatter.format(item.remainingQty)),
             BaseTextLine('UoM', item.uom),
             BaseTextLine('Item Batch', item.fgBatch),
             Divider(),

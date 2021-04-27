@@ -43,6 +43,7 @@ class ItemListPickListSo extends StatelessWidget {
               child: Column(
                 children: [
                   BaseTextLine('Pick List No ', item.grpono),
+                  BaseTextLine('Pick List Sap No ', item.picklistSapnumber.toString()),
                   BaseTextLine('So No', item.poNo),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
                   BaseTitle(item.logMessage),

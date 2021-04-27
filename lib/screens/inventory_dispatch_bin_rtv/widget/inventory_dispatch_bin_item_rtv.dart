@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_bin_rtv.dart';
 import 'package:msi_app/models/inventory_dispatch_item_rtv.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_item_rtv_provider.dart';
 import 'package:msi_app/screens/Inventory_dispatch_batch_rtv/inventory_dispatch_batch_rtv_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_item_rtv/inventory_dispatch_item_rtv_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -30,6 +31,12 @@ class InventoryDispatchBinItemRtv extends StatelessWidget {
             );
           }else{
           inventoryDispatchItem.itemStorageLocation = item.binLocation;
+
+           final inventoryDispItem =
+                Provider.of<InventoryDispatchItemRtvProvider>(context,
+                    listen: false);
+            inventoryDispItem.inputBinNonBatch(inventoryDispatchItem,
+                inventoryDispatchItem.itemStorageLocation);
 
             Navigator.of(context).popUntil(
               ModalRoute.withName(InventoryDispatchItemRtvScreen.routeName));

@@ -5,6 +5,7 @@ import 'package:msi_app/providers/production_issue_item_batch_provider.dart';
 import 'package:msi_app/providers/production_issue_item_provider.dart';
 import 'package:msi_app/providers/production_issue_provider.dart';
 import 'package:msi_app/screens/production_issue_item/production_issue_item_screen.dart';
+import 'package:msi_app/screens/production_issue_item_batch/widgets/dialog_expired.dart';
 import 'package:msi_app/screens/production_issue_item_batch/widgets/production_issue_item_batch_list.dart';
 import 'package:msi_app/screens/production_issue_item_batch/widgets/production_issue_item_batch_list_dialog.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -29,6 +30,8 @@ class ProductionIssueItemBatch extends StatelessWidget {
     await provider.getBatchListByItemWarehouse(itemCode, binCode);
   }
 
+  final globalKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     final itemBatchProvider =
@@ -39,6 +42,8 @@ class ProductionIssueItemBatch extends StatelessWidget {
     //     ? item.availableQty.toStringAsFixed(4)
     //     : formatter.format(item.availableQty);
     return Scaffold(
+      key: globalKey,
+
       appBar: AppBar(
         title: Text('Issue (Raw Material)'),
         actions: [
@@ -59,17 +64,36 @@ class ProductionIssueItemBatch extends StatelessWidget {
                   '0.0000') {
                 showAlertOnZero(context);
               }
+              // disini
+              print("disini ${itemBatchProvider.totalPicked}");
+              print("disini2 ${item.availableQty}");
+              if (itemBatchProvider.totalPicked != item.availableQty) {
+              print("disini masuk");
+
+ final snackBar = SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(Icons.error_outline, color: Colors.red),
+                      SizedBox(width: getProportionateScreenWidth(kLarge)),
+                      Text('Total Put Qty Must Be Same Than Planned Qty'),
+                    ],
+                  ),
+                );
+                globalKey.currentState.showSnackBar(snackBar);
+                return;
+               
+              }
               //  else {
               //   if (double.tryParse(
               //           itemBatchProvider.totalPicked.toStringAsFixed(4)) >
               //       double.tryParse(item.availableQty.toStringAsFixed(4))) {
               //     showAlertGreaterThanZero(context, avlQty);
               //   } else {
-                  if (item.fgBatch == "Y") {
-                    itemProvider.addBatchList(item, batchList);
-                  }
-                  Navigator.of(context).popUntil(
-                      ModalRoute.withName(ProductionIssueItem.routeName));
+              if (item.fgBatch == "Y") {
+                itemProvider.addBatchList(item, batchList);
+              }
+              Navigator.of(context)
+                  .popUntil(ModalRoute.withName(ProductionIssueItem.routeName));
               //   }
               // }
               /* itemBatchProvider.totalPicked.toStringAsFixed(2) == '0.00'
@@ -120,8 +144,8 @@ class ProductionIssueItemBatch extends StatelessWidget {
             BaseTitle(item.itemCode),
             BaseTitle(item.itemName + ' / ' + item.unitMsr),
             BaseTitle(item.availableQty == 0.0
-                ? 'Open Quantity : ' + item.availableQty.toStringAsFixed(4)
-                : 'Open Quantity : ' + formatter.format(item.availableQty)),
+                ? 'Planned qty : ' + item.availableQty.toStringAsFixed(4)
+                : 'Planned qty : ' + formatter.format(item.availableQty)),
             SizedBox(height: getProportionateScreenHeight(kMedium)),
             BaseTitle('List Batch of Item'),
             Divider(),
@@ -140,10 +164,21 @@ class ProductionIssueItemBatch extends StatelessWidget {
       hint: 'Input or Scan Batch Number',
       scanResult: (value) {
         final item = provider.findByBatchNo(value);
-        showModalBottomSheet(
-          context: context,
-          builder: (_) => ProductionIssueItemBatchListDialog(item),
-        );
+        final date = new DateTime.now();
+
+        if (item.expiredDate.isBefore(date)) {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => DialogExpired(item),
+          );
+        } else {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => ProductionIssueItemBatchListDialog(item),
+          );
+          print('expired ' + item.expiredDate.toString());
+          print(date);
+        }
       },
     );
   }
@@ -211,6 +246,7 @@ class ProductionIssueItemBatch extends StatelessWidget {
       },
     );
   }
+
 
   Future<void> showAlertGreaterThanZero(
       BuildContext context, String toPick) async {
