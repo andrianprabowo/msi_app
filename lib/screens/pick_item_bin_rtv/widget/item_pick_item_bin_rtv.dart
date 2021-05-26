@@ -17,8 +17,11 @@ class ItemPickItemBinRtv extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
+   
     return InkWell(
       onTap: () {
         if (pickItemReceive.fgBatch == 'Y') {
@@ -53,7 +56,7 @@ class ItemPickItemBinRtv extends StatelessWidget {
             BaseTextLine(
                 'Qty',
                 item.avlQty == 0.0
-                    ? item.avlQty.toStringAsFixed(4)
+                    ? item.avlQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.avlQty)),
           ],
         ),

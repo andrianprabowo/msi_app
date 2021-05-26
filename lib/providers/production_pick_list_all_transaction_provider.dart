@@ -34,4 +34,9 @@ class ProductionPickListAllTransactionProvider with ChangeNotifier {
       throw error;
     }
   }
+
+  void selectPo(ProductionPickListAllTransactionModel purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
+  }
 }

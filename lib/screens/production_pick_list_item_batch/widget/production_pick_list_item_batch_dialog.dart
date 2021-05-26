@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_pick_list_item_batch_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_pick_list_item_batch_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -25,9 +26,12 @@ class _ProductionPickListItemBatchDialogState
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+  final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     var avlQty = widget.item.availableQty == 0.0000
-        ? widget.item.availableQty.toStringAsFixed(4)
+        ? widget.item.availableQty.toStringAsFixed(authProvider.decLen)
         : formatter.format(widget.item.availableQty);
     return Container(
       padding: const EdgeInsets.all(kLarge),
@@ -49,7 +53,7 @@ class _ProductionPickListItemBatchDialogState
           // if (_quantity.text != '' &&
           //         (double.tryParse(_quantity.text) >
           //             double.tryParse(
-          //                 widget.item.availableQty.toStringAsFixed(4))) ||
+          //                 widget.item.availableQty.toStringAsFixed(authProvider))) ||
           //     _quantity.text == '0')
           //   buildButtonNotif(context, avlQty)
           // else

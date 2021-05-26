@@ -17,10 +17,13 @@ class ProductionPickListBinList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+  
     // final pickItemListProvider =
     //     Provider.of<ProductionPickListItemProvider>(context, listen: false);
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return InkWell(
       onTap: () {
         if (productionPickListItemModel.fgBatch == "Y") {
@@ -56,7 +59,7 @@ class ProductionPickListBinList extends StatelessWidget {
             BaseTextLine(
                 'Qty',
                 item.avlQty == 0.0
-                    ? item.avlQty.toStringAsFixed(4)
+                    ? item.avlQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.avlQty)),
           ],
         ),

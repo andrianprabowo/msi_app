@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_issue_item_batch_model.dart';
 import 'package:msi_app/models/production_issue_item_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_issue_item_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -16,7 +17,10 @@ class ProductionIssueItemBatchBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ProductionIssueItemProvider>(context, listen: false);
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+ final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return Container(
       margin: const EdgeInsets.all(kTiny),
       padding: const EdgeInsets.all(kSmall),
@@ -36,7 +40,7 @@ class ProductionIssueItemBatchBox extends StatelessWidget {
                 BaseTextLine('Expired Date', convertDate(batch.expiredDate)),
                 BaseTextLine('UOM', batch.uom),
                 BaseTextLine('Quantity', batch.putQty == 0.0
-                  ? batch.putQty.toStringAsFixed(4)
+                  ? batch.putQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(batch.putQty)),
               ],
             ),

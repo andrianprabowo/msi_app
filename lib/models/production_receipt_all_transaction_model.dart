@@ -7,10 +7,12 @@ class ProductionReceiptAllTransactionModel with ChangeNotifier {
   final String wono;
   final String logMessage;
   final int status;
+  final int idGrpofgHeader;
   final DateTime docDate;
   ProductionReceiptAllTransactionModel({
     this.issueNo, 
     this.wono, 
+    this.idGrpofgHeader, 
     this.status, 
     this.logMessage, 
     this.docDate,
@@ -39,6 +41,7 @@ class ProductionReceiptAllTransactionModel with ChangeNotifier {
       'docDate': docDate?.toIso8601String(),
       'status': status,
       'logMessage': logMessage,
+      'idGrpofgHeader': idGrpofgHeader,
     };
   }
 
@@ -49,7 +52,8 @@ class ProductionReceiptAllTransactionModel with ChangeNotifier {
       issueNo: map['issueNo'] ?? '',
       wono: map['wono'] ?? '',
       docDate: DateTime.parse(map['docDate']),
-      status: map['status'] ?? '3',
+      status: map['status'] ?? 3,
+      idGrpofgHeader: map['idGrpofgHeader'] ?? 0,
       logMessage: map['logMessage'] ?? '',
     );
   }

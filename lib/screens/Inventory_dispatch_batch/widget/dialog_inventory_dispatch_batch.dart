@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/inventory_dispatch_batch.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_batch_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -23,7 +24,10 @@ class _DialogInventoryDispatchBatchState extends State<DialogInventoryDispatchBa
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
@@ -37,7 +41,7 @@ class _DialogInventoryDispatchBatchState extends State<DialogInventoryDispatchBa
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Available Quantity',
               widget.item.availableQty == 0.0
-                  ? widget.item.availableQty.toStringAsFixed(4)
+                  ? widget.item.availableQty.toStringAsFixed(authProvider.decLen)
                   :formatter.format(widget.item.availableQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),

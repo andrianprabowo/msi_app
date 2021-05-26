@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/put_batch_si.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:provider/provider.dart';
 
 class ItemBatchStagingSi extends StatelessWidget {
   final PutBatchSi item;
@@ -11,7 +13,10 @@ class ItemBatchStagingSi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return InkWell(
       // onTap: () {
       //   showModalBottomSheet(
@@ -29,7 +34,7 @@ class ItemBatchStagingSi extends StatelessWidget {
             BaseTextLine(
                 'Available Qty',
                 item.availableQty == 0.0
-                    ? item.availableQty.toStringAsFixed(4)
+                    ? item.availableQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.availableQty)),
             BaseTextLine('Expired Date', convertDate(item.expiredDate)),
             // BaseTextLine('Put Qty', item.putQty.toStringAsFixed(4)),

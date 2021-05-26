@@ -34,4 +34,9 @@ class ProductionReceiptRMAllTransactionProvider with ChangeNotifier {
       throw error;
     }
   }
+
+   void selectPo(ProductionReceiptRMAllTransactionModel purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
+  }
 }

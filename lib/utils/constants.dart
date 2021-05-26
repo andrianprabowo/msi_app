@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+// Digit
+// final digit = '000#';
+
 // Base URL
 const kBaseUrl = 'http://103.87.86.29:12950';
 // const kBaseUrl = 'http://116.197.129.170:12950';

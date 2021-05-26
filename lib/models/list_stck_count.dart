@@ -8,10 +8,12 @@ class ListStckCount with ChangeNotifier {
   final DateTime docDate;
   final String vendor;
   final int status;
+  final int idStckcntingHeader;
   final String logMessage;
   ListStckCount({
     this.grpono,
     this.poNo,
+    this.idStckcntingHeader,
     this.docDate,
     this.vendor,
     this.status,
@@ -42,6 +44,7 @@ class ListStckCount with ChangeNotifier {
       'vendor': vendor,
       'status': status,
       'logMessage': logMessage,
+      'idStckcntingHeader': idStckcntingHeader,
     };
   }
 
@@ -55,6 +58,7 @@ class ListStckCount with ChangeNotifier {
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
       logMessage: map['logMessage'] ?? '',
+      idStckcntingHeader: map['idStckcntingHeader'] ?? '',
     );
   }
 

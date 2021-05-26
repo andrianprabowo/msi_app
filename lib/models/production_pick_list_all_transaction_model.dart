@@ -8,12 +8,14 @@ class ProductionPickListAllTransactionModel with ChangeNotifier {
   final String logMessage;
   final int status;
   final int picklistSapnumber;
+  final int idPlrmHeader;
   final DateTime docDate;
   ProductionPickListAllTransactionModel({
     this.pickListNo,
     this.srno,
     this.status,
     this.picklistSapnumber,
+    this.idPlrmHeader,
     this.logMessage,
     this.docDate,
   });
@@ -41,6 +43,7 @@ class ProductionPickListAllTransactionModel with ChangeNotifier {
       'docDate': docDate?.toIso8601String(),
       'status': status,
       'logMessage': logMessage,
+      'idPlrmHeader': idPlrmHeader,
     };
   }
 
@@ -55,6 +58,7 @@ class ProductionPickListAllTransactionModel with ChangeNotifier {
       status: map['status'] ?? '3',
       picklistSapnumber: map['picklistSapnumber'] ?? 0,
       logMessage: map['logMessage'] ?? '',
+      idPlrmHeader: map['idPlrmHeader'] ?? 0,
     );
   }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/inventory_dispatch_bin_so.dart';
 import 'package:msi_app/models/inventory_dispatch_detail_so.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_bin_so_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_so_provider.dart';
 import 'package:msi_app/screens/inventory_dispatch_item_so/inventory_dispatch_item_so_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -10,17 +12,22 @@ import 'package:provider/provider.dart';
 
 class ItemInventoryDispatchDetailSo extends StatelessWidget {
   final InventoryDispatchDetailSo item;
+  final InventoryDispatchBinSo itemBin;
 
-  const ItemInventoryDispatchDetailSo(this.item);
+  const ItemInventoryDispatchDetailSo(this.item, this.itemBin);
 
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final inventoryDispatchDetailProvider =
         Provider.of<InventoryDispatchDetailSoProvider>(context, listen: false);
+    final binProv =
+        Provider.of<InventoryDispatchBinSoProvider>(context, listen: false);
+        
     return InkWell(
       onTap: () {
         inventoryDispatchDetailProvider.selectPickList(item);
+        binProv.selectBin(itemBin);
         Navigator.of(context).pushNamed(InventoryDispatchItemSoScreen.routeName);
       },
       child: Container(
@@ -35,6 +42,7 @@ class ItemInventoryDispatchDetailSo extends StatelessWidget {
             BaseTextLineList('Cust Name', item.cardName, 265),
             BaseTextLine('Picker', authProvider.username),
             BaseTextLine('Memo', item.pickRemark),
+            // BaseTextLine('bin', item.binSelect),
           ],
         ),
       ),

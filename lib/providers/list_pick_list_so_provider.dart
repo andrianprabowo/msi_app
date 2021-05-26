@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:msi_app/models/list_pick_list_so.dart';
+import 'package:msi_app/models/list_pick_list_soo.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
 class ListPickListSoProvider with ChangeNotifier {
-  List<ListPickListSo> _items = [];
-  ListPickListSo _selected;
+  List<ListPickListSoo> _items = [];
+  ListPickListSoo _selected;
 
-  List<ListPickListSo> get items => _items;
-  ListPickListSo get selected => _selected;
+  List<ListPickListSoo> get items => _items;
+  ListPickListSoo get selected => _selected;
 
   
 
@@ -24,9 +24,9 @@ class ListPickListSoProvider with ChangeNotifier {
       print(data);
       if (data == null) return;
 
-      final List<ListPickListSo> list = [];
+      final List<ListPickListSoo> list = [];
       data.forEach((map) {
-        list.add(ListPickListSo.fromMap(map));
+        list.add(ListPickListSoo.fromMap(map));
       });
 
       _items = list;
@@ -38,7 +38,7 @@ class ListPickListSoProvider with ChangeNotifier {
   }
 
   
-  void selectPo(ListPickListSo purchaseOrder) {
+  void selectPo(ListPickListSoo purchaseOrder) {
     _selected = purchaseOrder;
     notifyListeners();
   }

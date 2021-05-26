@@ -13,6 +13,7 @@ class ProductionIssueItemModel with ChangeNotifier {
   final double availableQty;
   double remainingQty;
   double putQty;
+  double totQty;
   List<ProductionIssueItemBatchModel> batchList;
   ProductionIssueItemModel({
     this.itemCode,
@@ -24,6 +25,7 @@ class ProductionIssueItemModel with ChangeNotifier {
     this.availableQty,
     this.remainingQty,
     this.putQty,
+    this.totQty,
     this.batchList,
   });
 
@@ -52,6 +54,7 @@ class ProductionIssueItemModel with ChangeNotifier {
       unitMsr: map['unitMsr'] ?? '',
       binCode: map['binCode'] ?? '',
       putQty: 0.0,
+      totQty: 0.0,
       fgBatch: map['fgBatch'] ?? '',
       batchList: map['batchList'] ?? [],
     );
@@ -64,6 +67,6 @@ class ProductionIssueItemModel with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ProductionIssueItemModel(itemCode: $itemCode, itemName: $itemName, binCode: $binCode, fgBatch: $fgBatch, binCodeDestination: $binCodeDestination, availableQty: $availableQty, remainingQty: $remainingQty, putQty: $putQty, batchList: $batchList, unitMsr: $unitMsr)';
+    return 'ProductionIssueItemModel(itemCode: $itemCode,totQty: $totQty, itemName: $itemName, binCode: $binCode, fgBatch: $fgBatch, binCodeDestination: $binCodeDestination, availableQty: $availableQty, remainingQty: $remainingQty, putQty: $putQty, batchList: $batchList, unitMsr: $unitMsr)';
   }
 }

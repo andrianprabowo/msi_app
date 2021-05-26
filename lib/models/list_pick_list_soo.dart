@@ -1,33 +1,34 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
-class ListPickListSo with ChangeNotifier {
+// 2
+class ListPickListSoo with ChangeNotifier {
   final String grpono;
   final String poNo;
   final DateTime docDate;
   final String vendor;
   final int status;
+  final int idSoplHeader;
   final int picklistSapnumber;
   final String logMessage;
-  ListPickListSo({
+  ListPickListSoo({
     this.grpono,
     this.poNo,
     this.docDate,
     this.vendor,
     this.status,
+    this.idSoplHeader,
     this.picklistSapnumber,
     this.logMessage,
   });
 
-  ListPickListSo copyWith({
+  ListPickListSoo copyWith({
     String grpono,
     String poNo,
     DateTime docDate,
     String vendor,
     int status,
   }) {
-    return ListPickListSo(
+    return ListPickListSoo(
       grpono: grpono ?? this.grpono,
       poNo: poNo ?? this.poNo,
       docDate: docDate ?? this.docDate,
@@ -43,19 +44,21 @@ class ListPickListSo with ChangeNotifier {
       'docDate': docDate?.toIso8601String(),
       'vendor': vendor,
       'status': status,
+      'idSoplHeader': idSoplHeader,
       'logMessage': logMessage,
     };
   }
 
-  factory ListPickListSo.fromMap(Map<String, dynamic> map) {
+  factory ListPickListSoo.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
-    return ListPickListSo(
+    return ListPickListSoo(
       grpono: map['pickListNo'] ?? '',
       poNo: map['sono'] ?? '',
       docDate: DateTime.parse(map['docDate']),
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
+      idSoplHeader: map['idSoplHeader'] ?? 0,
       picklistSapnumber: map['picklistSapnumber'] ?? 0,
       logMessage: map['logMessage'] ?? '',
     );
@@ -63,19 +66,19 @@ class ListPickListSo with ChangeNotifier {
 
   String toJson() => json.encode(toMap());
 
-  factory ListPickListSo.fromJson(String source) =>
-      ListPickListSo.fromMap(json.decode(source));
+  factory ListPickListSoo.fromJson(String source) =>
+      ListPickListSoo.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'ListPickListSo(picklistSapnumber: $picklistSapnumber,grpono: $grpono, poNo: $poNo, docDate: $docDate, vendor: $vendor, status: $status, logMessage: $logMessage)';
+    return 'ListPickListSoo(picklistSapnumber: $picklistSapnumber,grpono: $grpono, poNo: $poNo, docDate: $docDate, vendor: $vendor, status: $status, logMessage: $logMessage)';
   }
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is ListPickListSo &&
+    return o is ListPickListSoo &&
         o.grpono == grpono &&
         o.poNo == poNo &&
         o.docDate == docDate &&

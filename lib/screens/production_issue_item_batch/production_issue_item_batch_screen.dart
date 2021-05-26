@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_issue_item_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_issue_item_batch_provider.dart';
 import 'package:msi_app/providers/production_issue_item_provider.dart';
+import 'package:msi_app/providers/production_issue_number_provider.dart';
 import 'package:msi_app/providers/production_issue_provider.dart';
 import 'package:msi_app/screens/production_issue_item/production_issue_item_screen.dart';
 import 'package:msi_app/screens/production_issue_item_batch/widgets/dialog_expired.dart';
@@ -37,13 +39,15 @@ class ProductionIssueItemBatch extends StatelessWidget {
     final itemBatchProvider =
         Provider.of<ProductionIssueItemBatchProvider>(context, listen: false);
     ProductionIssueItemModel item = ModalRoute.of(context).settings.arguments;
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     // var avlQty = item.availableQty == 0.0
     //     ? item.availableQty.toStringAsFixed(4)
     //     : formatter.format(item.availableQty);
     return Scaffold(
       key: globalKey,
-
       appBar: AppBar(
         title: Text('Issue (Raw Material)'),
         actions: [
@@ -53,6 +57,9 @@ class ProductionIssueItemBatch extends StatelessWidget {
               final itemProvider = Provider.of<ProductionIssueItemProvider>(
                   context,
                   listen: false);
+              final itemNumberProvider =
+                  Provider.of<ProductionIssueNumberProvider>(context,
+                      listen: false);
               final itemBatchProvider =
                   Provider.of<ProductionIssueItemBatchProvider>(context,
                       listen: false);
@@ -60,7 +67,7 @@ class ProductionIssueItemBatch extends StatelessWidget {
               /* if (item.fgBatch == "Y") {
                 itemProvider.addBatchList(item, batchList);
               } */
-              if (itemBatchProvider.totalPicked.toStringAsFixed(4) ==
+              if (itemBatchProvider.totalPicked.toStringAsFixed(authProvider.decLen) ==
                   '0.0000') {
                 showAlertOnZero(context);
               }
@@ -68,9 +75,9 @@ class ProductionIssueItemBatch extends StatelessWidget {
               print("disini ${itemBatchProvider.totalPicked}");
               print("disini2 ${item.availableQty}");
               if (itemBatchProvider.totalPicked != item.availableQty) {
-              print("disini masuk");
+                print("disini masuk");
 
- final snackBar = SnackBar(
+                final snackBar = SnackBar(
                   content: Row(
                     children: [
                       Icon(Icons.error_outline, color: Colors.red),
@@ -81,8 +88,9 @@ class ProductionIssueItemBatch extends StatelessWidget {
                 );
                 globalKey.currentState.showSnackBar(snackBar);
                 return;
-               
               }
+
+              
               //  else {
               //   if (double.tryParse(
               //           itemBatchProvider.totalPicked.toStringAsFixed(4)) >
@@ -90,10 +98,34 @@ class ProductionIssueItemBatch extends StatelessWidget {
               //     showAlertGreaterThanZero(context, avlQty);
               //   } else {
               if (item.fgBatch == "Y") {
+                // final batchLists = itemNumberProvider.items;
+                //               batchLists.forEach((detail) {
+                //                 // calculate bin
+                //                 // detail.totalRemain = batchList.first.putQty;
+                //                 detail.totalRemain = batchList.first.putQty;
+                //               });
+                //
+                //
+                print("xx1    ${itemNumberProvider.selected.totalQty}");
+
+                // itemNumberProvider.items.first.totalQty =
+                //     itemNumberProvider.items.first.totalQty -
+                //         itemBatchProvider.totalPicked;
+                itemNumberProvider.selected.totalQty =
+                    itemNumberProvider.selected.totalQty -
+                        itemBatchProvider.totalPicked;
+                print("xx    ${itemNumberProvider.selected.totalQty}");
+
                 itemProvider.addBatchList(item, batchList);
+
+                //
+
+                // itemNumberProvider.items.sel.totalRemain =
+                //   batchList.first.putQty;
               }
               Navigator.of(context)
                   .popUntil(ModalRoute.withName(ProductionIssueItem.routeName));
+
               //   }
               // }
               /* itemBatchProvider.totalPicked.toStringAsFixed(2) == '0.00'
@@ -126,7 +158,7 @@ class ProductionIssueItemBatch extends StatelessWidget {
                     child: BaseTextLine(
                       'Total Put Qty',
                       provider.totalPicked == 0.0
-                          ? provider.totalPicked.toStringAsFixed(4)
+                          ? provider.totalPicked.toStringAsFixed(authProvider.decLen)
                           : formatter.format(provider.totalPicked),
                     ),
                   );
@@ -144,7 +176,7 @@ class ProductionIssueItemBatch extends StatelessWidget {
             BaseTitle(item.itemCode),
             BaseTitle(item.itemName + ' / ' + item.unitMsr),
             BaseTitle(item.availableQty == 0.0
-                ? 'Planned qty : ' + item.availableQty.toStringAsFixed(4)
+                ? 'Planned qty : ' + item.availableQty.toStringAsFixed(authProvider.decLen)
                 : 'Planned qty : ' + formatter.format(item.availableQty)),
             SizedBox(height: getProportionateScreenHeight(kMedium)),
             BaseTitle('List Batch of Item'),
@@ -246,7 +278,6 @@ class ProductionIssueItemBatch extends StatelessWidget {
       },
     );
   }
-
 
   Future<void> showAlertGreaterThanZero(
       BuildContext context, String toPick) async {

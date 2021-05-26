@@ -9,7 +9,9 @@ class Prefs {
   static const String warehouseName = 'warehouseName';
   static const String binId = 'binId';
   static const String binGl = 'binGL';
-
+  static const String decString = 'decString';
+  static const int decLen = 0;
+  
   static Future<bool> getBool(String key) async {
     final p = await prefs;
     return p.getBool(key) ?? false;

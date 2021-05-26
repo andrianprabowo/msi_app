@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_pick_list_bin_model.dart';
 import 'package:msi_app/models/production_pick_list_item_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_pick_list_item_batch_provider.dart';
 import 'package:msi_app/providers/production_pick_list_item_provider.dart';
 import 'package:msi_app/screens/production_pick_list_item/production_pick_list_item_screen.dart';
@@ -41,7 +42,10 @@ class ProductionPickListItemBatch extends StatelessWidget {
     ProductionPickListItemModel pickItem = map['productionPickListItemModel'];
     ProductionPickListBinModel itemBin = map['pickListBin'];
 
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
 
     return Scaffold(
       appBar: AppBar(
@@ -126,7 +130,7 @@ class ProductionPickListItemBatch extends StatelessWidget {
                     child: BaseTextLine(
                       'Total Picked',
                       provider.totalPicked == 0.0
-                          ? provider.totalPicked.toStringAsFixed(4)
+                          ? provider.totalPicked.toStringAsFixed(authProvider.decLen)
                           : formatter.format(provider.totalPicked),
                     ),
                   );
@@ -150,13 +154,13 @@ class ProductionPickListItemBatch extends StatelessWidget {
             BaseTextLine(
                 'Total to Pick',
                 pickItem.quantity == 0.0
-                    ? pickItem.quantity.toStringAsFixed(4)
+                    ? pickItem.quantity.toStringAsFixed(authProvider.decLen)
                     : formatter.format(pickItem.quantity)),
             SizedBox(height: getProportionateScreenHeight(kMedium)),
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kMedium)),
             BaseTitle(itemBin.avlQty == 0.0
-                ? 'Avl Qty Bin Loc : ' + itemBin.avlQty.toStringAsFixed(4)
+                ? 'Avl Qty Bin Loc : ' + itemBin.avlQty.toStringAsFixed(authProvider.decLen)
                 : 'Avl Qty Bin Loc : ' + formatter.format(itemBin.avlQty)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             // BaseTitle('List Batch of Item'),

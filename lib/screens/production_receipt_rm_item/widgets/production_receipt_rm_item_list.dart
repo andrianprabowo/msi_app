@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_batch_list_model.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/production_receipt_rm_bin/production_receipt_rm_bin_screen.dart';
 import 'package:msi_app/screens/production_receipt_rm_item/widgets/production_receipt_rm_item_batch_box.dart';
 import 'package:msi_app/screens/production_receipt_rm_item/widgets/production_receipt_rm_item_bin_box.dart';
@@ -9,6 +10,7 @@ import 'package:msi_app/screens/production_receipt_rm_item_batch/production_rece
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:provider/provider.dart';
 
 class ProductionReceiptRMItemList extends StatelessWidget {
   final ProductionReceiptRMItemListModel item;
@@ -17,7 +19,10 @@ class ProductionReceiptRMItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
 
     return InkWell(
       onTap: () {
@@ -46,12 +51,12 @@ class ProductionReceiptRMItemList extends StatelessWidget {
             BaseTextLine(
                 'Total To Receipt',
                 item.openQty == 0.0
-                    ? item.openQty.toStringAsFixed(4)
+                    ? item.openQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.openQty)),
             BaseTextLine(
                 'Remaining Qty',
                 item.quantity == 0.0
-                    ? item.quantity.toStringAsFixed(4)
+                    ? item.quantity.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.quantity)),
             BaseTextLine('Inventory UoM', item.unitMsr),
             BaseTextLine('Item Batch', item.fgBatch),
@@ -61,7 +66,7 @@ class ProductionReceiptRMItemList extends StatelessWidget {
             BaseTextLine(
                 'Picked Qty',
                 item.pickedQty == 0.0
-                    ? item.pickedQty.toStringAsFixed(4)
+                    ? item.pickedQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.pickedQty)),
                     if (item.fgBatch == 'Y') buildItemBatchList(item.batchList),
             if (item.fgBatch == 'N') buildItemBin(item.batchList),

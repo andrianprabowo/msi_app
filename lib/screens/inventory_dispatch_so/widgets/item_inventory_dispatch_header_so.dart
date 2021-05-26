@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_header_so.dart';
+import 'package:msi_app/providers/inventory_dispatch_detail_so_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_header_so_provider.dart';
 import 'package:msi_app/screens/inventory_dispatch_detail_so/inventory_dispatch_detail_so_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -14,12 +15,16 @@ class ItemInventoryDispatchHeaderSo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<InventoryDispatchHeaderSoProvider>(context, listen: false);
+    final provider =
+        Provider.of<InventoryDispatchHeaderSoProvider>(context, listen: false);
 
     return InkWell(
       onTap: () {
         provider.selectStagingBin(item);
-        Navigator.of(context).pushNamed(InventoryDispatchDetailSoScreen.routeName);
+       
+
+        Navigator.of(context)
+            .pushNamed(InventoryDispatchDetailSoScreen.routeName);
       },
       child: Container(
         margin: const EdgeInsets.all(kTiny),

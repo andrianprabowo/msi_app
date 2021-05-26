@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/list_good_receipt_po.dart';
+import 'package:msi_app/providers/list_grpo_provider.dart';
+import 'package:msi_app/screens/list_receipt_from_vendor_detail/list_receipt_from_vendor_detail_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_text_line_list.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/base_title_color.dart';
+import 'package:provider/provider.dart';
 
 class ItemListReceiptFromVendor extends StatelessWidget {
   final ListGoodReceiptPo item;
@@ -14,20 +18,41 @@ class ItemListReceiptFromVendor extends StatelessWidget {
   Widget get status {
     switch (item.status) {
       case 0:
-        return Icon(Icons.close, color: Colors.red, size: 48);
+        return Icon(Icons.sms_failed, color: Colors.red, size: 48);
         break;
       case 1:
         return Icon(Icons.check, color: Colors.green, size: 48);
+        break;
+      case 2:
+        return Icon(Icons.block, color: Colors.blue, size: 48);
         break;
       default:
         return Icon(Icons.help_outline, color: Colors.grey, size: 48);
     }
   }
 
+Widget get textStatus {
+    switch (item.status) {
+      case 2:
+        return BaseTitleColor('Canceled');
+        break;
+      default:
+        return Text("");
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
+    final listProvider = Provider.of<ListGrpoProvider>(context, listen: false);
     return InkWell(
       onTap: () {
+        if (item.status == 0) {
+          listProvider.selectPo(item);
+          Navigator.of(context).pushNamed(
+              ListReceiptFromVendorDetailScreen.routeName,
+              arguments: item);
+        }
+
         // Navigator.of(context).pushNamed(BarcodeGrpoScreen.routeName);
       },
       child: Container(
@@ -46,9 +71,9 @@ class ItemListReceiptFromVendor extends StatelessWidget {
                   BaseTextLine('GRPO Number', item.grpono),
                   BaseTextLine('Po Number', item.poNo),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
-                  BaseTextLineList('Vendor', item.vendor,235),
+                  BaseTextLineList('Vendor', item.vendor, 235),
                   BaseTitle(item.logMessage),
-
+                  textStatus,
                 ],
               ),
             ),

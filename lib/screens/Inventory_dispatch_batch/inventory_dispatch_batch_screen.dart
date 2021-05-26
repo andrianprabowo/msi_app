@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/inventory_dispatch_bin.dart';
 import 'package:msi_app/models/inventory_dispatch_item.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_batch_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_header_provider.dart';
@@ -39,8 +40,11 @@ class InventoryDispatchBatchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
-
+    
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     // final provider =
     //     Provider.of<InventoryDispatchHeaderProvider>(context, listen: false);
     
@@ -65,20 +69,7 @@ class InventoryDispatchBatchScreen extends StatelessWidget {
               final batchList = pickBatchProvider.pickedItems;
               pickItemProvider.addBatchList(pickItem, batchList);
 
-              // var guider =
-              //     double.tryParse(pickItem.openQty.toStringAsFixed(2)) >
-              //             double.tryParse(itemBin.avlQty.toStringAsFixed(2))
-              //         ? double.tryParse(itemBin.avlQty.toStringAsFixed(2))
-              //         : double.tryParse(pickItem.openQty.toStringAsFixed(2));
-
-              // pickBatchProvider.totalPicked.toStringAsFixed(2) == '0.00'
-              //     ? showAlertOnZero(context)
-              //     : double.tryParse(pickBatchProvider.totalPicked
-              //                 .toStringAsFixed(2)) >
-              //             guider
-              //         ? showAlertGreaterThanZero(context, guider.toString())
-              //         : Navigator.of(context).popUntil(ModalRoute.withName(
-              //             InventoryDispatchItemScreen.routeName));
+             
               Navigator.of(context).popUntil(ModalRoute.withName(
                           InventoryDispatchItemScreen.routeName));
             },
@@ -101,7 +92,7 @@ class InventoryDispatchBatchScreen extends StatelessWidget {
                   return Expanded(
                     child: BaseTextLine(
                       'Total Picked',provider.totalPicked == 0.0
-                  ? provider.totalPicked.toStringAsFixed(4)
+                  ? provider.totalPicked.toStringAsFixed(authProvider.decLen)
                   : formatter.format(provider.totalPicked),
                     ),
                   );
@@ -120,7 +111,7 @@ class InventoryDispatchBatchScreen extends StatelessWidget {
             BaseTitle(pickItem.description),
             BaseTextLine(
                 'Total to Pick Qty', pickItem.openQty == 0.0
-                  ? pickItem.openQty.toStringAsFixed(4)
+                  ? pickItem.openQty.toStringAsFixed(authProvider.decLen)
                   :formatter.format(pickItem.openQty)),
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

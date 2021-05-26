@@ -7,12 +7,14 @@ class ProductionReceiptRMAllTransactionModel with ChangeNotifier {
   final String srno;
   final String logMessage;
   final int status;
+  final int idPutAwyProdHeader;
   final DateTime docDate;
   ProductionReceiptRMAllTransactionModel({
     this.putAwayNo, 
     this.srno, 
     this.status, 
-    this.logMessage, 
+    this.logMessage,
+    this.idPutAwyProdHeader,
     this.docDate,
   });
 
@@ -39,6 +41,7 @@ class ProductionReceiptRMAllTransactionModel with ChangeNotifier {
       'docDate': docDate?.toIso8601String(),
       'status': status,
       'logMessage': logMessage,
+      'idPutAwyProdHeader': idPutAwyProdHeader,
     };
   }
 
@@ -51,6 +54,7 @@ class ProductionReceiptRMAllTransactionModel with ChangeNotifier {
       docDate: DateTime.parse(map['docDate']),
       status: map['status'] ?? '3',
       logMessage: map['logMessage'] ?? '',
+      idPutAwyProdHeader: map['idPutAwyProdHeader'] ?? 0,
     );
   }
 

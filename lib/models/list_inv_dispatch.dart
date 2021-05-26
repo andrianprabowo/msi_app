@@ -8,6 +8,7 @@ class ListInvDispatch with ChangeNotifier {
   final DateTime docDate;
   final String vendor;
   final int status;
+  final int idInvent;
   final String logMessage;
   ListInvDispatch({
     this.grpono,
@@ -15,6 +16,7 @@ class ListInvDispatch with ChangeNotifier {
     this.docDate,
     this.vendor,
     this.status,
+    this.idInvent,
     this.logMessage,
   });
 
@@ -42,6 +44,7 @@ class ListInvDispatch with ChangeNotifier {
       'vendor': vendor,
       'status': status,
       'logMessage': logMessage,
+      'idInvent': idInvent,
     };
   }
 
@@ -54,6 +57,7 @@ class ListInvDispatch with ChangeNotifier {
       docDate: DateTime.parse(map['docDate']),
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
+      idInvent: map['idGrpodlvHeader'] ?? 0,
       logMessage: map['logMessage'] ?? '',
     );
   }

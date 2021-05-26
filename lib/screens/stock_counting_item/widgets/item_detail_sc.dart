@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/stock_counting_batch.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
 import 'package:msi_app/screens/stock_counting_batch/stock_counting_batch_screen.dart';
 import 'package:msi_app/screens/stock_counting_item/widgets/dialog_input_non_batch_sc.dart';
@@ -18,7 +19,10 @@ class ItemDetailSc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     final provider =
         Provider.of<StockCountingItemProvider>(context, listen: false);
 
@@ -77,7 +81,7 @@ class ItemDetailSc extends StatelessWidget {
                   BaseTextLine(
                       'Counted Qty',
                       item.quantity == 0.0
-                          ? item.quantity.toStringAsFixed(4)
+                          ? item.quantity.toStringAsFixed(authProvider.decLen)
                           : formatter.format(item.quantity)),
                   BaseTextLine('Inventory UoM', item.unitMsr),
                   BaseTextLine('Item Batch', item.fgBatch),

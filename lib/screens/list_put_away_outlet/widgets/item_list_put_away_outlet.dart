@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/list_put_away_rfo.dart';
+import 'package:msi_app/providers/list_put_away_rfo_provider.dart';
+import 'package:msi_app/screens/list_put_away_outlet_detail/list_put_away_detail_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/base_title_color.dart';
+import 'package:provider/provider.dart';
 
 class ItemListPutAwayOutlet extends StatelessWidget {
   final ListPutAwayRfo item;
@@ -13,21 +17,40 @@ class ItemListPutAwayOutlet extends StatelessWidget {
   Widget get status {
     switch (item.status) {
       case 0:
-        return Icon(Icons.close, color: Colors.red, size: 48);
+        return Icon(Icons.sms_failed_outlined, color: Colors.red, size: 48);
         break;
       case 1:
         return Icon(Icons.check, color: Colors.green, size: 48);
+        break;
+      case 2:
+        return Icon(Icons.block, color: Colors.blue, size: 48);
         break;
       default:
         return Icon(Icons.help_outline, color: Colors.grey, size: 48);
     }
   }
 
+  Widget get textStatus {
+    switch (item.status) {
+      case 2:
+        return BaseTitleColor('Canceled');
+        break;
+      default:
+        return Text("");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+     final listProvider =
+        Provider.of<ListPutAwayRfoProvider>(context, listen: false);
     return InkWell(
       onTap: () {
-        //Navigator.of(context).pushNamed(StagingItemScreen.routeName);
+        if (item.status == 0) {
+          listProvider.selectPo(item);
+          Navigator.of(context)
+              .pushNamed(ListPutAwayOutletDetailScreen.routeName, arguments: item);
+        }
       },
       child: Container(
         width: double.infinity,
@@ -46,6 +69,7 @@ class ItemListPutAwayOutlet extends StatelessWidget {
                   // BaseTextLine('Doc No', item.poNo),
                   BaseTextLine('Doc Date', convertDate(item.docDate)),
                   BaseTitle(item.logMessage),
+                  textStatus,
                 ],
               ),
             ),

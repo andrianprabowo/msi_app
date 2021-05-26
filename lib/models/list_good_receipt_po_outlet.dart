@@ -8,6 +8,7 @@ class ListGoodReceiptPoOutlet with ChangeNotifier {
   final DateTime docDate;
   final String vendor;
   final int status;
+  final int idRtoHeader;
   final String logMessage;
   ListGoodReceiptPoOutlet({
     this.grpono,
@@ -15,6 +16,7 @@ class ListGoodReceiptPoOutlet with ChangeNotifier {
     this.docDate,
     this.vendor,
     this.status,
+    this.idRtoHeader,
     this.logMessage,
   });
 
@@ -42,6 +44,7 @@ class ListGoodReceiptPoOutlet with ChangeNotifier {
       'vendor': vendor,
       'status': status,
       'logMessage': logMessage,
+      'idRtoHeader': idRtoHeader,
     };
   }
 
@@ -54,6 +57,7 @@ class ListGoodReceiptPoOutlet with ChangeNotifier {
       docDate: DateTime.parse(map['docDate']),
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
+      idRtoHeader: map['idRtoHeader'] ?? 0,
       logMessage: map['logMessage'] ?? '',
     );
   }

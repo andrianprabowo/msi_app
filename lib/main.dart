@@ -9,16 +9,31 @@ import 'package:msi_app/providers/dashboard_provider.dart';
 import 'package:msi_app/providers/item_batch_si_provider.dart';
 import 'package:msi_app/providers/item_bin_si_provider.dart';
 import 'package:msi_app/providers/item_gl_provider.dart';
+import 'package:msi_app/providers/list_grpo_detail_provider.dart';
+import 'package:msi_app/providers/list_grpo_outlet_detail_provider.dart';
 import 'package:msi_app/providers/list_grpo_outlet_provider.dart';
 import 'package:msi_app/providers/list_grpo_provider.dart';
+import 'package:msi_app/providers/list_inv_dispatch_detail_provider.dart';
 import 'package:msi_app/providers/list_inv_dispatch_provider.dart';
+import 'package:msi_app/providers/list_inv_dispatch_rtv_detail_provider.dart';
 import 'package:msi_app/providers/list_inv_dispatch_rtv_provider.dart';
+import 'package:msi_app/providers/list_inv_dispatch_so_detail_provider.dart';
 import 'package:msi_app/providers/list_inv_dispatch_so_provider.dart';
+import 'package:msi_app/providers/list_pick_list_detail_provider.dart';
+import 'package:msi_app/providers/list_pick_list_prod_detail_provider.dart';
+import 'package:msi_app/providers/list_pick_list_prod_receipt_detail_provider.dart';
 import 'package:msi_app/providers/list_pick_list_provider.dart';
+import 'package:msi_app/providers/list_pick_list_rtv_detail_provider.dart';
 import 'package:msi_app/providers/list_pick_list_rtv_provider.dart';
+import 'package:msi_app/providers/list_pick_list_so_detail_provider.dart';
 import 'package:msi_app/providers/list_pick_list_so_provider.dart';
+import 'package:msi_app/providers/list_prod_issue_rm_detail_provider.dart';
+import 'package:msi_app/providers/list_prod_receipt_fg_detail_provider.dart';
+import 'package:msi_app/providers/list_put_away_detail_provider.dart';
 import 'package:msi_app/providers/list_put_away_provider.dart';
+import 'package:msi_app/providers/list_put_away_rfo_detail_provider.dart';
 import 'package:msi_app/providers/list_put_away_rfo_provider.dart';
+import 'package:msi_app/providers/list_stck_count_detail_provider.dart';
 import 'package:msi_app/providers/list_stck_count_provider.dart';
 import 'package:msi_app/providers/modul.provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_bin.dart';
@@ -223,6 +238,23 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ModulProvider()),
         ChangeNotifierProvider(create: (_) => ItemGlProvider()),
         // ChangeNotifierProvider(create: (_) => BatchNumberProvider()),
+
+        ChangeNotifierProvider(create: (_) => ListGrpoDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListPutAwayDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListGrpoOutletDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListPutAwayRfoDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListPickListDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListPickListRtvDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListPickListSooDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListInvDispatchSoDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListInvDispatchRtvDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListInvDispatchDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListPickListProdDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListPickListProdReceiptDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListProdIssueRmDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListProdReceiptFgDetailProvider()),
+        ChangeNotifierProvider(create: (_) => ListStckCountDetailProvider()),
+
       ],
       child: MyApp(),
     ),

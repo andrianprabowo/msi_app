@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_pick_list_item_batch_model.dart';
 import 'package:msi_app/models/production_pick_list_item_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/production_pick_list_bin/production_pick_list_bin_screen.dart';
 import 'package:msi_app/screens/production_pick_list_item/widgets/pick_bin_widget.dart';
 import 'package:msi_app/screens/production_pick_list_item/widgets/production_pick_list_item_batch_box.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:provider/provider.dart';
 
 class ProductionPickListItemList extends StatelessWidget {
   final ProductionPickListItemModel item;
@@ -16,7 +18,10 @@ class ProductionPickListItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+  final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return InkWell(
       onTap: () {
         item.fgBatch == "Y"
@@ -40,17 +45,17 @@ class ProductionPickListItemList extends StatelessWidget {
             BaseTextLine(
                 'Total To Pick',
                 item.openQty == 0.0
-                    ? item.openQty.toStringAsFixed(4)
+                    ? item.openQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.openQty)),
             BaseTextLine(
                 'Picked Qty',
                 item.pickedQty == 0.0
-                    ? item.pickedQty.toStringAsFixed(4)
+                    ? item.pickedQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.pickedQty)),
             BaseTextLine(
                 'Remaining Qty',
                 item.quantity == 0.0
-                    ? item.quantity.toStringAsFixed(4)
+                    ? item.quantity.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.quantity)),
             BaseTextLine('UOM', item.unitMsr),
             BaseTextLine('Item Batch', item.fgBatch),
@@ -60,7 +65,7 @@ class ProductionPickListItemList extends StatelessWidget {
             // BaseTextLine(
             //     'Picked Qty',
             //     item.pickedQty == 0.0
-            //         ? item.pickedQty.toStringAsFixed(4)
+            //         ? item.pickedQty.toStringAsFixed(authProvider.decLen)
             //         : formatter.format(item.pickedQty)),
             if (item.fgBatch == 'Y') buildItemBatchList(item.batchList),
             if (item.fgBatch == 'N') buildItemBin(item.batchList),

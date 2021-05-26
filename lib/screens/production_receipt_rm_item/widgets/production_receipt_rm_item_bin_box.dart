@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_batch_list_model.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -18,7 +19,10 @@ class ProductionReceiptRMItemBinBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProductionReceiptRMItemListProvider>(context,
         listen: false);
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return Container(
       margin: const EdgeInsets.all(kTiny),
       padding: const EdgeInsets.all(kSmall),
@@ -41,7 +45,7 @@ class ProductionReceiptRMItemBinBox extends StatelessWidget {
                 BaseTextLine(
                     'Quantity',
                     batch.pickQty == 0.0
-                        ? batch.pickQty.toStringAsFixed(4)
+                        ? batch.pickQty.toStringAsFixed(authProvider.decLen)
                         : formatter.format(batch.pickQty)),
               ],
             ),

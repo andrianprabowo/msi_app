@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/inventory_dispatch_item_so.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_batch_so_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_so_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_header_so_provider.dart';
@@ -36,9 +37,14 @@ class InventoryDispatchBatchSoScreen extends StatelessWidget {
         itemCode, binHeader.binCode, details.docNumber);
   }
 
+  final globalKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
 
     final pickItemProvider =
         Provider.of<InventoryDispatchItemSoProvider>(context, listen: false);
@@ -50,12 +56,30 @@ class InventoryDispatchBatchSoScreen extends StatelessWidget {
     // InventoryDispatchBinSo itemBin = map['inventoryDispatchBin'];
 
     return Scaffold(
+      key: globalKey,
       appBar: AppBar(
         title: Text('Inventory Dispatch Sales Order'),
         actions: [
           IconButton(
             icon: Icon(Icons.check_box_outlined),
             onPressed: () {
+           print("total  ${pickBatchProvider.totalPicked}");
+           print("open qty  ${pickItem.openQty}");
+
+
+              if (pickBatchProvider.totalPicked > pickItem.openQty) {
+                  final snackBar = SnackBar(
+                    content: Row(
+                      children: [
+                        Icon(Icons.error_outline, color: Colors.red),
+                        SizedBox(width: getProportionateScreenWidth(kLarge)),
+                        Text("Total Picked Can't be bigger than Dispatch Qty"),
+                      ],
+                    ),
+                  );
+                  globalKey.currentState.showSnackBar(snackBar);
+                  return;
+                }
               // update bin location
               // pickItem.itemStorageLocation = itemBin.binLocation;
               // add batch list
@@ -85,7 +109,7 @@ class InventoryDispatchBatchSoScreen extends StatelessWidget {
                     child: BaseTextLine(
                       'Total Picked',
                       provider.totalPicked == 0.0
-                          ? provider.totalPicked.toStringAsFixed(4)
+                          ? provider.totalPicked.toStringAsFixed(authProvider.decLen)
                           : formatter.format(provider.totalPicked),
                     ),
                   );
@@ -105,7 +129,7 @@ class InventoryDispatchBatchSoScreen extends StatelessWidget {
             BaseTextLine(
                 'Dispatch Qty',
                 pickItem.openQty == 0.0
-                    ? pickItem.openQty.toStringAsFixed(4)
+                    ? pickItem.openQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(pickItem.openQty)),
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

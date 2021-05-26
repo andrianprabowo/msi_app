@@ -6,6 +6,7 @@ class PutBatch with ChangeNotifier {
   final String batchNo;
   final String uom;
   final double availableQty;
+  final double tempQty;
   String bin;
   double putQty;
   final DateTime expiredDate;
@@ -14,6 +15,7 @@ class PutBatch with ChangeNotifier {
     this.uom,
     this.bin,
     this.availableQty,
+    this.tempQty,
     this.putQty,
     this.expiredDate,
   });
@@ -23,6 +25,7 @@ class PutBatch with ChangeNotifier {
       'itemStorageLocation': bin,
       'batchNo': batchNo,
       'batchQuantity': putQty,
+      'tempQty': tempQty,
       'expDate': expiredDate?.toIso8601String(),
     };
   }
@@ -35,6 +38,7 @@ class PutBatch with ChangeNotifier {
       uom: map['uom'] ?? '',
       bin: map['itemStorageLocation'] ?? '',
       availableQty: map['avlQty'] ?? 0.0,
+      tempQty: map['tempQty'] ?? 0.0,
       putQty: map['putqty'] ?? 0.0,
       expiredDate: DateTime.parse(map['expDate']),
     );
@@ -47,5 +51,5 @@ class PutBatch with ChangeNotifier {
 
   @override
   String toString() =>
-      'PutBatch(batchNo: $batchNo, bin: $bin, availableQty: $availableQty,putQty: $putQty, expiredDate: $expiredDate,uom: $uom)';
+      'PutBatch(batchNo: $batchNo, bin: $bin, tempQty: $tempQty, availableQty: $availableQty,putQty: $putQty, expiredDate: $expiredDate,uom: $uom)';
 }

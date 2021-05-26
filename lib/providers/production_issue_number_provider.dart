@@ -45,4 +45,9 @@ class ProductionIssueNumberProvider with ChangeNotifier {
     _selected = productionIssueNumberModel;
     notifyListeners();
   }
+  void inputQtyNonBatch(ProductionIssueNumberModel productionIssueItemModel, double qty) {
+    productionIssueItemModel.totalRemain = qty;
+    notifyListeners();
+    print('Update Qty Non batch: $ProductionIssueNumberModel');
+  }
 }

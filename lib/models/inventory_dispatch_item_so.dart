@@ -10,6 +10,7 @@ class InventoryDispatchItemSo with ChangeNotifier {
   double quantity;
   double pickedQty;
   String fgBatch;
+  String selecBin;
   final String unitMsr;
   final int val;
   String itemStorageLocation;
@@ -20,6 +21,7 @@ class InventoryDispatchItemSo with ChangeNotifier {
     this.description,
     this.openQty,
     this.quantity,
+    this.selecBin,
     this.pickedQty,
     this.fgBatch,
     this.unitMsr,
@@ -37,6 +39,7 @@ class InventoryDispatchItemSo with ChangeNotifier {
       'grQuantity': pickedQty,
       'uom': unitMsr,
       'val': val,
+      'selecBin': selecBin,
       'itemStorageLocation': itemStorageLocation,
       'listBatches': batchList?.map((x) => x?.toMap())?.toList(),
     };
@@ -53,6 +56,7 @@ class InventoryDispatchItemSo with ChangeNotifier {
       fgBatch: map['fgBatch'] ?? '',
       pickedQty: 0.0,
       unitMsr: map['unitMsr'] ?? '',
+      selecBin: map['selecBin'] ?? '',
       val: map['val'] ?? 0,
       itemStorageLocation: map['itemStorageLocation'] ?? '',
       batchList: map['batchList'] ?? [],

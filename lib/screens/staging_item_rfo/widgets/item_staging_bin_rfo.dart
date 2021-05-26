@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin_rfo.dart';
 import 'package:msi_app/models/put_batch_rfo.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/staging_batch_rfo/staging_batch_rfo_screen.dart';
 import 'package:msi_app/screens/staging_item_rfo/widgets/put_batch_widget_rfo.dart';
 import 'package:msi_app/screens/staging_item_rfo/widgets/put_bin_widget_rfo.dart';
 import 'package:msi_app/screens/storage_bin_item_rfo/storage_bin_item_rfo_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:provider/provider.dart';
 
 class ItemStagingBinRfo extends StatelessWidget {
   final ItemBinRfo item;
@@ -16,7 +18,10 @@ class ItemStagingBinRfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return InkWell(
       onTap: () {
         item.fgBatch == 'Y'
@@ -41,21 +46,21 @@ class ItemStagingBinRfo extends StatelessWidget {
             BaseTextLine(
                 'Put Qty',
                 item.putQty == 0.0
-                    ? item.putQty.toStringAsFixed(4)
+                    ? item.putQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.putQty)),
             // if (item.binCodeDestination.isNotEmpty)
             //   BaseTextLine('Bin Code', item.binCodeDestination),
             BaseTextLine(
                 'Available Qty',
                 item.availableQty == 0.0
-                    ? item.availableQty.toStringAsFixed(4)
+                    ? item.availableQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.availableQty)),
             BaseTextLine('Uom', item.uom),
             // if (item.putQty != 0)
             BaseTextLine(
                 'Remaining Qty',
                 item.remainingQty == 0.0
-                    ? item.remainingQty.toStringAsFixed(4)
+                    ? item.remainingQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.remainingQty)),
             // buildItemBatchList(item.batchList),
             if (item.fgBatch == 'Y') buildItemBatchList(item.batchList),

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_batch_so.dart';
 import 'package:msi_app/models/pick_item_receive_so.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:provider/provider.dart';
 
 class PickBinCheckSo extends StatelessWidget {
   final PickItemReceiveSo pickItem;
@@ -14,7 +16,10 @@ class PickBinCheckSo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+  final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     // final provider =
     //     Provider.of<PickItemReceiveSoProvider>(context, listen: false);
     return Container(
@@ -32,7 +37,7 @@ class PickBinCheckSo extends StatelessWidget {
                 BaseTextLine(
                     'Quantity',
                     batch.pickQty == 0.0
-                        ? batch.pickQty.toStringAsFixed(4)
+                        ? batch.pickQty.toStringAsFixed(authProvider.decLen)
                         : formatter.format(batch.pickQty)),
               ],
             ),

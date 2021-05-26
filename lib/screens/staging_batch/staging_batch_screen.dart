@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/item_batch_provider.dart';
 import 'package:msi_app/screens/staging_batch/widgets/dialog_put_away.dart';
 import 'package:msi_app/screens/staging_batch/widgets/item_batch_staging.dart';
@@ -29,11 +30,14 @@ class StagingBatchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     final itemBatchProvider =
         Provider.of<ItemBatchProvider>(context, listen: false);
     ItemBin item = ModalRoute.of(context).settings.arguments;
-    final avlQty = item.availableQty.toStringAsFixed(4);
+    final avlQty = item.availableQty.toStringAsFixed(authProvider.decLen);
 
     return Scaffold(
       appBar: AppBar(
@@ -43,8 +47,8 @@ class StagingBatchScreen extends StatelessWidget {
             icon: Icon(Icons.check_box_outlined),
             onPressed: () {
               if (double.parse(
-                      itemBatchProvider.totalPicked.toStringAsFixed(4)) >
-                  double.parse(item.availableQty.toStringAsFixed(4))) {
+                      itemBatchProvider.totalPicked.toStringAsFixed(authProvider.decLen)) >
+                  double.parse(item.availableQty.toStringAsFixed(authProvider.decLen))) {
                 print('Tidak boleh lebih besar dari Available Qty ');
                 return showDialog<void>(
                   context: context,
@@ -105,7 +109,7 @@ class StagingBatchScreen extends StatelessWidget {
                     child: BaseTextLine(
                       'Total Picked',
                       provider.totalPicked == 0.0
-                          ? provider.totalPicked.toStringAsFixed(4)
+                          ? provider.totalPicked.toStringAsFixed(authProvider.decLen)
                           : formatter.format(provider.totalPicked),
                     ),
                   );
@@ -125,7 +129,7 @@ class StagingBatchScreen extends StatelessWidget {
             BaseTextLine(
                 'Available Qty',
                 item.availableQty == 0.0
-                    ? item.availableQty.toStringAsFixed(4)
+                    ? item.availableQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.availableQty)),
             BaseTextLine('Uom', item.uom),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

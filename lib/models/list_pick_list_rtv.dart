@@ -8,6 +8,7 @@ class ListPickListRtv with ChangeNotifier {
   final DateTime docDate;
   final String vendor;
   final int status;
+  final int idRvplHeader;
   final String logMessage;
   ListPickListRtv({
     this.grpono,
@@ -15,6 +16,7 @@ class ListPickListRtv with ChangeNotifier {
     this.docDate,
     this.vendor,
     this.status,
+    this.idRvplHeader,
     this.logMessage,
   });
 
@@ -41,6 +43,7 @@ class ListPickListRtv with ChangeNotifier {
       'docDate': docDate?.toIso8601String(),
       'vendor': vendor,
       'status': status,
+      'idRvplHeader': idRvplHeader,
       'logMessage': logMessage,
     };
   }
@@ -54,6 +57,7 @@ class ListPickListRtv with ChangeNotifier {
       docDate: DateTime.parse(map['docDate']),
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
+      idRvplHeader: map['idRvplHeader'] ?? 0,
       logMessage: map['logMessage'] ?? '',
     );
   }

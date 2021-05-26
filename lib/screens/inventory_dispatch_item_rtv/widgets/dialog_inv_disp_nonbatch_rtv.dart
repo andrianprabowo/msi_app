@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/inventory_dispatch_item_rtv.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_item_rtv_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -28,7 +29,10 @@ class _DialogInvDispNonbatchRtvState extends State<DialogInvDispNonbatchRtv> {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
@@ -42,7 +46,7 @@ class _DialogInvDispNonbatchRtvState extends State<DialogInvDispNonbatchRtv> {
           BaseTextLine(
               'Available Quantity',
               widget.item.openQty == 0.0
-                  ? widget.item.openQty.toStringAsFixed(4)
+                  ? widget.item.openQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(widget.item.openQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),

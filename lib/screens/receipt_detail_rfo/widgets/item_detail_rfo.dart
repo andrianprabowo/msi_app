@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_batch_rfo.dart';
 import 'package:msi_app/models/item_purchase_order_rfo.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/receipt_batch_rfo/receipt_batch_rfo_screen.dart';
 import 'package:msi_app/screens/receipt_detail_rfo/widgets/dialog_input_non_batch_rfo.dart';
 import 'package:msi_app/screens/receipt_detail_rfo/widgets/item_batch_widget_rfo.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:provider/provider.dart';
 
 class ItemDetailRfo extends StatelessWidget {
   final ItemPurchaseOrderRfo item;
@@ -16,7 +18,10 @@ class ItemDetailRfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
 
     return InkWell(
       onTap: () {
@@ -45,17 +50,17 @@ class ItemDetailRfo extends StatelessWidget {
             BaseTextLine(
                 'Return Quantity',
                 item.openQty == 0.0
-                    ? item.openQty.toStringAsFixed(4)
+                    ? item.openQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.openQty)),
             BaseTextLine(
                 'Receipt Quantity',
                 item.quantity == 0.0
-                    ? item.quantity.toStringAsFixed(4)
+                    ? item.quantity.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.quantity)),
             BaseTextLine(
                 'Remaining Quantity',
                 item.remainingQty == 0.0
-                    ? item.remainingQty.toStringAsFixed(4)
+                    ? item.remainingQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.remainingQty)),
             BaseTextLine('UoM', item.uom),
             BaseTextLine('Item Batch', item.fgBatch),

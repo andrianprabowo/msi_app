@@ -9,6 +9,11 @@ import 'package:http/http.dart' as http;
 class ProductionIssueItemProvider with ChangeNotifier {
   List<ProductionIssueItemModel> _items;
 
+  
+  ProductionIssueItemModel _selected;
+
+  ProductionIssueItemModel get selected => _selected;
+
   List<ProductionIssueItemModel> get items {
     _items.forEach((detail) {
       if (detail.fgBatch == "Y") {
@@ -22,6 +27,8 @@ class ProductionIssueItemProvider with ChangeNotifier {
 
       // calculate remaining qty
       detail.remainingQty = detail.availableQty - detail.putQty;
+      detail.totQty = detail.totQty + detail.putQty;
+      
     });
 
     return _items;

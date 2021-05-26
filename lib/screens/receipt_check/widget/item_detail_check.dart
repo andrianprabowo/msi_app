@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_batch.dart';
 import 'package:msi_app/models/item_purchase_order.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/receipt_check/widget/item_batch_check.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:provider/provider.dart';
 
 class ItemDetailCheck extends StatelessWidget {
   final ItemPurchaseOrder item;
@@ -14,7 +16,10 @@ class ItemDetailCheck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return Container(
       margin: const EdgeInsets.all(kTiny),
       padding: const EdgeInsets.all(kSmall),
@@ -27,17 +32,17 @@ class ItemDetailCheck extends StatelessWidget {
           BaseTextLine(
               'PO Quantity',
               item.openQty == 0.0
-                  ? item.openQty.toStringAsFixed(4)
+                  ? item.openQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.openQty)),
           BaseTextLine(
               'Receipt Quantity',
               item.quantity == 0.0
-                  ? item.quantity.toStringAsFixed(4)
+                  ? item.quantity.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.quantity)),
           BaseTextLine(
               'Remaining Quantity',
               item.remainingQty == 0.0
-                  ? item.remainingQty.toStringAsFixed(4)
+                  ? item.remainingQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.remainingQty)),
           BaseTextLine('UoM', item.uom),
           Divider(),

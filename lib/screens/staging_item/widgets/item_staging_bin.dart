@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin.dart';
 import 'package:msi_app/models/put_batch.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/staging_batch/staging_batch_screen.dart';
 import 'package:msi_app/screens/staging_item/widgets/put_batch_widget.dart';
 import 'package:msi_app/screens/staging_item/widgets/put_bin_widget.dart';
 import 'package:msi_app/screens/storage_bin_item/storage_bin_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:provider/provider.dart';
 
 class ItemStagingBin extends StatelessWidget {
   final ItemBin item;
@@ -16,7 +18,10 @@ class ItemStagingBin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     final numUom = formatter.format(item.numInBuy) + " " + item.unitMsr;
     return InkWell(
       onTap: () {
@@ -41,21 +46,21 @@ class ItemStagingBin extends StatelessWidget {
             BaseTextLine(
                 'Picked Qty',
                 item.putQty == 0.0
-                    ? item.putQty.toStringAsFixed(4)
+                    ? item.putQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.putQty)),
             // if (item.binCodeDestination.isNotEmpty)
             //   BaseTextLine('Bin Code', item.binCodeDestination),
             BaseTextLine(
                 'Available Qty',
                 item.availableQty == 0.0
-                    ? item.availableQty.toStringAsFixed(4)
+                    ? item.availableQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.availableQty)),
             BaseTextLine('Uom', item.uom),
             // if (item.putQty != 0)
             BaseTextLine(
                 'Remaining Qty',
                 item.remainingQty == 0.0
-                    ? item.remainingQty.toStringAsFixed(4)
+                    ? item.remainingQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.remainingQty)),
             BaseTextLine(
                 'Item per unit',numUom),

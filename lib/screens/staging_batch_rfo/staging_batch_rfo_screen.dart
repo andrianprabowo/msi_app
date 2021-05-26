@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin_rfo.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/item_batch_rfo_provider.dart';
 import 'package:msi_app/screens/staging_batch_rfo/widgets/dialog_put_away_rfo.dart';
 import 'package:msi_app/screens/staging_batch_rfo/widgets/item_batch_staging_rfo.dart';
@@ -28,7 +29,10 @@ class StagingBatchRfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     final itemBatchProvider =
         Provider.of<ItemBatchRfoProvider>(context, listen: false);
     ItemBinRfo item = ModalRoute.of(context).settings.arguments;
@@ -64,7 +68,7 @@ class StagingBatchRfoScreen extends StatelessWidget {
                     child: BaseTextLine(
                         'Total Picked',
                         provider.totalPicked == 0.0
-                            ? provider.totalPicked.toStringAsFixed(4)
+                            ? provider.totalPicked.toStringAsFixed(authProvider.decLen)
                             : formatter.format(provider.totalPicked)),
                   );
                 }),
@@ -83,7 +87,7 @@ class StagingBatchRfoScreen extends StatelessWidget {
             BaseTextLine(
                 'Available Qty',
                 item.availableQty == 0.0
-                    ? item.availableQty.toStringAsFixed(4)
+                    ? item.availableQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.availableQty)),
             BaseTextLine('Uom', item.uom),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin.dart';
 import 'package:msi_app/models/put_batch.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/item_bin_provider.dart';
 import 'package:msi_app/screens/staging_item/staging_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -29,7 +30,10 @@ class _DialogPutAwayNonbatchState extends State<DialogPutAwayNonbatch> {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return Container(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
@@ -46,7 +50,7 @@ class _DialogPutAwayNonbatchState extends State<DialogPutAwayNonbatch> {
           BaseTextLine(
               'Available Quantity',
               widget.item.remainingQty == 0.0
-                  ? widget.item.remainingQty.toStringAsFixed(4)
+                  ? widget.item.remainingQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(widget.item.remainingQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
@@ -59,7 +63,7 @@ class _DialogPutAwayNonbatchState extends State<DialogPutAwayNonbatch> {
           //   buildButtonNotif(context, widget.item.availableQty.toString())
           // else
           buildButtonSubmit(
-              context, widget.item.availableQty.toStringAsFixed(4)),
+              context, widget.item.availableQty.toStringAsFixed(authProvider.decLen)),
         ],
       ),
     );

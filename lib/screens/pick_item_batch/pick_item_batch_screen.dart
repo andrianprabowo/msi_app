@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/models/pick_list_bin.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/pick_batch_provider.dart';
 import 'package:msi_app/providers/pick_item_receive_provider.dart';
 import 'package:msi_app/screens/pick_item_batch/widget/dialog_expired.dart';
@@ -31,7 +32,10 @@ class PickItemBatchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     final pickItemReceiveProvider =
         Provider.of<PickItemReceiveProvider>(context, listen: false);
     final pickBatchProvider =
@@ -53,7 +57,7 @@ class PickItemBatchScreen extends StatelessWidget {
                 showAlertGreaterThanZero(
                     context,
                     pickItem.quantity == 0.0
-                        ? pickItem.quantity.toStringAsFixed(4)
+                        ? pickItem.quantity.toStringAsFixed(authProvider.decLen)
                         : formatter.format(pickItem.quantity));
               } else {
                 // update bin location
@@ -73,18 +77,18 @@ class PickItemBatchScreen extends StatelessWidget {
               }
 
               // var guider =
-              //     double.tryParse(pickItem.quantity.toStringAsFixed(4)) >
-              //             double.tryParse(itemBin.avlQty.toStringAsFixed(4))
-              //         ? double.tryParse(itemBin.avlQty.toStringAsFixed(4))
-              //         : double.tryParse(pickItem.quantity.toStringAsFixed(4));
+              //     double.tryParse(pickItem.quantity.toStringAsFixed(authProvider.decLen)) >
+              //             double.tryParse(itemBin.avlQty.toStringAsFixed(authProvider.decLen))
+              //         ? double.tryParse(itemBin.avlQty.toStringAsFixed(authProvider.decLen))
+              //         : double.tryParse(pickItem.quantity.toStringAsFixed(authProvider.decLen));
 
-              // pickBatchProvider.totalPicked.toStringAsFixed(4) == '0.0000'
+              // pickBatchProvider.totalPicked.toStringAsFixed(authProvider.decLen) == '0.0000'
               //     ? showAlertOnZero(context)
               //     : double.tryParse(pickBatchProvider.totalPicked
-              //                 .toStringAsFixed(4)) >
+              //                 .toStringAsFixed(authProvider.decLen)) >
               //             guider
               //         ? showAlertGreaterThanZero(
-              //             context, guider.toStringAsFixed(4))
+              //             context, guider.toStringAsFixed(authProvider.decLen))
 
               // : Navigator.of(context).popUntil(
               //     ModalRoute.withName(PickItemReceiveScreen.routeName));
@@ -109,7 +113,7 @@ class PickItemBatchScreen extends StatelessWidget {
                     child: BaseTextLine(
                       'Total Picked',
                       provider.totalPicked == 0.0
-                          ? provider.totalPicked.toStringAsFixed(4)
+                          ? provider.totalPicked.toStringAsFixed(authProvider.decLen)
                           : formatter.format(provider.totalPicked),
                     ),
                   );
@@ -130,7 +134,7 @@ class PickItemBatchScreen extends StatelessWidget {
             BaseTextLine(
                 'Total to Pick Qty',
                 pickItem.quantity == 0.0
-                    ? pickItem.quantity.toStringAsFixed(4)
+                    ? pickItem.quantity.toStringAsFixed(authProvider.decLen)
                     : formatter.format(pickItem.quantity)),
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

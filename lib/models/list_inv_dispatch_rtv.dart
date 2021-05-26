@@ -9,6 +9,8 @@ class ListInvDispatchRtv with ChangeNotifier {
   final String vendor;
   final int status;
   final String logMessage;
+  final int idRvidpHeader;
+  
   ListInvDispatchRtv({
     this.grpono,
     this.poNo,
@@ -16,6 +18,7 @@ class ListInvDispatchRtv with ChangeNotifier {
     this.vendor,
     this.status,
     this.logMessage,
+    this.idRvidpHeader,
   });
 
   ListInvDispatchRtv copyWith({
@@ -42,6 +45,7 @@ class ListInvDispatchRtv with ChangeNotifier {
       'vendor': vendor,
       'status': status,
       'logMessage': logMessage,
+      'idRvidpHeader': idRvidpHeader,
     };
   }
 
@@ -55,6 +59,7 @@ class ListInvDispatchRtv with ChangeNotifier {
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
       logMessage: map['logMessage'] ?? '',
+      idRvidpHeader: map['idRvidpHeader'] ?? '',
     );
   }
 

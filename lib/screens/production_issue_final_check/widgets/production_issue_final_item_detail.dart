@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_issue_item_batch_model.dart';
 import 'package:msi_app/models/production_issue_item_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/production_issue_final_check/widgets/production_issue_final_item_detail_batch.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:provider/provider.dart';
 
 class ProductionIssueFinalItemDetail extends StatelessWidget {
   final ProductionIssueItemModel item;
@@ -14,7 +16,10 @@ class ProductionIssueFinalItemDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return Container(
       margin: const EdgeInsets.all(kTiny),
       padding: const EdgeInsets.all(kSmall),
@@ -27,17 +32,17 @@ class ProductionIssueFinalItemDetail extends StatelessWidget {
           BaseTextLine(
               'Planned Quantity',
               item.availableQty == 0.0
-                  ? item.availableQty.toStringAsFixed(4)
+                  ? item.availableQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.availableQty)),
           BaseTextLine('UOM', item.unitMsr),
           BaseTextLine('Remaining Quantity', 
               item.remainingQty == 0.0
-                  ? item.remainingQty.toStringAsFixed(4)
+                  ? item.remainingQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.remainingQty)),
           BaseTextLine(
               'Issue Quantity',
               item.putQty == 0.0
-                  ? item.putQty.toStringAsFixed(4)
+                  ? item.putQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.putQty)),
           Divider(),
           if (item.batchList.isNotEmpty) BaseTitle('Item Batch List'),

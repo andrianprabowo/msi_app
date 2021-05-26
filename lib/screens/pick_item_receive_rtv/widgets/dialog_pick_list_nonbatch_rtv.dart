@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_batch_rtv.dart';
 import 'package:msi_app/models/pick_item_receive_rtv.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/pick_item_receive_rtv_provider.dart';
 import 'package:msi_app/screens/pick_item_receive_rtv/pick_item_receive_rtv_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -30,7 +31,10 @@ class _DialogPickListNonbatchRtvState extends State<DialogPickListNonbatchRtv> {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+ final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
@@ -47,7 +51,7 @@ class _DialogPickListNonbatchRtvState extends State<DialogPickListNonbatchRtv> {
           BaseTextLine(
               'Total to Pick Qty',
               widget.item.quantity == 0.0
-                  ? widget.item.quantity.toStringAsFixed(4)
+                  ? widget.item.quantity.toStringAsFixed(authProvider.decLen)
                   : formatter.format(widget.item.quantity)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),

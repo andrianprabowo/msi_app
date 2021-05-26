@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_pick_list_item_batch_model.dart';
 import 'package:msi_app/models/production_pick_list_item_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_pick_list_item_provider.dart';
 import 'package:msi_app/screens/production_pick_list_item/production_pick_list_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -31,9 +32,12 @@ class _ProductionPickListItemNonBatchDialogState
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     var openQty = widget.item.openQty == 0.0
-        ? widget.item.openQty.toStringAsFixed(4)
+        ? widget.item.openQty.toStringAsFixed(authProvider.decLen)
         : formatter.format(widget.item.openQty);
     return Container(
       padding: const EdgeInsets.all(kLarge),
@@ -51,7 +55,7 @@ class _ProductionPickListItemNonBatchDialogState
           BaseTextLine(
               'Total to Pick Qty',
               widget.item.quantity == 0.0
-                  ? widget.item.quantity.toStringAsFixed(4)
+                  ? widget.item.quantity.toStringAsFixed(authProvider.decLen)
                   : formatter.format(widget.item.quantity)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),

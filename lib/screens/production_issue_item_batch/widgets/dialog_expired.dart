@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_issue_item_batch_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title_color.dart';
+import 'package:provider/provider.dart';
 
 class DialogExpired extends StatefulWidget {
   final ProductionIssueItemBatchModel item;
@@ -20,7 +22,10 @@ class _DialogExpiredState extends State<DialogExpired> {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
@@ -34,7 +39,7 @@ class _DialogExpiredState extends State<DialogExpired> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Available Quantity', 
               widget.item.availableQty == 0.0
-                  ? widget.item.availableQty.toStringAsFixed(4)
+                  ? widget.item.availableQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(widget.item.availableQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildButtonExpired(

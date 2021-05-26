@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_item_receive_rtv.dart';
 import 'package:msi_app/models/pick_list_bin_rtv.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/pick_batch_rtv_provider.dart';
 import 'package:msi_app/providers/pick_item_receive_rtv_provider.dart';
 import 'package:msi_app/screens/pick_item_batch_rtv/widget/dialog_expired_rtv.dart';
@@ -31,7 +32,10 @@ class PickItemBatchRtvScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+ final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     final pickItemProvider =
         Provider.of<PickItemReceiveRtvProvider>(context, listen: false);
     final pickBatchProvider =
@@ -68,18 +72,18 @@ class PickItemBatchRtvScreen extends StatelessWidget {
                     ModalRoute.withName(PickItemReceiveRtvScreen.routeName));
               }
               // var guider =
-              //     double.tryParse(pickItem.openQty.toStringAsFixed(4)) >
-              //             double.tryParse(itemBin.avlQty.toStringAsFixed(4))
-              //         ? double.tryParse(itemBin.avlQty.toStringAsFixed(4))
-              //         : double.tryParse(pickItem.openQty.toStringAsFixed(4));
+              //     double.tryParse(pickItem.openQty.toStringAsFixed(authProvider.decLen)) >
+              //             double.tryParse(itemBin.avlQty.toStringAsFixed(authProvider.decLen))
+              //         ? double.tryParse(itemBin.avlQty.toStringAsFixed(authProvider.decLen))
+              //         : double.tryParse(pickItem.openQty.toStringAsFixed(authProvider.decLen));
 
-              // pickBatchProvider.totalPicked.toStringAsFixed(4) == '0.00'
+              // pickBatchProvider.totalPicked.toStringAsFixed(authProvider.decLen) == '0.00'
               //     ? showAlertOnZero(context)
               //     : double.tryParse(pickBatchProvider.totalPicked
-              //                 .toStringAsFixed(4)) >
+              //                 .toStringAsFixed(authProvider.decLen)) >
               //             guider
               //         ? showAlertGreaterThanZero(
-              //             context, guider.toStringAsFixed(4))
+              //             context, guider.toStringAsFixed(authProvider.decLen))
               //         : Navigator.of(context).popUntil(ModalRoute.withName(
               //             PickItemReceiveRtvScreen.routeName));
             },
@@ -121,7 +125,7 @@ class PickItemBatchRtvScreen extends StatelessWidget {
             BaseTextLine(
                 'Total To Pick Qty',  
                       pickItem.quantity == 0.0
-                          ? pickItem.quantity.toStringAsFixed(4)
+                          ? pickItem.quantity.toStringAsFixed(authProvider.decLen)
                           : formatter.format(pickItem.quantity)),
             BaseTextLine('UoM', pickItem.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

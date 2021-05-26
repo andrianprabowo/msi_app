@@ -7,11 +7,13 @@ class ProductionIssueAllTransactionModel with ChangeNotifier {
   final String wono;
   final String logMessage;
   final int status;
+  final int idIssueRmHeader;
   final DateTime docDate;
   ProductionIssueAllTransactionModel({
     this.issueNo, 
     this.wono, 
     this.status, 
+    this.idIssueRmHeader, 
     this.logMessage, 
     this.docDate,
   });
@@ -38,6 +40,7 @@ class ProductionIssueAllTransactionModel with ChangeNotifier {
       'wono': wono,
       'docDate': docDate?.toIso8601String(),
       'status': status,
+      'idIssueRmHeader': idIssueRmHeader,
       'logMessage': logMessage,
     };
   }
@@ -50,6 +53,7 @@ class ProductionIssueAllTransactionModel with ChangeNotifier {
       wono: map['wono'] ?? '',
       docDate: DateTime.parse(map['docDate']),
       status: map['status'] ?? '3',
+      idIssueRmHeader: map['idIssueRmHeader'] ?? 0,
       logMessage: map['logMessage'] ?? '',
     );
   }

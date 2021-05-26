@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/stock_counting_batch.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/stock_counting_batch/widget/dialog_pick_batch_sc.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:provider/provider.dart';
 
 class ItemStockCountingBatch extends StatelessWidget {
   final StockCountingBatch item;
@@ -12,7 +14,10 @@ class ItemStockCountingBatch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return InkWell(
       onTap: () {
         showModalBottomSheet(
@@ -31,7 +36,7 @@ class ItemStockCountingBatch extends StatelessWidget {
             BaseTextLine('Expired Date', convertDate(item.expiredDate)),
             BaseTextLine('Count Qty', 
                     item.pickQty == 0.0
-                        ? item.pickQty.toStringAsFixed(4)
+                        ? item.pickQty.toStringAsFixed(authProvider.decLen)
                         : formatter.format(item.pickQty)),
           ],
         ),

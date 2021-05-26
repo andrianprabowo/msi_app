@@ -5,11 +5,15 @@ class Warehouse {
   final String whsName;
   final String username;
   final int adminId;
+  final int decLen;
+  final String decString;
   Warehouse({
     this.whsCode,
     this.whsName,
     this.username,
     this.adminId,
+    this.decLen,
+    this.decString,
   });
 
   Warehouse copyWith({
@@ -30,6 +34,8 @@ class Warehouse {
       'whsName': whsName,
       'username': username,
       'idUserInput': adminId,
+      'decLen': decLen,
+      'decString': decString,
     };
   }
 
@@ -41,6 +47,8 @@ class Warehouse {
       whsName: map['outletName1'] ?? '',
       username: map['username'] ?? '',
       adminId: map['adminId'] ?? 0.0,
+      decLen: map['decLen'] ?? 7,
+      decString: map['decString'] ?? '',
     );
   }
 
@@ -51,7 +59,7 @@ class Warehouse {
 
   @override
   String toString() =>
-      'Warehouse(whsCode: $whsCode, whsName: $whsName, username: $username ,adminId: $adminId)';
+      'Warehouse(whsCode: $whsCode, whsName: $whsName, username: $username ,adminId: $adminId,decLen: $decLen,decString: $decString)';
 
   @override
   bool operator ==(Object o) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin_rfo.dart';
 import 'package:msi_app/models/put_batch_rfo.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/item_bin_rfo_provider.dart';
 import 'package:msi_app/screens/staging_item_rfo/staging_item_rfo_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -30,7 +31,10 @@ class _DialogPutAwayNonbatchRfoState extends State<DialogPutAwayNonbatchRfo> {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return Container(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
@@ -46,7 +50,7 @@ class _DialogPutAwayNonbatchRfoState extends State<DialogPutAwayNonbatchRfo> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine('Available Quantity',
                     widget.item.remainingQty == 0.0
-                        ? widget.item.remainingQty.toStringAsFixed(4)
+                        ? widget.item.remainingQty.toStringAsFixed(authProvider.decLen)
                         : formatter.format(widget.item.remainingQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
@@ -58,7 +62,7 @@ class _DialogPutAwayNonbatchRfoState extends State<DialogPutAwayNonbatchRfo> {
           //     _quantity.text == '0')
           //   buildButtonNotif(context, widget.item.availableQty.toString())
           // else
-          buildButtonSubmit(context, widget.item.availableQty.toStringAsFixed(4)),
+          buildButtonSubmit(context, widget.item.availableQty.toStringAsFixed(authProvider.decLen)),
         ],
       ),
     );

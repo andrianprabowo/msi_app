@@ -8,6 +8,7 @@ class ListPutAwayRfo with ChangeNotifier {
   final DateTime docDate;
   final String vendor;
   final int status;
+  final int idPwyrtoHeader;
   final String logMessage;
   ListPutAwayRfo({
     this.grpono,
@@ -15,6 +16,7 @@ class ListPutAwayRfo with ChangeNotifier {
     this.docDate,
     this.vendor,
     this.status,
+    this.idPwyrtoHeader,
     this.logMessage,
   });
 
@@ -41,6 +43,7 @@ class ListPutAwayRfo with ChangeNotifier {
       'docDate': docDate?.toIso8601String(),
       'vendor': vendor,
       'status': status,
+      'idPwyrtoHeader': idPwyrtoHeader,
       'logMessage': logMessage,
     };
   }
@@ -54,6 +57,7 @@ class ListPutAwayRfo with ChangeNotifier {
       docDate: DateTime.parse(map['docDate']),
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
+      idPwyrtoHeader: map['idPwyrtoHeader'] ?? 3,
       logMessage: map['logMessage'] ?? '',
     );
   }

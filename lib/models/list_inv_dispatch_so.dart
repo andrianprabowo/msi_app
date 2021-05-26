@@ -8,6 +8,7 @@ class ListInvDispatchSo with ChangeNotifier {
   final DateTime docDate;
   final String vendor;
   final int status;
+  final int idInvent;
   final String logMessage;
   ListInvDispatchSo({
     this.grpono,
@@ -15,6 +16,7 @@ class ListInvDispatchSo with ChangeNotifier {
     this.docDate,
     this.vendor,
     this.status,
+    this.idInvent,
     this.logMessage,
   });
 
@@ -41,6 +43,7 @@ class ListInvDispatchSo with ChangeNotifier {
       'docDate': docDate?.toIso8601String(),
       'vendor': vendor,
       'status': status,
+      'idInvent': idInvent,
       'logMessage': logMessage,
     };
   }
@@ -54,6 +57,7 @@ class ListInvDispatchSo with ChangeNotifier {
       docDate: DateTime.parse(map['docDate']),
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
+      idInvent: map['idSoidpHeader'] ?? 0,
       logMessage: map['logMessage'] ?? '',
     );
   }

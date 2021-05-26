@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_receipt_item_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_receipt_item_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -30,9 +31,12 @@ class _ProductionReceiptItemQtyNonBatchDialogState
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     var openQty = widget.item.openQty == 0.0
-        ? widget.item.openQty.toStringAsFixed(4)
+        ? widget.item.openQty.toStringAsFixed(authProvider.decLen)
         : formatter.format(widget.item.openQty);
     return Container(
         padding: const EdgeInsets.all(kLarge),
@@ -115,7 +119,7 @@ class _ProductionReceiptItemQtyNonBatchDialogState
                         (_quantityReject.text.isEmpty
                             ? double.parse('0')
                             : double.parse(_quantityReject.text))) >
-                    double.tryParse(widget.item.openQty.toStringAsFixed(4)))) {
+                    double.tryParse(widget.item.openQty.toStringAsFixed(3)))) {
               print('Tidak boleh lebih besar dari Available Qty ');
               return showDialog<void>(
                 context: context,

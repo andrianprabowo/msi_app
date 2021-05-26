@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/inventory_dispatch_bin_so.dart';
+import 'package:msi_app/providers/inventory_dispatch_bin_so_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_detail_so_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_header_so_provider.dart';
 import 'package:msi_app/screens/inventory_dispatch_detail_so/widgets/item_inventory_dispatch_detail_so.dart';
@@ -8,6 +10,7 @@ import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/input_scan.dart';
+import 'package:msi_app/widgets/item_bin.dart';
 import 'package:msi_app/widgets/no_data.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +23,8 @@ class InventoryDispatchDetailSoScreen extends StatelessWidget {
     final provider =
         Provider.of<InventoryDispatchDetailSoProvider>(context, listen: false);
     final item = headerProvider.selected;
+
+   
     print(item);
     // provider.getPlByWarehouse('WMSISTPR-SYSTEM-BIN-LOCATION');
     provider.getPlByWarehouse(item.binCode);
@@ -28,6 +33,10 @@ class InventoryDispatchDetailSoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+ final binProvider =
+        Provider.of<InventoryDispatchBinSoProvider>(context, listen: false);
+    final itemBin = binProvider.selected;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Inventory Dispatch Sales Order'),
@@ -53,14 +62,14 @@ class InventoryDispatchDetailSoScreen extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('Inventory Dispatch List'),
             Divider(),
-            buildItemList(context),
+            buildItemList(context,itemBin ),
           ],
         ),
       ),
     );
   }
 
-  Widget buildItemList(BuildContext context) {
+  Widget buildItemList(BuildContext context, InventoryDispatchBinSo bin) {
     return Expanded(
       child: FutureBuilder(
         future: refreshData(context),
@@ -82,7 +91,7 @@ class InventoryDispatchDetailSoScreen extends StatelessWidget {
                         return ChangeNotifierProvider.value(
                           value: provider.items[index],
                           child: ItemInventoryDispatchDetailSo(
-                              provider.items[index]),
+                              provider.items[index],bin),
                         );
                       },
                     ),

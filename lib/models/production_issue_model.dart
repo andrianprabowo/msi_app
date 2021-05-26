@@ -10,6 +10,8 @@ class ProductionIssueModel with ChangeNotifier {
   final String binCode;
   String plant;
   String plantName;
+  double totalQty;
+  double totalRemain;
   final String fileName;
   List<ProductionIssueItemModel> itemBinList;
   ProductionIssueModel({
@@ -19,6 +21,8 @@ class ProductionIssueModel with ChangeNotifier {
     this.binCode,
     this.plant,
     this.plantName,
+    this.totalQty,
+    this.totalRemain,
     this.fileName,
     this.itemBinList,
   });
@@ -45,6 +49,8 @@ class ProductionIssueModel with ChangeNotifier {
       plant: map['plant'] ?? '',
       plantName: map['plantName'] ?? '',
       fileName: map['fileName'] ?? '',
+      totalQty: map['total'] ?? 0.0,
+      totalRemain: map['totalRemain'] ?? 0.0,
       itemBinList: map['itemBinList'] ?? [],
     );
   }
@@ -56,6 +62,6 @@ class ProductionIssueModel with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ProductionIssueModel(binCode: $binCode, plant: $plant, plantName: $plantName, fileName: $fileName, itemBinList: $itemBinList)';
+    return 'ProductionIssueModel(binCode: $binCode, totalQty: $totalQty, totalRemain: $totalRemain plant: $plant, plantName: $plantName, fileName: $fileName, itemBinList: $itemBinList)';
   }
 }

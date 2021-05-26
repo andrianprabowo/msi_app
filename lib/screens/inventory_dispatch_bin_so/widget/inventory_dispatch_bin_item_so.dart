@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_bin_so.dart';
 import 'package:msi_app/models/inventory_dispatch_item_so.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_bin_so_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_item_so_provider.dart';
 import 'package:msi_app/screens/Inventory_dispatch_batch_so/inventory_dispatch_batch_so_screen.dart';
 import 'package:msi_app/screens/inventory_dispatch_item_so/inventory_dispatch_item_so_screen.dart';
@@ -18,9 +19,14 @@ class InventoryDispatchBinItemSo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final binProv =
+        Provider.of<InventoryDispatchBinSoProvider>(context, listen: false);
     return InkWell(
         onTap: () {
           if (inventoryDispatchItem.fgBatch == 'Y') {
+        binProv.selectBin(item);
+        print("object bin ?? ${binProv.selected.binLocation}");
+
             Navigator.of(context).pushNamed(
               InventoryDispatchBatchSoScreen
                   .routeName, //ddasdasdsadasadasdsadsa

@@ -3,11 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/inventory_dispatch_batch_so.dart';
 import 'package:msi_app/models/inventory_dispatch_item_so.dart';
+import 'package:msi_app/providers/inventory_dispatch_header_so_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
 
 class InventoryDispatchItemSoProvider with ChangeNotifier {
   List<InventoryDispatchItemSo> _items;
+  InventoryDispatchItemSo _selected;
+  InventoryDispatchItemSo get selected => _selected;
 
   List<InventoryDispatchItemSo> get items {
     _items.forEach((detail) {
@@ -28,9 +33,20 @@ class InventoryDispatchItemSoProvider with ChangeNotifier {
     return _items;
   }
 
-  Future<void> getInventItemByPlNo(String docNumber) async {
+  Future<void> getInventItemByPlNo(
+      BuildContext context, String docNumber) async {
+    print('object bb ???aa');
 
-    final url = '$kBaseUrl/api/getplitemsbySOIDPno/docnum=$docNumber';
+    final binProv =
+        Provider.of<InventoryDispatchHeaderSoProvider>(context, listen: false).selected;
+    final aa = binProv.binCode;
+    print('object bb $aa');
+    // print('object bb ${json.decode(binProv.selected.binLocation)}');
+    // print('object aaa $aa');
+    final url =
+        '$kBaseUrl/api/getplitemsbySOIDPno/docnum=$docNumber&bincode=$aa';
+        // '$kBaseUrl/api/getplitemsbySOIDPno/docnum=$docNumber&bincode=WMSISTFG-UNLOADING%20BIN';
+    // '$kBaseUrl/api/getplitemsbySOIDPno/docnum=$docNumber&bincode=${binProv.selected.binLocation}';
     // final url = '$kBaseUrl/api/getplitemsbyIDPno/docnum=MS2020070000007';
 
     try {
@@ -75,18 +91,24 @@ class InventoryDispatchItemSoProvider with ChangeNotifier {
     print('Removed Item Batch: $itemBatch');
   }
 
-  void inputQtyNonBatch(InventoryDispatchItemSo inventoryDispatchItem, double qty ) {
+  void inputQtyNonBatch(
+      InventoryDispatchItemSo inventoryDispatchItem, double qty) {
     inventoryDispatchItem.pickedQty = qty;
     // inventoryDispatchItem.itemStorageLocation = itemStorageLocation;
     notifyListeners();
     print('Update Qty Non batch: $inventoryDispatchItem');
   }
 
-  
-  void inputBinNonBatch(InventoryDispatchItemSo inventoryDispatchItem, String itemStorageLocation) {
+  void inputBinNonBatch(InventoryDispatchItemSo inventoryDispatchItem,
+      String itemStorageLocation) {
     // inventoryDispatchItem.pickedQty = qty;
     inventoryDispatchItem.itemStorageLocation = itemStorageLocation;
     notifyListeners();
     print('Update Bin Non batch: $inventoryDispatchItem');
+  }
+
+  void selectPo(InventoryDispatchItemSo purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
   }
 }

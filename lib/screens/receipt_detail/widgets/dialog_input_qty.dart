@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_batch.dart';
 import 'package:msi_app/models/item_purchase_order.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/item_po_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -23,6 +24,7 @@ class _DialogInputQtyState extends State<DialogInputQty> {
   final _batchNumber = TextEditingController();
   final _quantity = TextEditingController();
   var itemxx = 1;
+  var helpDate = 1;
 
   DateTime _selectedDate = DateTime.now();
 
@@ -32,7 +34,10 @@ class _DialogInputQtyState extends State<DialogInputQty> {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+ final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
@@ -48,13 +53,13 @@ class _DialogInputQtyState extends State<DialogInputQty> {
           BaseTextLine(
               'PO Qty',
               item.openQty == 0.0
-                  ? item.openQty.toStringAsFixed(4)
+                  ? item.openQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.openQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           BaseTextLine(
               'Remaining Qty',
               item.remainingQty == 0.0
-                  ? item.remainingQty.toStringAsFixed(4)
+                  ? item.remainingQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.remainingQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildInput(),
@@ -107,28 +112,52 @@ class _DialogInputQtyState extends State<DialogInputQty> {
         DateTime.now().add(new Duration(days: widget.item.defDayExpired));
     return Row(
       children: [
-        // Expanded(
-        //   child: Container(
-        //     padding: const EdgeInsets.all(kLarge),
-        //     decoration: ShapeDecoration(
-        //       shape: RoundedRectangleBorder(
-        //         side: BorderSide(
-        //           width: kTiny,
-        //           style: BorderStyle.solid,
-        //           color: kPrimaryColor,
-        //         ),
-        //         borderRadius: BorderRadius.all(
-        //           Radius.circular(kMedium),
-        //         ),
-        //       ),
-        //     ),
-        //     // if (pickedDate == null) {
+              if (helpDate == 5 )
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(kLarge),
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  width: kTiny,
+                  style: BorderStyle.solid,
+                  color: kPrimaryColor,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(kMedium),
+                ),
+              ),
+            ),
+            // if (pickedDate == null) {
 
-        //     // }
+            // }
 
-        //     child: Text(DateFormat().addPattern('dd/MM/yyyy').format(initial)),
-        //   ),
-        // ),
+            child: Text(DateFormat().addPattern('dd/MM/yyyy').format(_selectedDate)),
+          ),
+        ),
+         if (helpDate == 1 )
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(kLarge),
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(
+                  width: kTiny,
+                  style: BorderStyle.solid,
+                  color: kPrimaryColor,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(kMedium),
+                ),
+              ),
+            ),
+            // if (pickedDate == null) {
+
+            // }
+
+            child: Text(DateFormat().addPattern('dd/MM/yyyy').format(initial)),
+          ),
+        ),
         IconButton(
           icon: Icon(Icons.event),
           onPressed: () async {
@@ -161,6 +190,7 @@ class _DialogInputQtyState extends State<DialogInputQty> {
             setState(() {
               _selectedDate = pickedDate;
               initial = _selectedDate;
+               helpDate = 5;
             });
             print("3 date select ${item.xxxx.toString()}");
             print("3 date initial $initial");

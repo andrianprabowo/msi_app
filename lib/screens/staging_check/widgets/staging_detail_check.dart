@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin.dart';
 import 'package:msi_app/models/put_batch.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/staging_check/widgets/staging_batch_check.dart';
 import 'package:msi_app/screens/staging_check/widgets/staging_bin_check.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:provider/provider.dart';
 
 class StagingDetailCheck extends StatelessWidget {
   final ItemBin item;
@@ -15,7 +17,10 @@ class StagingDetailCheck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return Container(
       margin: const EdgeInsets.all(kTiny),
       padding: const EdgeInsets.all(kSmall),
@@ -28,12 +33,12 @@ class StagingDetailCheck extends StatelessWidget {
           BaseTextLine(
               'Available Quantity',
               item.availableQty == 0.0
-                  ? item.availableQty.toStringAsFixed(4)
+                  ? item.availableQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.availableQty)),
           BaseTextLine(
               'Put Quantity',
               item.putQty == 0.0
-                  ? item.putQty.toStringAsFixed(4)
+                  ? item.putQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.putQty)),
           // BaseTextLine('Bin Location', item.binCodeDestination),
           Divider(),

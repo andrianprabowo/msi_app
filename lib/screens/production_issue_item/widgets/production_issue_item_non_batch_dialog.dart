@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_issue_item_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_issue_item_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -28,9 +29,12 @@ class _ProductionIssueItemNonBatchDialogState
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+  final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     var avlQty = widget.item.availableQty == 0.0
-        ? widget.item.availableQty.toStringAsFixed(4)
+        ? widget.item.availableQty.toStringAsFixed(authProvider.decLen)
         : formatter.format(widget.item.availableQty);
     return Container(
       padding: const EdgeInsets.all(kLarge),
@@ -50,7 +54,7 @@ class _ProductionIssueItemNonBatchDialogState
           // if (_quantity.text != '' &&
           //         (double.parse(_quantity.text) >
           //             double.tryParse(
-          //                 widget.item.availableQty.toStringAsFixed(4))) ||
+          //                 widget.item.availableQty.toStringAsFixed(authProvider.decLen))) ||
           //     _quantity.text == '0')
           //   buildButtonNotif(context, avlQty)
           // else

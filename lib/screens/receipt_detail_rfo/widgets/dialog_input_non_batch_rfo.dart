@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_purchase_order_rfo.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/item_po_provider_rfo.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -28,7 +29,10 @@ class _DialogInputQtyNonBatchRfoState extends State<DialogInputQtyNonBatchRfo> {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
 
     return Container(
         padding: const EdgeInsets.all(kLarge),
@@ -42,7 +46,7 @@ class _DialogInputQtyNonBatchRfoState extends State<DialogInputQtyNonBatchRfo> {
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTextLine('PO Qty', 
               item.openQty == 0.0
-                  ? item.openQty.toStringAsFixed(4)
+                  ? item.openQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.openQty)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildQtyFormField(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_item_list_batch_list_provider.dart';
 // import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_number_list_provider.dart';
@@ -50,12 +51,15 @@ class ProductionReceiptRMItemBatch extends StatelessWidget {
             listen: false);
     ProductionReceiptRMItemListModel pickItem =
         ModalRoute.of(context).settings.arguments;
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+  final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     var openQty = pickItem.openQty == 0.0
-        ? pickItem.openQty.toStringAsFixed(4)
+        ? pickItem.openQty.toStringAsFixed(authProvider.decLen)
         : formatter.format(pickItem.openQty);
         var totalPic = pickItem.quantity == 0.0
-        ? pickItem.quantity.toStringAsFixed(4)
+        ? pickItem.quantity.toStringAsFixed(authProvider.decLen)
         : formatter.format(pickItem.quantity);
     return Scaffold(
       appBar: AppBar(
@@ -67,11 +71,11 @@ class ProductionReceiptRMItemBatch extends StatelessWidget {
               // add batch list
               // final batchList = pickBatchProvider.pickedItems;
               // pickItemProvider.addBatchList(pickItem, batchList);
-              pickBatchProvider.totalPicked.toStringAsFixed(4) == '0.0000'
+              pickBatchProvider.totalPicked.toStringAsFixed(authProvider.decLen) == '0.0000'
                   ? showAlertOnZero(context)
                   : double.tryParse(pickBatchProvider.totalPicked
-                              .toStringAsFixed(4)) >
-                          double.tryParse(pickItem.openQty.toStringAsFixed(4))
+                              .toStringAsFixed(authProvider.decLen)) >
+                          double.tryParse(pickItem.openQty.toStringAsFixed(authProvider.decLen))
                       ? showAlertGreaterThanZero(context, openQty)
                       :
                       // Navigator.of(context).popUntil(ModalRoute.withName(
@@ -100,7 +104,7 @@ class ProductionReceiptRMItemBatch extends StatelessWidget {
                     child: BaseTextLine(
                       'Total Picked',
                       provider.totalPicked == 0.0
-                          ? provider.totalPicked.toStringAsFixed(4)
+                          ? provider.totalPicked.toStringAsFixed(authProvider.decLen)
                           : formatter.format(provider.totalPicked),
                     ),
                   );

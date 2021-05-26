@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:msi_app/models/list_good_receipt_po_detail.dart';
 
 class ListGoodReceiptPo with ChangeNotifier {
   final String grpono;
@@ -8,14 +9,18 @@ class ListGoodReceiptPo with ChangeNotifier {
   final DateTime docDate;
   final String vendor;
   final int status;
+   int idGrpo;
   final String logMessage;
+  List<ListGoodReceiptPoDetail> itemList;
   ListGoodReceiptPo({
     this.grpono,
     this.poNo,
     this.docDate,
     this.vendor,
     this.status,
+    this.idGrpo,
     this.logMessage,
+    this.itemList,
   });
 
   ListGoodReceiptPo copyWith({
@@ -42,6 +47,7 @@ class ListGoodReceiptPo with ChangeNotifier {
       'vendor': vendor,
       'status': status,
       'logMessage': logMessage,
+      'details': itemList?.map((x) => x?.toMap())?.toList(),
     };
   }
 
@@ -54,7 +60,9 @@ class ListGoodReceiptPo with ChangeNotifier {
       docDate: DateTime.parse(map['docDate']),
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
+      idGrpo: map['idGrpoHeader'] ?? 0,
       logMessage: map['logMessage'] ?? '',
+      itemList: map['itemList'] ?? [],
     );
   }
 
@@ -65,7 +73,7 @@ class ListGoodReceiptPo with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ListGoodReceiptPo(grpono: $grpono, poNo: $poNo, docDate: $docDate, vendor: $vendor, status: $status, logMessage: $logMessage)';
+    return 'ListGoodReceiptPo(grpono: $grpono, poNo: $poNo, docDate: $docDate, vendor: $vendor, idGrpo: $idGrpo,status: $status, logMessage: $logMessage)';
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/inventory_dispatch_batch_so.dart';
 import 'package:msi_app/models/inventory_dispatch_item_so.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_item_so_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -15,7 +16,10 @@ class InventoryDispatchBatchWidgetSo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     final provider =
         Provider.of<InventoryDispatchItemSoProvider>(context, listen: false);
     return Container(
@@ -38,7 +42,7 @@ class InventoryDispatchBatchWidgetSo extends StatelessWidget {
                 BaseTextLine(
                     'Quantity',
                     batch.pickQty == 0.0
-                        ? batch.pickQty.toStringAsFixed(4)
+                        ? batch.pickQty.toStringAsFixed(authProvider.decLen)
                         : formatter.format(batch.pickQty)),
               ],
             ),

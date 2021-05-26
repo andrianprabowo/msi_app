@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_batch_list_model.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
 import 'package:msi_app/screens/production_receipt_rm_item/production_receipt_rm_item_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -31,9 +32,12 @@ class _ProductionReceiptRMItemNonBatchDialogState
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     var openQty = widget.item.openQty == 0.0
-        ? widget.item.openQty.toStringAsFixed(4)
+        ? widget.item.openQty.toStringAsFixed(authProvider.decLen)
         : formatter.format(widget.item.openQty);
     return Container(
       padding: const EdgeInsets.all(kLarge),
@@ -56,7 +60,7 @@ class _ProductionReceiptRMItemNonBatchDialogState
           // if (_quantity.text != '' &&
           //         (double.parse(_quantity.text) >
           //             double.tryParse(
-          //                 widget.item.openQty.toStringAsFixed(4))) ||
+          //                 widget.item.openQty.toStringAsFixed(authProvider.decLen))) ||
           //     _quantity.text == '0')
           //   buildButtonNotif(context, openQty)
           // else

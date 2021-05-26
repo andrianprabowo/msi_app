@@ -14,6 +14,8 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   String _username;
   String _password;
+  String _decString;
+  int _decLen;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +63,8 @@ class _LoginFormState extends State<LoginForm> {
           var loginSuccess = await authProvider.login(
             username: _username,
             password: _password,
+            decLen: _decLen,
+            decString: _decString,
           );
 
           if (loginSuccess) {

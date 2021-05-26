@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/inventory_dispatch_batch_so.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_batch_so_provider.dart';
+import 'package:msi_app/providers/inventory_dispatch_item_so_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -25,7 +27,10 @@ class _DialogInventoryDispatchBatchSoState
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
       child: Column(
@@ -40,7 +45,8 @@ class _DialogInventoryDispatchBatchSoState
           BaseTextLine(
               'Available Quantity',
               widget.item.availableQty == 0.0
-                  ? widget.item.availableQty.toStringAsFixed(4)
+                  ? widget.item.availableQty
+                      .toStringAsFixed(authProvider.decLen)
                   : formatter.format(widget.item.availableQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
@@ -78,6 +84,9 @@ class _DialogInventoryDispatchBatchSoState
   }
 
   Widget buildButtonSubmit(BuildContext context, String avlQty) {
+    final pickItemProvider =
+        Provider.of<InventoryDispatchItemSoProvider>(context, listen: false)
+            .selected;
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(
@@ -116,6 +125,46 @@ class _DialogInventoryDispatchBatchSoState
               },
             );
           }
+          // print("1  ${pickItemProvider.openQty}");
+          // print("2  ${pickItemProvider.batchList}");
+          // print("3  ${pickItemProvider.description}");
+          // print("4  ${pickItemProvider.pickedQty}");
+
+          // if (double.parse(_quantity.text) > pickItemProvider.openQty) {
+          //   print('Tidak boleh lebih besar dari Available Qty ');
+          //   return showDialog<void>(
+          //     context: context,
+          //     barrierDismissible: false,
+          //     builder: (BuildContext context) {
+          //       return AlertDialog(
+          //         content: Column(
+          //           mainAxisSize: MainAxisSize.min,
+          //           children: [
+          //             Icon(Icons.notification_important,
+          //                 color: Colors.red, size: 50),
+          //             Divider(),
+          //             SizedBox(height: getProportionateScreenHeight(kLarge)),
+          //             BaseTitleColor("Can't be bigger than Dispatch Qty"),
+          //             SizedBox(height: getProportionateScreenHeight(kLarge)),
+          //             BaseTitleColor(
+          //                 'or equal to  ${pickItemProvider.openQty}'),
+          //             SizedBox(height: getProportionateScreenHeight(kLarge)),
+          //             SizedBox(
+          //               width: double.infinity,
+          //               child: RaisedButton(
+          //                 child: Text('OK'),
+          //                 onPressed: () {
+          //                   Navigator.of(context).pop();
+          //                 },
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       );
+          //     },
+          //   );
+          // }
+
           double qty;
           try {
             qty = double.parse(_quantity.text);

@@ -8,6 +8,7 @@ class ListPickList with ChangeNotifier {
   final DateTime docDate;
   final String vendor;
   final int status;
+  final int idGrpodlvHeader;
   final int picklistSapnumber;
   final String logMessage;
   ListPickList({
@@ -15,6 +16,7 @@ class ListPickList with ChangeNotifier {
     this.poNo,
     this.docDate,
     this.vendor,
+    this.idGrpodlvHeader,
     this.status,
     this.picklistSapnumber,
     this.logMessage,
@@ -44,6 +46,7 @@ class ListPickList with ChangeNotifier {
       'vendor': vendor,
       'status': status,
       'logMessage': logMessage,
+      'idGrpodlvHeader': idGrpodlvHeader,
     };
   }
 
@@ -56,6 +59,7 @@ class ListPickList with ChangeNotifier {
       docDate: DateTime.parse(map['docDate']),
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
+      idGrpodlvHeader: map['idGrpodlvHeader'] ?? 0,
       picklistSapnumber: map['picklistSapnumber'] ?? 0,
       logMessage: map['logMessage'] ?? '',
     );

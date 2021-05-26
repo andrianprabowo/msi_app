@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_batch_rfo.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/receipt_batch_rfo/widgets/dialog_receipt_batch_rfo.dart';
 import 'package:msi_app/screens/receipt_batch_rfo/widgets/expired_dialog.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:provider/provider.dart';
 
 class ItemBatchReceiptBatchRfo extends StatelessWidget {
   final ItemBatchRfo item;
@@ -13,7 +15,10 @@ class ItemBatchReceiptBatchRfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return InkWell(
       onTap: () {
         final date = new DateTime.now();
@@ -44,14 +49,14 @@ class ItemBatchReceiptBatchRfo extends StatelessWidget {
             BaseTextLine(
                 'Available Qty',
                 item.availableQty == 0.0
-                    ? item.availableQty.toStringAsFixed(4)
+                    ? item.availableQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.availableQty)),
             BaseTextLine('Expired Date', convertDate(item.expiredDate)),
             BaseTextLine('Uom', item.uom),
             BaseTextLine(
                 'Put Qty',
                 item.putQty == 0.0
-                    ? item.putQty.toStringAsFixed(4)
+                    ? item.putQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.putQty)),
           ],
         ),

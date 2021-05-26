@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_receipt_item_batch_model.dart';
 import 'package:msi_app/models/production_receipt_item_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_receipt_item_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
@@ -26,6 +27,7 @@ class _ProductionReceiptItemQtyDialogState
   final _quantity = TextEditingController();
   final _quantityReject = TextEditingController();
   var itemxx = 1;
+  var helpDate = 1;
   DateTime _selectedDate = DateTime.now();
 
   ProductionReceiptItemModel get item {
@@ -34,9 +36,12 @@ class _ProductionReceiptItemQtyDialogState
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+  final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     var openQty = widget.item.openQty == 0.0
-        ? widget.item.openQty.toStringAsFixed(4)
+        ? widget.item.openQty.toStringAsFixed(authProvider.decLen)
         : formatter.format(widget.item.openQty);
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
@@ -94,28 +99,54 @@ class _ProductionReceiptItemQtyDialogState
         DateTime.now().add(new Duration(days: widget.item.defDayExpired));
     return Row(
       children: [
-        // Expanded(
-        //   child: Container(
-        //     padding: const EdgeInsets.all(kLarge),
-        //     decoration: ShapeDecoration(
-        //       shape: RoundedRectangleBorder(
-        //         side: BorderSide(
-        //           width: kTiny,
-        //           style: BorderStyle.solid,
-        //           color: kPrimaryColor,
-        //         ),
-        //         borderRadius: BorderRadius.all(
-        //           Radius.circular(kMedium),
-        //         ),
-        //       ),
-        //     ),
-        //     // child: Text(convertDate(initial)),
+              if (helpDate == 5 )
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(kLarge),
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    width: kTiny,
+                    style: BorderStyle.solid,
+                    color: kPrimaryColor,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(kMedium),
+                  ),
+                ),
+              ),
+              // child: Text(convertDate(initial)),
 
-        //     child: Text( DateFormat().addPattern('dd/MM/yyyy').format(initial)),
+              child: Text(
+                  DateFormat().addPattern('dd/MM/yyyy').format(_selectedDate)),
 
-        //     // child: Text(convertDate(_selectedDate)),
-        //   ),
-        // ),
+              // child: Text(convertDate(_selectedDate)),
+            ),
+          ),
+                if (helpDate == 1 )
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(kLarge),
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    width: kTiny,
+                    style: BorderStyle.solid,
+                    color: kPrimaryColor,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(kMedium),
+                  ),
+                ),
+              ),
+              // child: Text(convertDate(initial)),
+
+              child: Text(
+                  DateFormat().addPattern('dd/MM/yyyy').format(initial)),
+
+              // child: Text(convertDate(_selectedDate)),
+            ),
+          ),
         IconButton(
           icon: Icon(Icons.event),
           onPressed: () async {
@@ -132,10 +163,10 @@ class _ProductionReceiptItemQtyDialogState
             final init = DateTime.now()
                 .add(new Duration(days: widget.item.defDayExpired));
 
-                print(" ini xxx  $itemxx");
+            print(" ini xxx  $itemxx");
 
             print(" date initial $initial");
-            
+
             final maxYear = init.year + 5;
             final pickedDate = await showDatePicker(
               context: context,
@@ -146,15 +177,19 @@ class _ProductionReceiptItemQtyDialogState
 
             print(" 2 date picked $pickedDate");
             if (pickedDate == null) {
+             
               return;
             }
             setState(() {
               _selectedDate = pickedDate;
               initial = _selectedDate;
-            });print("3 date select ${item.xxxx.toString()}");
+               helpDate = 5;
+            });
+            print("3 date select ${item.xxxx.toString()}");
             print("3 date initial $initial");
           },
         ),
+  
       ],
     );
   }
@@ -197,49 +232,49 @@ class _ProductionReceiptItemQtyDialogState
       child: RaisedButton(
         child: Text('Submit'),
         onPressed: () {
-          if (((_quantity.text != '' || _quantityReject.text != '') ||
-                  (_quantity.text == '0' || _quantity.text == '0.0') ||
-                  (_quantityReject.text == '0' ||
-                      _quantityReject.text == '0.0')) &&
-              (((_quantity.text.isEmpty
-                          ? double.parse('0')
-                          : double.parse(_quantity.text)) +
-                      (_quantityReject.text.isEmpty
-                          ? double.parse('0')
-                          : double.parse(_quantityReject.text))) >
-                  double.tryParse(widget.item.openQty.toStringAsFixed(4)))) {
-            print('Tidak boleh lebih besar darig Available Qty ');
-            return showDialog<void>(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.notification_important,
-                          color: Colors.red, size: 50),
-                      Divider(),
-                      SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      BaseTitleColor('Total Qty must be above 0'),
-                      SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      BaseTitleColor('or equal to  $avlQty'),
-                      SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      SizedBox(
-                        width: double.infinity,
-                        child: RaisedButton(
-                          child: Text('OK'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
-          }
+          // if (((_quantity.text != '' || _quantityReject.text != '') ||
+          //         (_quantity.text == '0' || _quantity.text == '0.0') ||
+          //         (_quantityReject.text == '0' ||
+          //             _quantityReject.text == '0.0')) &&
+          //     (((_quantity.text.isEmpty
+          //                 ? double.parse('0')
+          //                 : double.parse(_quantity.text)) +
+          //             (_quantityReject.text.isEmpty
+          //                 ? double.parse('0')
+          //                 : double.parse(_quantityReject.text))) >
+          //         double.tryParse(widget.item.openQty.toStringAsFixed(4)))) {
+          //   print('Tidak boleh lebih besar darig Available Qty ');
+          //   return showDialog<void>(
+          //     context: context,
+          //     barrierDismissible: false,
+          //     builder: (BuildContext context) {
+          //       return AlertDialog(
+          //         content: Column(
+          //           mainAxisSize: MainAxisSize.min,
+          //           children: [
+          //             Icon(Icons.notification_important,
+          //                 color: Colors.red, size: 50),
+          //             Divider(),
+          //             SizedBox(height: getProportionateScreenHeight(kLarge)),
+          //             BaseTitleColor('Total Qty must be above 0'),
+          //             SizedBox(height: getProportionateScreenHeight(kLarge)),
+          //             BaseTitleColor('or equal to  $avlQty'),
+          //             SizedBox(height: getProportionateScreenHeight(kLarge)),
+          //             SizedBox(
+          //               width: double.infinity,
+          //               child: RaisedButton(
+          //                 child: Text('OK'),
+          //                 onPressed: () {
+          //                   Navigator.of(context).pop();
+          //                 },
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       );
+          //     },
+          //   );
+          // }
           if (_quantityReject.text == '') {
             print('Tidak boleh lebih besar darig Available Qty ');
             return showDialog<void>(
@@ -283,7 +318,7 @@ class _ProductionReceiptItemQtyDialogState
                     .add(new Duration(days: widget.item.defDayExpired));
                 print("ini number null xxx $_selectedDate");
               }
-              
+
               return showDialog<void>(
                 context: context,
                 barrierDismissible: false,

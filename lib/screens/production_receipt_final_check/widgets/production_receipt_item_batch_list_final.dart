@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_receipt_item_batch_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:provider/provider.dart';
 
 class ProductionReceiptItemBatchListFinal extends StatelessWidget {
   final ProductionReceiptItemBatchModel item;
@@ -11,7 +13,10 @@ class ProductionReceiptItemBatchListFinal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return Container(
       margin: const EdgeInsets.all(kTiny),
       padding: const EdgeInsets.all(kSmall),
@@ -23,12 +28,12 @@ class ProductionReceiptItemBatchListFinal extends StatelessWidget {
           BaseTextLine(
               'Complete Quantity',
               item.availableQty == 0.0
-                  ? item.availableQty.toStringAsFixed(4)
+                  ? item.availableQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.availableQty)),
           BaseTextLine(
               'Reject Quantity',
               item.rejectQty == 0.0
-                  ? item.rejectQty.toStringAsFixed(4)
+                  ? item.rejectQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.rejectQty)),
         ],
       ),

@@ -24,16 +24,27 @@ import 'package:msi_app/screens/inventory_dispatch_item_so/inventory_dispatch_it
 import 'package:msi_app/screens/inventory_dispatch_rtv/inventory_dispatch_header_screen_rtv.dart';
 import 'package:msi_app/screens/inventory_dispatch_so/inventory_dispatch_header_screen_so.dart';
 import 'package:msi_app/screens/list_inv_dispatch/list_inv_dispatch_screen.dart';
+import 'package:msi_app/screens/list_inv_dispatch_detail/list_inv_dispatch_detail_screen.dart';
 import 'package:msi_app/screens/list_inv_dispatch_rtv/list_inv_dispatch_rtv_screen.dart';
+import 'package:msi_app/screens/list_inv_dispatch_rtv_detail/list_inv_dispatch_rtv_detail_screen.dart';
 import 'package:msi_app/screens/list_inv_dispatch_so/list_inv_dispatch_so_screen.dart';
+import 'package:msi_app/screens/list_inv_dispatch_so_detail/list_inv_dispatch_so_detail_screen.dart';
 import 'package:msi_app/screens/list_pick_list/list_pick_list_screen.dart';
+import 'package:msi_app/screens/list_pick_list_detail/list_pick_list_detail_screen.dart';
 import 'package:msi_app/screens/list_pick_list_rtv/list_pick_list_rtv_screen.dart';
+import 'package:msi_app/screens/list_pick_list_rtv_detail/list_pick_list_rtv_detail_screen.dart';
 import 'package:msi_app/screens/list_pick_list_so/list_pick_list_so_screen.dart';
+import 'package:msi_app/screens/list_pick_list_so_detail/list_pick_list_so_detail_screen.dart';
 import 'package:msi_app/screens/list_put_away/list_put_away_screen.dart';
+import 'package:msi_app/screens/list_put_away_detail/list_put_away_detail_screen.dart';
 import 'package:msi_app/screens/list_put_away_outlet/list_put_away_outlet_screen.dart';
+import 'package:msi_app/screens/list_put_away_outlet_detail/list_put_away_detail_screen.dart';
 import 'package:msi_app/screens/list_receipt_from_vendor/list_receipt_from_vendor_screen.dart';
+import 'package:msi_app/screens/list_receipt_from_vendor_detail/list_receipt_from_vendor_detail_screen.dart';
 import 'package:msi_app/screens/list_receipt_from_vendor_outlet/list_receipt_from_vendor_outlet_screen.dart';
+import 'package:msi_app/screens/list_receipt_from_vendor_outlet_detail/list_receipt_from_vendor_outlet_detail_screen.dart';
 import 'package:msi_app/screens/list_stck_count/list_stck_count_screen.dart';
+import 'package:msi_app/screens/list_stck_count_detail/list_stck_count_detail_screen.dart';
 import 'package:msi_app/screens/login/login_screen.dart';
 import 'package:msi_app/screens/outbound/outbound_screen.dart';
 import 'package:msi_app/screens/outbound_sub_1/outbound_sub_1_screen.dart';
@@ -54,6 +65,10 @@ import 'package:msi_app/screens/pick_item_receive_so/pick_item_receive_so_screen
 import 'package:msi_app/screens/picker_pick/picker_pick_screen.dart';
 import 'package:msi_app/screens/picker_pick_rtv/picker_pick_rtv_screen.dart';
 import 'package:msi_app/screens/picker_pick_so/picker_pick_so_screen.dart';
+import 'package:msi_app/screens/prod_list_issue_rm_detail/list_issue_raw_rm_detail_screen.dart';
+import 'package:msi_app/screens/prod_list_pick_list_detail/prod_list_pick_list_detail_screen.dart';
+import 'package:msi_app/screens/prod_list_pick_list_detail_receipt/prod_list_pick_list_detail_receipt_screen.dart';
+import 'package:msi_app/screens/prod_receipt_fg_detail/list_receipt_fg_detail_screen.dart';
 import 'package:msi_app/screens/production/production_screen.dart';
 import 'package:msi_app/screens/production_receipt_rm_bin/production_receipt_rm_bin_screen.dart';
 import 'package:msi_app/screens/put_away/put_away_screen.dart';
@@ -305,4 +320,23 @@ final Map<String, WidgetBuilder> routes = {
       ProductionReceiptRMAllTransaction(),
   ProductionReceiptRmBinScreen.routeName: (context) =>
       ProductionReceiptRmBinScreen(),
+
+  //Detail List
+  ListReceiptFromVendorDetailScreen.routeName: (context) =>
+      ListReceiptFromVendorDetailScreen(),
+  ListPutAwayDetailScreen.routeName: (context) => ListPutAwayDetailScreen(),
+  ListReceiptFromVendorOutletDetailScreen.routeName: (context) => ListReceiptFromVendorOutletDetailScreen(),
+  ListPutAwayOutletDetailScreen.routeName: (context) => ListPutAwayOutletDetailScreen(),
+  ListPickListDetailScreen.routeName: (context) => ListPickListDetailScreen(),
+  ListPickListRtvDetailScreen.routeName: (context) => ListPickListRtvDetailScreen(),
+  ListPickListSoDetailScreen.routeName: (context) => ListPickListSoDetailScreen(),
+  ListInvDispatchSoDetailScreen.routeName: (context) => ListInvDispatchSoDetailScreen(),
+  ListInvDispatchRtvDetailScreen.routeName: (context) => ListInvDispatchRtvDetailScreen(),
+  ListInvDispatchDetailScreen.routeName: (context) => ListInvDispatchDetailScreen(),
+  ProdListPickListDetailScreen.routeName: (context) => ProdListPickListDetailScreen(),
+  ProdListPickListDetailReceiptScreen.routeName: (context) => ProdListPickListDetailReceiptScreen(),
+  ListIssueRawRmDetailScreen.routeName: (context) => ListIssueRawRmDetailScreen(),
+  ListReceiptFgDetailScreen.routeName: (context) => ListReceiptFgDetailScreen(),
+  ListStckCountDetailScreen.routeName: (context) => ListStckCountDetailScreen(),
+
 };

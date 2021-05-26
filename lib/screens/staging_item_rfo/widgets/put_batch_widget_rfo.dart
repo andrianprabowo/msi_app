@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin_rfo.dart';
 import 'package:msi_app/models/put_batch_rfo.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/item_bin_rfo_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -16,7 +17,10 @@ class PutBatchWidgetRfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     final provider = Provider.of<ItemBinRfoProvider>(context, listen: false);
     return Container(
       margin: const EdgeInsets.all(kTiny),
@@ -38,7 +42,7 @@ class PutBatchWidgetRfo extends StatelessWidget {
                 BaseTextLine('Expired Date', convertDate(batch.expiredDate)),
                 BaseTextLine('Quantity', 
                     batch.putQty == 0.0
-                        ? batch.putQty.toStringAsFixed(4)
+                        ? batch.putQty.toStringAsFixed(authProvider.decLen)
                         : formatter.format(batch.putQty)),
               ],
             ),

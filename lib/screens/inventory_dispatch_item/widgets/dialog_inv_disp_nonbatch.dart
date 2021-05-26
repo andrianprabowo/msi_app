@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/inventory_dispatch_item.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_item_provider.dart';
 import 'package:msi_app/screens/inventory_dispatch_bin/inventory_dispatch_bin_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -28,7 +29,10 @@ class _DialogInvDispNonbatchState extends State<DialogInvDispNonbatch> {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(kLarge),
@@ -42,7 +46,7 @@ class _DialogInvDispNonbatchState extends State<DialogInvDispNonbatch> {
           BaseTextLine(
               'Total to Dispatch',
               item.openQty == 0.0
-                  ? item.openQty.toStringAsFixed(4)
+                  ? item.openQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(widget.item.openQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),

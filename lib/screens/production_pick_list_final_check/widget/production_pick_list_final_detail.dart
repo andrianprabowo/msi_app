@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_pick_list_item_batch_model.dart';
 import 'package:msi_app/models/production_pick_list_item_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/production_pick_list_final_check/widget/production_pick_list_final_detail_batch.dart';
 import 'package:msi_app/screens/production_pick_list_final_check/widget/production_widget_bin_check.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:provider/provider.dart';
 
 class ProductionPickListFinalDetail extends StatelessWidget {
   final ProductionPickListItemModel item;
@@ -15,7 +17,10 @@ class ProductionPickListFinalDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return Container(
       margin: const EdgeInsets.all(kTiny),
       padding: const EdgeInsets.all(kSmall),
@@ -28,7 +33,7 @@ class ProductionPickListFinalDetail extends StatelessWidget {
           BaseTextLine(
               'Total to Pick Qty',
               item.openQty == 0.0
-                  ? item.openQty.toStringAsFixed(4)
+                  ? item.openQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.openQty)),
           // BaseTextLine(
           //     'Pick Quantity',
@@ -38,12 +43,12 @@ class ProductionPickListFinalDetail extends StatelessWidget {
           BaseTextLine(
               'Pick Quantity',
               item.pickedQty == 0.0
-                  ? item.pickedQty.toStringAsFixed(4)
+                  ? item.pickedQty.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.pickedQty)),
           BaseTextLine(
               'Remaining Quantity',
               item.quantity == 0.0
-                  ? item.quantity.toStringAsFixed(4)
+                  ? item.quantity.toStringAsFixed(authProvider.decLen)
                   : formatter.format(item.quantity)),
           BaseTextLine('Item Batch', item.fgBatch),
           BaseTextLine('UoM', item.unitMsr),

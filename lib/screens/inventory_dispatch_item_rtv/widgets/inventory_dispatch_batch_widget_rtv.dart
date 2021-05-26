@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/inventory_dispatch_batch_rtv.dart';
 import 'package:msi_app/models/inventory_dispatch_item_rtv.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/inventory_dispatch_item_rtv_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -15,7 +16,10 @@ class InventoryDispatchBatchWidgetRtv extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     final provider =
         Provider.of<InventoryDispatchItemRtvProvider>(context, listen: false);
     return Container(
@@ -36,7 +40,7 @@ class InventoryDispatchBatchWidgetRtv extends StatelessWidget {
                 BaseTextLine('Batch Number', batch.batchNo),
                 BaseTextLine('Expired Date', convertDate(batch.expiredDate)),
                 BaseTextLine('Quantity', batch.pickQty == 0.0
-                  ? batch.pickQty.toStringAsFixed(4)
+                  ? batch.pickQty.toStringAsFixed(authProvider.decLen)
                   :formatter.format(batch.pickQty)),
               ],
             ),

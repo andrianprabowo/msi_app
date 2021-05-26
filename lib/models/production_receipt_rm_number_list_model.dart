@@ -14,6 +14,7 @@ class ProductionReceiptRMNumberListModel with ChangeNotifier {
   final String cardName;
   final String pickRemark;
   final String filename;
+  final int flagRcpt;
   String storageLocation;
 
   List<ProductionReceiptRMItemListModel> itemList;
@@ -28,6 +29,7 @@ class ProductionReceiptRMNumberListModel with ChangeNotifier {
     this.filename,
     this.storageLocation,
     this.itemList,
+    this.flagRcpt,
   });
 
   Map<String, dynamic> toMap() {
@@ -41,6 +43,7 @@ class ProductionReceiptRMNumberListModel with ChangeNotifier {
       'remark': pickRemark,
       'filename': 'Receipt (Raw Material)',
       'storageLocation': storageLocation,
+      'idPutAwyProdPlant': flagRcpt,
       'details': itemList?.map((x) => x?.toMap())?.toList(),
     };
   }
@@ -56,6 +59,7 @@ class ProductionReceiptRMNumberListModel with ChangeNotifier {
       pickRemark: map['pickRemark'] ?? '',
       filename: 'Inventory Dispatch',
       storageLocation: map['storageLocation'],
+      flagRcpt: map['flagRcpt']?? 3,
       itemList: map['itemList'] ?? [],
     );
   }
@@ -66,6 +70,6 @@ class ProductionReceiptRMNumberListModel with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ProductionReceiptRMNumberListModel(docNumber: $docNumber, userId: $userId, docDate: $docDate, postingDate: $postingDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, filename: $filename, storageLocation: $storageLocation, itemList: $itemList)';
+    return 'ProductionReceiptRMNumberListModel(docNumber: $docNumber, flagRcpt: $flagRcpt, userId: $userId, docDate: $docDate, postingDate: $postingDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, filename: $filename, storageLocation: $storageLocation, itemList: $itemList)';
   } 
 }

@@ -14,6 +14,7 @@ class InventoryDispatchDetailSo with ChangeNotifier {
   final String pickRemark;
   final String filename;
   String storageLocation;
+  String binSelect;
 
   List<InventoryDispatchItemSo> itemList;
   InventoryDispatchDetailSo({
@@ -25,6 +26,7 @@ class InventoryDispatchDetailSo with ChangeNotifier {
     this.pickRemark,
     this.filename,
     this.storageLocation,
+    this.binSelect,
     this.itemList,
   });
 
@@ -38,6 +40,7 @@ class InventoryDispatchDetailSo with ChangeNotifier {
       'remark': pickRemark,
       'filename': 'Inventory Dispatch',
       'storageLocation': storageLocation,
+      'binSelect': binSelect,
       'details': itemList?.map((x) => x?.toMap())?.toList(),
     };
   }
@@ -53,6 +56,7 @@ class InventoryDispatchDetailSo with ChangeNotifier {
       pickRemark: map['pickRemark'] ?? '',
       filename: 'Inventory Dispatch',
       storageLocation: map['storageLocation'],
+      binSelect: map['binSelect']??'',
       itemList: map['itemList'] ?? [],
     );
   }

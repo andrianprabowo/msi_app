@@ -21,7 +21,7 @@ class InventoryDispatchItemSoScreen extends StatelessWidget {
   Future<void> refreshData(BuildContext context, String docNumber) async {
     final inventoryItemProvider =
         Provider.of<InventoryDispatchItemSoProvider>(context, listen: false);
-    await inventoryItemProvider.getInventItemByPlNo(docNumber);
+    await inventoryItemProvider.getInventItemByPlNo(context, docNumber);
 
     final inventoryDispatchDetailProvider =
         Provider.of<InventoryDispatchDetailSoProvider>(context, listen: false);

@@ -20,6 +20,8 @@ class AuthProvider with ChangeNotifier {
   String _warehouseName;
   String _binId;
   String _binGl;
+  int _decLen;
+  String _decString;
 
   String get token => _token;
   String get username => _username;
@@ -27,6 +29,8 @@ class AuthProvider with ChangeNotifier {
   String get warehouseName => _warehouseName;
   String get binId => _binId;
   String get binGl => _binGl;
+  int get decLen => _decLen;
+  String get decString => _decString;
 
   Future<void> getData() async {
     _token = await Prefs.getString(Prefs.token);
@@ -35,12 +39,16 @@ class AuthProvider with ChangeNotifier {
     _warehouseName = await Prefs.getString(Prefs.warehouseName);
     _binId = await Prefs.getString(Prefs.binId);
     _binGl = await Prefs.getString(Prefs.binGl);
+    _decLen = await Prefs.getInt(Prefs.decLen.toString());
+    _decString = await Prefs.getString(Prefs.decString);
     notifyListeners();
   }
 
   Future<bool> login({
     String username,
     String password,
+    int decLen,
+    String decString,
   }) async {
     var pass = md5.convert(utf8.encode(password)).toString();
     print('password: $password');
@@ -57,6 +65,8 @@ class AuthProvider with ChangeNotifier {
       Map obj = data[0];
       await Prefs.setString(Prefs.username, obj['username']);
       await Prefs.setString(Prefs.token, obj['adminPassword']);
+      await Prefs.setInt(Prefs.token, obj['decLen']);
+      await Prefs.setString(Prefs.token, obj['decString']);
       return true;
     } catch (error) {
       print(error);
@@ -86,10 +96,17 @@ class AuthProvider with ChangeNotifier {
   void selectWarehouse(BuildContext context, Warehouse warehouse) async {
     await Prefs.setString(Prefs.warehouseId, warehouse.whsCode);
     await Prefs.setString(Prefs.warehouseName, warehouse.whsName);
+    await Prefs.setString(Prefs.decString, warehouse.decString);
+    await Prefs.setInt(Prefs.decLen.toString(), warehouse.decLen);
 
     _warehouseId = warehouse.whsCode;
     _warehouseName = warehouse.whsName;
+    _decLen = warehouse.decLen;
+    _decString = warehouse.decString;
 
+    print("ini declen $_decLen");
+    print("ini decString $_decString");
+    print("ini whs $_warehouseId");
     notifyListeners();
     Navigator.of(context).pushNamed(DashboardScreen.routeName);
   }
@@ -100,7 +117,6 @@ class AuthProvider with ChangeNotifier {
 
     notifyListeners();
   }
-
 
   void selectItemGl(EnterGl enterGl) async {
     await Prefs.setString(Prefs.binGl, enterGl.enterGl);

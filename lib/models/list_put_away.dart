@@ -2,20 +2,26 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
+import 'list_put_away_detail.dart';
+
 class ListPutAway with ChangeNotifier {
   final String grpono;
   final String poNo;
   final DateTime docDate;
   final String vendor;
   final int status;
+  final int idGrpodlvHeader;
   final String logMessage;
+  List<ListPutAwayDetail> itemList;
   ListPutAway({
     this.grpono,
     this.poNo,
     this.docDate,
     this.vendor,
     this.status,
+    this.idGrpodlvHeader,
     this.logMessage,
+    this.itemList,
   });
 
   ListPutAway copyWith({
@@ -42,6 +48,8 @@ class ListPutAway with ChangeNotifier {
       'vendor': vendor,
       'status': status,
       'logMessage': logMessage,
+      'idGrpodlvHeader': idGrpodlvHeader,
+      'details': itemList?.map((x) => x?.toMap())?.toList(),
     };
   }
 
@@ -51,10 +59,12 @@ class ListPutAway with ChangeNotifier {
     return ListPutAway(
       grpono: map['putAwayNo'] ?? '',
       poNo: map['doNo'] ?? '',
-      docDate: DateTime.parse(map['docDate']),
+      docDate: DateTime.parse(map['docDate'])?? '2001-01-01T13:23:41',
       vendor: map['vendor'] ?? '',
       status: map['status'] ?? 3,
       logMessage: map['logMessage'] ?? '',
+      idGrpodlvHeader: map['idGrpodlvHeader'] ?? 0,
+      itemList: map['itemList'] ?? [],
     );
   }
 
@@ -65,7 +75,7 @@ class ListPutAway with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ListPutAway(grpono: $grpono, poNo: $poNo, docDate: $docDate, vendor: $vendor, status: $status, logMessage: $logMessage)';
+    return 'ListPutAway(grpono: $grpono,idGrpodlvHeader: $idGrpodlvHeader, poNo: $poNo, docDate: $docDate, vendor: $vendor, status: $status, logMessage: $logMessage)';
   }
 
   @override

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_pick_list_item_batch_model.dart';
 import 'package:msi_app/models/production_pick_list_item_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:provider/provider.dart';
 
 class ProductionWidgetBinCheck extends StatelessWidget {
   final ProductionPickListItemModel pickItem;
@@ -14,7 +16,10 @@ class ProductionWidgetBinCheck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     // final provider =
     //     Provider.of<PickItemReceiveProvider>(context, listen: false);
     return Container(
@@ -32,7 +37,7 @@ class ProductionWidgetBinCheck extends StatelessWidget {
                 BaseTextLine(
                     'Quantity',
                     batch.pickQty == 0.0
-                        ? batch.pickQty.toStringAsFixed(4)
+                        ? batch.pickQty.toStringAsFixed(authProvider.decLen)
                         : formatter.format(batch.pickQty)),
               ],
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_issue_number_model.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_issue_item_provider.dart';
 import 'package:msi_app/providers/production_issue_number_provider.dart';
 import 'package:msi_app/providers/production_issue_provider.dart';
@@ -29,13 +30,29 @@ class ProductionIssueItem extends StatelessWidget {
         Provider.of<ProductionIssueProvider>(context, listen: false);
     stagingBinProvider.selected.itemBinList = itemBinProvider.items;
   }
+  
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat('#,###.0000#', 'en_US');
+   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   
+    final formatter =
+        NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     final transactionNumberSelected =
         Provider.of<ProductionIssueNumberProvider>(context, listen: false)
             .selected;
+    // final itemsProvider =
+    //     Provider.of<ProductionIssueItemProvider>(context, listen: false)
+    //         .selected;
+// if(itemsProvider.putQty != 0){
+//    print("nul ga? ");
+// }else{
+//    print("ga masukkkkk");
+
+// }
+  final globalKey = GlobalKey<ScaffoldState>();
+   
+
     final stagingBin =
         Provider.of<ProductionIssueProvider>(context, listen: false);
     /* final provider =
@@ -46,13 +63,33 @@ class ProductionIssueItem extends StatelessWidget {
     stagingBin.selected.pickRemark = transactionNumberSelected.pickRemark;
     stagingBin.selected.plant = transactionNumberSelected.plant;
     stagingBin.selected.plantName = transactionNumberSelected.plantName;
+    // stagingBin.selected.totalQty = transactionNumberSelected.totalQty;
+    stagingBin.selected.totalRemain = transactionNumberSelected.totalRemain;
     return Scaffold(
+      key: globalKey,
+
       appBar: AppBar(
         title: Text('Issue (Raw Material)'),
         actions: [
           IconButton(
               icon: Icon(Icons.post_add),
               onPressed: () {
+                if (transactionNumberSelected.totalQty != 0) {
+                print("disini masuk");
+
+                final snackBar = SnackBar(
+                  content: Row(
+                    children: [
+                      Icon(Icons.error_outline, color: Colors.red),
+                      SizedBox(width: getProportionateScreenWidth(kLarge)),
+                      Text('Please Input All Items'),
+                    ],
+                  ),
+                );
+                globalKey.currentState.showSnackBar(snackBar);
+                return;
+              }
+
                 Navigator.of(context)
                     .pushNamed(ProductionIssueFinalCheck.routeName);
                 /* for (var i = 0; i < provider.items.length; i++) {
@@ -82,17 +119,27 @@ class ProductionIssueItem extends StatelessWidget {
             BaseTextLine('Production Date',
                 convertDate(transactionNumberSelected.pickDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Product Code',transactionNumberSelected.productCode),
+            BaseTextLine('Product Code', transactionNumberSelected.productCode),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Product Name',transactionNumberSelected.productName),
+            BaseTextLine('Product Name', transactionNumberSelected.productName),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Planned Qty', 
-              transactionNumberSelected.quantity == 0.0
-                  ? transactionNumberSelected.quantity.toStringAsFixed(4)
-                  : formatter.format(transactionNumberSelected.quantity)),
+            BaseTextLine(
+                'Planned Qty',
+                transactionNumberSelected.quantity == 0.0
+                    ? transactionNumberSelected.quantity.toStringAsFixed(authProvider.decLen)
+                    : formatter.format(transactionNumberSelected.quantity)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
-            BaseTextLine('Uom',transactionNumberSelected.uom),
+            BaseTextLine('Uom', transactionNumberSelected.uom),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
+
+            // BaseTextLine(
+            //     'total qty', transactionNumberSelected.totalQty.toString()),
+            // SizedBox(height: getProportionateScreenHeight(kLarge)),
+            // // if(itemsProvider.putQty != null)
+            // //  BaseTextLine('total remain?',transactionNumberSelected.totalRemain.toString()),
+
+            // SizedBox(height: getProportionateScreenHeight(kLarge)),
+
             BaseTextLine('Remarks', transactionNumberSelected.pickRemark),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildInputScan(context),

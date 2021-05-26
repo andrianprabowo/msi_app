@@ -8,6 +8,10 @@ import 'package:http/http.dart' as http;
 
 class InventoryDispatchBinSoProvider with ChangeNotifier {
   List<InventoryDispatchBinSo> _items = [];
+  InventoryDispatchBinSo _selected;
+
+  
+  InventoryDispatchBinSo get selected => _selected;
   var _showAllBin = false;
 
   List<InventoryDispatchBinSo> get items {
@@ -21,10 +25,11 @@ class InventoryDispatchBinSoProvider with ChangeNotifier {
     notifyListeners();
   }
 
+ 
+
   Future<void> getPlBinList(String itemCode) async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
-    final url =
-        '$kBaseUrl/api/getcontainerbin/whscode=$warehouseId';
+    final url = '$kBaseUrl/api/getcontainerbin/whscode=$warehouseId';
 
     try {
       final response = await http.get(url);
@@ -48,5 +53,10 @@ class InventoryDispatchBinSoProvider with ChangeNotifier {
 
   InventoryDispatchBinSo findByBinLocation(String binLocation) {
     return _items.firstWhere((element) => element.binLocation == binLocation);
+  }
+
+   void selectBin(InventoryDispatchBinSo inventoryDispatchDetail) {
+    _selected = inventoryDispatchDetail;
+    notifyListeners();
   }
 }

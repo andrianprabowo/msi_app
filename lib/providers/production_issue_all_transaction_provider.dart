@@ -34,4 +34,9 @@ class ProductionIssueAllTransactionProvider with ChangeNotifier {
       throw error;
     }
   }
+
+  void selectPo(ProductionIssueAllTransactionModel purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
+  }
 }
