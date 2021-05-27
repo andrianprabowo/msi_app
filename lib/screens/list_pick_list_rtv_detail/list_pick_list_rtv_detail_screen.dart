@@ -25,7 +25,7 @@ class ListPickListRtvDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('List Pick List'),
+        title: Text('List Pick List Rtv'),
         actions: [],
       ),
       body: Container(

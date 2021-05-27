@@ -25,7 +25,7 @@ class ProdListPickListDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('List Pick List'),
+        title: Text('List Pick List Submitted'),
         actions: [],
       ),
       body: Container(

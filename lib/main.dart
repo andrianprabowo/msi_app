@@ -85,6 +85,7 @@ import 'package:msi_app/providers/bin_production_picklist_provider.dart';
 import 'package:msi_app/providers/stock_counting_item_provider.dart';
 import 'package:msi_app/providers/storage_bin_item_provider.dart';
 import 'package:msi_app/providers/storage_bin_item_rfo_provider.dart';
+import 'package:msi_app/providers/temp_batch_putaway_provider.dart';
 import 'package:msi_app/providers/warehouse_provider.dart';
 import 'package:msi_app/utils/routes.dart';
 import 'package:msi_app/utils/theme.dart';
@@ -254,6 +255,9 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ListProdIssueRmDetailProvider()),
         ChangeNotifierProvider(create: (_) => ListProdReceiptFgDetailProvider()),
         ChangeNotifierProvider(create: (_) => ListStckCountDetailProvider()),
+
+
+        ChangeNotifierProvider(create: (_) => TempBatchPutawayProvider()),
 
       ],
       child: MyApp(),

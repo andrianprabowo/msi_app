@@ -64,7 +64,7 @@ class ProductionReceiptRMItemListProvider with ChangeNotifier {
   ) {
     inventoryDispatchItem.batchList.addAll(batchList);
     notifyListeners();
-    print('Added Batch List: $batchList');
+    print('Added Batch? List: $batchList');
   }
 
   void addBin(
@@ -73,7 +73,7 @@ class ProductionReceiptRMItemListProvider with ChangeNotifier {
   ) {
     inventoryDispatchItem.batchList.add(batchList);
     notifyListeners();
-    print('Added Batch List: $batchList');
+    print('Added bin List: $batchList');
   }
 
   void removeBatchItem(

@@ -7,6 +7,7 @@ import 'package:msi_app/screens/production_issue/production_issue_screen.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
 
 class ItemProductionIssueRmDetail extends StatelessWidget {
@@ -29,7 +30,9 @@ class ItemProductionIssueRmDetail extends StatelessWidget {
             child: Text('OK?'),
             onPressed: () async {
               print("itemDetail object? $itemDetail");
-              final provider = Provider.of<ListProdIssueRmDetailProvider>(context, listen: false);
+              final provider = Provider.of<ListProdIssueRmDetailProvider>(
+                  context,
+                  listen: false);
               provider.selectPo(itemDetail);
 
               print("bb  ${itemDetail.status}");
@@ -99,8 +102,10 @@ class ItemProductionIssueRmDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        final detail =
-            Provider.of<ProductionIssueAllTransactionProvider>(context, listen: false).selected;
+        final detail = Provider.of<ProductionIssueAllTransactionProvider>(
+                context,
+                listen: false)
+            .selected;
 
         postData(context, detail);
       },
@@ -116,56 +121,57 @@ class ItemProductionIssueRmDetail extends StatelessWidget {
               child: Column(
                 children: [
                   buildButtonCancel(context),
-                  BaseTextLine(
-                      'ID Issue Rm Header', itemDetail.idIssueRmHeader.toString()),
+                  BaseTextLine('Issue Raw Material ID',
+                      itemDetail.idIssueRmHeader.toString()),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
                   // BaseTextLine(
                   //     'POsting Date', convertDate(itemDetail.postingDate)),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('DO Number', itemDetail.doNo),
+                  BaseTextLine('Doc Number', itemDetail.doNo),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('GRPO Number', itemDetail.grpodlvNo),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  // BaseTextLine(
-                  //     'Delivery Date', convertDate(itemDetail.deliveryDate)),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Kode Vendor', itemDetail.kdVendor),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Nama Vendor', itemDetail.nmVendor),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Plant', itemDetail.plant),
+                  // BaseTextLine('GRPO Number', itemDetail.grpodlvNo),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // // BaseTextLine(
+                  // //     'Delivery Date', convertDate(itemDetail.deliveryDate)),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Kode Vendor', itemDetail.kdVendor),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Nama Vendor', itemDetail.nmVendor),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  BaseTextLine('WHS Code', itemDetail.plant),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
                   // BaseTextLine('Id Grpo Plant', itemDetail.id),
-                  BaseTextLine('Storage Location', itemDetail.storageLocation),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine(
-                      'Storage Location Name', itemDetail.storageLocationName),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Status', itemDetail.status.toString()),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Item Grup Code', itemDetail.itemGroupCode),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine(
-                      'Id User Input', itemDetail.idUserInput.toString()),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine(
-                      'Id User Approved', itemDetail.idUserApproved.toString()),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Filename', itemDetail.fileName),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                   BaseTextLine('Log Message', itemDetail.logMessage),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Bin Location', itemDetail.storageLocation),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
                   // BaseTextLine(
-                      // 'Last Modified', convertDate(itemDetail.lastmodified)),
+                  //     'Storage Location Name', itemDetail.storageLocationName),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Status', itemDetail.status.toString()),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Item Grup Code', itemDetail.itemGroupCode),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine(
+                  //     'Id User Input', itemDetail.idUserInput.toString()),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine(
+                  //     'Id User Approved', itemDetail.idUserApproved.toString()),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Filename', itemDetail.fileName),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  BaseTextLine('Remarks', itemDetail.remark),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Docnum', itemDetail.docNum),
+                  BaseTitleColor(itemDetail.logMessage),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Back', itemDetail.back.toString()),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Remark', itemDetail.remark),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Grpodlv No 1', itemDetail.grpodlvNo1.toString()),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // // BaseTextLine(
+                  //     // 'Last Modified', convertDate(itemDetail.lastmodified)),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Docnum', itemDetail.docNum),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Back', itemDetail.back.toString()),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+
+                  // BaseTextLine('Grpodlv No 1', itemDetail.grpodlvNo1.toString()),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
                 ],
               ),
             ),
@@ -182,10 +188,12 @@ class ItemProductionIssueRmDetail extends StatelessWidget {
         color: Colors.red,
         child: Text('Cancel'),
         onPressed: () {
-          final detail =
-            Provider.of<ProductionIssueAllTransactionProvider>(context, listen: false).selected;
+          final detail = Provider.of<ProductionIssueAllTransactionProvider>(
+                  context,
+                  listen: false)
+              .selected;
 
-        postData(context, detail);
+          postData(context, detail);
         },
       ),
     );

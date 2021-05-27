@@ -7,6 +7,7 @@ import 'package:msi_app/screens/receipt_vendor_rfo/receipt_vendor_rfo_screen.dar
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
+import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
 
 class ItemListReceiptFromVendorOutletDetail extends StatelessWidget {
@@ -118,55 +119,55 @@ class ItemListReceiptFromVendorOutletDetail extends StatelessWidget {
                 children: [
                   buildButtonCancel(context),
                   BaseTextLine(
-                      'ID Grpo Header', itemDetail.idRtoHeader.toString()),
+                      'Receipt Return from Outlet ID', itemDetail.idRtoHeader.toString()),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
                   BaseTextLine(
-                      'POsting Date', convertDate(itemDetail.postingDate)),
+                      'Posting Date', convertDate(itemDetail.postingDate)),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('PO Number', itemDetail.poNo),
+                  BaseTextLine('Doc Number', itemDetail.poNo),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Rto Number', itemDetail.rtoNo),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Rto Number', itemDetail.rtoNo),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
                   BaseTextLine(
                       'Delivery Date', convertDate(itemDetail.deliveryDate)),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Kode Vendor', itemDetail.kdVendor),
+                  BaseTextLine('Outlet Code', itemDetail.kdVendor),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Nama Vendor', itemDetail.nmVendor),
+                  BaseTextLine('Outlet Name', itemDetail.nmVendor),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Plant', itemDetail.plant),
+                  BaseTextLine('WHS Code', itemDetail.plant),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
                   // BaseTextLine('Id Grpo Plant', itemDetail.id),
-                  BaseTextLine('Storage Location', itemDetail.storageLocation),
+                  BaseTextLine('Bin Location', itemDetail.storageLocation),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine(
-                      'Storage Location Name', itemDetail.storageLocationName),
+                  // BaseTextLine(
+                  //     'Storage Location Name', itemDetail.storageLocationName),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Status', itemDetail.status.toString()),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Item Grup Code', itemDetail.itemGroupCode),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine(
+                  //     'Id User Input', itemDetail.idUserInput.toString()),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine(
+                  //     'Id User Approved', itemDetail.idUserApproved.toString()),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Filename', itemDetail.fileName),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                   BaseTitleColor( itemDetail.logMessage),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Status', itemDetail.status.toString()),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Item Grup Code', itemDetail.itemGroupCode),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine(
-                      'Id User Input', itemDetail.idUserInput.toString()),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine(
-                      'Id User Approved', itemDetail.idUserApproved.toString()),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Filename', itemDetail.fileName),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                   BaseTextLine('Log Message', itemDetail.logMessage),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine(
-                      'Last Modified', convertDate(itemDetail.lastmodified)),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Docnum', itemDetail.docnum),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Back', itemDetail.back.toString()),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Remark', itemDetail.remark),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Rto No 1', itemDetail.rtoNo1.toString()),
-                  SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine(
+                  //     'Last Modified', convertDate(itemDetail.lastmodified)),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Docnum', itemDetail.docnum),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Back', itemDetail.back.toString()),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Remark', itemDetail.remark),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  // BaseTextLine('Rto No 1', itemDetail.rtoNo1.toString()),
+                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
                 ],
               ),
             ),

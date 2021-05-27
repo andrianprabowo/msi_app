@@ -25,7 +25,7 @@ class ListInvDispatchDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('List Pick List'),
+        title: Text('List Inventory Dispatch'),
         actions: [],
       ),
       body: Container(

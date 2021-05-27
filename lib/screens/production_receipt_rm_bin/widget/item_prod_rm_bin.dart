@@ -30,7 +30,7 @@ class ItemProdRmBin extends StatelessWidget {
         pickItemReceive.itemStorageLocation = item.binLocation;
         // add batch list
         if (pickItemReceive.fgBatch == 'Y') {
-          final batchList = itemBatchProvider.items;
+          final batchList = itemBatchProvider.pickedItems;
           batchList.forEach((detail) {
             // calculate bin
             detail.bin = item.binLocation;

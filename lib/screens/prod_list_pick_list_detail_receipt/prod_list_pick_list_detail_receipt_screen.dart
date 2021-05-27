@@ -25,7 +25,7 @@ class ProdListPickListDetailReceiptScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('List Receipt'),
+        title: Text('List Receipt Submitted'),
         actions: [],
       ),
       body: Container(
