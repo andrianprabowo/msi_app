@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_batch_list_model.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_model.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
 import 'package:msi_app/screens/production_receipt_rm_bin/production_receipt_rm_bin_screen.dart';
 import 'package:msi_app/screens/production_receipt_rm_item/widgets/production_receipt_rm_item_batch_box.dart';
 import 'package:msi_app/screens/production_receipt_rm_item/widgets/production_receipt_rm_item_bin_box.dart';
@@ -20,12 +21,15 @@ class ProductionReceiptRMItemList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-   
+    final stagingBin = Provider.of<ProductionReceiptRMItemListProvider>(context, listen: false);
+
     final formatter =
         NumberFormat(('#,###.' + authProvider.decString), 'en_US');
 
     return InkWell(
       onTap: () {
+        stagingBin.selectItem(item);
+
         if (item.fgBatch == 'Y') {
           Navigator.of(context).pushNamed(
               ProductionReceiptRMItemBatch.routeName,

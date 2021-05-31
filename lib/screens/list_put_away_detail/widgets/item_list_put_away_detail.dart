@@ -133,7 +133,7 @@ class ItemListPutAwayDetail extends StatelessWidget {
                   // SizedBox(width: getProportionateScreenWidth(kSmall)),
                   // BaseTextLine('Nama Vendor', itemDetail.nmVendor),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
-                  BaseTextLine('Plant', itemDetail.plant),
+                  BaseTextLine('WHS Code', itemDetail.plant),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
                   // BaseTextLine('Id Grpo Plant', itemDetail.id),
                   BaseTextLine('Bin Location', itemDetail.storageLocation),

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/put_batch.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/item_batch_provider.dart';
+import 'package:msi_app/providers/item_bin_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -24,8 +25,8 @@ class _DialogPutAwayState extends State<DialogPutAway> {
 
   @override
   Widget build(BuildContext context) {
-   final authProvider = Provider.of<AuthProvider>(context, listen: false);
-   
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
     final formatter =
         NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return SingleChildScrollView(
@@ -42,7 +43,8 @@ class _DialogPutAwayState extends State<DialogPutAway> {
           BaseTextLine(
               'Available Quantity',
               widget.item.availableQty == 0.0
-                  ? widget.item.availableQty.toStringAsFixed(authProvider.decLen)
+                  ? widget.item.availableQty
+                      .toStringAsFixed(authProvider.decLen)
                   : formatter.format(widget.item.availableQty)),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
@@ -95,8 +97,87 @@ class _DialogPutAwayState extends State<DialogPutAway> {
         child: Text('Submit'),
         onPressed: () {
           // handle if input not double to return nothing
+          final stagingBin =
+              Provider.of<ItemBinProvider>(context, listen: false);
 
-          if (double.parse(_quantity.text) > widget.item.availableQty) {
+          final itemList = stagingBin.items;
+          double sisanya = 0;
+          double list = 0;
+
+          itemList.forEach((item) {
+            if (item.itemCode == stagingBin.selected.itemCode) {
+              double sisa = 0;
+              double sisaSekarang = 0;
+              double total = 0;
+              print('test bismillah${item.putQty}');
+              print('item ${item.itemCode}');
+              print('item name ${item.itemName}');
+
+              item.batchList.forEach((element) {
+                print('breakk');
+
+                if (element.batchNo == widget.item.batchNo) {
+                  list = 1;
+                  sisa = element.availableQty.toDouble() - item.putQty;
+                  sisaSekarang = sisa - double.parse(_quantity.text);
+                  total = total + element.putQty;
+                  print(' batch ${element.batchNo}');
+                  print(' qty ${element.putQty}');
+                  print(' total $total');
+                  int alert = 0;
+                  sisanya = element.availableQty.toDouble() - total;
+                  print(' sisnya $sisanya');
+
+                  // if (double.parse(_quantity.text) > sisa) {
+                  if (double.parse(_quantity.text) > sisanya) {
+                    print(' error nih $sisa');
+                    // alert = 2;
+                    // print('error allert $alert');
+
+                    // return showDialog<void>(
+                    //   context: context,
+                    //   barrierDismissible: false,
+                    //   builder: (BuildContext context) {
+                    //     return AlertDialog(
+                    //       content: Column(
+                    //         mainAxisSize: MainAxisSize.min,
+                    //         children: [
+                    //           Icon(Icons.notification_important,
+                    //               color: Colors.red, size: 50),
+                    //           Divider(),
+                    //           SizedBox(
+                    //               height: getProportionateScreenHeight(kLarge)),
+                    //           BaseTitleColor('$sisanya qty left'),
+                    //           SizedBox(
+                    //               height: getProportionateScreenHeight(kLarge)),
+                    //           BaseTitleColor('on ${element.batchNo}'),
+                    //           SizedBox(
+                    //               height: getProportionateScreenHeight(kLarge)),
+                    //           SizedBox(
+                    //             width: double.infinity,
+                    //             child: RaisedButton(
+                    //               child: Text('OK'),
+                    //               onPressed: () {
+                    //                 Navigator.of(context).pop();
+                    //               },
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     );
+                    //   },
+                    // );
+                  }
+                }
+              });
+            }
+          });
+
+          //
+          if (list == 0) {
+            sisanya = widget.item.availableQty;
+          }
+          if (double.parse(_quantity.text) > sisanya) {
             print('Tidak boleh lebih besar dari Available Qty ');
             return showDialog<void>(
               context: context,
@@ -110,15 +191,16 @@ class _DialogPutAwayState extends State<DialogPutAway> {
                           color: Colors.red, size: 50),
                       Divider(),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      BaseTitleColor('Qty must be above 0'),
+                      BaseTitleColor('$sisanya qty left'),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      BaseTitleColor('or equal to  $avlQty'),
+                      BaseTitleColor('on ${widget.item.batchNo}'),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
                       SizedBox(
                         width: double.infinity,
                         child: RaisedButton(
                           child: Text('OK'),
                           onPressed: () {
+                            list = 0;
                             Navigator.of(context).pop();
                           },
                         ),

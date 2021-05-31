@@ -54,6 +54,11 @@ class ProductionReceiptRMItemListProvider with ChangeNotifier {
     }
   }
 
+void selectItem(ProductionReceiptRMItemListModel purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
+  }
+
   ProductionReceiptRMItemListModel findByItemCode(String itemCode) {
     return _items.firstWhere((element) => element.itemCode == itemCode);
   }

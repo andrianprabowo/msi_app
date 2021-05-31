@@ -58,6 +58,11 @@ class ItemBinRfoProvider with ChangeNotifier {
     }
   }
 
+  void selectItem(ItemBinRfo purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
+  }
+
   ItemBinRfo findByItemCode(String itemCode) {
     return _items.firstWhere((element) => element.itemCode == itemCode);
   }

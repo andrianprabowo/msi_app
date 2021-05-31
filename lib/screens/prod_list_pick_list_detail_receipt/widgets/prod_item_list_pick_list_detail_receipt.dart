@@ -118,7 +118,7 @@ class ProdItemListPickListDetailReceipt extends StatelessWidget {
                 children: [
                   buildButtonCancel(context),
                   BaseTextLine(
-                      'IReceipt Trf Inter Sentul ID', itemDetail.idPutAwyProdHeader.toString()),
+                      'Receipt Trf Inter Sentul ID', itemDetail.idPutAwyProdHeader.toString()),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
                   // BaseTextLine(
                   //     'POsting Date', convertDate(itemDetail.postingDate)),

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin_rfo.dart';
 import 'package:msi_app/models/put_batch_rfo.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/item_bin_rfo_provider.dart';
 import 'package:msi_app/screens/staging_batch_rfo/staging_batch_rfo_screen.dart';
 import 'package:msi_app/screens/staging_item_rfo/widgets/put_batch_widget_rfo.dart';
 import 'package:msi_app/screens/staging_item_rfo/widgets/put_bin_widget_rfo.dart';
@@ -19,11 +20,13 @@ class ItemStagingBinRfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final stagingBin = Provider.of<ItemBinRfoProvider>(context, listen: false);
    
     final formatter =
         NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return InkWell(
       onTap: () {
+        stagingBin.selectItem(item);
         item.fgBatch == 'Y'
             ? Navigator.of(context)
                 .pushNamed(StagingBatchRfoScreen.routeName, arguments: item)

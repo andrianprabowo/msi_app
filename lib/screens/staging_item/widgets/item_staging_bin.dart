@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/item_bin.dart';
 import 'package:msi_app/models/put_batch.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/item_bin_provider.dart';
 import 'package:msi_app/screens/staging_batch/staging_batch_screen.dart';
 import 'package:msi_app/screens/staging_item/widgets/put_batch_widget.dart';
 import 'package:msi_app/screens/staging_item/widgets/put_bin_widget.dart';
@@ -19,12 +20,14 @@ class ItemStagingBin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-   
+    final stagingBin = Provider.of<ItemBinProvider>(context, listen: false);
+
     final formatter =
         NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     final numUom = formatter.format(item.numInBuy) + " " + item.unitMsr;
     return InkWell(
       onTap: () {
+        stagingBin.selectItem(item);
         item.fgBatch == 'Y'
             ? Navigator.of(context)
                 .pushNamed(StagingBatchScreen.routeName, arguments: item)
@@ -62,8 +65,7 @@ class ItemStagingBin extends StatelessWidget {
                 item.remainingQty == 0.0
                     ? item.remainingQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.remainingQty)),
-            BaseTextLine(
-                'Item per unit',numUom),
+            BaseTextLine('Item per unit', numUom),
             if (item.fgBatch == 'Y') buildItemBatchList(item.batchList),
             if (item.fgBatch == 'N') buildItemBin(item.batchList),
           ],

@@ -8,6 +8,9 @@ import 'package:msi_app/utils/prefs.dart';
 
 class ItemBatchProvider with ChangeNotifier {
   List<PutBatch> _items = [];
+  PutBatch _selected;
+  PutBatch get selected => _selected;
+
   double _totalPicked = 0.0;
 
   List<PutBatch> get items {
@@ -60,6 +63,11 @@ class ItemBatchProvider with ChangeNotifier {
     }
 
     countTotal();
+    notifyListeners();
+  }
+
+  void selectPo(PutBatch purchaseOrder) {
+    _selected = purchaseOrder;
     notifyListeners();
   }
 

@@ -95,11 +95,13 @@ class ProductionReceiptRMItem extends StatelessWidget {
   Widget buildInputScan(BuildContext context) {
     final provider = Provider.of<ProductionReceiptRMItemListProvider>(context,
         listen: false);
+        
     return InputScan(
       label: 'Item Code',
       hint: 'Scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value.toUpperCase());
+        provider.selectItem(item);
         item.fgBatch == "Y"
             ? Navigator.of(context).pushNamed(
                 ProductionReceiptRMItemBatch.routeName,

@@ -65,6 +65,10 @@ class ItemBinProvider with ChangeNotifier {
       throw error;
     }
   }
+  void selectItem(ItemBin purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
+  }
 
   ItemBin findByItemCode(String itemCode) {
     return _items.firstWhere((element) => element.itemCode == itemCode);

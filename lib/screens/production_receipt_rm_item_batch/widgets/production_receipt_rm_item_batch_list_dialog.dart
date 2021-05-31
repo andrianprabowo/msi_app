@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_receipt_rm_item_list_batch_list_model.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_item_list_batch_list_provider.dart';
+import 'package:msi_app/providers/production_receipt_rm_item_list_provider.dart';
+import 'package:msi_app/providers/production_receipt_rm_number_list_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -83,7 +85,52 @@ class _ProductionReceiptRMItemBatchDialogState
       child: RaisedButton(
         child: Text('Submit'),
         onPressed: () {
-           if (double.parse(_quantity.text) > widget.item.availableQty) {
+           final stagingBin =
+              Provider.of<ProductionReceiptRMItemListProvider>(context, listen: false);
+
+          final itemList = stagingBin.items;
+          double sisanya = 0;
+          double list = 0;
+
+          itemList.forEach((item) {
+            if (item.itemCode == stagingBin.selected.itemCode) {
+              double sisa = 0;
+              double sisaSekarang = 0;
+              double total = 0;
+              print('test bismillah${item.pickedQty}');
+              print('item ${item.itemCode}');
+              print('item name ${item.description}');
+
+              item.batchList.forEach((element) {
+                print('breakk');
+
+                if (element.batchNo == widget.item.batchNo) {
+                  list = 1;
+                  sisa = element.availableQty.toDouble() - item.pickedQty;
+                  sisaSekarang = sisa - double.parse(_quantity.text);
+                  total = total + element.pickQty;
+                  print(' batch ${element.batchNo}');
+                  print(' qty ${element.pickQty}');
+                  print(' total $total');
+                  int alert = 0;
+                  sisanya = element.availableQty.toDouble() - total;
+                  print(' sisnya $sisanya');
+
+                  // if (double.parse(_quantity.text) > sisa) {
+                  if (double.parse(_quantity.text) > sisanya) {
+                    print(' error nih $sisa');
+                    
+                  }
+                }
+              });
+            }
+          });
+
+          //
+          if (list == 0) {
+            sisanya = widget.item.availableQty;
+          }
+          if (double.parse(_quantity.text) > sisanya) {
             print('Tidak boleh lebih besar dari Available Qty ');
             return showDialog<void>(
               context: context,
@@ -97,15 +144,16 @@ class _ProductionReceiptRMItemBatchDialogState
                           color: Colors.red, size: 50),
                       Divider(),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      BaseTitleColor('Qty must be above 0'),
+                      BaseTitleColor('$sisanya qty left'),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      BaseTitleColor('or equal to  $avlQty'),
+                      BaseTitleColor('on ${widget.item.batchNo}'),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
                       SizedBox(
                         width: double.infinity,
                         child: RaisedButton(
                           child: Text('OK'),
                           onPressed: () {
+                            list = 0;
                             Navigator.of(context).pop();
                           },
                         ),

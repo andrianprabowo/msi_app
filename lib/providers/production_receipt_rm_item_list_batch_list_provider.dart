@@ -8,6 +8,8 @@ import 'package:msi_app/utils/prefs.dart';
 
 class ProductionReceiptRMItemListBatchListProvider with ChangeNotifier {
   List<ProductionReceiptRMItemListBatchListModel> _items = [];
+  ProductionReceiptRMItemListBatchListModel _selected;
+  ProductionReceiptRMItemListBatchListModel get selected => _selected;
   double _totalPicked = 0.0;
 
   List<ProductionReceiptRMItemListBatchListModel> get items {
@@ -65,6 +67,11 @@ class ProductionReceiptRMItemListBatchListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+
+void selectPo(ProductionReceiptRMItemListBatchListModel purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
+  }
   void clear() {
     _items.forEach((item) => item.pickQty = 0.0);
 

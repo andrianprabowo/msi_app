@@ -44,11 +44,11 @@ class ItemBatchStaging extends StatelessWidget {
                 item.putQty == 0.0
                     ? item.putQty.toStringAsFixed(authProvider.decLen)
                     : formatter.format(item.putQty)),
-                     BaseTextLine(
-                'temp Qty',
-                item.tempQty == 0.0
-                    ? item.tempQty.toStringAsFixed(authProvider.decLen)
-                    : formatter.format(item.tempQty)),
+                //      BaseTextLine(
+                // 'temp Qty',
+                // item.tempQty == 0.0
+                //     ? item.tempQty.toStringAsFixed(authProvider.decLen)
+                //     : formatter.format(item.tempQty)),
           ],
         ),
       ),

@@ -141,8 +141,8 @@ class ItemProductionIssueRmDetail extends StatelessWidget {
                   BaseTextLine('WHS Code', itemDetail.plant),
                   SizedBox(width: getProportionateScreenWidth(kSmall)),
                   // BaseTextLine('Id Grpo Plant', itemDetail.id),
-                  // BaseTextLine('Bin Location', itemDetail.storageLocation),
-                  // SizedBox(width: getProportionateScreenWidth(kSmall)),
+                  BaseTextLine('Bin Location', itemDetail.storageLocation),
+                  SizedBox(width: getProportionateScreenWidth(kSmall)),
                   // BaseTextLine(
                   //     'Storage Location Name', itemDetail.storageLocationName),
                   // SizedBox(width: getProportionateScreenWidth(kSmall)),

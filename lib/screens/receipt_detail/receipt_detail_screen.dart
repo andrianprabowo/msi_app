@@ -148,6 +148,7 @@ class ReceiptDetailScreen extends StatelessWidget {
       scanResult: (value) {
         poProvider.setStagingBin(value);
       },
+      
     );
   }
 }

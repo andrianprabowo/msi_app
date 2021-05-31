@@ -96,6 +96,8 @@ class StagingItemScreen extends StatelessWidget {
 
   Widget buildInputScan(BuildContext context) {
     final provider = Provider.of<ItemBinProvider>(context, listen: false);
+    final stagingBin = Provider.of<ItemBinProvider>(context, listen: false);
+
     return InputScan(
       label: 'Item Barcode',
       hint: 'Input or scan Item Barcode',
@@ -105,6 +107,7 @@ class StagingItemScreen extends StatelessWidget {
         //   StagingBatchScreen.routeName,
         //   arguments: item,
         // );
+        stagingBin.selectItem(item);
         item.fgBatch == 'Y'
             ? Navigator.of(context)
                 .pushNamed(StagingBatchScreen.routeName, arguments: item)
