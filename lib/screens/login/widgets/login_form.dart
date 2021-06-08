@@ -11,6 +11,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  
   final _formKey = GlobalKey<FormState>();
   String _username;
   String _password;
@@ -19,6 +20,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+
     return Form(
       key: _formKey,
       child: Padding(
@@ -37,6 +39,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget buildButtonLogin(BuildContext context) {
+    
     return SizedBox(
       width: double.infinity,
       child: RaisedButton(
@@ -68,6 +71,8 @@ class _LoginFormState extends State<LoginForm> {
           );
 
           if (loginSuccess) {
+        await authProvider.getMenuByUsername();
+
             Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
           } else {
             Scaffold.of(context).showSnackBar(SnackBar(

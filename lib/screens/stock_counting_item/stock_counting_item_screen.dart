@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/stock_counting_header.dart';
+import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/stock_counting_bin_provider.dart';
 import 'package:msi_app/providers/stock_counting_header_provider.dart';
@@ -36,10 +37,10 @@ class StockCountingItemScreen extends StatelessWidget {
         Provider.of<StockCountingHeaderProvider>(context, listen: false)
             .selected;
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    
+
     final itemBin =
-        Provider.of<StockCountingBinProvider>(context, listen: false)
-            .selected;
+        Provider.of<StockCountingBinProvider>(context, listen: false).selected;
+    final itemSelect = StockCountingItem();
 
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +48,7 @@ class StockCountingItemScreen extends StatelessWidget {
         actions: [
           // IconButton(
           //   icon: Icon(Icons.post_add),
-          //   onPressed: () {  
+          //   onPressed: () {
           //     authProvider.clearBin();
           //     Navigator.of(context)
           //         .pushNamed(StockCountingCheckScreen.routeName);
@@ -126,6 +127,8 @@ class StockCountingItemScreen extends StatelessWidget {
       hint: 'Scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value);
+        // provider.selectItemCode(item);
+        print('object selected ${item.unitMsr}');
 
         if (item.fgBatch == 'Y') {
           // Navigator.of(context).pop();

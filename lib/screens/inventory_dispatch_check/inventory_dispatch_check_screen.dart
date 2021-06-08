@@ -12,9 +12,8 @@ import 'package:provider/provider.dart';
 
 class InventoryDispatchCheckScreen extends StatelessWidget {
   static const routeName = '/inventory_dispatch_check';
-
+  int a = 1;
   void postData(BuildContext context) {
-    int a = 1;
     showDialog(
       context: context,
       child: AlertDialog(

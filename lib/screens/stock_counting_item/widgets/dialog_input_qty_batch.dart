@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/stock_counting_batch.dart';
 import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/stock_counting_batch_provider.dart';
+import 'package:msi_app/providers/stock_counting_item_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_title.dart';
@@ -21,6 +22,7 @@ class DialogInputQtyBatch extends StatefulWidget {
 class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
   final _batchNumber = TextEditingController();
   final _quantity = TextEditingController();
+  // final _uom = TextEditingController();
   DateTime _selectedDate = DateTime.now();
 
   StockCountingItem get item {
@@ -40,6 +42,8 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildQtyFormField(),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
+          // buildUomFormField(),
+          // SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildDatePicker(context),
           SizedBox(height: getProportionateScreenHeight(kLarge)),
           buildButtonSubmit(context),
@@ -122,6 +126,23 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
     );
   }
 
+  // Widget buildUomFormField() {
+  //   return SizedBox(
+  //     width: getProportionateScreenWidth(280),
+  //     child: TextFormField(
+  //       keyboardType: TextInputType.number,
+  //       controller: _uom,
+  //       textInputAction: TextInputAction.done,
+  //       decoration: InputDecoration(
+  //         floatingLabelBehavior: FloatingLabelBehavior.always,
+  //         labelText: 'Uom',
+  //         hintText: 'Input Uom',
+  //       ),
+  //       autofocus: true,
+  //     ),
+  //   );
+  // }
+
   Widget buildButtonSubmit(BuildContext context) {
     return SizedBox(
       width: double.infinity,
@@ -143,11 +164,13 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
 
           final provider =
               Provider.of<StockCountingBatchProvider>(context, listen: false);
+          final iteMprovider =
+              Provider.of<StockCountingItemProvider>(context, listen: false);
           final date = new DateTime.now();
           String dateString =
               DateFormat().addPattern('yyyy/MM/dd').format(date);
           final qty = double.parse(_quantity.text);
-
+          // final uom = _uom.text;
           if (_batchNumber.text.isEmpty) {
             return showDialog<void>(
               context: context,
@@ -185,7 +208,9 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
                                     ? "BatchNo-$dateString"
                                     : _batchNumber.text,
                                 expiredDate: _selectedDate,
+                                flagSo: 0,
                                 pickQty: qty,
+                                uom: item.unitMsr,
                                 availableQty: 0.0);
 
                             provider.addItemBatch(itemBatch);
@@ -209,6 +234,8 @@ class _DialogInputQtyBatchState extends State<DialogInputQtyBatch> {
                   : _batchNumber.text,
               expiredDate: _selectedDate,
               pickQty: qty,
+              uom: item.unitMsr,
+              flagSo: 0,
               availableQty: 0.0);
           provider.addItemBatch(itemBatch);
           provider.updatePickQty(itemBatch.batchNo, qty);

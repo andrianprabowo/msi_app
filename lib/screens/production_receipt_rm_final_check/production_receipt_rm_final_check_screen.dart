@@ -12,9 +12,8 @@ import 'package:provider/provider.dart';
 
 class ProductionReceiptRMFinalCheck extends StatelessWidget {
   static const routeName = '/production_receipt_rm_final_check';
-
+  int a = 1;
   void postData(BuildContext context) {
-    int a = 1;
     showDialog(
       context: context,
       child: AlertDialog(

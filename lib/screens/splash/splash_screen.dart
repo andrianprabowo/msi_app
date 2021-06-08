@@ -14,7 +14,7 @@ class SplashScreen extends StatelessWidget {
 
     final token = await Prefs.getString(Prefs.token);
     if (token != null) {
-      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
     } else {
       Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
     }

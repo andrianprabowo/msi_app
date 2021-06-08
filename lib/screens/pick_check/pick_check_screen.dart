@@ -14,9 +14,8 @@ import 'package:provider/provider.dart';
 
 class PickCheckScreen extends StatelessWidget {
   static const routeName = '/pick_check';
-
+  int a = 1;
   void postData(BuildContext context) {
-    int a = 1;
     showDialog(
       context: context,
       child: AlertDialog(

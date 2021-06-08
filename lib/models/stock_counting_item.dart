@@ -10,7 +10,7 @@ class StockCountingItem with ChangeNotifier {
   double quantity;
   double pickedQty;
   String fgBatch;
-  final String unitMsr;
+  String unitMsr;
   final int val;
   String itemStorageLocation;
   List<StockCountingBatch> batchList;

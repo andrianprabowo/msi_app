@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:msi_app/models/stock_counting_batch.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/stock_counting_batch_provider.dart';
 import 'package:msi_app/screens/stock_counting_batch/widget/dialog_pick_batch_sc.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -15,9 +16,14 @@ class ItemStockCountingBatch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-   
+
+    final provider =
+        Provider.of<StockCountingBatchProvider>(context, listen: false);
+
     final formatter =
         NumberFormat(('#,###.' + authProvider.decString), 'en_US');
+    print(' item flag ${item.flagSo}');
+
     return InkWell(
       onTap: () {
         showModalBottomSheet(
@@ -29,15 +35,28 @@ class ItemStockCountingBatch extends StatelessWidget {
         margin: const EdgeInsets.all(kTiny),
         padding: const EdgeInsets.all(kSmall),
         decoration: kBoxDecoration,
-        child: Column(
+        child: Row(
           children: [
-            BaseTextLine('Batch No', item.batchNo),
-            // BaseTextLine('Available Qty', item.availableQty.toStringAsFixed(4)),
-            BaseTextLine('Expired Date', convertDate(item.expiredDate)),
-            BaseTextLine('Count Qty', 
+            if (item.flagSo == 0)
+              IconButton(
+                icon: Icon(Icons.delete, color: Colors.red),
+                onPressed: () {
+                  provider.removeBatch(item);
+                },
+              ),
+            Expanded(
+              child: Column(
+                children: [
+                  BaseTextLine('Batch Number', item.batchNo),
+                  BaseTextLine('Expired Date', convertDate(item.expiredDate)),
+                  BaseTextLine('Count Qty', 
                     item.pickQty == 0.0
                         ? item.pickQty.toStringAsFixed(authProvider.decLen)
                         : formatter.format(item.pickQty)),
+                  BaseTextLine('Uom', item.uom),
+                ],
+              ),
+            ),
           ],
         ),
       ),

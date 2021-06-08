@@ -124,6 +124,7 @@ class StockCountingBatchScreen extends StatelessWidget {
             ),
             BaseTitle(item.itemCode),
             BaseTitle(item.description),
+            BaseTextLine('Uom',item.unitMsr),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Batch of Item'),
             Divider(),

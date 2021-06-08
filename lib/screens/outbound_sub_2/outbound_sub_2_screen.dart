@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/screens/inventory_dispatch_so/inventory_dispatch_header_screen_so.dart';
 import 'package:msi_app/screens/picker_pick_so/picker_pick_so_screen.dart';
 import 'package:msi_app/widgets/base_app_bar.dart';
@@ -6,25 +7,41 @@ import 'package:msi_app/widgets/item_header.dart';
 import 'package:msi_app/widgets/item_menu.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
+import 'package:provider/provider.dart';
 
 class OutboundSub2Screen extends StatelessWidget {
   static const routeName = '/outbound_sub_2';
 
-  final List<Map<String, Object>> menus = [
+  
+
+  @override
+  Widget build(BuildContext context) {
+     var hak1 = '';
+    var hak2 = '';
+    final whsProvider = Provider.of<AuthProvider>(context, listen: false);
+    // modul = whsProvider.itemsMenu;
+    whsProvider.itemsMenu.forEach((element) {
+      if (element.permName == 'Picker Pick List Sales Order') {
+        hak1 = element.authorized;
+      }
+      if (element.permName == 'Inventory Dispatch SO') {
+        hak2 = element.authorized;
+      }
+    });
+    final List<Map<String, Object>> menus = [
+      if (hak1 == 'Y')
     {
       'icon': Icons.event_note,
       'label': 'Picker Pick List Sales Order',
       'routeName': PickerPickSoScreen.routeName,
     },
+      if (hak2 == 'Y')
     {
       'icon': Icons.moped,
       'label': 'Inventory Dispatch SO',
       'routeName': InventoryDispatchHeaderSoScreen.routeName,
     },
   ];
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(),
       body: Padding(

@@ -12,9 +12,9 @@ import 'package:provider/provider.dart';
 
 class ReceiptCheckScreen extends StatelessWidget {
   static const routeName = '/receipt_check';
-
+ int a = 1;
   void postData(BuildContext context) {
-    int a = 1;
+   
     showDialog(
       context: context,
       child: AlertDialog(

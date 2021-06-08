@@ -11,9 +11,8 @@ import 'package:provider/provider.dart';
 
 class ProductionIssueFinalCheck extends StatelessWidget {
   static const routeName = '/production_issue_final_check';
-
+  int a = 1;
   void postData(BuildContext context) {
-    int a = 1;
     showDialog(
       context: context,
       child: AlertDialog(

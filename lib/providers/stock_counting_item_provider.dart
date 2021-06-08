@@ -119,6 +119,11 @@ class StockCountingItemProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // void selectItem(StockCountingItem bin) {
+  //   _selected.unitMsr = bin.unitMsr;
+  //   notifyListeners();
+  // }
+
   void inputQty(StockCountingItem item, double qty, BuildContext context) {
     // update qty
     item.quantity = qty;

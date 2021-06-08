@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:msi_app/models/bin.rfv.dart';
 import 'package:msi_app/models/enter_gl.dart';
+import 'package:msi_app/models/menu_modul.dart';
 import 'package:msi_app/models/warehouse.dart';
 import 'package:msi_app/screens/dashboard/dashboard_screen.dart';
 import 'package:msi_app/screens/login/login_screen.dart';
@@ -22,6 +23,8 @@ class AuthProvider with ChangeNotifier {
   String _binGl;
   int _decLen;
   String _decString;
+  List<MenuModul> _itemsMenu;
+
 
   String get token => _token;
   String get username => _username;
@@ -31,6 +34,8 @@ class AuthProvider with ChangeNotifier {
   String get binGl => _binGl;
   int get decLen => _decLen;
   String get decString => _decString;
+  List<MenuModul> get itemsMenu => _itemsMenu;
+
 
   Future<void> getData() async {
     _token = await Prefs.getString(Prefs.token);
@@ -74,6 +79,30 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+Future<void> getMenuByUsername() async {
+    final username = await Prefs.getString(Prefs.username);
+    final url = '$kBaseUrl/tgrpo/tgrpo/api/getmenu/username=$username';
+
+    try {
+      final response = await http.get(url);
+      print(response.request);
+      final data = json.decode(response.body) as List;
+      if (data == null) return;
+      print('data menu $data');
+
+      final List<MenuModul> list = [];
+      data.forEach((map) {
+        list.add(MenuModul.fromMap(map));
+      });
+
+      _itemsMenu = list;
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw error;
+    }
+  }
+
   Future<void> logout(BuildContext context) async {
     final prefs = await Prefs.prefs;
     prefs.clear();
@@ -82,9 +111,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   void clearBin() async {
-    // final prefs =  Prefs.binId;
     await Prefs.setString(Prefs.binId, 'Please Select Bin');
-    // prefs.replaceAll(Prefs.binId, 'select bin');
   }
 
   void clearGl() async {

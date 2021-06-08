@@ -17,9 +17,9 @@ import 'package:provider/provider.dart';
 
 class StockCountingCheckScreen extends StatelessWidget {
   static const routeName = '/stock_counting_check';
-
+int a = 1;
   void postData(BuildContext context, List<StockCountingItem> items) {
-    int a = 1;
+    
     showDialog(
       context: context,
       child: AlertDialog(

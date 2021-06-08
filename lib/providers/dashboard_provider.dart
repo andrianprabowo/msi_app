@@ -17,7 +17,9 @@ class DashboardProvider with ChangeNotifier {
 
   Future<void> getAllData() async {
     final warehouseId = await Prefs.getString(Prefs.warehouseId);
-    final url = '$kBaseUrl/api/dashboard/whscode=$warehouseId';
+    final username = await Prefs.getString(Prefs.username);
+
+    final url = '$kBaseUrl/api/dashboard/whscode=$warehouseId&username=$username';
 
     try {
       final response = await http.get(url);

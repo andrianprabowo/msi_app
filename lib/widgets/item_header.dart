@@ -48,6 +48,7 @@ class ItemHeader extends StatelessWidget {
   Widget buildChangeWarehouse(BuildContext context) {
     final whsProvider = Provider.of<WarehouseProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    // final menuProvider = Provider.of<MenuModulProvider>(context, listen: false);
     return IconButton(
       icon: Icon(Icons.settings),
       onPressed: () async {

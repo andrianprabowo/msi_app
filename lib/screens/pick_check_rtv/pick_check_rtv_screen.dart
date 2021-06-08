@@ -14,9 +14,8 @@ import 'package:provider/provider.dart';
 
 class PickCheckRtvScreen extends StatelessWidget {
   static const routeName = '/pick_check_rtv';
-
+  int a = 1;
   void postData(BuildContext context) {
-    int a = 1;
     showDialog(
       context: context,
       child: AlertDialog(

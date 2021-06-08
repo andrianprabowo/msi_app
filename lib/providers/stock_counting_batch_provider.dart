@@ -18,8 +18,8 @@ class StockCountingBatchProvider with ChangeNotifier {
   }
 
   List<StockCountingBatch> get pickedItems {
-    // return _items;
-    return _items.where((item) => item.pickQty > 0).toList();
+    return _items;
+    // return _items.where((item) => item.pickQty > 0).toList();
   }
 
   double get totalPicked => _totalPicked;
@@ -91,5 +91,11 @@ class StockCountingBatchProvider with ChangeNotifier {
     _items.add(itemBatch);
     notifyListeners();
     print('Added Batch: $itemBatch');
+  }
+
+  void removeBatch(StockCountingBatch itemBatch) {
+    _items.remove(itemBatch);
+    notifyListeners();
+    print('Removed Batch: $itemBatch');
   }
 }

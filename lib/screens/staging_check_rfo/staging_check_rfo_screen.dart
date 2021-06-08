@@ -11,9 +11,8 @@ import 'package:provider/provider.dart';
 
 class StagingCheckRfoScreen extends StatelessWidget {
   static const routeName = '/staging_check_rfo';
-
+  int a = 1;
   void postData(BuildContext context) {
-    int a = 1;
     showDialog(
       context: context,
       child: AlertDialog(

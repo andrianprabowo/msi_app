@@ -35,6 +35,7 @@ import 'package:msi_app/providers/list_put_away_rfo_detail_provider.dart';
 import 'package:msi_app/providers/list_put_away_rfo_provider.dart';
 import 'package:msi_app/providers/list_stck_count_detail_provider.dart';
 import 'package:msi_app/providers/list_stck_count_provider.dart';
+import 'package:msi_app/providers/menu_modul_provider.dart';
 import 'package:msi_app/providers/modul.provider.dart';
 import 'package:msi_app/providers/production_receipt_rm_bin.dart';
 import 'package:msi_app/providers/receipt_batch_rfo_provider.dart';
@@ -258,6 +259,7 @@ void main() async {
 
 
         ChangeNotifierProvider(create: (_) => TempBatchPutawayProvider()),
+        ChangeNotifierProvider(create: (_) => MenuModulProvider()),
 
       ],
       child: MyApp(),

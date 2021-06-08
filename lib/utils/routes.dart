@@ -89,6 +89,7 @@ import 'package:msi_app/screens/staging_check/staging_check_screen.dart';
 import 'package:msi_app/screens/staging_check_rfo/staging_check_rfo_screen.dart';
 import 'package:msi_app/screens/staging_item/staging_item_screen.dart';
 import 'package:msi_app/screens/staging_item_rfo/staging_item_rfo_screen.dart';
+import 'package:msi_app/screens/stock_count_sub_1/stock_count_sub_1_screen.dart';
 import 'package:msi_app/screens/stock_counting/stock_counting_screen.dart';
 import 'package:msi_app/screens/stock_counting_batch/stock_counting_batch_screen.dart';
 import 'package:msi_app/screens/stock_counting_bin/stock_counting_bin_screen.dart';
@@ -100,6 +101,7 @@ import 'package:msi_app/screens/stock_inquiry/stock_inquiry_screen.dart';
 import 'package:msi_app/screens/stock_inquiry_batch/stock_inquiry_batch_screen.dart';
 import 'package:msi_app/screens/stock_inquiry_detail/stock_inquiry_detail.dart';
 import 'package:msi_app/screens/stock_inquiry_header/stock_inquiry_header_screen.dart';
+import 'package:msi_app/screens/stock_inquiry_sub_1/stock_inq_sub_1_screen.dart';
 import 'package:msi_app/screens/storage_bin_item/storage_bin_item_screen.dart';
 import 'package:msi_app/screens/storage_bin_item_rfo/storage_bin_item_rfo_screen.dart';
 import 'package:msi_app/screens/transfer_to_production/transfer_to_production_screen.dart';
@@ -338,5 +340,7 @@ final Map<String, WidgetBuilder> routes = {
   ListIssueRawRmDetailScreen.routeName: (context) => ListIssueRawRmDetailScreen(),
   ListReceiptFgDetailScreen.routeName: (context) => ListReceiptFgDetailScreen(),
   ListStckCountDetailScreen.routeName: (context) => ListStckCountDetailScreen(),
+  StockCountSub1Screen.routeName: (context) => StockCountSub1Screen(),
+  StockInquirySub1Screen.routeName: (context) => StockInquirySub1Screen(),
 
 };

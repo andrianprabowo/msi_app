@@ -1,41 +1,43 @@
 import 'package:flutter/material.dart';
 
-class InputScan extends StatefulWidget {
+class InputScanClear extends StatefulWidget {
   final String label;
   final String hint;
+  final String input;
   final void Function(String scanResult) scanResult;
 
-  const InputScan({
+  const InputScanClear({
     this.label,
     this.hint,
+    this.input,
     this.scanResult,
   });
 
   @override
-  _InputScanState createState() => _InputScanState();
+  _InputScanClearState createState() => _InputScanClearState();
 }
 
-class _InputScanState extends State<InputScan> {
+class _InputScanClearState extends State<InputScanClear> {
   @override
   Widget build(BuildContext context) {
-  final _text = TextEditingController();
-
+    final clearText = TextEditingController();
     return TextFormField(
-      controller: _text,
+      controller: clearText,
       onChanged: (value) {
+        print('clear 01 $clearText');
+        
+        // print('clear 01 is $clearText');
+
         widget.scanResult(value);
+        clearText.clear();
+        print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+
       },
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: widget.label,
         hintText: widget.hint,
-        suffixIcon: IconButton(
-          icon: Icon(Icons.assessment_outlined),
-          onPressed: () {
-            _text.clear();
-            print('delete');
-          },
-        ),
+        suffixIcon: Icon(Icons.assessment_outlined),
       ),
       autofocus: true,
     );
