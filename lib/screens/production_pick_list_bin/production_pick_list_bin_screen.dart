@@ -228,13 +228,14 @@ class ProductionPickListBin extends StatelessWidget {
       ProductionPickListItemModel productionPickListItemModel) {
     final provider =
         Provider.of<ProductionPickListBinProvider>(context, listen: false);
-    // final pickItemListProvider =
-    //     Provider.of<ProductionPickListItemProvider>(context, listen: false);
+    final binProv = Provider.of<ProductionPickListBinProvider>(context, listen: false);
+
     return InputScan(
       label: 'Bin Location',
       hint: 'Scan Bin Location',
       scanResult: (value) {
         final item = provider.findByBinLocation(value.toUpperCase());
+        binProv.selectbin(item);
         if (productionPickListItemModel.fgBatch == "Y") {
           productionPickListItemModel.itemStorageLocation = item.binLocation;
           Navigator.of(context).pushNamed(
@@ -251,12 +252,13 @@ class ProductionPickListBin extends StatelessWidget {
           //     item.binLocation);
           // Navigator.of(context)
           //     .popUntil(ModalRoute.withName(ProductionPickListItem.routeName));
-        
+
           // update bin location
           productionPickListItemModel.itemStorageLocation = item.binLocation;
           showModalBottomSheet(
               context: context,
-              builder: (_) => ProductionPickListItemNonBatchDialog(productionPickListItemModel));
+              builder: (_) => ProductionPickListItemNonBatchDialog(
+                  productionPickListItemModel));
         }
       },
     );

@@ -9,6 +9,7 @@ import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/item_bin_production_picklist.dart';
+import 'package:msi_app/widgets/item_date_prod_picklist.dart';
 import 'package:provider/provider.dart';
 
 class ProductionPickListFinalCheck extends StatelessWidget {
@@ -71,6 +72,7 @@ class ProductionPickListFinalCheck extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ItemDateProdPickList(),
             BaseTextLine('Pick Number', item.pickNumber),
             BaseTextLine('Pick Date', convertDate(item.pickDate)),
             BaseTextLine('Remark', item.pickRemark),

@@ -8,6 +8,10 @@ import 'package:http/http.dart' as http;
 
 class PickItemReceiveProvider with ChangeNotifier {
   List<PickItemReceive> _items;
+  PickItemReceive _selected;
+
+  PickItemReceive get selected => _selected;
+
 
   List<PickItemReceive> get items {
     _items.forEach((detail) {
@@ -60,6 +64,11 @@ class PickItemReceiveProvider with ChangeNotifier {
 
   PickItemReceive findByItemCode(String itemCode) {
     return _items.firstWhere((element) => element.itemCode == itemCode);
+  }
+
+  void selectItem(PickItemReceive purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
   }
 
   void addBatchList(

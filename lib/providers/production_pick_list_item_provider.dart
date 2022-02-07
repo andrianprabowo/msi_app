@@ -8,6 +8,9 @@ import 'package:http/http.dart' as http;
 
 class ProductionPickListItemProvider with ChangeNotifier {
   List<ProductionPickListItemModel> _items;
+  ProductionPickListItemModel _selected;
+
+  ProductionPickListItemModel get selected => _selected;
 
   List<ProductionPickListItemModel> get items {
     _items.forEach((detail) {
@@ -69,6 +72,11 @@ class ProductionPickListItemProvider with ChangeNotifier {
     productionPickListItemModel.batchList.addAll(batchList);
     notifyListeners();
     print('Added Batch List: $batchList');
+  }
+
+  void selectItem(ProductionPickListItemModel purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
   }
 
   void addBin(

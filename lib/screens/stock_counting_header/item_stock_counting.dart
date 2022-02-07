@@ -29,7 +29,8 @@ class ItemStockCounting extends StatelessWidget {
             BaseTextLine('Inv.Counting No', item.pickNumber),
             BaseTextLine('Count Date', convertDate(item.pickDate)),
             BaseTextLine('Counter Assign', item.cardCode),
-            BaseTextLine('Warehouse', item.cardName)
+            BaseTextLine('Warehouse', item.cardName),
+            // BaseTextLine('Remark', item.pickRemark)
           ],
         ),
       ),

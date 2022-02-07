@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_batch_rtv.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/pick_batch_rtv_provider.dart';
+import 'package:msi_app/providers/pick_item_receive_rtv_provider.dart';
+import 'package:msi_app/providers/pick_list_bin_rtv_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -88,7 +90,56 @@ class _DialogPickBatchRtvState extends State<DialogPickBatchRtv> {
       child: RaisedButton(
         child: Text('Submit'),
         onPressed: () {
-          if (double.parse(_quantity.text) > widget.item.availableQty) {
+           final itemProv =
+              Provider.of<PickItemReceiveRtvProvider>(context, listen: false);
+          final itemBin =
+              Provider.of<PickListBinRtvProvider>(context, listen: false);
+
+          final itemList = itemProv.items;
+          double sisanya = 0;
+          double list = 0;
+          itemList.forEach((item) {     
+          if (item.itemCode == itemProv.selected.itemCode) { 
+            double sisa = 0;
+              double sisaSekarang = 0;
+              double total = 0;
+              print('test bismillah${item.pickedQty}');
+              print('item ${item.itemCode}');
+              print('item name ${item.description}');
+
+              item.batchList.forEach((element) {
+                print('break');
+                print(
+                    ' kondisi widget  batch ${widget.item.batchNo} dan bin${widget.item.bin} ');
+                print(
+                    ' kondisi element batch ${element.batchNo} dan bin${element.bin} ');
+
+          
+                if (element.batchNo == widget.item.batchNo &&
+                    element.bin == itemBin.selected.binLocation) {
+                  list = 1;
+                  sisa = element.availableQty.toDouble() - item.pickedQty;
+                  sisaSekarang = sisa - double.parse(_quantity.text);
+                  total = total + element.pickQty;
+                  print(' batch ${element.batchNo} dan bin${element.bin} ');
+                  print(' qty ${element.pickQty}');
+                  print(' total $total');
+                  int alert = 0;
+                  sisanya = element.availableQty.toDouble() - total;
+                  print(' sisnya $sisanya');
+
+                  if (double.parse(_quantity.text) > sisanya) {
+                    print(' error nih $sisa');
+                  }
+                }
+              });
+            }
+          });
+
+          if (list == 0) {
+            sisanya = widget.item.availableQty;
+          }
+          if (double.parse(_quantity.text) > sisanya) {
             print('Tidak boleh lebih besar dari Available Qty ');
             return showDialog<void>(
               context: context,
@@ -102,48 +153,16 @@ class _DialogPickBatchRtvState extends State<DialogPickBatchRtv> {
                           color: Colors.red, size: 50),
                       Divider(),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      BaseTitleColor('Qty must be above 0'),
+                      BaseTitleColor('$sisanya qty left'),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      BaseTitleColor('or equal to  $avlQty'),
-                      SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      SizedBox(
-                        width: double.infinity,
-                        child: RaisedButton(
-                          child: Text('OK'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
-          }
-          if (double.parse(_quantity.text) > widget.item.remainQty) {
-            print('Tidak boleh ');
-            return showDialog<void>(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.notification_important,
-                          color: Colors.red, size: 50),
-                      Divider(),
-                      SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      BaseTitleColor('Qty must be above 0'),
-                      SizedBox(height: getProportionateScreenHeight(kLarge)),
-                      BaseTitleColor('or equal to  ${widget.item.remainQty}'),
+                      BaseTitleColor('on ${widget.item.batchNo}'),
                       SizedBox(height: getProportionateScreenHeight(kLarge)),
                       SizedBox(
                         width: double.infinity,
                         child: RaisedButton(
                           child: Text('OK'),
                           onPressed: () {
+                            list = 0;
                             Navigator.of(context).pop();
                           },
                         ),
@@ -160,6 +179,7 @@ class _DialogPickBatchRtvState extends State<DialogPickBatchRtv> {
           } on FormatException {
             // return;
           }
+
 
           Provider.of<PickBatchRtvProvider>(context, listen: false)
               .updatePickQty(widget.item.batchNo, qty);

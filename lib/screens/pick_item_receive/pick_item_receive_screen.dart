@@ -112,12 +112,13 @@ class PickItemReceiveScreen extends StatelessWidget {
       hint: 'Scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value);
+        provider.selectItem(item);
         item.fgBatch == 'Y'
             ? Navigator.of(context)
                 .pushNamed(PickListBinScreen.routeName, arguments: item)
-            :  Navigator.of(context)
+            : Navigator.of(context)
                 .pushNamed(PickListBinScreen.routeName, arguments: item);
-     },
+      },
     );
   }
 }

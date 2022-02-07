@@ -7,6 +7,7 @@ import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/item_date_putaway_outlet.dart';
 import 'package:provider/provider.dart';
 
 class StagingCheckRfoScreen extends StatelessWidget {
@@ -141,6 +142,7 @@ class StagingCheckRfoScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ItemDatePutAwayOutlet(),
             BaseTextLine('Storage Location', item.binCode),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Item Details'),

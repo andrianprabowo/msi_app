@@ -8,6 +8,11 @@ import 'package:http/http.dart' as http;
 
 class ProductionPickListBinProvider with ChangeNotifier {
   List<ProductionPickListBinModel> _items = [];
+  ProductionPickListBinModel _selected;
+
+  ProductionPickListBinModel get selected => _selected;
+
+
   String _recBin;
   var _showAllBin = false;
 
@@ -48,6 +53,10 @@ class ProductionPickListBinProvider with ChangeNotifier {
       print(error);
       throw error;
     }
+  }
+  void selectbin(ProductionPickListBinModel purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
   }
 
   ProductionPickListBinModel findByBinLocation(String binLocation) {

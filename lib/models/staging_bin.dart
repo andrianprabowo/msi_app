@@ -7,10 +7,12 @@ class StagingBin with ChangeNotifier {
   final String binCode;
   final DateTime docDate;
   String plant;
+  DateTime postingDate;
   String plantName;
   final String fileName;
   List<ItemBin> itemBinList;
   StagingBin({
+    // this.postingDate,
     this.binCode,
     this.docDate,
     this.plant,
@@ -22,7 +24,7 @@ class StagingBin with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'storageLocation': binCode,
-      'postingDate': DateTime.now().toIso8601String(),
+      'postingDate': postingDate?.toIso8601String() ?? DateTime.now().toIso8601String(),
       'plant': plant,
       'plantName': plantName,
       'filename': 'Put Away',
@@ -34,6 +36,7 @@ class StagingBin with ChangeNotifier {
     if (map == null) return null;
 
     return StagingBin(
+      // postingDate: DateTime.parse(map['postingDate']) ?? DateTime.now(),
       binCode: map['binCode'] ?? '',
       plant: map['plant'] ?? '',
       plantName: map['plantName'] ?? '',

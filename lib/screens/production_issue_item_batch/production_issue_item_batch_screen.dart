@@ -74,21 +74,21 @@ class ProductionIssueItemBatch extends StatelessWidget {
               // disini
               print("disini ${itemBatchProvider.totalPicked}");
               print("disini2 ${item.availableQty}");
-              if (itemBatchProvider.totalPicked != item.availableQty) {
-                print("disini masuk");
+              // if (itemBatchProvider.totalPicked != item.availableQty) {
+              //   print("disini masuk");
 
-                final snackBar = SnackBar(
-                  content: Row(
-                    children: [
-                      Icon(Icons.error_outline, color: Colors.red),
-                      SizedBox(width: getProportionateScreenWidth(kLarge)),
-                      Text('Total Put Qty Must Be Same Than Planned Qty'),
-                    ],
-                  ),
-                );
-                globalKey.currentState.showSnackBar(snackBar);
-                return;
-              }
+              //   final snackBar = SnackBar(
+              //     content: Row(
+              //       children: [
+              //         Icon(Icons.error_outline, color: Colors.red),
+              //         SizedBox(width: getProportionateScreenWidth(kLarge)),
+              //         Text('Total Put Qty Must Be Same Than Planned Qty'),
+              //       ],
+              //     ),
+              //   );
+              //   globalKey.currentState.showSnackBar(snackBar);
+              //   return;
+              // }
 
               
               //  else {
@@ -114,7 +114,10 @@ class ProductionIssueItemBatch extends StatelessWidget {
                 itemNumberProvider.selected.totalQty =
                     itemNumberProvider.selected.totalQty -
                         itemBatchProvider.totalPicked;
-                print("xx    ${itemNumberProvider.selected.totalQty}");
+                itemNumberProvider.selected.totalItem =
+                    itemNumberProvider.selected.totalItem -
+                        1;
+                print("xx    ${itemNumberProvider.selected.totalItem}");
 
                 itemProvider.addBatchList(item, batchList);
 

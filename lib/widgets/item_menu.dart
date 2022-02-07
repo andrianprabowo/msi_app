@@ -3,7 +3,7 @@ import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/prefs.dart';
 import 'package:msi_app/utils/size_config.dart';
 
-class ItemMenu extends StatelessWidget {
+class  ItemMenu extends StatelessWidget {
   final IconData iconData;
   final String label;
   final String routeName;

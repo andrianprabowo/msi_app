@@ -93,6 +93,7 @@ class ProductionPickListItem extends StatelessWidget {
       hint: 'Input or Scan Item',
       scanResult: (value) {
         final item = provider.findByItemCode(value.toUpperCase());
+        provider.selectItem(item);
         item.fgBatch == "Y"
             ? Navigator.of(context)
                 .pushNamed(ProductionPickListBin.routeName, arguments: item)

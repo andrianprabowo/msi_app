@@ -9,6 +9,7 @@ class ListStckCountDetail with ChangeNotifier {
   final String kdVendor;
   final String nmVendor;
   final String plant;
+  final String plantName;
   final String toPlant;
   final String storageLocation;
   final String storageLocationName;
@@ -22,9 +23,9 @@ class ListStckCountDetail with ChangeNotifier {
   int status;
   int idUserInput;
   int idUserApproved;
-  // int back;
+  int back;
   final DateTime postingDate;
-  // final DateTime deliveryDate;
+  final DateTime createdDate;
   final DateTime lastmodified;
   ListStckCountDetail({
     this.stckcntingNo,
@@ -33,6 +34,7 @@ class ListStckCountDetail with ChangeNotifier {
     this.kdVendor,
     this.nmVendor,
     this.plant,
+    this.plantName,
     this.toPlant,
     this.storageLocation,
     this.storageLocationName,
@@ -44,11 +46,11 @@ class ListStckCountDetail with ChangeNotifier {
     this.grpodlvNo1,
     this.idUserInput,
     this.idUserApproved,
-    // this.back,
+    this.back,
     this.idStckcntingHeader,
     this.status,
     this.postingDate,
-    // this.deliveryDate,
+    this.createdDate,
     this.lastmodified,
   });
 
@@ -60,6 +62,7 @@ class ListStckCountDetail with ChangeNotifier {
       'kdVendor': kdVendor,
       'nmVendor': nmVendor,
       'plant': plant,
+      'plantName': plantName,
       'toPlant': toPlant,
       'storageLocation': storageLocation,
       'storageLocationName': storageLocationName,
@@ -73,9 +76,9 @@ class ListStckCountDetail with ChangeNotifier {
       'status': status,
       'idUserInput': idUserInput,
       'idUserApproved': idUserApproved,
-      // 'back': back,
-      'postingDate': postingDate?.toIso8601String(),
-      // 'deliveryDate': deliveryDate?.toIso8601String(),
+      'back': back,
+      'postingDate': postingDate?.toIso8601String() ?? DateTime.now().toIso8601String(),
+      'createdDate': createdDate?.toIso8601String(),
       'lastmodified': lastmodified?.toIso8601String(),
     };
   }
@@ -90,6 +93,7 @@ class ListStckCountDetail with ChangeNotifier {
       kdVendor: map['kdVendor'] ?? '',
       nmVendor: map['nmVendor'] ?? '',
       plant: map['plant'] ?? '',
+      plantName: map['plantName'] ?? '',
       toPlant: map['toPlant'] ?? '',
       storageLocation: map['storageLocation'] ?? '',
       storageLocationName: map['storageLocationName'] ?? '',
@@ -101,11 +105,11 @@ class ListStckCountDetail with ChangeNotifier {
       idStckcntingHeader: map['idStckcntingHeader'] ?? 0,
       status: map['s'] ?? 2, // set status sama dengan 2
       logMessage: map['logMessage'] ?? '',
-      // back: map['back'] ?? 0,
+      back: map['back'] ?? 0,
       idUserApproved: map['idUserApproved'] ?? 0,
       idUserInput: map['idUserInput'] ?? 0,
       postingDate: DateTime.parse(map['postingDate'])??'',
-      // deliveryDate: DateTime.parse(map['deliveryDate']??''),
+      createdDate: DateTime.parse(map['createdDate']??''),
       lastmodified: DateTime.parse(map['lastmodified']),
     );
   }
@@ -117,7 +121,7 @@ class ListStckCountDetail with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ListStckCountDetail(dgrpodlvNo: $grpodlvNo)';
-    // return 'ListStckCountDetail(stckcntingNo: $stckcntingNo,stckcntingNo1: $stckcntingNo1, grpodlvNo: $grpodlvNo, kdVendor: $kdVendor, nmVendor: $nmVendor, plant: $plant,toPlant: $toPlant, storageLocation: $storageLocation, storageLocationName: $storageLocationName, itemGroupCode: $itemGroupCode, fileName: $fileName, docNum: $docNum, remark: $remark, grpodlvNo1: $grpodlvNo1, idStckcntingHeader: $idStckcntingHeader, status: $status, idUserInput: $idUserInput, idUserApproved: $idUserApproved, back: $back, postingDate: $postingDate, deliveryDate: $deliveryDate, lastmodified: $lastmodified)';
+    // return 'ListStckCountDetail(dgrpodlvNo: $grpodlvNo)';
+    return 'ListStckCountDetail(stckcntingNo: $stckcntingNo,stckcntingNo1: $stckcntingNo1, grpodlvNo: $grpodlvNo, kdVendor: $kdVendor, nmVendor: $nmVendor, plant: $plant,toPlant: $toPlant, storageLocation: $storageLocation, storageLocationName: $storageLocationName, itemGroupCode: $itemGroupCode, fileName: $fileName, docNum: $docNum, remark: $remark, grpodlvNo1: $grpodlvNo1, idStckcntingHeader: $idStckcntingHeader, status: $status, idUserInput: $idUserInput, idUserApproved: $idUserApproved, back: $back, postingDate: $postingDate, createdDate: $createdDate, lastmodified: $lastmodified)';
   }
 }

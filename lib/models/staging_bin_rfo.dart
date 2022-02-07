@@ -8,11 +8,13 @@ class StagingBinRfo with ChangeNotifier {
   final DateTime docDate;
   String plant;
   String plantName;
+  DateTime postingDate;
   final String fileName;
   List<ItemBinRfo> itemBinList;
   StagingBinRfo({
     this.binCode,
     this.docDate,
+    this.postingDate,
     this.plant,
     this.plantName,
     this.fileName,
@@ -22,7 +24,7 @@ class StagingBinRfo with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'storageLocation': binCode,
-      'postingDate': DateTime.now().toIso8601String(),
+      'postingDate': postingDate?.toIso8601String() ?? DateTime.now().toIso8601String(),
       'plant': plant,
       'plantName': plantName,
       'filename': 'Put Away',

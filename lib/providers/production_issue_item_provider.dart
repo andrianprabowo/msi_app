@@ -59,7 +59,7 @@ class ProductionIssueItemProvider with ChangeNotifier {
   }
 
   ProductionIssueItemModel findByItemCode(String itemCode) {
-    return _items.firstWhere((element) => element.itemCode == itemCode);
+    return _items.firstWhere((element) => element.itemCode == itemCode && element.remainingQty>0);
   }
 
   void addBatchList(
@@ -84,5 +84,10 @@ class ProductionIssueItemProvider with ChangeNotifier {
     productionIssueItemModel.putQty = qty;
     notifyListeners();
     print('Update Qty Non batch: $ProductionIssueItemModel');
+  }
+
+   void selectPo(ProductionIssueItemModel purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
   }
 }

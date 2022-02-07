@@ -5,7 +5,7 @@ import 'package:msi_app/models/production_receipt_item_model.dart';
 
 class ProductionReceiptModel with ChangeNotifier {
   final int docEntry;
-  final DateTime postingDate;
+  DateTime postingDate;
   final String poNumber;
   final DateTime docDate;
   String vendorCode;
@@ -31,7 +31,7 @@ class ProductionReceiptModel with ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     return {
-      'postingDate': DateTime.now().toIso8601String(),
+      'postingDate': postingDate?.toIso8601String() ?? DateTime.now().toIso8601String(),
       'doNo': poNumber,
       'deliveryDate': docDate?.toIso8601String(),
       'plant': vendorCode,
@@ -39,7 +39,7 @@ class ProductionReceiptModel with ChangeNotifier {
       'plantName': vendorName,
       'storageLocation': storageLocation ?? '',
       'storageLocationName': storageLocationName ?? '',
-      'filename':'Receipt From Production',
+      'filename': 'Receipt From Production',
       //'docnum': poNumber,
       'details': detailList?.map((x) => x?.toMap())?.toList(),
     };

@@ -31,6 +31,19 @@ class ProductionIssueItem extends StatelessWidget {
     stagingBinProvider.selected.itemBinList = itemBinProvider.items;
   }
   
+  
+  Future<void> fetchData(
+    BuildContext context,
+    String pickNumber,
+  ) async {
+   final itemBinProvider =
+        Provider.of<ProductionIssueItemProvider>(context, listen: false);
+    await itemBinProvider.getItemInStagingBin(pickNumber);
+
+    final stagingBinProvider =
+        Provider.of<ProductionIssueProvider>(context, listen: false);
+    stagingBinProvider.selected.itemBinList = itemBinProvider.items;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,15 +87,16 @@ class ProductionIssueItem extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.post_add),
               onPressed: () {
-                if (transactionNumberSelected.totalQty != 0) {
-                print("disini masuk");
+                if (transactionNumberSelected.totalItem != 0) {
+                print("disini error");
+                print(transactionNumberSelected.totalQty);
 
                 final snackBar = SnackBar(
                   content: Row(
                     children: [
                       Icon(Icons.error_outline, color: Colors.red),
                       SizedBox(width: getProportionateScreenWidth(kLarge)),
-                      Text('Please Input All Items'),
+                      Text('Please Input ' + transactionNumberSelected.totalItem.toString()  +' More items'),
                     ],
                   ),
                 );
@@ -144,6 +158,7 @@ class ProductionIssueItem extends StatelessWidget {
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             buildInputScan(context),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
+           
             BaseTitle('List Items'),
             Divider(),
             buildItemList(context, transactionNumberSelected),
@@ -161,14 +176,71 @@ class ProductionIssueItem extends StatelessWidget {
       hint: 'Input or Scan Item Barcode',
       scanResult: (value) {
         final item = provider.findByItemCode(value.toUpperCase());
-        item.fgBatch == "Y"
-            ? Navigator.of(context).pushNamed(
-                ProductionIssueItemBatch.routeName,
-                arguments: item,
-              )
-            : showModalBottomSheet(
+          if (item.fgBatch == 'Y') {
+          Navigator.of(context)
+              .pushNamed(ProductionIssueItemBatch.routeName, arguments: item);
+        } else {
+              if(item.putQty > 0){
+             print('masuk');
+              return showDialog<void>(
                 context: context,
-                builder: (_) => ProductionIssueItemNonBatchDialog(item));
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+
+                return AlertDialog(
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.info_outline, color: Colors.red, size: 50),
+                        Divider(),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        Text('You Already Put Qty'),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        Text(item.putQty.toString()),
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        Text('You want to re-enter qty ?'),
+
+                        SizedBox(height: getProportionateScreenHeight(kLarge)),
+                        SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            child: Text('Cancel'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: RaisedButton(
+                            child: Text('Put New Qty'),
+                            onPressed: () {
+                               final itemNumberProvider =
+                  Provider.of<ProductionIssueNumberProvider>(context,
+                      listen: false);
+           itemNumberProvider.selected.totalItem =
+                    itemNumberProvider.selected.totalItem  +
+                        1;
+                               Navigator.of(context).pop();
+                              showModalBottomSheet(
+                              context: context,
+                              builder: (_) => ProductionIssueItemNonBatchDialog(item));
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                  },
+              );
+
+              }else{
+                  showModalBottomSheet(
+                  context: context,
+                  builder: (_) => ProductionIssueItemNonBatchDialog(item));
+              }
+          
+        }
       },
     );
   }
@@ -176,7 +248,7 @@ class ProductionIssueItem extends StatelessWidget {
   Widget buildItemList(BuildContext context, ProductionIssueNumberModel item) {
     return Expanded(
       child: FutureBuilder(
-        future: refreshData(context, item.pickNumber),
+        future: fetchData(context, item.pickNumber),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -184,9 +256,7 @@ class ProductionIssueItem extends StatelessWidget {
 
           if (snapshot.hasError) return ErrorInfo();
 
-          return RefreshIndicator(
-            onRefresh: () => refreshData(context, item.pickNumber),
-            child: Consumer<ProductionIssueItemProvider>(
+          return Consumer<ProductionIssueItemProvider>(
               builder: (_, provider, child) => provider.items.length == 0
                   ? NoData()
                   : ListView.builder(
@@ -198,7 +268,7 @@ class ProductionIssueItem extends StatelessWidget {
                         );
                       },
                     ),
-            ),
+            
           );
         },
       ),

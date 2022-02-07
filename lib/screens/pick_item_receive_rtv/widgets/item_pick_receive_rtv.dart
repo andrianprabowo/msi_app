@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_batch_rtv.dart';
 import 'package:msi_app/models/pick_item_receive_rtv.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/pick_item_receive_rtv_provider.dart';
 import 'package:msi_app/screens/pick_item_bin_rtv/pick_list_bin_rtv_screen.dart';
 import 'package:msi_app/screens/pick_item_receive_rtv/widgets/pick_batch_widget_rtv.dart';
 import 'package:msi_app/screens/pick_item_receive_rtv/widgets/pick_bin_widget_rtv.dart';
@@ -18,12 +19,17 @@ class ItemPickReceiveRtv extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   final authProvider = Provider.of<AuthProvider>(context, listen: false);
-   
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
     final formatter =
         NumberFormat(('#,###.' + authProvider.decString), 'en_US');
+    final provider =
+        Provider.of<PickItemReceiveRtvProvider>(context, listen: false);
+
     return InkWell(
       onTap: () {
+        provider.selectItem(item);
+
         item.fgBatch == 'Y'
             ? Navigator.of(context)
                 .pushNamed(PickListBinRtvScreen.routeName, arguments: item)

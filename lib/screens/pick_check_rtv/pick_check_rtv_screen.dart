@@ -10,6 +10,7 @@ import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/input_scan.dart';
 import 'package:msi_app/widgets/item_bin_picklist_rtv.dart';
+import 'package:msi_app/widgets/item_date_picklist_rtv.dart';
 import 'package:provider/provider.dart';
 
 class PickCheckRtvScreen extends StatelessWidget {
@@ -161,6 +162,7 @@ class PickCheckRtvScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ItemDatePickListRtv(),
             BaseTextLine('Pick Number', item.pickNumber),
             BaseTextLine('Pick Date', convertDate(item.pickDate)),
             BaseTextLine('Remark', item.pickRemark),

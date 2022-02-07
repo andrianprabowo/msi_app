@@ -8,6 +8,7 @@ import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/item_date_prod_receipt_fg.dart';
 import 'package:provider/provider.dart';
 
 class ProductionReceiptFinalCheck extends StatelessWidget {
@@ -144,6 +145,7 @@ class ProductionReceiptFinalCheck extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ItemDateProdReceiptFg(),
             BaseTextLine('Production Number', po.poNumber),
             BaseTextLine('Delivery Date', convertDate(po.docDate)),
             BaseTextLine('Memo', po.vendorName),

@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 LoginForm(),
                 SizedBox(height: getProportionateScreenHeight(kLarge)),
-                BaseTitle("Ver 1.05")
+                BaseTitle("Ver 1.13")
               ],
             ),
           ),

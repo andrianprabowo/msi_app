@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_pick_list_bin_model.dart';
 import 'package:msi_app/models/production_pick_list_item_model.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/production_pick_list_bin_provider.dart';
 import 'package:msi_app/screens/production_pick_list_item/widgets/production_pick_list_item_non_batch_dialog.dart';
 import 'package:msi_app/screens/production_pick_list_item_batch/production_pick_list_item_batch_screen.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -21,11 +22,13 @@ class ProductionPickListBinList extends StatelessWidget {
     // final pickItemListProvider =
     //     Provider.of<ProductionPickListItemProvider>(context, listen: false);
    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+   final binProv = Provider.of<ProductionPickListBinProvider>(context, listen: false);
    
     final formatter =
         NumberFormat(('#,###.' + authProvider.decString), 'en_US');
     return InkWell(
       onTap: () {
+        binProv.selectbin(item);
         if (productionPickListItemModel.fgBatch == "Y") {
           productionPickListItemModel.itemStorageLocation = item.binLocation;
           Navigator.of(context).pushNamed(

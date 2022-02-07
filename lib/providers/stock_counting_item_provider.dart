@@ -7,6 +7,7 @@ import 'package:msi_app/models/stock_counting_item.dart';
 import 'package:msi_app/providers/stock_counting_bin_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:msi_app/utils/prefs.dart';
 import 'package:provider/provider.dart';
 
 class StockCountingItemProvider with ChangeNotifier {
@@ -53,7 +54,8 @@ class StockCountingItemProvider with ChangeNotifier {
   }
 
   Future<void> getAllItems() async {
-    final url = '$kBaseUrl/api/getallitem';
+    final warehouseId = await Prefs.getString(Prefs.warehouseId);
+    final url = '$kBaseUrl/api/getallitem/whscode=$warehouseId';
 
     try {
       final response = await http.get(url);

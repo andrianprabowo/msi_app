@@ -9,6 +9,10 @@ import 'package:msi_app/utils/prefs.dart';
 
 class PickItemReceiveSoProvider with ChangeNotifier {
   List<PickItemReceiveSo> _items;
+  PickItemReceiveSo _selected;
+
+  PickItemReceiveSo get selected => _selected;
+
 
   List<PickItemReceiveSo> get items {
     _items.forEach((detail) {
@@ -63,6 +67,11 @@ class PickItemReceiveSoProvider with ChangeNotifier {
 
   PickItemReceiveSo findByItemCode(String itemCode) {
     return _items.firstWhere((element) => element.itemCode == itemCode);
+  }
+
+   void selectItem(PickItemReceiveSo purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
   }
 
   void addBatchList(

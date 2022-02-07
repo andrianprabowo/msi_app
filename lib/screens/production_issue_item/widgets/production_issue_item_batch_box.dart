@@ -4,6 +4,7 @@ import 'package:msi_app/models/production_issue_item_batch_model.dart';
 import 'package:msi_app/models/production_issue_item_model.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_issue_item_provider.dart';
+import 'package:msi_app/providers/production_issue_number_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,9 @@ class ProductionIssueItemBatchBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProductionIssueItemProvider>(context, listen: false);
  final authProvider = Provider.of<AuthProvider>(context, listen: false);
+ final itemNumberProvider =
+                  Provider.of<ProductionIssueNumberProvider>(context,
+                      listen: false);
    
     final formatter =
         NumberFormat(('#,###.' + authProvider.decString), 'en_US');
@@ -30,6 +34,9 @@ class ProductionIssueItemBatchBox extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.delete, color: Colors.red),
             onPressed: () {
+               itemNumberProvider.selected.totalItem =
+                    itemNumberProvider.selected.totalItem  +
+                        1;
               provider.removeBatchItem(item, batch);
             },
           ),

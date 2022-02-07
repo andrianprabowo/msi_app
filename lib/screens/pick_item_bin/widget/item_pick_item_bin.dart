@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_item_receive.dart';
 import 'package:msi_app/models/pick_list_bin.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/pick_list_bin_provider.dart';
 import 'package:msi_app/screens/pick_item_batch/pick_item_batch_screen.dart';
 import 'package:msi_app/screens/pick_item_receive/widgets/dialog_pick_list_nonbatch.dart';
 import 'package:msi_app/utils/constants.dart';
@@ -18,13 +19,14 @@ class ItemPickItemBin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-   
+    final binProv = Provider.of<PickListBinProvider>(context, listen: false);
+
     final formatter =
         NumberFormat(('#,###.' + authProvider.decString), 'en_US');
 
-  
     return InkWell(
       onTap: () {
+        binProv.selectbin(item);
         if (pickItemReceive.fgBatch == 'Y') {
           pickItemReceive.itemStorageLocation = item.binLocation;
           Navigator.of(context).pushNamed(

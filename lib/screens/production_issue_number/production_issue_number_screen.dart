@@ -55,7 +55,9 @@ class ProductionIssueNumber extends StatelessWidget {
       label: 'Production Number',
       hint: 'Input or Scan Production Number',
       scanResult: (value) {
-        final item = provider.findByPickNumber(value.toUpperCase());
+        final item = provider.findByPickNumber(value);
+        
+        provider.selectPickList(item);
         Navigator.of(context).pushNamed(
           ProductionIssueItem.routeName,
           arguments: item,

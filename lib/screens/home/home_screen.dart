@@ -4,7 +4,6 @@ import 'package:msi_app/providers/modul.provider.dart';
 import 'package:msi_app/screens/dashboard/dashboard_screen.dart';
 import 'package:msi_app/screens/stock_counting_header/stock_counting_header_screen.dart';
 import 'package:msi_app/screens/stock_inquiry_header/stock_inquiry_header_screen.dart';
-import 'package:msi_app/screens/stock_inquiry_sub_1/stock_inq_sub_1_screen.dart';
 import 'package:msi_app/widgets/base_app_bar.dart';
 import 'package:msi_app/widgets/item_header.dart';
 import 'package:msi_app/widgets/item_menu.dart';

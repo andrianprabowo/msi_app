@@ -6,7 +6,7 @@ import 'package:msi_app/models/item_purchase_order_rfo.dart';
 class PurchaseOrderRfo with ChangeNotifier {
   final int docEntry;
   // int userId;
-  final DateTime postingDate;
+  DateTime postingDate;
   final String poNumber;
   final DateTime docDate;
   final String vendorCode;
@@ -33,7 +33,7 @@ class PurchaseOrderRfo with ChangeNotifier {
 
   Map<String, dynamic> toMap() {
     return {
-      'postingDate': DateTime.now().toIso8601String(),
+      'postingDate': postingDate?.toIso8601String() ?? DateTime.now().toIso8601String(),
       'poNo': poNumber,
       // 'idUserInput': userId,
       'deliveryDate': docDate?.toIso8601String(),

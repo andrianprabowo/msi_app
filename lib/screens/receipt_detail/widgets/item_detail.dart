@@ -9,6 +9,7 @@ import 'package:msi_app/screens/receipt_detail/widgets/dialog_input_qty.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:provider/provider.dart';
 
 class ItemDetail extends StatelessWidget {
@@ -40,6 +41,7 @@ class ItemDetail extends StatelessWidget {
         child: Column(
           children: [
             BaseTitle(item.itemCode),
+            // BaseTitleColor(item.itemCode),
             BaseTitle(item.description),
             Divider(),
             BaseTextLine(

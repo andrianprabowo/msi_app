@@ -10,6 +10,7 @@ import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/input_scan.dart';
 import 'package:msi_app/widgets/item_bin_picklist_so.dart';
+import 'package:msi_app/widgets/item_date_picklist_so.dart';
 import 'package:provider/provider.dart';
 
 class PickCheckSoScreen extends StatelessWidget {
@@ -160,6 +161,7 @@ class PickCheckSoScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ItemDatePickListSo(),
             BaseTextLine('SO Number', item.pickNumber),
             BaseTextLine('SO Date', convertDate(item.pickDate)),
             BaseTextLine('Remark', item.pickRemark),

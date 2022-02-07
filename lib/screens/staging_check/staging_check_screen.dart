@@ -7,6 +7,7 @@ import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/item_date_putaway.dart';
 import 'package:provider/provider.dart';
 
 class StagingCheckScreen extends StatelessWidget {
@@ -139,6 +140,7 @@ class StagingCheckScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ItemDatePutAway(),
             BaseTextLine('Staging Bin Location', item.binCode),
             SizedBox(height: getProportionateScreenHeight(kLarge)),
             BaseTitle('List Item Details'),

@@ -6,7 +6,7 @@ import 'package:msi_app/models/production_pick_list_item_model.dart';
 class ProductionPickListModel with ChangeNotifier {
   final String pickNumber;
   final DateTime pickDate;
-  final DateTime postingDate;
+  DateTime postingDate;
   String cardCode;
   String cardName;
   final String pickRemark;
@@ -30,7 +30,7 @@ class ProductionPickListModel with ChangeNotifier {
     return {
       'doNo': pickNumber,
       'deliveryDate': pickDate?.toIso8601String(),
-      'postingDate': DateTime.now().toIso8601String(),
+      'postingDate': postingDate?.toIso8601String() ?? DateTime.now().toIso8601String(),
       'plant': cardCode,
       'plantName': cardName,
       'remark': pickRemark,

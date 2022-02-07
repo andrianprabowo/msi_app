@@ -70,6 +70,7 @@ import 'package:msi_app/screens/prod_list_pick_list_detail/prod_list_pick_list_d
 import 'package:msi_app/screens/prod_list_pick_list_detail_receipt/prod_list_pick_list_detail_receipt_screen.dart';
 import 'package:msi_app/screens/prod_receipt_fg_detail/list_receipt_fg_detail_screen.dart';
 import 'package:msi_app/screens/production/production_screen.dart';
+import 'package:msi_app/screens/production_issue_item_change/production_issue_item_change_screen.dart';
 import 'package:msi_app/screens/production_receipt_rm_bin/production_receipt_rm_bin_screen.dart';
 import 'package:msi_app/screens/put_away/put_away_screen.dart';
 import 'package:msi_app/screens/put_away_rfo/put_away_rfo_screen.dart';
@@ -297,6 +298,7 @@ final Map<String, WidgetBuilder> routes = {
   ProductionIssue.routeName: (context) => ProductionIssue(),
   ProductionIssueNumber.routeName: (context) => ProductionIssueNumber(),
   ProductionIssueItem.routeName: (context) => ProductionIssueItem(),
+  ProductionIssueItemChange.routeName: (context) => ProductionIssueItemChange(),
   ProductionIssueItemBatch.routeName: (context) => ProductionIssueItemBatch(),
   ProductionIssueFinalCheck.routeName: (context) => ProductionIssueFinalCheck(),
   ProductionIssueAllTransaction.routeName: (context) =>

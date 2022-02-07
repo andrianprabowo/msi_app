@@ -176,7 +176,7 @@ class _DialogInputQtyState extends State<DialogInputQty> {
 
             print(" date initial $initial");
 
-            final maxYear = init.year + 5;
+            final maxYear = init.year + 100;
             final pickedDate = await showDatePicker(
               context: context,
               initialDate: init,

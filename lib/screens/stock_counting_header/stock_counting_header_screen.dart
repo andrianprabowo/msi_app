@@ -7,6 +7,7 @@ import 'package:msi_app/screens/stock_counting_header/item_stock_counting.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/base_title_color.dart';
 import 'package:msi_app/widgets/error_info.dart';
 import 'package:msi_app/widgets/input_scan.dart';
 import 'package:msi_app/widgets/no_data.dart';

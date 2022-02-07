@@ -14,6 +14,7 @@ class ProductionIssueNumberModel with ChangeNotifier {
   final String plantName;
   double totalQty;
   double totalRemain;
+  int totalItem;
   ProductionIssueNumberModel({
     this.pickNumber,
     this.pickDate,
@@ -25,6 +26,7 @@ class ProductionIssueNumberModel with ChangeNotifier {
     this.totalQty,
     this.totalRemain,
     this.quantity,
+    this.totalItem,
     this.plantName,
   });
 
@@ -51,6 +53,7 @@ class ProductionIssueNumberModel with ChangeNotifier {
       uom: map['uom'] ?? '',
       totalQty: map['totalQuantity'] ?? 0.0,
       totalRemain: map['totalRemain'] ?? 0.0,
+      totalItem: map['totalItem'] ?? 0,
       quantity: map['quantity'] ?? '',
       plantName: map['cardName'] ?? '',
     );
@@ -63,6 +66,6 @@ class ProductionIssueNumberModel with ChangeNotifier {
 
   @override
   String toString() {
-    return 'ProductionIssueNumberModel(productCode: $productCode,totalRemain: $totalRemain,totalQty: $totalQty, productName: $productName,uom: $uom,quantity: $quantity,pickNumber: $pickNumber, docDate: $pickDate, pickRemark: $pickRemark, plant: $plant, plantName: $plantName)';
+    return 'ProductionIssueNumberModel(productCode: $productCode,totalRemain: $totalRemain,totalQty: $totalQty, productName: $productName,uom: $uom,quantity: $quantity,pickNumber: $pickNumber, docDate: $pickDate, pickRemark: $pickRemark, plant: $plant, totalItem: $totalItem, plantName: $plantName)';
   }
 }

@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/pick_batch_so.dart';
 import 'package:msi_app/models/pick_item_receive_so.dart';
 import 'package:msi_app/providers/auth_provider.dart';
+import 'package:msi_app/providers/pick_item_receive_so_provider.dart';
 import 'package:msi_app/screens/pick_item_bin_so/pick_list_bin_so_screen.dart';
 import 'package:msi_app/screens/pick_item_receive_so/widgets/pick_batch_widget_so.dart';
 import 'package:msi_app/screens/pick_item_receive_so/widgets/pick_bin_widget_so.dart';
@@ -19,11 +20,16 @@ class ItemPickReceiveSo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-   
+
     final formatter =
         NumberFormat(('#,###.' + authProvider.decString), 'en_US');
+    final provider =
+        Provider.of<PickItemReceiveSoProvider>(context, listen: false);
+
     return InkWell(
       onTap: () {
+        provider.selectItem(item);
+
         item.fgBatch == 'Y'
             ? Navigator.of(context)
                 .pushNamed(PickListBinSoScreen.routeName, arguments: item)

@@ -6,7 +6,7 @@ import 'package:msi_app/models/pick_item_receive.dart';
 class PickListWhs with ChangeNotifier {
   final String pickNumber;
   final DateTime pickDate;
-  final DateTime postingDate;
+  DateTime postingDate;
   String cardCode;
   final String cardName;
   final String pickRemark;
@@ -29,7 +29,7 @@ class PickListWhs with ChangeNotifier {
     return {
       'doNo': pickNumber,
       'deliveryDate': pickDate?.toIso8601String(),
-      'postingDate': DateTime.now().toIso8601String(),
+      'postingDate': postingDate?.toIso8601String() ?? DateTime.now().toIso8601String(),
       'plant': cardCode,
       'plantName': cardName,
       'remark': pickRemark,

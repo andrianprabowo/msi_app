@@ -14,7 +14,7 @@ class StockCountingBinProvider with ChangeNotifier {
   StockCountingBin _selected;
 
   List<StockCountingBin> get items {
-    return _showAllBin ? _items : _items.take(5).toList();
+    return _showAllBin ? _items : _items.toList();
   }
 
   StockCountingBin get selected => _selected;

@@ -9,7 +9,7 @@ class ProductionReceiptRMNumberListModel with ChangeNotifier {
   final String docNumber;
   int userId;
   final DateTime docDate;
-  final DateTime postingDate;
+  DateTime postingDate;
   final String cardCode;
   final String cardName;
   final String pickRemark;
@@ -37,7 +37,7 @@ class ProductionReceiptRMNumberListModel with ChangeNotifier {
       'doNo': docNumber,
       'idUserInput': userId,
       'deliveryDate': docDate?.toIso8601String(),
-      'postingDate': DateTime.now().toIso8601String(),
+      'postingDate': postingDate?.toIso8601String() ?? DateTime.now().toIso8601String(),
       'plant': cardCode,
       'plantName': cardName,
       'remark': pickRemark,
@@ -47,10 +47,10 @@ class ProductionReceiptRMNumberListModel with ChangeNotifier {
       'details': itemList?.map((x) => x?.toMap())?.toList(),
     };
   }
-  
+
   factory ProductionReceiptRMNumberListModel.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
+
     return ProductionReceiptRMNumberListModel(
       docNumber: map['uDocNum'] ?? '',
       docDate: DateTime.parse(map['docDate']),
@@ -59,17 +59,18 @@ class ProductionReceiptRMNumberListModel with ChangeNotifier {
       pickRemark: map['pickRemark'] ?? '',
       filename: 'Inventory Dispatch',
       storageLocation: map['storageLocation'],
-      flagRcpt: map['flagRcpt']?? 3,
+      flagRcpt: map['flagRcpt'] ?? 3,
       itemList: map['itemList'] ?? [],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory ProductionReceiptRMNumberListModel.fromJson(String source) => ProductionReceiptRMNumberListModel.fromMap(json.decode(source));
+  factory ProductionReceiptRMNumberListModel.fromJson(String source) =>
+      ProductionReceiptRMNumberListModel.fromMap(json.decode(source));
 
   @override
   String toString() {
     return 'ProductionReceiptRMNumberListModel(docNumber: $docNumber, flagRcpt: $flagRcpt, userId: $userId, docDate: $docDate, postingDate: $postingDate, cardCode: $cardCode, cardName: $cardName, pickRemark: $pickRemark, filename: $filename, storageLocation: $storageLocation, itemList: $itemList)';
-  } 
+  }
 }

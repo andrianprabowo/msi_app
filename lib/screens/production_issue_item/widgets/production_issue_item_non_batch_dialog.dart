@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:msi_app/models/production_issue_item_model.dart';
 import 'package:msi_app/providers/auth_provider.dart';
 import 'package:msi_app/providers/production_issue_item_provider.dart';
+import 'package:msi_app/providers/production_issue_number_provider.dart';
 import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
@@ -86,6 +87,12 @@ class _ProductionIssueItemNonBatchDialogState
       child: RaisedButton(
         child: Text('Submit'),
         onPressed: () {
+          final itemNumberProvider =
+                  Provider.of<ProductionIssueNumberProvider>(context,
+                      listen: false);
+           itemNumberProvider.selected.totalItem =
+                    itemNumberProvider.selected.totalItem  -
+                        1;
           final itemBinProvider =
               Provider.of<ProductionIssueItemProvider>(context, listen: false);
           itemBinProvider.inputQtyNonBatch(

@@ -8,7 +8,7 @@ import 'package:msi_app/models/inventory_dispatch_item_so.dart';
 class InventoryDispatchDetailSo with ChangeNotifier {
   final String docNumber;
   final DateTime docDate;
-  final DateTime postingDate;
+  DateTime postingDate;
   String cardCode;
   final String cardName;
   final String pickRemark;
@@ -34,7 +34,7 @@ class InventoryDispatchDetailSo with ChangeNotifier {
     return {
       'doNo': docNumber,
       'deliveryDate': docDate?.toIso8601String(),
-      'postingDate': DateTime.now().toIso8601String(),
+      'postingDate': postingDate?.toIso8601String() ?? DateTime.now().toIso8601String(),
       'plant': cardCode,
       'plantName': cardName,
       'remark': pickRemark,

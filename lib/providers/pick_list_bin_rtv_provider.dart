@@ -8,12 +8,16 @@ import 'package:http/http.dart' as http;
 
 class PickListBinRtvProvider with ChangeNotifier {
   List<PickListBinRtv> _items = [];
+  PickListBinRtv _selected;
+
   String _recBin;
   var _showAllBin = false;
 
   List<PickListBinRtv> get items {
     return _showAllBin ? _items : _items.take(5).toList();
   }
+
+  PickListBinRtv get selected => _selected;
 
   String get recBin => _recBin;
 
@@ -52,5 +56,10 @@ class PickListBinRtvProvider with ChangeNotifier {
 
   PickListBinRtv findByBinLocation(String binLocation) {
     return _items.firstWhere((element) => element.binLocation == binLocation);
+  }
+
+  void selectbin(PickListBinRtv pickListBin) {
+    _selected = pickListBin;
+    notifyListeners();
   }
 }

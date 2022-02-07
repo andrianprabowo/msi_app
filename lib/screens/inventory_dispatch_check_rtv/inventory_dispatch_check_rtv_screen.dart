@@ -8,6 +8,7 @@ import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
 import 'package:msi_app/widgets/input_scan.dart';
+import 'package:msi_app/widgets/item_date_dispatch_rtv.dart';
 import 'package:provider/provider.dart';
 
 class InventoryDispatchCheckRtvScreen extends StatelessWidget {
@@ -161,6 +162,7 @@ class InventoryDispatchCheckRtvScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ItemDateDispatchRtv(),
             BaseTextLine('Pick Number', item.docNumber),
             BaseTextLine('Pick Date', convertDate(item.docDate)),
             BaseTextLine('Remark', item.pickRemark),

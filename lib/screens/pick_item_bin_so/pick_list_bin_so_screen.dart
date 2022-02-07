@@ -115,11 +115,13 @@ class PickListBinSoScreen extends StatelessWidget {
   Widget buildInputScan(
       BuildContext context, PickItemReceiveSo pickItemReceive) {
     final provider = Provider.of<PickListBinSoProvider>(context, listen: false);
+    final binProv = Provider.of<PickListBinSoProvider>(context, listen: false);
     return InputScan(
       label: 'Bin Location',
       hint: 'Scan Bin Location',
       scanResult: (value) {
         final item = provider.findByBinLocation(value);
+        binProv.selectbin(item);
         if (pickItemReceive.fgBatch == 'Y') {
           pickItemReceive.itemStorageLocation = item.binLocation;
           Navigator.of(context).pushNamed(

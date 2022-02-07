@@ -8,13 +8,13 @@ import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/item_date.dart';
 import 'package:provider/provider.dart';
 
 class ReceiptCheckScreen extends StatelessWidget {
   static const routeName = '/receipt_check';
- int a = 1;
+  int a = 1;
   void postData(BuildContext context) {
-   
     showDialog(
       context: context,
       child: AlertDialog(
@@ -145,6 +145,7 @@ class ReceiptCheckScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ItemDate(),
             BaseTextLine('PO Number', po.poNumber),
             BaseTextLine('Delivery Date', convertDate(po.docDate)),
             SizedBox(height: getProportionateScreenHeight(kLarge)),

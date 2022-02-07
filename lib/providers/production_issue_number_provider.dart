@@ -41,6 +41,8 @@ class ProductionIssueNumberProvider with ChangeNotifier {
     return _items.firstWhere((element) => element.pickNumber == pickNumber);
   }
 
+  
+
   void selectPickList(ProductionIssueNumberModel productionIssueNumberModel) {
     _selected = productionIssueNumberModel;
     notifyListeners();

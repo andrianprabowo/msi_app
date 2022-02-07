@@ -6,6 +6,7 @@ import 'package:msi_app/models/production_issue_item_model.dart';
 class ProductionIssueModel with ChangeNotifier {
   String pickNumber;
   DateTime pickDate;
+  DateTime postingDate;
   String pickRemark;
   final String binCode;
   String plant;
@@ -16,6 +17,7 @@ class ProductionIssueModel with ChangeNotifier {
   List<ProductionIssueItemModel> itemBinList;
   ProductionIssueModel({
     this.pickNumber,
+    this.postingDate,
     this.pickDate,
     this.pickRemark,
     this.binCode,
@@ -33,7 +35,7 @@ class ProductionIssueModel with ChangeNotifier {
       'deliveryDate': pickDate?.toIso8601String(),
       'remark': pickRemark,
       'storageLocation': binCode,
-      'postingDate': DateTime.now().toIso8601String(),
+      'postingDate': postingDate?.toIso8601String() ?? DateTime.now().toIso8601String(),
       'plant': plant,
       'plantName': plantName,
       'filename': 'Production Issue (Raw Mat)',

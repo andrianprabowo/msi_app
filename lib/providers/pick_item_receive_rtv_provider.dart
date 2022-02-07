@@ -9,6 +9,9 @@ import 'package:msi_app/utils/prefs.dart';
 
 class PickItemReceiveRtvProvider with ChangeNotifier {
   List<PickItemReceiveRtv> _items;
+  PickItemReceiveRtv _selected;
+
+  PickItemReceiveRtv get selected => _selected;
 
   List<PickItemReceiveRtv> get items {
     _items.forEach((detail) {
@@ -63,6 +66,11 @@ class PickItemReceiveRtvProvider with ChangeNotifier {
 
   PickItemReceiveRtv findByItemCode(String itemCode) {
     return _items.firstWhere((element) => element.itemCode == itemCode);
+  }
+
+   void selectItem(PickItemReceiveRtv purchaseOrder) {
+    _selected = purchaseOrder;
+    notifyListeners();
   }
 
   void addBatchList(

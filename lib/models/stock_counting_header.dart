@@ -6,7 +6,7 @@ import 'package:msi_app/models/stock_counting_item.dart';
 class StockCountingHeader with ChangeNotifier {
   final String pickNumber;
   final DateTime pickDate;
-  final DateTime postingDate;
+  DateTime postingDate;
   String cardCode;
   final String cardName;
   String whs;
@@ -33,7 +33,7 @@ class StockCountingHeader with ChangeNotifier {
     return {
       'stckcntingNo': pickNumber,
       'deliveryDate': pickDate?.toIso8601String(),
-      'postingDate': DateTime.now().toIso8601String(),
+      'postingDate': postingDate?.toIso8601String() ?? DateTime.now().toIso8601String(),
       'createdDate': DateTime.now().toIso8601String(),
       'plant': whs,
       'plantName': user,

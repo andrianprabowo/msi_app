@@ -113,12 +113,14 @@ class PickListBinScreen extends StatelessWidget {
 
   Widget buildInputScan(BuildContext context, PickItemReceive pickItemReceive) {
     final provider = Provider.of<PickListBinProvider>(context, listen: false);
+    final binProv = Provider.of<PickListBinProvider>(context, listen: false);
     return InputScan(
       label: 'Bin Location',
       hint: 'Scan Bin Location',
       scanResult: (value) {
         final item = provider.findByBinLocation(value);
-        if (pickItemReceive.fgBatch == 'Y'){
+        binProv.selectbin(item);
+        if (pickItemReceive.fgBatch == 'Y') {
           pickItemReceive.itemStorageLocation = item.binLocation;
           Navigator.of(context).pushNamed(
             PickItemBatchScreen.routeName,
@@ -127,7 +129,7 @@ class PickListBinScreen extends StatelessWidget {
               'pickListBin': item,
             },
           );
-        }else {
+        } else {
           // update bin location
           pickItemReceive.itemStorageLocation = item.binLocation;
           pickItemReceive.itemStorageLocation = item.binLocation;

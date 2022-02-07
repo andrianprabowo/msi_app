@@ -7,6 +7,7 @@ import 'package:msi_app/utils/constants.dart';
 import 'package:msi_app/utils/size_config.dart';
 import 'package:msi_app/widgets/base_text_line.dart';
 import 'package:msi_app/widgets/base_title.dart';
+import 'package:msi_app/widgets/item_date_prod_issue_raw.dart';
 import 'package:provider/provider.dart';
 
 class ProductionIssueFinalCheck extends StatelessWidget {
@@ -140,6 +141,7 @@ class ProductionIssueFinalCheck extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ItemDateProdIssueRaw(),
             BaseTextLine('Production Number', item.pickNumber),
             BaseTextLine('Production Date', convertDate(item.pickDate)),
             BaseTextLine('Remark', item.pickRemark),
